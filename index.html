@@ -1633,7 +1633,7 @@ function careerSections(d){
   const label=d.avHow==='exact'?'':`<div class="srcnote" style="margin-bottom:18px">${ICON.doc}<div>הנתונים בעמוד הזה הם של התחום <b>"${esc(f.n)}"</b> במאגר עבודאטה, שהוא התחום הרשמי הקרוב ביותר לתואר הזה. ייתכנו הבדלים בין התוכנית הספציפית לבין התחום הכללי.</div></div>`;
   const st=f.stats||{};
   const split=Object.keys(st).length>1?`<div class="thr" style="margin-top:16px"><table class="num"><thead><tr><th></th>${Object.keys(st).map(k=>`<th>${esc(k)}</th>`).join('')}</tr></thead><tbody>
-    ${[['שכר חודשי ממוצע (5–6 שנים)','sal',shek],['שיעור תעסוקה (3–4 שנים)','emp',v=>v==null?'—':v+'%'],['פסיכומטרי ממוצע של המתקבלים','psy',v=>v==null?'—':fmt(v)],['ממוצע בגרות משוקלל של המתקבלים (יכול לעלות על 100)','bagrut',v=>v==null?'—':v],['משך הלימודים','dur',v=>v?esc(v)+' שנים':'—'],['מסיימים בזמן','ontime',v=>v==null?'—':v+'%']]
+    ${[['שכר חודשי ממוצע (5–6 שנים)','sal',shek],['שיעור תעסוקה (3–4 שנים)','emp',v=>v==null?'—':v+'%'],['פסיכומטרי ממוצע של המתקבלים','psy',v=>v==null?'—':fmt(v)],['ממוצע בגרות משוקלל','bagrut',v=>v==null?'—':v],['משך הלימודים','dur',v=>v?esc(v)+' שנים':'—'],['מסיימים בזמן','ontime',v=>v==null?'—':v+'%']]
       .filter(([l,k])=>d.avHow==='exact'||k==='sal'||k==='emp').map(([l,k,fn])=>`<tr><th scope="row">${l}</th>${Object.values(st).map(s=>`<td>${fn(s[k])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:'';
   const curve=(f.curve||[]).filter(x=>x.v);
   const occ=(f.occ||[]);
