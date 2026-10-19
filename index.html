@@ -1503,6 +1503,18 @@ button.ft-chip:hover{box-shadow:0 1px 0 rgba(31,37,68,.22)}
 .tl-i.sch .tl-dot{border-color:#7048E8}
 @media(max-width:820px){.sc-two{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:520px){.sc-card{padding:14px}.sc-h{flex-direction:column;gap:6px}.sc-dl>div{grid-template-columns:76px minmax(0,1fr)}.sc-il li{flex-direction:column;align-items:flex-start;gap:6px}.sc-q{padding:16px}}
+/* F2a: welcome back, the bridge plan, my story, the date I finish */
+.kp-wb{background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:16px 18px;margin-bottom:14px;border-inline-start:6px solid var(--primary)}
+.kp-wbh{display:flex;gap:12px;align-items:flex-start}.kp-wbh>div{min-width:0}.kp-wbh h2{font-size:20px;margin:0 0 2px}.kp-wbh p{margin:0;font-size:15px;color:#3B4262;line-height:1.6}
+.kp-wbd{margin:12px 0 0;display:grid;gap:10px}.kp-wbd>div{display:grid;grid-template-columns:130px minmax(0,1fr);gap:4px 12px;align-items:baseline}
+.kp-wbd dt{font-family:var(--head);font-weight:600;font-size:14px;color:var(--muted)}.kp-wbd dd{margin:0;font-size:15.5px;overflow-wrap:anywhere}.kp-wbd ul{margin:0;padding-inline-start:18px;display:grid;gap:3px}
+.kp-bridge{list-style:none;margin:8px 0;padding:0;display:grid;gap:8px}.kp-bridge li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:10px;align-items:start;background:#F7F8FC;border-radius:14px;padding:9px 12px;font-size:15px}
+.kp-bridge b{font-family:var(--head);font-size:14.5px;color:#B83A1B}.kp-bridge b.u{color:var(--muted);font-weight:600}.kp-bridge span{min-width:0;overflow-wrap:anywhere}
+.kp-story{display:grid;gap:6px;margin:10px 0}.kp-story label{font-family:var(--head);font-weight:600;font-size:15px}
+.kp-story textarea{box-sizing:border-box;width:100%;font:inherit;font-size:16px;line-height:1.55;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;background:#fff;color:var(--ink);resize:vertical;min-height:120px}
+.kp-story textarea:focus{outline:none;box-shadow:0 0 0 3px #FFD0C3;border-color:var(--primary)}.kp-story small{color:var(--muted);font-size:13px}
+.kp-endf{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}.kp-endf input{font:inherit;font-size:16px;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;background:#fff;min-height:44px}.kp-endf input:focus{outline:none;box-shadow:0 0 0 3px #FFD0C3}
+@media(max-width:520px){.kp-wb{padding:14px}.kp-wbd>div{grid-template-columns:minmax(0,1fr)}.kp-bridge li{grid-template-columns:64px minmax(0,1fr)}}
 html.rm .kp-next.soon,html.rm .kp-focus.soon{animation:none}
 
 </style>
@@ -2738,7 +2750,7 @@ function avatar(uid,anon,sz=''){
   const n=(FM.names[uid]||(uid===FM.me?'א':'?')).trim(), c=AV_C[hash(uid||'x')%AV_C.length];
   return `<span class="av ${sz}" style="background:${c}" aria-hidden="true">${esc(n.charAt(0)||'?')}</span>`;
 }
-const bIn=n=>'ב'+(n.startsWith('ה')?n.slice(1):n);
+const bIn=n=>'ב'+(n.startsWith('ה')?n.slice(1):n), lIn=n=>'ל'+(n.startsWith('ה')?n.slice(1):n);
 function roleBadge(uid){const r=fIdx().roles[uid];if(!r||!ROLES[r.k]||r.k==='team')return '';
   const l=ROLES[r.k]+(r.inst&&INST[r.inst]&&(r.k==='stud'||r.k==='grad')?(r.k==='stud'?' '+bIn(INST[r.inst].n):' של '+INST[r.inst].n):'');
   return `<span class="rbadge r-${r.k}" title="לפי הצהרת המשתמש/ת">${esc(l)}</span>`}
@@ -4587,7 +4599,10 @@ const FACTS=[
  {id:'sechem.haifa',t:'יחסי הסכם באוניברסיטת חיפה',v:'בגרות:פסיכומטרי 1:2 בהרוח, 1:3 בחברה, 3:7 במשפטים',by:'אוניברסיטת חיפה',scope:'תשפ"ז',src:'https://www.haifa.ac.il/%D7%97%D7%99%D7%A9%D7%95%D7%91-%D7%A6%D7%99%D7%95%D7%9F-%D7%A7%D7%91%D7%9C%D7%94-%D7%A1%D7%9B%D7%9D/',srcType:'official',status:'unverified',checked:FT_D},
  {id:'tau.reali',t:'תוספת 10 נקודות בתל אביב',v:'5 יח"ל מתמטיקה ו-5 יח"ל פיזיקה (ציון 55 לפחות), בהנדסה ובמדעים מדויקים',by:'אוניברסיטת תל אביב',scope:'תשפ"ז',src:'https://go.tau.ac.il/he/ba/how-to-calculate',srcType:'official',status:'unverified',checked:FT_D},
  {id:'avodata.bagrut',t:'ממוצע בגרות של המתקבלים (עבודאטה)',v:'ממוצע משוקלל שיכול לעלות על 100',by:'עבודאטה',src:'https://avodata.labor.gov.il',srcType:'official',status:'unverified',checked:FT_D,note:'ייתכן שהוא כולל בונוסים. שיטת החישוב של עבודאטה לא אומתה.'},
- {id:'cycle.thr',t:'מחזור ספי הקבלה שמוצגים באתר',v:'תשפ"ז (לימודים מאוקטובר 2026)',scope:'תשפ"ז',src:'https://www.kan.org.il/content/kan-news/local/999187/',srcType:'secondary',status:'unverified',checked:FT_D,note:'ספי תשפ"ח עדיין לא נאספו.'}
+ {id:'cycle.thr',t:'מחזור ספי הקבלה שמוצגים באתר',v:'תשפ"ז (לימודים מאוקטובר 2026)',scope:'תשפ"ז',src:'https://www.kan.org.il/content/kan-news/local/999187/',srcType:'secondary',status:'unverified',checked:FT_D,note:'ספי תשפ"ח עדיין לא נאספו.'},
+ {id:'courses.reg',t:'הרשמה לקורסים של הסמסטר הראשון',v:'נעשית אחרי הקבלה, במערכת של המוסד',src:'',srcType:'',status:'unverified',checked:FT_D,note:'ידע כללי על אופן הלימודים, לא נבדק מול מקור. כל מוסד קובע מועדים ושיטה, ולכן בודקים באתר המוסד.'},
+ {id:'orient.days',t:'ימי היכרות לסטודנטים חדשים',v:'מוסדות רבים מקיימים אותם לפני תחילת הלימודים',src:'',srcType:'',status:'unverified',checked:FT_D,note:'ידע כללי, לא נבדק מול מקור. המועדים והתוכן נקבעים בכל מוסד.'},
+ {id:'dorm.separate',t:'ההרשמה למעונות',v:'במוסדות רבים נפרדת מההרשמה לתואר, עם מועדים משלה',src:'',srcType:'',status:'unverified',checked:FT_D,note:'ידע כללי, לא נבדק מול מקור. את התנאים והמועדים בודקים באתר המוסד או בדיקנאט הסטודנטים.'}
 ];
 const FACTM=new Map(FACTS.map(f=>[f.id,f])), FT_IC={verified:'✓',unverified:'?',conflict:'!'};
 const factGet=id=>FACTM.get(id)||null;
@@ -4765,8 +4780,11 @@ const sex=()=>(S.prof&&S.prof.sex)||'';
 const gx=(m,f,n)=>{const s=sex();if(m===f||s==='m')return m;if(s==='f')return f;if(n)return n;let i=0;while(i<m.length&&i<f.length&&m[i]===f[i])i++;return i===m.length?m+'/'+f.slice(i):m+'/'+f};
 const myReg=()=>(S.prof&&S.prof.reg)||'';
 const myLang=()=>{const p=S.prof||{};return p.nat||(p.heb==='ar'?'ar':'he')};
-/* a start year that already passed means "I have not decided" */
-const startY=()=>{const P=pth();return P&&P.start>=startOpts()[0]?P.start:0};
+/* a start year that already passed means "I have not decided". When I gave the date I finish school or service (P.end) and did not pick a year,
+   the first October after it is the earliest start that fits (never a date from an institution) */
+const startPicked=()=>{const P=pth();return !!(P&&P.start>=startOpts()[0])};
+const startFromEnd=()=>{const P=pth();if(!P||!P.end)return 0;const [y,m]=P.end.split('-').map(Number);return Math.max(m<=9?y:y+1,startOpts()[0])};
+const startY=()=>{const P=pth();return startPicked()?P.start:startFromEnd()};
 const startOpts=()=>{const t=today0(),y0=t.getMonth()>=9?t.getFullYear()+1:t.getFullYear();return [0,1,2,3,4].map(k=>y0+k)};
 
 /* ---------- the path state (localStorage kivun3.path, v4: a list of targets) ----------
@@ -4774,10 +4792,10 @@ const startOpts=()=>{const t=today0(),y0=t.getMonth()>=9?t.getFullYear()+1:t.get
    mirror the target I am looking at (the active one), so the plan, the lab and the rest read "my target" from pth() as before. */
 let PTH=null;
 const JR={sim:null}; /* kept: the account sign-in code resets it */
-const MAXT=6;
+const MAXT=6,STORY_MAX=2000;
 /* steps that are about me, not about one target: ticking one ticks it for every target */
-const GMARK=['eng','psyReg','prep','cert','atuda','svcPlan','svcKeep','svcRights','explore','units','schSeen','schApplied'];
-const pthNew=()=>({v:4,created:Date.now(),targets:[],active:'',d:'',i:'',auto:0,marks:{},goalP:0,start:0,dates:[],lab:null,sess:'',log:[]});
+const GMARK=['eng','psyReg','prep','cert','atuda','svcPlan','svcKeep','svcRights','explore','units','schSeen','schApplied','story','schol']; /* story and schol are about me, not about one target */
+const pthNew=()=>({v:4,created:Date.now(),targets:[],active:'',d:'',i:'',auto:0,marks:{},goalP:0,start:0,dates:[],lab:null,sess:'',log:[],end:'',seen:'',story:''});
 const tNew=(d,i,auto,marks)=>({id:'t'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),d,i,auto:auto?1:0,marks:marks||{},goalP:0,added:Date.now()});
 const tOk=t=>!!(t&&BY[t.d]&&INST[t.i]&&BY[t.d].of.some(o=>o.i===t.i));
 function pth(){
@@ -4794,6 +4812,8 @@ function pth(){
   if(!p.d||!INST[p.i]||!BY[p.d].of.some(o=>o.i===p.i))p.i='';
   if(!p.marks||typeof p.marks!=='object')p.marks={};
   if(!Array.isArray(p.dates))p.dates=[];if(!Array.isArray(p.log))p.log=[];
+  /* F2a: when I finish school or service (end), the last day I was on the road (seen) and my story notes; old saves have none of them */
+  if(!isoOk(p.end))p.end='';if(!isoOk(p.seen))p.seen='';p.story=typeof p.story==='string'?p.story.slice(0,STORY_MAX):'';
   /* before v4 there was a single goal in d / i / auto / marks / goalP: it becomes the first target */
   if(!Array.isArray(x.targets)){p.targets=p.d&&p.i?[{id:'t1',d:p.d,i:p.i,auto:p.auto?1:0,marks:p.marks,goalP:+p.goalP||0,added:p.created||Date.now()}]:[];p.active=p.targets.length?'t1':''}
   const seen=new Set();
@@ -4835,12 +4855,16 @@ const tList=()=>{const P=pth();return P?P.targets:[]};
 /* a write that silently fails (private browsing, a sandboxed page) would look like "it does not update": check that it stuck */
 const persisted=(k,v)=>{try{return JSON.stringify(store.get(k,null))===JSON.stringify(v)}catch(e){return false}};
 const hasGoal=()=>{const p=pth();return !!(p&&p.d&&p.i)};
-const logAct=()=>{const P=pth();if(!P)return;P.log.push(Date.now());if(P.log.length>200)P.log=P.log.slice(-200)};
-/* my streak: consecutive days (ending today or yesterday) with at least one action */
-function streak(){const P=pth();if(!P||!P.log.length)return 0;const days=new Set(P.log.map(t=>{const d=new Date(t);return isoOf(d.getFullYear(),d.getMonth()+1,d.getDate())}));
-  let n=0,d=today0();const key=x=>isoOf(x.getFullYear(),x.getMonth()+1,x.getDate());
-  if(!days.has(key(d)))d.setDate(d.getDate()-1);
-  while(days.has(key(d))){n++;d.setDate(d.getDate()-1)}return n}
+/* one entry per day (the last action of the day): the streak counts days, and a busy day must not push older days out of the list */
+const logAct=()=>{const P=pth();if(!P)return;const t=Date.now(),L=P.log,day=x=>new Date(x).toDateString();
+  if(L.length&&day(L[L.length-1])===day(t))L[L.length-1]=t;else L.push(t);if(L.length>400)P.log=L.slice(-400)};
+/* my streak: days with an action, counted back from today. Rest is part of it: up to 2 days without an action in any 7 do not break it
+   (today may be one of them), and only the days with an action are counted */
+function streak(){const P=pth();if(!P||!P.log.length)return 0;const key=x=>isoOf(x.getFullYear(),x.getMonth()+1,x.getDate()),days=new Set(P.log.map(t=>key(new Date(t))));
+  let n=0,d=today0();const w=[]; /* w: the last 7 days looked at, 1 = a day without an action */
+  for(let k=0;k<400;k++){const on=days.has(key(d));w.unshift(on?0:1);if(w.length>7)w.pop();
+    if(w.reduce((a,b)=>a+b,0)>2)break;if(on)n++;d.setDate(d.getDate()-1)}
+  return n}
 
 /* ---------- facts about a degree and an institution ---------- */
 function famOf(d){const n=d.n;
@@ -4907,7 +4931,7 @@ function setGoal(d,i,silent,auto){
   else if(dup){P.targets.splice(P.targets.indexOf(cur),1);loadT(P,dup)} /* that target already exists: go to it */
   else{
     if(cur.d!==d){const m={};GMARK.forEach(k=>{if(P.marks[k])m[k]=P.marks[k]});P.marks=m;P.goalP=0}
-    else if(cur.i!==i){['thr','ext','reg','acc','docs','planB','answer'].forEach(k=>delete P.marks[k])}
+    else if(cur.i!==i){['thr','ext','reg','acc','docs','planB','answer','bridge','courses','orient','tuition','dorm','commute','arrived'].forEach(k=>delete P.marks[k])} /* steps that belong to one institution or to one threshold */
     P.d=d;P.i=i;P.auto=auto?1:0}
   freshView();pthSave();
   if(!silent)toast(`היעד שלי: ${BY[d].n} ${bIn(INST[i].n)}`);
@@ -5070,7 +5094,7 @@ function ctx(){
   const P=pth(),d=BY[P.d],I=INST[P.i],q=reqOf(d,P.i),stg=stageNow(),sc=curSc(),V=verdict({d:P.d,i:P.i},sc,true),prof=S.prof||{};
   /* hasP: a psychometric score I really got. A score saved as "expected" (estP) counts in the numbers, but the exam is still ahead of me */
   const rows=bagRows(),real=hasReal(),hasP=!!(S.sc&&S.sc.p&&!S.sc.estP),est=!!(S.sc&&(S.sc.est||S.sc.estP));
-  return {P,d,I,q,stg,start:startY(),sc:sc||{},V,prof,rows,real,hasP,est,fam:q.fam,Z:zoneMap(stg),np:psyPick(),
+  return {P,d,I,q,stg,start:startY(),startE:!startPicked()&&!!startFromEnd(),sc:sc||{},V,prof,rows,real,hasP,est,fam:q.fam,Z:zoneMap(stg),np:psyPick(),
     noCert:!!prof.bag&&!BAG_EQUIV(prof),M:P.marks,
     gap:V.tier===1&&V.gapP!=null&&isFinite(V.gapP)?V.gapP:null}}
 
@@ -5123,7 +5147,7 @@ function summaryText(pl){
     `פסיכומטרי: ${sc.p?sc.p+(S.sc&&S.sc.estP?' (צפוי)':''):'עוד אין'} · ממוצע בגרות: ${sc.b?fmt(sc.b,1)+(S.sc&&S.sc.est?' (צפוי)':''):'עוד אין'}`];
   const t=pl.tasks.filter(x=>!x.done).slice(0,5);
   if(t.length)L.push('','הצעדים הבאים:',...t.map(x=>'• '+x.t+(x.due?` (${dueText(x)})`:'')));
-  const ev=timeline(pl).filter(x=>!x.id.startsWith('psyres-')&&x.k!=='sch').slice(0,3); /* my scholarship items are private: not in a summary I share */
+  const ev=timeline(pl).filter(x=>!x.id.startsWith('psyres-')&&x.k!=='sch'&&x.id!=='end-mine').slice(0,3); /* my scholarship items and my end date are private: not in a summary I share */
   if(ev.length)L.push('','מועדים קרובים:',...ev.map(x=>{const f=x.f&&factGet(x.f);return `• ${dLong(x.d)}: ${x.t}${f&&f.status!=='verified'?' ('+factLabel(f)+')':''}`}));
   return L.join('\n')}
 
@@ -5156,7 +5180,7 @@ function standing(X){
 
 /* ---------- the plan itself ---------- */
 let PLC=null; /* one cached plan per target: {targetId: {key, v}} */
-const planKey=()=>{const P=pth();return JSON.stringify([P.active,P.d,P.i,P.auto,P.marks,P.goalP,P.start,P.sess,P.dates,S.prof,S.sc,CALC_ROWS,CALC_AR,today0().getTime()])};
+const planKey=()=>{const P=pth();return JSON.stringify([P.active,P.d,P.i,P.auto,P.marks,P.goalP,P.start,P.sess,P.dates,S.prof,S.sc,CALC_ROWS,CALC_AR,today0().getTime(),P.end,(P.story||'').trim().length>0,schSeenOn(),schAppliedOn()])}; /* F2a: the end date, whether story notes exist, and the scholarship state that two steps read */
 function plan(){
   if(!hasGoal())return null;
   const PA=pth().active,key=planKey(),hit=PLC&&PLC[PA];if(hit&&hit.key===key)return hit.v;
@@ -5220,6 +5244,9 @@ function plan(){
         add(Z.ready,{id:'boost',ic:'fire',t:'לשפר איפה שהכי משתלם',s:'הבוסטרים הכי שווים מהבגרות והפסיכומטרי',
           body:()=>`${boostHTML(X)}${BTNS([KB('data-kgo="lab"','לנסות בתרחיש','primary')])}`})}
     }
+    /* a bridge plan: only while the verdict says I am not above the threshold yet */
+    if(V.ok===false&&X.real)add(Z.ready,{id:'bridge',ic:'map',t:'לבנות תוכנית גישור',s:X.gap!=null?`חסרות ${X.gap} נקודות בפסיכומטרי, ויש דרך לסגור`:'מהמצב של היום אל הסף, צעד אחרי צעד',
+      body:()=>bridgeHTML(X)});
     /* the threshold */
     if(q.tier===1||q.tier===2)add(Z.ready,{id:'thr',ms:1,nm:q.tier===1?1:0,ic:'flag',t:'לעבור את סף הקבלה',s:standing(X).h,done:V.ok===true||(q.tier===2&&M.thr),
       body:()=>`<p>${esc(standing(X).s)}</p>${q.tier===2?tier2HTML(V):''}${BTNS([KB('data-kgo="lab"','כמה חסר לי, ואיך סוגרים','primary'),q.tier===2?KB('data-kmark="thr"',M.thr?`✓ בדקתי, אני ${gx('עומד','עומדת')} בתנאים`:`בדקתי ואני ${gx('עומד','עומדת')} בתנאים`):''].filter(Boolean))}${q.tier===1&&q.th?`<p class="fine">הסף והנוסחה: <a href="${esc(q.th.src)}" target="_blank" rel="noopener">אתר הקבלה של המוסד</a> (${esc(q.th.year||'')}). הספים משתנים משנה לשנה.</p>${cycleNote(P.i)}`:''}`});
@@ -5255,6 +5282,10 @@ function plan(){
     body:()=>`${altHTML(X)}${BTNS([KB('data-kgo="opt"','לכל האפשרויות','primary'),KB('data-kmark="planB"',M.planB?'✓ בחרתי גיבוי':'בחרתי גיבוי')])}`});
   add(Z.reg,{id:'docs',ic:'doc',t:'להכין את המסמכים להרשמה',s:'כדי לא להיתקע ברגע האחרון',
     body:()=>`${UL(['תעודת זהות','גיליון ציונים או תעודת בגרות (אפשר להפיק דיגיטלית ב-gov.il)','ציון פסיכומטרי וציון אמירנט: לבדוק באתר המוסד איך הם מועברים','תיק עבודות, מכתבים או אישורים אם נדרשים בתוכנית','דמי רישום: הסכום מופיע באתר המוסד'])}${BTNS([KA(EDU.cert,'גיליון ציונים דיגיטלי','primary'),KA(NITE.reg,'מאל"ו: העברת ציונים'),KB('data-kmark="docs"',M.docs?'✓ מוכן':'סימון: מוכן')])}`});
+  add(Z.reg,{id:'story',ic:'bag',t:'לבנות את הסיפור שלי',s:(P.story||'').trim()?'התחלתי לכתוב, אפשר להמשיך':'מה שאני רוצה שיכירו ממני',
+    body:()=>storyHTML(X)});
+  add(Z.reg,{id:'schol',ic:'coin',t:'לבדוק מלגות וזכויות שמתאימות לי',s:schSeenOn()?'בדקתי בעמוד המלגות':'חלק מהמלגות נסגרות לפני תחילת השנה',done:schSeenOn()||!!M.schol,
+    body:()=>`<p>בעמוד המלגות והזכויות רואים אילו מלגות והטבות עשויות להתאים לי לפי מה שסיפרתי, ואפשר לעקוב שם אחרי מועדי ההגשה שלי. הרשימה לא מבטיחה זכאות: את התנאים והסכומים בודקים באתר הגוף המעניק.</p>${schNextLine()}${BTNS([KB('data-go="sch"','למרכז המלגות והזכויות','primary'),KB('data-kmark="schol"',M.schol?'✓ בדקתי':'סימון: בדקתי')])}`});
   add(Z.reg,{id:'reg',ic:'pen',t:'להירשם לתואר',s:regWindow(X),
     body:()=>`<p>ההרשמה נעשית באתר ${esc(I.n)}. ${regWindow(X,1)}${instKind(P.i)==='u'&&!q.open?factChip('reg.pattern'):''}</p>${regInfoHTML(X)}${tip('כשמתפרסם מועד סגירת ההרשמה, כדאי להוסיף אותו ליומן. כך שום דבר לא נופל בין הכיסאות.')}${dateAdd()}${BTNS([instKA(I,'לאתר המוסד','primary'),KB('data-kmark="reg"',M.reg?'✓ נרשמתי':'נרשמתי לתואר')])}`});
   if(X.fam==='med'||q.fl.mor)add(Z.reg,{id:'mor',ic:'star',t:'מיון אישי: מו"ר ומרק"ם',s:'הזימון מגיע ממאל"ו אחרי הציונים',
@@ -5266,8 +5297,27 @@ function plan(){
   /* ----- first day ----- */
   add(Z.go,{id:'fin',ic:'coin',t:'לסדר מימון ומלגות',s:'שכר לימוד, מלגות ומגורים',
     body:()=>`<p>כדאי לבדוק את שכר הלימוד, המלגות והסיוע באתר המוסד כבר בזמן ההרשמה: חלק מהמלגות נסגרות לפני תחילת השנה, ויש מוסדות שמציעים מלגות לפי הצטיינות או מצב כלכלי.</p>${schNextLine()}${BTNS([KB('data-go="sch"','מרכז המלגות והזכויות','primary'),instKA(I,'אתר המוסד: מלגות ושכר לימוד'),KA(MOD_SCHOL,'מלגות למשוחררים'),KB('data-kmark="fin"',M.fin?'✓ סידרתי':'סימון: סידרתי')])}`});
-  add(Z.go,{id:'first',ic:'cap',t:'להתכונן ליום הראשון',s:'הרשמה לקורסים והיכרות',
-    body:()=>`<p>בשבועות שלפני הלימודים נרשמים לקורסים, מכירים את הקמפוס, ויש בדרך כלל ימי היכרות לסטודנטים חדשים. כדאי להגיע, לא רק בשביל המידע: כאן נפגשים עם מי שילמדו איתי.</p>${BTNS([KB(`data-kfq="deg:${d.id}"`,'לשאול בוגרים בפורום'),KB('data-kmark="first"',M.first?`✓ ${gx('מוכן','מוכנה')}`:`סימון: ${gx('מוכן','מוכנה')}`)])}`});
+  /* the weeks before the first day: small steps that are easy to forget. They are generic on purpose: every institution sets its own dates and systems */
+  add(Z.go,{id:'courses',ic:'book',t:'להירשם לקורסים של הסמסטר הראשון',s:'מערכת שעות ראשונה',
+    body:()=>`<p>אחרי הקבלה נרשמים לקורסים של הסמסטר הראשון במערכת של ${esc(I.n)}, ומשם נבנית מערכת השעות.${factChip('courses.reg')} פותחים את תוכנית הלימודים של התואר, בודקים אילו קורסים הם חובה בסמסטר הראשון, ומתי נפתחת ההרשמה אליהם.</p>${BTNS([KB(`data-open="${d.id}"`,'לעמוד התואר'),instKA(I,'לאתר המוסד'),KB('data-kmark="courses"',M.courses?'✓ נרשמתי לקורסים':'נרשמתי לקורסים')])}`});
+  add(Z.go,{id:'orient',ic:'compass',t:'להגיע לימי ההיכרות',s:'להכיר את הקמפוס ואת מי שילמדו איתי',
+    body:()=>`<p>מוסדות רבים מקיימים לפני תחילת הלימודים ימי היכרות והתארגנות לסטודנטים חדשים.${factChip('orient.days')} שווה להגיע: מקבלים מידע שימושי, מכירים את הקמפוס ופוגשים את מי שילמדו איתי. את המועדים בודקים באתר המוסד או בהודעות שמגיעות אחרי ההרשמה.</p>${BTNS([instKA(I,'לאתר המוסד'),KB('data-kmark="orient"',M.orient?'✓ הייתי':'הייתי / התעדכנתי')])}`});
+  add(Z.go,{id:'tuition',ic:'coin',t:'לשלם שכר לימוד ולאשר מלגות',s:'תשלום, פריסה ואישורי מלגה',
+    body:()=>`<p>אחרי הקבלה מגיעות הוראות התשלום. את סכום שכר הלימוד ואת הפריסה בודקים באתר המוסד.${factChip('tuition.uniform')} אם אני אמור/ה לקבל מלגה או הטבה, מוודאים שהאישור הגיע למוסד לפני מועד התשלום, ושומרים עותק של כל אישור.</p>${schNextLine()}${BTNS([KB('data-go="sch"','מעקב המלגות שלי'),instKA(I,'אתר המוסד: שכר לימוד'),KB('data-kmark="tuition"',M.tuition?'✓ סידרתי':'סידרתי תשלום ואישורים')])}`});
+  add(Z.go,{id:'dorm',ic:'pin',t:'לסגור מעונות או מגורים',s:'מקום לגור בו, אם הקמפוס רחוק מהבית',
+    body:()=>dormHTML(X)});
+  add(Z.go,{id:'commute',ic:'map',t:'לתכנן הגעה לקמפוס',s:'דרך, זמן ועלות',
+    body:()=>`<p>בודקים כמה זמן לוקח להגיע ${esc(lIn(I.n))} בשעות הלימודים, ואיזו דרך מתאימה לי: תחבורה ציבורית, רכב או מגורים קרובים יותר. לסטודנטים יש הנחה בתחבורה הציבורית (${esc(fact('transport'))}), ולכן בודקים איך מקבלים אותה.${factChip('transport')}</p>${BTNS([instKA(I,'אתר המוסד: הגעה לקמפוס'),KB('data-kmark="commute"',M.commute?'✓ תכננתי':'תכננתי את ההגעה')])}`});
+  add(Z.go,{id:'routine',ic:'fire',t:'לבנות שגרת לימוד לשבוע הראשון',s:'שעות קבועות וקצב שאפשר להחזיק',
+    body:()=>`<p>בשבוע הראשון קובעים שגרה קטנה שאפשר להחזיק. לא צריך שגרה מושלמת, צריך משהו שחוזר.</p>${UL(['שעות קבועות ללמידה בכל יום, גם אם הן מעטות','מקום שקט אחד ללמוד בו, בקמפוס או בבית','יום אחד בשבוע לסדר, לסכם ולהתכונן לשבוע הבא'])}${BTNS([KB('data-kmark="routine"',M.routine?'✓ תכננתי':'תכננתי שגרה')])}`});
+  add(Z.go,{id:'copies',ic:'doc',t:'לשמור עותקים דיגיטליים של המסמכים',s:'אישורים, תשלומים ותעודות במקום אחד',
+    body:()=>`<p>אחרי הקבלה מצטברים מסמכים: אישור קבלה, אישורי תשלום, אישורי מלגה, תעודת בגרות וגיליון ציונים. שומרים מכל אחד עותק דיגיטלי בתיקייה אחת, עם גיבוי, כדי שאפשר יהיה להציג אותם בכל רגע. גיליון ציונים דיגיטלי אפשר להפיק באתר gov.il.${factChip('digital.cert')}</p>${BTNS([KA(EDU.cert,'גיליון ציונים דיגיטלי'),KB('data-kmark="copies"',M.copies?'✓ שמרתי':'שמרתי עותקים')])}`});
+  add(Z.go,{id:'community',ic:'chat',t:'להכיר סטודנטים ולשאול שאלות',s:'לא מתחילים לבד',
+    body:()=>`<p>אפשר לשאול בפורום סטודנטים ובוגרים של התואר: איך זה באמת, אילו קורסים דורשים יותר זמן ואיך מתארגנים. ובמוסד עצמו כדאי לחפש את הקבוצה של השנתון ושל התואר.</p>${BTNS([KB(`data-kfq="deg:${d.id}"`,'לשאול בפורום','primary'),KB('data-kmark="community"',M.community?'✓ הצטרפתי':'שאלתי / הצטרפתי לקבוצה')])}`});
+  add(Z.go,{id:'first',ic:'cap',t:'להתכונן ליום הראשון',s:'מבט אחרון לפני שמתחילים',
+    body:()=>`<p>אחרי שסידרתי קורסים, ימי היכרות, תשלום ומגורים, נשאר מבט אחרון: איפה ומתי מתחיל היום הראשון, איך מגיעים, ומה לקחת איתי. אפשר גם לשאול בוגרים מה היו רוצים לדעת מראש.</p>${BTNS([KB(`data-kfq="deg:${d.id}"`,'לשאול בוגרים בפורום'),KB('data-kmark="first"',M.first?`✓ ${gx('מוכן','מוכנה')}`:`סימון: ${gx('מוכן','מוכנה')}`)])}`});
+  add(Z.go,{id:'arrived',ms:1,ic:'flag',t:'הגעתי: היום הראשון',s:M.arrived?'מזל טוב!':'נקודת הציון האחרונה בדרך',
+    body:()=>`<p>${M.arrived?'מזל טוב! הדרך הזאת נגמרה, והלימודים מתחילים.':'כשמגיע היום הראשון, מסמנים כאן וחוגגים. כל מה שנעשה עד עכשיו הביא אותי לשם.'}</p>${BTNS([KB('data-kmark="arrived"',M.arrived?'✓ הגעתי':'הגעתי! 🎓','primary')])}`});
 
   /* ----- order inside a zone: by the order they were added; deadlines surface in "next" ----- */
   zones.forEach(z=>{z.done=z.tasks.filter(t=>t.done).length;z.total=z.tasks.length});
@@ -5289,7 +5339,7 @@ function regWindow(X,long){
   const Y=X.start,uni=instKind(X.P.i)==='u';
   const typ=uni?'באוניברסיטאות הגדולות ההרשמה נפתחה בשנה האחרונה בתחילת פברואר, הרגילה נסגרה בסביבות סוף אפריל ותחילת מאי, ואחריה הרשמה מאוחרת על בסיס מקום פנוי עד הקיץ. תוכניות תחרותיות כמו רפואה ואדריכלות נסגרו מוקדם יותר, בלי הרשמה מאוחרת':'במכללות רבות ההרשמה נפתחת בחורף ונמשכת עד הקיץ, בכפוף למקומות פנויים. תוכניות עם מיון מוקדם יותר נסגרות קודם';
   if(X.q.open)return long?'ההרשמה פתוחה לכולם לאורך השנה.':'פתוחה לכולם';
-  return Y?(long?`כדי להתחיל באוקטובר ${Y}: ${typ}.`:`לימודים מאוקטובר ${Y}: ההרשמה לרוב מפברואר עד הקיץ של ${Y}`):(long?`${typ}.`:'בשנה שלפני תחילת הלימודים')}
+  return Y?(long?`${X.startE?`לפי תאריך הסיום שהזנתי, ההתחלה המוקדמת שמתאימה לי היא אוקטובר ${Y}. `:''}כדי להתחיל באוקטובר ${Y}: ${typ}.`:`לימודים מאוקטובר ${Y}: ההרשמה לרוב מפברואר עד הקיץ של ${Y}`):(long?`${typ}.`:'בשנה שלפני תחילת הלימודים')}
 const psyTip=X=>`<p>הציון מגיע עד 45 ימים אחרי הבחינה,${factChip('psy.results')} ולכן כדאי להיבחן לפחות חודשיים לפני סגירת ההרשמה למוסד, ולהשאיר זמן לבחינה חוזרת אם צריך. ${X.P.i==='technion'||X.P.i==='huji'?`ב${X.I.n}, בשנה האחרונה, הציון נדרש עד מועד אפריל להרשמה הרגילה${X.fam==='med'||X.fam==='dent'?', וברפואה מועד אפריל היה האחרון התקף':''}.${factChip('psy.april')}`:'כדאי לבדוק עד איזה מועד הציון נדרש במוסד שבחרתי.'}</p>`;
 /* provenance chips for the institution's registration dates (last published cycle) */
 const REGF={technion:'reg.technion',huji:'reg.huji',tau:'reg.tau',bgu:'reg.bgu',haifa:'reg.haifa'};
@@ -5332,6 +5382,54 @@ function boostHTML(X){
   else if(rows.length)avgMoves(rows).forEach(m=>out.push(`${esc(m.lbl)}: <b class="num">+${m.gainB}</b> בממוצע`));
   if(X.gap!=null)out.push(`בחינה פסיכומטרית חוזרת: חסרות ${X.gap} נקודות בפסיכומטרי עם הבגרות הנוכחית`);
   return out.length?`<p>הדברים שהכי מקרבים אותי לסף, לפי הנוסחה הרשמית:</p>${UL(out)}<p class="fine">כל אחד מחושב לבד. את השילוב ביניהם רואים בלשונית "כמה חסר לי?".</p>`:'<p>כדי לדעת מה הכי משתלם, צריך ציוני בגרות ופסיכומטרי. מזינים אותם בלשונית "כמה חסר לי?".</p>'}
+/* ---------- F2a: the bridge plan, my story, housing ---------- */
+/* the next exam dates of one bagrut subject, from the Ministry of Education draft (the chip says it is a draft) */
+const bagNext=k=>BAGD.filter(b=>b[1]===k&&daysTo(b[4]||b[2])>=0).slice(0,2);
+/* a short plan that starts from the boosters (the same pure functions the booster list uses) and the real exam dates; undated steps come last */
+function bridgeSteps(X){
+  const t={d:X.P.d,i:X.P.i},rows=X.rows,ps=X.sc.p||0,out=[],np=X.np;
+  const mv=rows.length&&ps&&UNI_RULES[t.i]?moves(t,rows,ps).map(m=>({lbl:m.lbl,k:m.diff.k,gain:`+${m.gain} נקודות פסיכומטרי`})):rows.length?avgMoves(rows).map(m=>({lbl:m.lbl,k:m.diff.k,gain:`+${m.gainB} בממוצע`})):[];
+  mv.slice(0,2).forEach(m=>{const ex=m.k?bagNext(m.k):[];
+    out.push({d:ex.length?ex[0][2]:'',h:`${esc(m.lbl)} (${esc(m.gain)})${ex.length?`. מועדי הבחינה: ${ex.map(b=>`${b[0]==='w'?'חורף':b[0]==='s'?'קיץ':'מועד ב'} ${dShort(b[2])}`).join(', ')}${factChip('bagrut.2027')}`:'. בוחרים עם היועץ/ת באיזה מועד ובאיזו דרך'}`})});
+  if(X.gap!=null){
+    const re=X.hasP?'בחינה פסיכומטרית חוזרת':'בחינה פסיכומטרית';
+    if(np){
+      out.push({d:np.reg,h:`${re}: ההרשמה הרגילה למועד ${esc(np.lbl)} נסגרת ${dLong(np.reg)} (${inN(np.n)})${factChip('psy.date.'+np.id)}`});
+      out.push({d:np.d,h:`הבחינה עצמה: ${esc(np.days)}. עד אז מתרגלים בבחינות להתנסות${factChip('psy.date.'+np.id)}`});
+      out.push({d:np.res||'',h:`הציון החדש מגיע עד 45 ימים אחרי הבחינה${np.res?', ובמועד הזה לפי תחזית':''}${factChip('psy.results')}`})}
+    else out.push({d:'',h:`${re}: אין כרגע מועד פתוח להרשמה. מועדים חדשים מתפרסמים באתר מאל"ו`})}
+  out.push({d:'',h:'כשיש ציון חדש, מזינים אותו בלשונית "כמה חסר לי?" ורואים מה השתנה'});
+  out.push({d:'',h:'במקביל, תוכנית גיבוי: מוסד או תואר דומה שפתוחים לי כבר היום'});
+  return [...out.filter(x=>x.d).sort((a,b)=>a.d.localeCompare(b.d)),...out.filter(x=>!x.d)]}
+function bridgeHTML(X){
+  const g=X.gap,M=X.M,steps=bridgeSteps(X);
+  const intro=g!=null&&g<=40?`חסרות עוד ${g} נקודות בפסיכומטרי. זה מרחק של בחינה אחת, ואפשר לתכנן אותו.`
+    :X.V.tier===1?'היעד הזה רחוק מהמספרים של היום. יש שלוש דרכים להתקרב אליו: לשפר את הבגרות, להיבחן שוב בפסיכומטרי, ולהוסיף יעד דומה שפתוח לי כבר עכשיו.'
+    :'עוד אין מספר מדויק לפער, ובכל זאת אפשר לבנות כבר תוכנית קצרה.';
+  return `<p>${intro}</p><ol class="kp-bridge">${steps.map(x=>`<li><b class="num ${x.d?'':'u'}">${x.d?dShort(x.d):'אחר כך'}</b><span>${x.h}</span></li>`).join('')}</ol>
+    <p class="fine">השיפורים מחושבים לפי הנוסחאות שבאתר, כל אחד לבד, והם לא הבטחה להתקבל. מועדי הפסיכומטרי והבגרות הם כפי שפורסמו, ויכולים להשתנות.</p>${BTNS([KB('data-kgo="lab"','לבדוק בתרחיש','primary'),KB('data-kgo="opt"','תוכנית גיבוי'),KB('data-kmark="bridge"',M.bridge?'✓ התחלתי את התוכנית':'התחלתי את התוכנית')])}`}
+
+/* my story: notes kept in the path (P.story, plain text, escaped when shown). The recommendations catalog of F2b plugs in at storyRecsHTML */
+function storyRecsHTML(X){return ''}
+const storyCount=n=>`${n} מתוך ${STORY_MAX} תווים`;
+function storyHTML(X){
+  const P=X.P,M=X.M,fl=[X.q.fl.iv?'ראיון':'',X.q.fl.port?'תיק עבודות':'',X.q.fl.test?'מבחן קבלה או מיון':''].filter(Boolean),txt=P.story||'';
+  return `<p>${fl.length?`בתנאי הקבלה של התוכנית שבחרתי מופיע: ${fl.join(', ')}. `:'בחלק מהתוכניות מבקשים ראיון, מכתב או תיק עבודות. '}כדאי לאסוף מראש את הסיפור שלי, כדי שיהיה לי מה להגיד כשיבקשו.</p>
+    ${UL(['מה משך אותי לתחום הזה, ומתי זה התחיל','משהו אחד שעשיתי סביבו: פרויקט, התנדבות, עבודה או קורס','מה אני רוצה ללמוד, ומה אני רוצה שיזכרו ממני'])}
+    <div class="kp-story"><label for="kpStory">הסיפור שלי, בנקודות או בקצרה</label><textarea id="kpStory" rows="6" maxlength="${STORY_MAX}" placeholder="למשל: מה משך אותי לתחום, מה עשיתי בו, ומה אני רוצה ללמוד">${esc(txt)}</textarea>
+    <small id="kpStoryS" role="status">${storyCount(txt.length)}${txt?' · נשמר בדפדפן הזה':''}</small></div>
+    <p class="fine">הסיפור לא מחליף את הציונים ולא משנה את חישוב הסכם: זה מה שמכינים לראיון, למכתב או לתיק. מה שנכתב כאן נשמר רק בדפדפן הזה ולא נכנס לסיכום שאני משתף/ת.</p>${storyRecsHTML(X)}${BTNS([KB('data-kmark="story"',M.story?'✓ הסיפור שלי מוכן':'סימון: הסיפור שלי מוכן')])}`}
+function storySave(v){const P=pth();if(!P)return;P.story=String(v).slice(0,STORY_MAX);pthSave();PLC=null;storyStatus(true)}
+function storyStatus(saved){const e=$('#kpStoryS'),t=$('#kpStory');if(e&&t)e.textContent=storyCount(t.value.length)+(saved&&t.value?' · נשמר בדפדפן הזה':'')}
+let STT=0;
+
+/* housing: the institution's page and my own date in the calendar (the dates I add here are ordinary custom dates, so they can be deleted from the dates tab) */
+function dormHTML(X){
+  const I=X.I,M=X.M,mine=(X.P.dates||[]).filter(x=>String(x.id).startsWith('my-dorm-')&&isoOk(x.d));
+  return `<p>מי שלומד רחוק מהבית צריך מקום לגור בו. במוסדות רבים ההרשמה למעונות נפרדת מההרשמה לתואר ויש לה מועדים משלה.${factChip('dorm.separate')} בודקים באתר ${esc(I.n)} או בדיקנאט הסטודנטים אם יש מעונות, איך נרשמים ועד מתי. אפשר גם לשקול דירה משותפת, או להמשיך לגור בבית.</p>
+    ${mine.length?`<ul class="kp-ul">${mine.map(x=>`<li>${esc(x.t)}: ${dLong(x.d)} (${inN(daysTo(x.d))}) <button class="linkbtn" data-kdel="${esc(x.id)}">מחיקה</button></li>`).join('')}</ul>`:''}
+    <form class="kp-form" id="kpDorm"><label for="kpDormD">מועד שחשוב לי במעונות (למשל סגירת ההרשמה)</label><input id="kpDormD" type="date" required><button class="btn soft sm" type="submit">${FIC.plus}הוספה ליומן</button></form>
+    ${BTNS([instKA(I,'אתר המוסד: מעונות'),KB('data-kmark="dorm"',M.dorm?'✓ סגרתי מעונות או מגורים':'סגרתי מעונות או מגורים אחרים')])}`}
 /* what a threshold built from sub-scores says, in words */
 const engLevel=V=>(V.row&&V.row.eng)||(V.pubBest&&V.pubBest.eng)||'';
 const pubDesc=r=>[r.why,r.extra,r.minP?(r.andor==='או'?`אפשר להתקבל גם עם פסיכומטרי ${r.minP} לפחות`:`ובנוסף נדרש פסיכומטרי ${r.minP} לפחות`):'',r.bag?`אפשר גם עם ממוצע בגרות ${r.bag} לפחות, לפי חישוב המוסד`:''].filter(Boolean).join('. ');
@@ -5428,7 +5526,7 @@ function zonesHTML(pl){
   const X=pl.X,Y=X.start;
   return `${stepsHTML(pl)}
     <div class="kp-road">${pl.zones.map(z=>zoneHTML(z,pl)).join('')}
-      <div class="kp-z end"><span class="kp-node end">${ki('cap')}</span><div class="kp-zc"><div class="kp-endc"><b>היום הראשון ללימודים</b><small>${Y?`אוקטובר ${Y} (${HY[Y]||''})`:`כשאני ${gx('מוכן','מוכנה')}, ובקצב שלי`}</small></div></div></div></div>`}
+      <div class="kp-z end"><span class="kp-node end">${ki('cap')}</span><div class="kp-zc"><div class="kp-endc"><b>היום הראשון ללימודים</b><small>${Y?`אוקטובר ${Y} (${HY[Y]||''})${X.startE?', לפי תאריך הסיום שהזנתי':''}`:`כשאני ${gx('מוכן','מוכנה')}, ובקצב שלי`}</small></div></div></div></div>`}
 
 /* ---------- my targets: how far along each one is ---------- */
 function tInfo(t){return withTarget(t,()=>{const pl=safe(plan,null);if(!pl)return null;const X=pl.X;
@@ -5474,7 +5572,7 @@ function gaugeHTML(X){
 function chipsHTML(X){
   const st=(STAGES.find(s=>s[0]===(S.prof&&S.prof.stage))||[])[1],P=X.P,r=myReg();
   const ch=(ic,t,empty)=>`<button class="kp-cp ${t?'':'empty'}" data-kme>${ki(ic)}${esc(t||empty)}</button>`;
-  return `<div class="kp-cps">${ch('user',st,'באיזו כיתה אני?')}${ch('cal',X.start?`לימודים מאוקטובר ${X.start}`:'',!X.start?'מתי אני רוצה להתחיל?':'')}${r?ch('pin',REGN[r],''):''}</div>`}
+  return `<div class="kp-cps">${ch('user',st,'באיזו כיתה אני?')}${ch('cal',X.start?`לימודים מאוקטובר ${X.start}${X.startE?' (לפי הסיום שלי)':''}`:'',!X.start?'מתי אני רוצה להתחיל?':'')}${r?ch('pin',REGN[r],''):''}</div>`}
 function heroHTML(pl){
   const X=pl.X,{d,I,P}=X,s=pl.stand;
   return `${switchHTML()}
@@ -5488,7 +5586,7 @@ function heroHTML(pl){
 /* ---------- what to do now: one step at a time ---------- */
 /* a few honest, encouraging words from my own numbers and progress */
 function coach(pl){
-  const X=pl.X,s=pl.stand,lines=[],sx=streak();
+  const X=pl.X,s=pl.stand,lines=[],sx=streak(),P0=X.P;
   const z=pl.zones.find(z=>z.id===pl.cur);
   if(pl.done<=1&&!X.real)lines.push('כל מסלול מתחיל בצעד אחד קטן. אפשר להתחיל מהערכה של הציונים, ולדייק בהמשך.');
   else if(s.k==='ok')lines.push('אני מעל הסף, וזה מגיע לי. עכשיו חשוב לא לוותר על ההמשך: דרישות נוספות, מסמכים והרשמה בזמן.');
@@ -5497,10 +5595,30 @@ function coach(pl){
   else if(s.k==='far')lines.push('הפער גדול, ובכל זאת יש דרך. כדאי לבדוק גם תוכנית גיבוי, כדי שהדרך לא תלויה בדבר אחד.');
   else if(s.k==='open')lines.push('אין צורך לחכות: אפשר להתחיל ללמוד כבר עכשיו, ולצבור נקודות זכות.');
   else lines.push('כל צעד שאני מסמן כאן מקרב אותי ליום הראשון. הקצב שלי הוא הקצב הנכון.');
-  if(sx>=2)lines.push(`${sx} ימים ברצף שבהם התקדמתי. ממשיכים.`);
+  if(sx>=2)lines.push(`${sx} ימים של התקדמות עד עכשיו. ממשיכים מכאן.`);
+  if(P0&&P0.end&&daysTo(P0.end)>=0&&daysTo(P0.end)<=400)lines.push(`${endTitle()}: ${inN(daysTo(P0.end))}.`); /* the date I gave myself, shown as a plain countdown */
   if(z&&z.total&&z.done===z.total)lines.push(`סיימתי את כל המשימות של "${z.t}". אפשר לעבור הלאה.`);
   const sn=schNext();if(sn&&daysTo(sn.d)<=30)lines.push(`המלגה הקרובה שלי: ${esc(sn.nm)}, ${esc(inN(daysTo(sn.d)))}.`); /* F3: my next scholarship deadline (user text: escaped) */
   return `<div class="kp-coach"><span class="kp-ci">${ki('compass')}</span><p>${lines.join(' ')}</p></div>`}
+/* ---------- F2a: welcome back ---------- */
+/* how long since I was last on the road. Decided once per page load (KP.away), so the card stays until I close it; then today is saved as the visit */
+function visitNote(){
+  if(KP.away!==undefined)return;const P=pth();if(!P)return;
+  const t=today0(),iso=isoOf(t.getFullYear(),t.getMonth()+1,t.getDate());
+  KP.away=isoOk(P.seen)?Math.max(0,-daysTo(P.seen)):0;
+  if(P.seen!==iso){P.seen=iso;pthSave()}}
+/* the card for a week or more away: what is close, how far I got, and one small step. Warm, no counting of what was missed */
+function welcomeHTML(pl){
+  const n=KP.away;if(!(n>=7)||KP.wbDone)return '';
+  const soon=[...pl.tasks.filter(t=>!t.done&&t.due&&!t.approx&&t.n>=0&&t.n<=14).map(t=>({d:t.due,t:t.t})),
+    ...timeline(pl).filter(x=>(x.k==='mine'||x.k==='sch')&&!x.approx&&daysTo(x.d)<=14).map(x=>({d:x.d,t:x.t}))].sort((a,b)=>a.d.localeCompare(b.d)).slice(0,3);
+  const nx=pl.next||pl.tasks.find(t=>!t.done);
+  return `<section class="kp-wb" aria-labelledby="kpWbH"><div class="kp-wbh"><span class="kp-ci">${ki('compass')}</span><div><h2 id="kpWbH">עבר זמן מאז שנפגשנו, וזה בסדר</h2>
+    <p>הנה מה שחשוב עכשיו ושלב קטן אחד להמשך. עברו ${n} ימים מאז הפעם האחרונה שהייתי כאן.</p></div></div>
+    <dl class="kp-wbd"><div><dt>בשבועיים הקרובים</dt><dd>${soon.length?`<ul>${soon.map(x=>`<li>${esc(x.t)} · ${esc(dShort(x.d))}, ${esc(inN(daysTo(x.d)))}</li>`).join('')}</ul>`:'אין מועד שנסגר בשבועיים הקרובים'}</dd></div>
+    <div><dt>עד עכשיו</dt><dd><b class="num">${pl.done}</b> מתוך <b class="num">${pl.total}</b> צעדים, ${pl.pct}% מהדרך</dd></div>
+    ${nx?`<div><dt>הצעד הבא</dt><dd>${esc(nx.t)}${nx.due&&!nx.done?` · ${esc(dueText(nx))}`:''}</dd></div>`:''}</dl>
+    <div class="kp-btns">${nx?KB(`data-kwel="${nx.id}"`,'להמשיך מהצעד הזה','primary'):''}<button class="linkbtn" data-kweld>סגירה</button></div></section>`}
 /* the step in focus: the one I chose, else the soonest deadline, else the first open step of the road */
 function focusTask(pl){
   let t=KP.fid&&pl.tasks.find(x=>x.id===KP.fid);if(t)return t;
@@ -5527,7 +5645,7 @@ function queueHTML(pl,cur){
 function doneHTML(pl){return `<div class="kp-next done"><span class="kn-i">${ki('cap')}</span><div class="kn-b"><small>הדרך הושלמה</small><h3>${gx('התקבלתי','התקבלתי')} ל${esc(pl.X.d.n)}!</h3></div></div>`}
 function nowHTML(pl){
   const t=focusTask(pl);
-  return `${coach(pl)}${t?focusHTML(pl,t):doneHTML(pl)}${queueHTML(pl,t)}
+  return `${safe(()=>welcomeHTML(pl),'')}${coach(pl)}${t?focusHTML(pl,t):doneHTML(pl)}${queueHTML(pl,t)}
     <div class="kp-mini"><small>הדרך במבט אחד, גם אחרי י"ב · לוחצים על שלב כדי לראות מה עושים בו</small>${stepsHTML(pl)}</div>
     <div class="kp-whyc">${safe(()=>whyHTML(pl))}</div>`}
 const roadHTML=pl=>`<div class="sec-h"><div><h2>${ki('map')}הדרך המלאה</h2><p>כל השלבים עד היום הראשון, גם אלה שאחרי י"ב. שום דבר לא נעול: פותחים שלב כדי לראות מה בו, ומסמנים ✓ כשמסיימים צעד.</p></div></div><div id="kpZones">${zonesHTML(pl)}</div>`;
@@ -5543,6 +5661,7 @@ const tabInner=pl=>`<section class="kp-sec" id="kp-${KP.tab}">${safe(()=>(TABF[K
 function renderPath(){
   if(!hasGoal())KP.wiz.active=true;
   if(KP.wiz.active)return safe(wizardHTML,'');
+  safe(visitNote); /* F2a: the day of my last visit, decided once per page load */
   /* arriving from another page starts at the landing (all my targets when I have several); a redraw in place keeps where I am */
   if(typeof NAVT!=='undefined'&&KP.navT!==NAVT){KP.navT=NAVT;if(S.navDir!=='back'||KP.land){KP.view=KP.land;KP.tab='now'}KP.land=''}
   /* the landing is decided once, on arrival; after that the view stays where I put it (adding a target from the options must not throw me to the hub) */
@@ -5845,6 +5964,7 @@ function timeline(pl){
         L.push({id,d:isoOf(Y,+m,+d),k:'idf',approx:1,t:`${t} (בערך, לפי ${R.cy})${many?` · ${X.I.n}`:''}`,sub:`${X.I.n}: לפי המחזור האחרון שפורסם. המועד לשנה שלי מתפרסם באתר המוסד.`,f:REGF[X.P.i],src:R.src})})})}
   (P&&P.dates||[]).forEach(x=>L.push({id:x.id,d:x.d,k:'mine',t:x.t,mine:1}));
   schEvents().forEach(x=>L.push(x)); /* F3: my tracked scholarships and verified windows */
+  if(P&&P.end)L.push({id:'end-mine',d:P.end,k:'mine',t:endTitle(),sub:'התאריך שהזנתי בעצמי.'}); /* F2a: my own date (no delete button: it is edited under "עליי") */
   return L.filter(x=>x.d&&daysTo(x.d2||x.d)>=0).sort((a,b)=>a.d.localeCompare(b.d))}
 /* in the list, all my bagrut exams of one season are one row; the calendar file keeps one event per exam */
 function groupBag(L){const out=[],seen={};
@@ -5881,21 +6001,37 @@ async function dl(name,text,type){
 /* ---------- achievements, about me, backup ---------- */
 function badges(pl){
   const X=pl.X,M=X.M,st=id=>{const t=pl.tasks.find(x=>x.id===id);return !!(t&&t.done)};
+  /* every badge is a real mark or a real saved state (never a visit). F2a: bridge plan, story, housing, ready for the first day, arrived */
   return [['יצאתי לדרך','target',true],['גיליתי את הכיוון שלי','compass',dirDone()],['המספרים שלי במערכת','chart',X.real],['יש לי ציון פסיכומטרי','bolt',X.hasP],['אנגלית סגורה','globe',!!M.eng],
-    ['מעל הסף','rocket',X.V.ok===true],['מסמכים מוכנים','doc',!!M.docs],['בדקתי מלגות','coin',!!M.schSeen||schSeenOn()],['הגשתי מלגה','check',!!M.schApplied||schAppliedOn()],['נרשמתי לתואר','pen',!!M.reg],['התקבלתי!','cap',!!M.acc]]}
+    ['תוכנית גישור','map',!!M.bridge],['מעל הסף','rocket',X.V.ok===true],['התחלתי לבנות תיק','bag',!!(X.P.story||'').trim()||!!M.story],['מסמכים מוכנים','doc',!!M.docs],['בדקתי מלגות','coin',!!M.schSeen||schSeenOn()||!!M.schol],['הגשתי מלגה','check',!!M.schApplied||schAppliedOn()],['נרשמתי לתואר','pen',!!M.reg],['התקבלתי!','cap',!!M.acc],
+    ['מעונות סגורים','pin',!!M.dorm],[`${gx('מוכן','מוכנה')} ליום הראשון`,'star',!!M.first],['הגעתי','flag',!!M.arrived]]}
 function badgesHTML(pl){const B=badges(pl);return `<div class="bdg">${B.map(([n,ic,on])=>`<div class="bd ${on?'on':''}" title="${on?'הושג':'עוד לא'}"><span>${ki(ic)}</span><small>${n}</small></div>`).join('')}</div>`}
 const MEQ=()=>[
   {k:'stage',q:'איפה אני עכשיו?',o:STAGES,off:0},
   {k:'start',q:'מתי אני רוצה להתחיל ללמוד?',o:startOpts().map(y=>[y,`אוקטובר ${y} (${HY[y]||''})`]).concat([[0,'עוד לא יודע']]),off:0},
+  {k:'end',q:'מתי אני מסיים/ת את י"ב או את השירות?',h:'תאריך משוער מספיק, ואפשר להשאיר ריק. הוא נשמר בדפדפן הזה ומשמש רק לחישוב כמה זמן נשאר',t:'date'},
   {k:'sex',q:'אני',o:[['m','זכר'],['f','נקבה'],['x','מעדיף/ה לא לציין']],off:1},
   {k:'reg',q:'איפה אני גר/ה?',o:Object.entries(REGN),off:1},
   {k:'nat',q:'שפת האם שלי',h:'משפיעה על מועדי הפסיכומטרי שמתאימים לי',o:LANGS,off:1}];
-const meVal=k=>k==='start'?(pth()||{}).start:(S.prof||{})[k];
+const meVal=k=>k==='start'?(pth()||{}).start:k==='end'?(pth()||{}).end||'':(S.prof||{})[k];
 /* chips for the "about me" questions; the profile form and the path use the same markup with different attributes */
 function meChips(q,cur,attr){return `<div class="pick">${q.o.map(([v,l])=>`<button type="button" class="chip" ${attr(q.k,v)} aria-pressed="${String(cur)===String(v)}" style="--c2:#FF8A65"><i></i>${l}</button>`).join('')}</div>`}
 function meFieldsHTML(mode,keys){
   const attr=mode==='prof'?(k,v)=>`data-pq="${k}" data-pv="${v}"`:(k,v)=>`data-kme="${k}:${v}"`,p=S.prof||{};
-  return MEQ().filter(q=>keys.includes(q.k)).map(q=>`<div class="field kp-mq"><label>${q.q}</label>${q.h?`<span class="hint">${q.h}</span>`:''}${meChips(q,mode==='prof'?p[q.k]:meVal(q.k),attr)}</div>`).join('')}
+  return MEQ().filter(q=>keys.includes(q.k)).map(q=>`<div class="field kp-mq"><label ${q.t==='date'?'id="kpEndL" for="kpEnd"':''}>${q.q}</label>${q.h?`<span class="hint">${q.h}</span>`:''}${q.t==='date'?endField():meChips(q,mode==='prof'?p[q.k]:meVal(q.k),attr)}</div>`).join('')}
+/* the date I finish school or service (P.end, on the path like the start year): a date input, a way to clear it, and what follows from it */
+const endRange=()=>{const t=today0(),a=new Date(t),b=new Date(t);a.setFullYear(a.getFullYear()-1);b.setFullYear(b.getFullYear()+8);const f=x=>isoOf(x.getFullYear(),x.getMonth()+1,x.getDate());return [f(a),f(b)]};
+const endTitle=()=>stageNow()==='svc'?'סיום השירות שלי':GRD[stageNow()]?'סיום י"ב שלי':'התאריך שבו אני מסיים';
+function endHint(){const P=pth(),v=P&&P.end;if(!v)return '';const n=daysTo(v);
+  return `${n>=0?`${endTitle()}: ${inN(n)}.`:'התאריך כבר עבר.'}${!startPicked()&&startFromEnd()?` ההתחלה המוקדמת שמתאימה לתאריך הזה: אוקטובר ${startFromEnd()}.`:''}`}
+function endField(){const P=pth(),v=P&&P.end||'',[lo,hi]=endRange();
+  return `<div class="kp-endf"><input type="date" id="kpEnd" data-kend value="${esc(v)}" min="${lo}" max="${hi}"><button type="button" class="linkbtn" data-kendx ${v?'':'hidden'}>ניקוי התאריך</button></div><span class="hint" id="kpEndH" role="status">${esc(endHint())}</span>`}
+function setEnd(v){const [lo,hi]=endRange();
+  if(v&&!(isoOk(v)&&v>=lo&&v<=hi)){toast('התאריך מחוץ לטווח. אפשר לבחור תאריך בשמונה השנים הקרובות');return false}
+  const P=pth()||pthNew();PTH=P;P.end=v||'';pthSave();PLC=null;return true}
+/* after the date changed: the hint under the input, the clear button, and the road behind the sheet */
+function endSync(){const h=$('#kpEndH'),b=$('[data-kendx]'),v=(pth()||{}).end||'';if(h)h.textContent=endHint();if(b)b.hidden=!v;
+  if(S.route.v==='path'&&!KP.wiz.active)paint()}
 /* the profile form shows the same questions, folded, under "עוד קצת עליי" */
 const PROF_OPT=['stage','stageAt','sex','reg','nat','svc','res','resAt','inc','first']; /* svc, res (with resAt), inc and first come from the scholarships page (optional, sensitive, kept in this browser) */
 function profMoreHTML(){const p=S.prof||{};
@@ -5910,12 +6046,12 @@ function setMe(k,v){
   store.set('prof',S.prof);PLC=null}
 function openMe(){
   openOv(`<h2>עליי</h2><p class="s">כמה פרטים שעוזרים למסלול להתאים לי: הכיתה, מתי להתחיל, וגם ניסוח נכון ומועדים שמתאימים לשפה שלי. הכול אופציונלי.</p>
-    <div class="form kp-me">${meFieldsHTML('path',['stage','start','sex','reg','nat'])}</div><p class="fine">${MENOTE}</p><div class="kp-btns"><button class="btn primary" data-kmedone>סיום</button></div>`,'')}
+    <div class="form kp-me">${meFieldsHTML('path',['stage','start','end','sex','reg','nat'])}</div><p class="fine">${MENOTE}</p><div class="kp-btns"><button class="btn primary" data-kmedone>סיום</button></div>`,'')}
 function moreHTML(pl){
   const X=pl.X,P=X.P,B=badges(pl),sx=streak(),p=X.prof;
-  const me=[(STAGES.find(s=>s[0]===p.stage)||[])[1],p.sex?{m:'זכר',f:'נקבה',x:''}[p.sex]:'',p.reg?REGN[p.reg]:'',p.nat?(LANGS.find(l=>l[0]===p.nat)||[])[1]:''].filter(Boolean);
+  const me=[(STAGES.find(s=>s[0]===p.stage)||[])[1],P.end?`${endTitle()}: ${dLong(P.end)}`:'',p.sex?{m:'זכר',f:'נקבה',x:''}[p.sex]:'',p.reg?REGN[p.reg]:'',p.nat?(LANGS.find(l=>l[0]===p.nat)||[])[1]:''].filter(Boolean);
   return `<div class="kp-two">
-    <div class="kp-card"><div class="pc-h"><h2>${ki('cap')}ההישגים שלי</h2><span class="pc-c num">${B.filter(b=>b[2]).length}/${B.length}</span></div>${badgesHTML(pl)}${sx>=2?`<p class="kp-streak">${ki('fire')}${sx} ימים ברצף שבהם התקדמתי</p>`:''}</div>
+    <div class="kp-card"><div class="pc-h"><h2>${ki('cap')}ההישגים שלי</h2><span class="pc-c num">${B.filter(b=>b[2]).length}/${B.length}</span></div>${badgesHTML(pl)}${sx>=2?`<p class="kp-streak">${ki('fire')}${sx} ימים של התקדמות. ממשיכים מכאן</p><p class="fine">יום או יומיים של מנוחה בשבוע לא שוברים את הרצף.</p>`:''}</div>
     <div class="kp-card"><div class="pc-h"><h2>${ki('user')}עליי</h2></div><p>${me.length?esc(me.join(' · ')):'עוד לא סיפרתי. אפשר לדלג, אבל כדאי: זה משפר את הניסוח, המועדים והאפשרויות.'}</p><div class="kp-btns">${KB('data-kme','עריכה')}${KB('data-prof','הפרופיל והציונים')}</div><p class="fine">${MENOTE}</p></div></div>
     <details class="adm dmeth kp-adm"><summary>שיתוף, גיבוי והגדרות</summary><div class="admb">
       <p>אפשר להעתיק סיכום קצר של המסלול ולשלוח להורה, ליועץ/ת או לחבר/ה. המסלול עצמו נשמר בדפדפן הזה, וכדי להעביר אותו למכשיר אחר: גיבוי לקובץ ושחזור ממנו במכשיר השני.</p>
@@ -5953,7 +6089,7 @@ function wizardHTML(){
   else if(s===2){const d=BY[W.d||P.d];
     body=`<h2>איפה הכי הייתי רוצה ללמוד ${esc(d.n)}?</h2><p class="sub">${profileOK()?`בירוק: לפי הנתונים שלי אני כבר ${gx('עומד','עומדת')} בתנאים שפורסמו.`:`אחרי מילוי הפרופיל אראה גם איפה אני כבר ${gx('עומד','עומדת')} בתנאים.`} את הכול אפשר להחליף אחר כך.</p>${instPick(d,i=>`data-kwi="${i}"`,true)}`}
   else body=`<h2>ועוד כמה שאלות קטנות, כדי שהתוכנית תתאים לי</h2><p class="sub">כולן אופציונליות. הכיתה והמועד עוזרים לסדר את הדרך לפי הזמן שנשאר.</p>
-    <div class="form kp-me">${meFieldsHTML('path',['stage','start'])}
+    <div class="form kp-me">${meFieldsHTML('path',['stage','start','end'])}
     <details class="kp-more-me"><summary>עוד קצת עליי <small>(לא חובה, מדייק את התוכנית)</small></summary>${meFieldsHTML('path',['sex','reg','nat'])}<p class="fine">${MENOTE}</p></details></div>`;
   return `<section class="hero pth-hero wiz kp-wizhero"><div class="wrap">${BACK}
     <span class="kicker" style="margin-top:10px">${ki('map')}המסלול שלי</span>
@@ -5970,7 +6106,7 @@ function celebrate(el,n=30){if(!el)return;const r=el.getBoundingClientRect();bur
 
 
 /* ---------- events ---------- */
-const KSEL='[data-padd],[data-ppick],[data-pswap],[data-kwd],[data-kwi],[data-kwauto],[data-kwb],[data-kwdone],[data-kme],[data-kmedone],[data-kc],[data-kt],[data-kz],[data-kjump],[data-kgo],[data-ktab],[data-ktgt],[data-khub],[data-kadd],[data-krm],[data-krmok],[data-krmno],[data-kfocus],[data-kfprev],[data-kfnext],[data-kfskip],[data-knext],[data-kmark],[data-kinst],[data-kchange],[data-kpick],[data-ksess],[data-kfq],[data-kmore],[data-kdel],[data-kics],[data-khelp],[data-kcopy],[data-kexp],[data-kreset],[data-kresetok],[data-kresetno],[data-lb],[data-lbm],[data-lbe],[data-lbx],[data-lbmode],[data-lbadd],[data-lbrm],[data-lbsave],[data-lbok],[data-lbno],[data-lbreal],[data-lbsavep],[data-lbreset]';
+const KSEL='[data-padd],[data-ppick],[data-pswap],[data-kwd],[data-kwi],[data-kwauto],[data-kwb],[data-kwdone],[data-kme],[data-kmedone],[data-kc],[data-kt],[data-kz],[data-kjump],[data-kgo],[data-ktab],[data-ktgt],[data-khub],[data-kadd],[data-krm],[data-krmok],[data-krmno],[data-kfocus],[data-kfprev],[data-kfnext],[data-kfskip],[data-knext],[data-kmark],[data-kinst],[data-kchange],[data-kpick],[data-ksess],[data-kfq],[data-kmore],[data-kdel],[data-kendx],[data-kwel],[data-kweld],[data-kics],[data-khelp],[data-kcopy],[data-kexp],[data-kreset],[data-kresetok],[data-kresetno],[data-lb],[data-lbm],[data-lbe],[data-lbx],[data-lbmode],[data-lbadd],[data-lbrm],[data-lbsave],[data-lbok],[data-lbno],[data-lbreal],[data-lbsavep],[data-lbreset]';
 const wizReset=(change,add)=>{KP.wiz={active:true,step:1,tq:'',d:'',i:'',change:!!change,add:!!add}};
 const top0=()=>window.scrollTo({top:0,behavior:'instant'});
 const refocus=sel=>{const e=$(sel);if(e)e.focus({preventScroll:true})};
@@ -5985,7 +6121,7 @@ function wizPick(d,i,auto){
 /* mark or unmark a manual step, then repaint what depends on it. A step finished in focus moves me on to the next one. */
 function toggleMark(id,el){
   const P=pth(),on=!P.marks[id],focus=!!document.getElementById('kpf-'+id);
-  if(on)celebrate(el||$('#kpt-'+id+' .kp-chk'),id==='acc'?90:26);
+  if(on)celebrate(el||$('#kpt-'+id+' .kp-chk'),id==='acc'||id==='arrived'?90:26);
   setMark(id,on?Date.now():0);if(on)logAct();
   pthSave();PLC=null;const pl=plan();
   if(on&&focus){KP.hist.push(id);if(KP.hist.length>30)KP.hist.shift();KP.fid='';KP.skip.delete(id)}
@@ -6013,6 +6149,9 @@ document.addEventListener('click',e=>{
     const j=ds.kme.indexOf(':'),k=ds.kme.slice(0,j),v=ds.kme.slice(j+1);setMe(k,k==='start'?+v:v);
     document.querySelectorAll(`[data-kme^="${k}:"]`).forEach(b=>b.setAttribute('aria-pressed',String(meVal(k))===b.dataset.kme.slice(k.length+1)));
     if(S.route.v==='path'&&!KP.wiz.active)paint()}
+  else if(ds.kwel!==undefined){KP.wbDone=true;focusOn(ds.kwel)}
+  else if(ds.kweld!==undefined){KP.wbDone=true;paint();const h=$('#kpf-h');if(h){h.tabIndex=-1;h.focus({preventScroll:true})}}
+  else if(ds.kendx!==undefined){setEnd('');const i=$('#kpEnd');if(i){i.value='';i.focus({preventScroll:true})}endSync()}
   else if(ds.kmedone!==undefined){closeOv(true);if(S.route.v==='path'&&!KP.wiz.active)keepY(render)}
   /* my targets */
   else if(ds.ktgt!==undefined){if(activate(ds.ktgt)){KP.view='road';KP.tab='now';KP.land='road';if(S.route.v==='path'){render();top0()}else go('path')}}
@@ -6075,6 +6214,7 @@ document.addEventListener('input',e=>{
   if(t.id==='ptq'){KP.wiz.tq=t.value;const v=t.value.trim(),box=$('#ptsugg');if(!box)return;if(!v){box.hidden=true;return}
     const R=DEG.map(d=>[d,qScore(d,v)]).filter(x=>x[1]>=30).sort((a,b)=>b[1]-a[1]||b[0].of.length-a[0].of.length).slice(0,7).map(x=>x[0]);
     box.innerHTML=R.length?R.map(d=>`<button data-kwd="${d.id}"><span class="mini">${ill(d)}</span><span><b>${esc(d.n)}</b><small>${d.of.length===1?esc(INST[d.of[0].i].n):d.of.length+' מוסדות'}</small></span></button>`).join(''):`<p style="padding:12px 14px;color:var(--muted)">לא נמצא תואר בשם "${esc(v)}"</p>`;box.hidden=false;return}
+  if(t.id==='kpStory'){clearTimeout(STT);storyStatus(false);STT=setTimeout(()=>storySave(t.value),500);return}
   if(t.id==='kpP'){LAB.p=+t.value;LAB.tp=true;labChanged(true);return}
   if(t.id==='kpPn'){const v=Math.round(+t.value);if(t.value!==''&&v>=200&&v<=800){LAB.p=v;LAB.tp=true;labChanged(true)}return}
   if(t.id==='kpA'){LAB.avg=+t.value;LAB.tb=true;labChanged(true);return}
@@ -6086,6 +6226,8 @@ document.addEventListener('input',e=>{
 document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='ptq'&&e.key==='Enter'){e.preventDefault();const b=$('#ptsugg button');if(b)b.click()}});
 document.addEventListener('change',e=>{
   const t=e.target;
+  if(t.id==='kpStory'){clearTimeout(STT);storySave(t.value);return}
+  if(t.dataset&&t.dataset.kend!==undefined){if(!setEnd(t.value))t.value=(pth()||{}).end||'';endSync();return}
   if(t.dataset&&t.dataset.lbr!==undefined&&t.tagName==='SELECT'){const r=LAB.rows[+t.dataset.lbr],f=t.dataset.f;if(r){r[f]=f==='k'?t.value:Number(t.value);LAB.tb=true;LAB.boost.clear();labChanged(false)}return}
   /* a typed number that ended outside its range goes back to the value in use */
   if(t.id==='kpPn'||t.id==='kpAn'){const v=+t.value,ok=t.id==='kpPn'?v>=200&&v<=800:v>=55&&v<=100;if(!ok||t.value==='')t.value=t.id==='kpPn'?LAB.p:LAB.avg;return}
@@ -6094,6 +6236,8 @@ document.addEventListener('change',e=>{
       PTH=null;PLC=null;DIRS=null;DIRR=null;CALC_ROWS=null;SCHS=null;LAB.on=false;KP.fid='';KP.skip.clear();KP.hist=[];KP.view='';S.prof=store.get('prof',null);S.sc=store.get('scores',null);S.list=new Set(store.get('list',[]));render();toast('המסלול שוחזר מהקובץ')}catch(err){toast('הקובץ לא נראה כמו גיבוי של כיוון')}};fr.readAsText(t.files[0])}
 });
 document.addEventListener('submit',e=>{
+  if(e.target.id==='kpDorm'){e.preventDefault();const d=$('#kpDormD').value,P=pth();if(!P||!isoOk(d)){toast('בוחרים תאריך');return}
+    P.dates.push({id:'my-dorm-'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),t:`מעונות ${bIn(INST[P.i].n)}`.slice(0,80),d});logAct();pthSave();PLC=null;toast('התאריך נוסף ליומן שלי');paint();refocus('#kpDormD');return}
   if(e.target.id==='kpDate'){e.preventDefault();const t=$('#kpDT').value.trim(),d=$('#kpDD').value;if(!t||!d)return;const P=pth();P.dates.push({id:'my-'+Date.now(),t,d});logAct();pthSave();PLC=null;toast('התאריך נוסף');paint();e.target.reset()}
   else if(e.target.id==='kpScore'){e.preventDefault();const v=Math.round(+$('#kpSc').value);if(!(v>=200&&v<=800)){toast('ציון פסיכומטרי הוא בין 200 ל-800');return}
     /* a real score replaces an expected one; between two real scores the higher counts (most institutions use the best one) */
