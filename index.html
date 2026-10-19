@@ -1528,6 +1528,7 @@ button.ft-chip:hover{box-shadow:0 1px 0 rgba(31,37,68,.22)}
 .rc-m{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.rc-m .ft-chip{margin-inline-start:0;min-height:40px}
 .rc-tg{display:inline-flex;align-items:center;gap:5px;min-height:28px;padding:2px 11px 2px 9px;border-radius:999px;font:600 13px/1.35 var(--body);background:#F0F1F6;color:#4A5068}.rc-tg svg{width:14px;height:14px;flex:none}
 .rc-tg.official{background:#E3F7EE;color:#0B5A3E}.rc-tg.admission{background:#E6EEFF;color:#1F3C88}.rc-tg.interview{background:#F1ECFF;color:#4B2FA0}.rc-tg.scholarship{background:#FFEAE4;color:#8E2418}
+.rc-ck{font-size:13px;color:var(--muted)}
 .rc-src{display:inline-flex;align-items:center;min-height:40px;padding-inline:4px;font-size:13px;color:#B83A1B;text-decoration:underline;overflow-wrap:anywhere;direction:ltr}
 .rc-leg{display:grid;gap:8px;margin:2px 0 0;padding:10px 12px;border-radius:14px;border:1px dashed var(--line)}.rc-leg>div{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px;align-items:start}.rc-leg dt{margin:0}.rc-leg dd{margin:0;font-size:14px;color:var(--muted);overflow-wrap:anywhere}
 .rc-none{margin:0;padding:10px 12px;border-radius:14px;background:#FFF7E6;font-size:15px}
@@ -1538,7 +1539,7 @@ button.ft-chip:hover{box-shadow:0 1px 0 rgba(31,37,68,.22)}
 .kp-qk{display:flex;align-items:center;gap:6px;font:600 13px/1.2 var(--head);color:var(--primary-dark);margin:0}.kp-qc.fx .kp-qk{color:#0B5A3E}.kp-qk svg{width:16px;height:16px}
 .kp-qc h2{font-size:19px;line-height:1.4;margin:0;overflow-wrap:anywhere}.kp-qc h2:focus{outline:none}
 .kp-qc.fx h2{font-size:17px;font-weight:600}
-.kp-qc .pick{margin:0}.kp-qc .kp-btns{margin:0}
+.kp-qc .pick{margin:0}.kp-qc .kp-btns{margin:0}.kp-qc .linkbtn{min-height:40px;display:inline-flex;align-items:center}
 .kp-qd{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.kp-qd input{box-sizing:border-box;min-height:44px;font:inherit;font-size:16px;border:1.5px solid var(--line);border-radius:12px;padding:6px 12px;background:#fff;color:var(--ink)}
 .kp-qd input:focus{outline:none;box-shadow:0 0 0 3px #FFD0C3;border-color:var(--primary)}
 .kp-qwy{font-size:14.5px;color:var(--muted)}.kp-qwy summary{cursor:pointer;font-weight:600;color:var(--ink);min-height:40px;display:flex;align-items:center}.kp-qwy p{margin:2px 0 0;overflow-wrap:anywhere}
@@ -4667,7 +4668,7 @@ const FT_EX={verified:'נבדק בחיפוש מול שני מקורות לפחו
 function openFact(id){const f=factGet(id);if(!f)return;const u=httpUrl(f.src),shown=fact(id);
   return openOv(`<h2>על הנתון הזה</h2><p class="s">${esc(f.t)}</p>
     <div class="ft-card"><p class="ft-val"><b>${esc(shown)}</b>${f.scope?` <span>(${esc(f.scope)})</span>`:''}</p><p>${factChip(id,{static:1})}</p><p>${esc(FT_EX[f.status])}</p>${f.note?`<p>${esc(f.note)}</p>`:''}
-      <p class="fine">${u?`המקור שמצאנו: <a href="${esc(u)}" target="_blank" rel="noopener">${esc(f.by||siteHost(u))}</a> (${f.srcType==='official'?'אתר רשמי':'מקור משני'}). `:'לא נמצא קישור למקור. '}נבדק לאחרונה ב-${esc(dLong(f.checked))}.</p></div>
+      <p class="fine">${u?`המקור שמצאנו: <a href="${esc(u)}" target="_blank" rel="noopener">${esc(f.by||siteHost(u))}</a> (${f.srcType==='official'?'אתר רשמי':'מקור משני'}). `:'לא נמצא קישור למקור. '}${f.col?'הטקסט נאסף':'נבדק לאחרונה'} ב-${esc(dLong(f.checked))}.</p></div>
     ${reportHTML({what:f.t,val:f.hide?'הסכום לא מוצג באתר':shown+(f.scope?` (${f.scope})`:''),src:u,st:factLabel(f)})}`,'wide')}
 document.addEventListener('click',e=>{
   const c=e.target.closest('[data-ftc]');if(c){e.preventDefault();openFact(c.dataset.ftc);return}
@@ -4823,7 +4824,7 @@ const JR={sim:null}; /* kept: the account sign-in code resets it */
 const MAXT=6,STORY_MAX=2000;
 /* steps that are about me, not about one target: ticking one ticks it for every target */
 const GMARK=['eng','psyReg','prep','cert','atuda','svcPlan','svcKeep','svcRights','explore','units','schSeen','schApplied','story','schol']; /* story and schol are about me, not about one target */
-const qMap=m=>{const o={};if(m&&typeof m==='object'&&!Array.isArray(m))Object.keys(m).slice(0,60).forEach(k=>{if(/^[A-Za-z0-9:_-]{1,40}$/.test(k)&&isoOk(m[k]))o[k]=m[k]});return o};
+const qMap=m=>{const o={},t=todayISO();if(m&&typeof m==='object'&&!Array.isArray(m))Object.keys(m).slice(0,60).forEach(k=>{if(/^[A-Za-z0-9:_-]{1,40}$/.test(k)&&isoOk(m[k]))o[k]=m[k]>t?t:m[k]});return o}; /* a date in the future (a damaged save, a wrong clock) counts as today, so it cannot hide a question for years */
 const pthNew=()=>({v:4,created:Date.now(),targets:[],active:'',d:'',i:'',auto:0,marks:{},goalP:0,start:0,dates:[],lab:null,sess:'',log:[],end:'',seen:'',story:'',qs:{},qa:{}});
 const tNew=(d,i,auto,marks)=>({id:'t'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),d,i,auto:auto?1:0,marks:marks||{},goalP:0,added:Date.now()});
 const tOk=t=>!!(t&&BY[t.d]&&INST[t.i]&&BY[t.d].of.some(o=>o.i===t.i));
@@ -5460,21 +5461,25 @@ const REC_TAGS={official:['chart','בונוס רשמי','בונוס בנוסחה
   cv:['bag','לקורות חיים','חומר לקורות חיים ולהמשך הדרך. לא קשור לקבלה.'],
   scholarship:['coin','מלגה','קריטריון או תנאי במלגה, למשל התנדבות בתמורה למלגה.'],
   fit:['compass','בדיקת התאמה','עוזר לבדוק אם התחום מתאים לי, בלי השפעה על הקבלה.']};
-const REC_NOTE={site:'נגזר מטקסט תנאי הקבלה שנאסף מאתר המוסד, ולא נבדק מחדש מול העמוד החי. התנאים משתנים בין תוכניות, מוסדות ושנים.',
+const REC_NOTE={abs:'זו טענה על מה שחסר: בנוסחאות ובספי הקבלה שבאתר אין רכיב כזה. היא לא נשענת על עמוד רשמי שקובע זאת, והקישור הוא לעמוד שבו בודקים.',
+  site:'נגזר מטקסט תנאי הקבלה שנאסף מאתר המוסד, ולא נבדק מחדש מול העמוד החי. התנאים משתנים בין תוכניות, מוסדות ושנים.',
   srch:'לפי סיכומי חיפוש של שלב קודם, לא לפי קריאה ישירה של העמוד הרשמי. מועדים וסכומים לא נבדקו.'};
 const U_B={tau:'באוניברסיטת תל אביב',huji:'באוניברסיטה העברית',bgu:'בבן-גוריון',haifa:'בחיפה',technion:'בטכניון'};
 const joinHe=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+(/^\d/.test(a[a.length-1])?' ו-':' ו')+a[a.length-1];
-/* the bonus a university's published rule gives for 5 units, read from UNI_RULES (never typed by hand) */
+/* the bonus a university's published rule gives for 5 units, read from UNI_RULES (never typed by hand). It is added to that subject's grade, which then goes into the unit-weighted average: so it moves the average by less than its own size (as bonusTxt says) */
+const BON_AVG='הבונוס נכנס לממוצע המשוקלל לפי יחידות הלימוד, ולכן משפיע על הממוצע פחות מהמספר עצמו.';
 function bonusRecText(subs,ids){
   const v=(i,k)=>UNI_RULES[i].bonus(k,5,[]);
-  if(ids.length===1){const i=ids[0];return `${U_B[i]}: 5 יח"ל מוסיפות לציון הבגרות המחושב ${joinHe(subs.map(k=>`${v(i,k)} נקודות ב${SN[k]}`))}, לפי הנוסחה שפורסמה. 4 יח"ל מוסיפות פחות${i==='technion'?', ובמקצועות הליבה בטכניון לא פורסם להן בונוס':''}.`}
-  return `5 יח"ל מוסיפות לציון הבגרות המחושב, לפי הנוסחאות שפורסמו:\n${subs.map(k=>{const g={};ids.forEach(i=>(g[v(i,k)]=g[v(i,k)]||[]).push(i));
-    return `ב${SN[k]}: ${Object.entries(g).sort((a,b)=>b[0]-a[0]).map(([p,L])=>`${p} נקודות ${joinHe(L.map(i=>U_B[i]))}`).join(', ')}`}).join('\n')}\n4 יח"ל מוסיפות פחות${ids.includes('technion')?', ובמקצועות הליבה בטכניון לא פורסם להן בונוס':''}.`}
+  if(ids.length===1){const i=ids[0];return `${U_B[i]}: 5 יח"ל מוסיפות ${joinHe(subs.map(k=>`${v(i,k)} נקודות ב${SN[k]}`))} לציון של אותו מקצוע, לפי הנוסחה שפורסמה. ${BON_AVG} 4 יח"ל מוסיפות פחות${i==='technion'?', ובמקצועות הליבה בטכניון לא פורסם להן בונוס':''}.`}
+  return `5 יח"ל מוסיפות לציון של אותו מקצוע, לפי הנוסחאות שפורסמו:\n${subs.map(k=>{const g={};ids.forEach(i=>(g[v(i,k)]=g[v(i,k)]||[]).push(i));
+    return `ב${SN[k]}: ${Object.entries(g).sort((a,b)=>b[0]-a[0]).map(([p,L])=>`${p} נקודות ${joinHe(L.map(i=>U_B[i]))}`).join(', ')}`}).join('\n')}\n${BON_AVG} 4 יח"ל מוסיפות פחות${ids.includes('technion')?', ובמקצועות הליבה בטכניון לא פורסם להן בונוס':''}.`}
 /* a bonus item: its title and text are made from the subjects and from UNI_RULES (the institutions whose rules apply are decided per degree) */
 const bon=(id,o)=>({id,o,t:`5 יח"ל ב${joinHe(o.map(k=>SN[k]))}: בונוס רשמי`,d:ids=>bonusRecText(o,ids),give:['official'],st:'unverified',b:'site'});
+/* the page a program's admission text was collected from, read from DATA.adm (a link is never retyped, so it cannot drift from its source) */
+const admU=(i,n)=>{const e=((DATA.adm[i]||{}).p||{})[n];return e&&e.u||''};
 const RECS={
   health:[
-    {id:'h-vol',t:'התנדבות (גם במד"א) ורפואה: לא מצאנו נקודות רשמיות',d:'בנוסחאות ובספי הקבלה שבאתר אין רכיב של התנדבות: הסף לרפואה נשען על בגרות ופסיכומטרי. לא מצאנו נוסחה מפורסמת שמוסיפה נקודות על התנדבות. זה לא הוכחה שאין שקלול בשלב המיון האישי, ולכן בודקים בדף הקבלה של הפקולטה לפני שמסתמכים על זה.',give:[],st:'unverified',b:'site',by:'מאל"ו',u:'https://www.nite.org.il/other-tests/mor-mirkam/',sc:{pro:['md','dmd']}},
+    {id:'h-vol',t:'התנדבות (גם במד"א) ורפואה: לא מצאנו נקודות רשמיות',d:'בנוסחאות ובספי הקבלה שבאתר אין רכיב של התנדבות: הסף לרפואה נשען על בגרות ופסיכומטרי. לא מצאנו נוסחה מפורסמת שמוסיפה נקודות על התנדבות. זה לא הוכחה שאין שקלול בשלב המיון האישי, ולכן בודקים בדף הקבלה של הפקולטה לפני שמסתמכים על זה.',give:[],st:'unverified',b:'site',abs:1,by:'מאל"ו',u:'https://www.nite.org.il/other-tests/mor-mirkam/',sc:{pro:['md','dmd']}},
     {id:'h-mor',t:'מיון אישי ברפואה: מו"ר ומרק"ם',d:'אחרי שלב הציונים מוזמנים לשלב אישי: שאלון אישי-ביוגרפי, מרכז הערכה ושאלון שאו"ל, והזימון מגיע ממאל"ו. עמידה בסף הציונים לבדה מזמינה לשלב הבא ואינה אישור קבלה. משקל כל מרכיב אצל כל פקולטה ומה נשאל בשאלון לא נבדקו.',give:['admission','interview'],st:'unverified',b:'site',f:'mor.structure',u:'https://www.nite.org.il/other-tests/mor-mirkam/',sc:{pro:['md','dmd']}},
     {id:'h-nur',t:'ראיון קבלה בסיעוד',d:'בטקסט תנאי הקבלה של סיעוד באונו מופיע ראיון קבלה, ובהסבת אקדמאים לסיעוד בלב מופיע ראיון אישי. בהכנה כדאי לדעת להסביר למה בחרתי בתחום ומה ראיתי ממנו.',give:['admission','interview'],st:'unverified',b:'site',by:'הקריה האקדמית אונו והמרכז האקדמי לב',u:'https://www.ono.ac.il/curriculum/nursing/',sc:{i:['i51','i9'],p:/סיעוד|אחיות/}},
     {id:'h-svc',t:'סיעוד: קבלה לפי שירות צבאי (אונו)',d:'במכללת אונו, בסיעוד, הטקסט שנאסף מציע קבלה על בסיס ממוצע בגרות בלבד (85 ומעלה) ועמידה בראיון ללוחמים בשירות סדיר, למשרתי מילואים, למפונים מקו העימות ולבני משפחה מדרגה ראשונה של נופלים. זה תנאי של מוסד אחד, וייתכן שהוא זמני: בודקים שהוא חל עליי ובשנה שלי.',give:['admission'],st:'unverified',b:'site',by:'הקריה האקדמית אונו',u:'https://www.ono.ac.il/curriculum/nursing/',sc:{i:['i51'],p:/סיעוד|אחיות/}},
@@ -5492,19 +5497,19 @@ const RECS={
     {id:'e-exc',t:'הטכניון למצוינים',d:'לפי תקציר של דף התוכנית, כ-20 מתקבלים בכל מחזור, אחרי סינון ראשוני וראיון אישי, והטבות כוללות פטור משכר לימוד ומגורים. יש להגיש גם בקשת קבלה רגילה לטכניון.',give:['admission','interview','scholarship'],st:'unverified',b:'srch',by:'הטכניון',u:'https://admissions.technion.ac.il/en/the-rothschild-scholars-program/',y:'תשפ"ז (מחזור שנסגר)',n:'הנתון מכמה דפים של הטכניון בלבד, ובלי מקור עצמאי. כותרת אחד הדפים שונה מהשם הזה. מועדי תשפ"ח לא נמצאו.',sc:{i:['technion']}}],
   science:[
     bon('s-bon',['bio','chem','phys','math']),
-    {id:'s-achva',t:'מדעי החיים באחווה: 5 יח"ל במקצוע מדעי',d:'בתנאי הקבלה שנאספו למדעי החיים באחווה מופיעה בגרות מלאה עם 4 יח"ל באנגלית בציון 70 לפחות, 4 יח"ל במתמטיקה ו-5 יח"ל במקצוע מדעי מורחב בציון 70 לפחות. הנוסח המלא והמסלולים באתר המכללה.',give:['admission'],st:'unverified',b:'site',by:'המכללה האקדמית אחוה',u:'https://achva.ac.il/%D7%AA%D7%95%D7%90%D7%A8-%D7%A8%D7%90%D7%A9%D7%95%D7%9F/%D7%AA%D7%95%D7%90%D7%A8-%D7%A8%D7%90%D7%A9%D7%95%D7%9F-%D7%91%D7%9E%D7%93%D7%A2%D7%99-%D7%94%D7%97%D7%99%D7%99%D7%9D/',sc:{i:['i5'],p:/מדעי החיים/}},
+    {id:'s-achva',t:'מדעי החיים באחווה: 5 יח"ל במקצוע מדעי',d:'בתנאי הקבלה שנאספו למדעי החיים באחווה מופיעה בגרות מלאה עם 4 יח"ל באנגלית בציון 70 לפחות, 4 יח"ל במתמטיקה ו-5 יח"ל במקצוע מדעי מורחב בציון 70 לפחות. הנוסח המלא והמסלולים באתר המכללה.',give:['admission'],st:'unverified',b:'site',by:'המכללה האקדמית אחוה',u:admU('i5','מדעי החיים'),sc:{i:['i5'],p:/מדעי החיים/}},
     {id:'s-exc',t:'תוכניות מצטיינים במדעים',d:'באמירים בעברית (מדעי הטבע, חקלאות ומחשבים) יש הרשמה מקוונת וראיון אישי, ומלגת שכר לימוד לשלוש שנים לפי העמוד הראשי. באחווה, בתוכנית במדעי החיים, מתקבלים כ-12 מי שסיימו שנה א\' בהצטיינות, לאחר ראיון אישי. אלה הכרעות לפי ציונים והתרשמות, לא נקודות על פעילות.',give:['admission','interview','scholarship'],st:'unverified',b:'srch',by:'האוניברסיטה העברית והמכללה האקדמית אחוה',u:'https://info.huji.ac.il/registration-process/honors-programs',y:'תשפ"ז (אמירים); אחוה: מחזור לא מצוין',n:'שני מוסדות, ולא אותה תוכנית. אמירים לפי תקציר חיפוש, אחוה לפי טקסט תנאי הקבלה שנאסף.',sc:{i:['huji','i5']}},
     {id:'s-mech',t:'מכינה קדם-אקדמית משותפת לתל אביב ולבר-אילן',d:'במכינה האוניברסיטאית ציון הגמר מחליף את ממוצע הבגרות בחישוב ציון ההתאמה, והפסיכומטרי נשאר חלק מהחישוב. נדרשים לפחות ארבעה מקצועות וציון גמר 60 לפחות בכל אחד. זו דרך להגדיל ציון בגרות נמוך, לא דרך לדלג על הפסיכומטרי.',give:['admission'],st:'unverified',b:'srch',by:'אוניברסיטת תל אביב',u:'https://go.tau.ac.il/he/ba/mechina-kdam',n:'לפי תקציר של דפי אוניברסיטת תל אביב בלבד. התנאים משתנים בין חוגים ושנים.',sc:{i:['tau','biu']}}],
   social:[
     {id:'so-crim',t:'קרימינולוגיה בבית ברל: התנדבות חברתית בתנאי הקבלה',d:'בבית ברל, בקרימינולוגיה בקהילה ובחינוך, הטקסט שנאסף מזכיר "פעילות התנדבותית חברתית משמעותית" כמקרה שבו נדרש פסיכומטרי 420 ו/או בגרות 85 ומעלה, לצד ראיון קבלה ומכתב קבלה אישי. הטקסט לא מגדיר מהי פעילות משמעותית ואיך מוכיחים אותה, וזה יוצא דופן ומוגבל לתוכנית אחת, ולכן שואלים במכללה לפני שמסתמכים על זה.',give:['admission','interview'],st:'unverified',b:'site',by:'המכללה האקדמית בית-ברל',u:'https://www.beitberl.ac.il/admission/criminology/',sc:{i:['i3'],p:/קרימינולוגיה/}},
     {id:'so-law',t:'משפטים: ראיון או מכתב אישי במכללות',d:'באונו, במשפטים, מסלולי הקבלה עם ממוצע 80 עד 94, למי שמעל גיל 30 או עם רקע לימודי קודם מותנים בראיון קבלה. בצפת מופיעים בעמוד התנאים גם מסלולים עם מכתב פנייה אישי לבית הספר למשפטים או עם ראיון קבלה. באוניברסיטאות אין לנו נתון על ראיון או מכתב.',give:['admission','interview'],st:'unverified',b:'site',by:'הקריה האקדמית אונו והמכללה האקדמית צפת',u:'https://www.ono.ac.il/curriculum/llb/',n:'לא ברור מהטקסט של צפת לאיזה מסלול כל שורה שייכת.',sc:{i:['i51','i33'],p:/משפטים/}},
     {id:'so-psy',t:'פסיכולוגיה: מכינה מחליפת פסיכומטרי בת"א-יפו',d:'לתואר בפסיכולוגיה הקבלה מבוססת בעיקר על בגרות ופסיכומטרי. בתנאי הקבלה של המכללה האקדמית ת"א-יפו מופיעה מכינה שמחליפה את הבחינה הפסיכומטרית, למי שלא עומדים בתנאי הקבלה.',give:['admission'],st:'unverified',b:'srch',by:'המכללה האקדמית ת"א-יפו',u:'https://www.mta.ac.il/program/prepatory',n:'מכינה כזאת מוצגת בעוד שני מוסדות לפי החיפוש. פרטים, מועדים ומחירים לא נבדקו.',sc:{i:['i34'],p:/פסיכולוגיה/}},
-    {id:'so-sw',t:'עבודה סוציאלית: ראיון קבלה באשקלון',d:'בטקסט הקבלה לעבודה סוציאלית במכללת אשקלון מופיע ראיון קבלה, במסלול למי שהציגו תעודת הנדסאי ופסיכומטרי 500 לפחות. כדאי לבדוק מראש אם יש שלב ראיון ולהתכונן להסביר למה בחרתי בתחום.',give:['admission','interview'],st:'unverified',b:'site',by:'המכללה האקדמית אשקלון',u:'https://www.aac.ac.il/economy/b-%D7%91%D7%9B%D7%9C%D7%9B%D7%9C%D7%94-%D7%95%D7%A0%D7%99%D7%94%D7%95%D7%9C/%D7%AA%D7%A0%D7%90%D7%99-%D7%A7%D7%91%D7%9C%D7%94-%D7%94%D7%97%D7%95%D7%92-%D7%9C%D7%9B%D7%9C%D7%9B%D7%9C%D7%94-%D7%95%D7%A0%D7%99%D7%94%D7%95%D7%9C/',sc:{i:['i4'],p:/עבודה סוציאלית/}},
+    {id:'so-sw',t:'עבודה סוציאלית: ראיון קבלה באשקלון',d:'בטקסט הקבלה לעבודה סוציאלית במכללת אשקלון מופיע ראיון קבלה, במסלול למי שהציגו תעודת הנדסאי ופסיכומטרי 500 לפחות. כדאי לבדוק מראש אם יש שלב ראיון ולהתכונן להסביר למה בחרתי בתחום.',give:['admission','interview'],st:'unverified',b:'site',by:'המכללה האקדמית אשקלון',u:admU('i4','עבודה סוציאלית'),sc:{i:['i4'],p:/עבודה סוציאלית/}},
     {id:'so-vol',t:'מלגות בתמורה להתנדבות: מפעל הפיס ופר"ח',d:'התנדבות לא מוסיפה נקודות לקבלה, אבל היא תנאי בכמה מלגות. במלגות מפעל הפיס (עם הרשות המקומית) ובפר"ח (חונכות לילדים ולבני נוער) מתנדבים בתמורה למלגה. ההרשמה והתנאים נקבעים אצל הגוף המעניק, ולכן בודקים באתר שלו.',give:['scholarship'],st:'verified',b:'srch',by:'מפעל הפיס ופר"ח',u:'https://www.pais.co.il/info/Scholarships.aspx',y:'תשפ"ו/תשפ"ז',n:'שעות ההתנדבות במפעל הפיס סותרות בין מקורות, ולכן לא מוצג מספר שעות. מועדי תשפ"ח לא נמצאו.'},
     {id:'so-ayl',t:'כפרי סטודנטים של איילים: מלגת מעורבות חברתית',d:'בכפרי הסטודנטים של איילים מקבלים מלגה ודיור מוזל בתמורה למעורבות חברתית (מפגש חודשי, ובכמה כפרים 140 שעות התנדבות). ההרשמה לכל כפר פתוחה עד שהכפר מתמלא. סכומים ומקומות בודקים אצל העמותה.',give:['scholarship'],st:'unverified',b:'srch',by:'איילים',u:'https://www.ayalim.org.il/students',n:'הסכומים מופיעים רק באתר העמותה, בלי שנת מחזור, ולכן לא מוצגים.'}],
   biz:[
     bon('b-bon',['math','eng']),
-    {id:'b-math',t:'כלכלה וניהול בת"א-יפו: רמת מתמטיקה וקורס הכנה',d:'בכלכלה וניהול באקדמית ת"א-יפו מופיעה דרישת רמת מתמטיקה בבגרות (4 יח"ל בציון 80 או 5 יח"ל בציון 55). מי שעומד באחת מחלופות הקבלה האוטומטיות אבל לא בדרישת המתמטיקה, ויש לו 4 יח"ל בציון 55 לפחות, יכול לעבור קורס הכנה במתמטיקה בקיץ או לגשת לבגרות. זה מה שמפריד בין קבלה ישירה לקבלה דרך הכנה.',give:['admission'],st:'unverified',b:'site',by:'המכללה האקדמית ת"א-יפו',u:'https://applicants.mta.ac.il/conditions-for-applying/',sc:{i:['i34'],p:/כלכלה וניהול/}},
+    {id:'b-math',t:'כלכלה וניהול בת"א-יפו: רמת מתמטיקה וקורס הכנה',d:'בכלכלה וניהול באקדמית ת"א-יפו מופיעה דרישת רמת מתמטיקה בבגרות (4 יח"ל בציון 80 או 5 יח"ל בציון 55). מי שעומדים באחת מחלופות הקבלה האוטומטיות אבל לא בדרישת המתמטיקה, ויש להם 4 יח"ל בציון 55 לפחות, יכולים לעבור קורס הכנה במתמטיקה בקיץ או לגשת לבגרות. זה מה שמפריד בין קבלה ישירה לקבלה דרך הכנה.',give:['admission'],st:'unverified',b:'site',by:'המכללה האקדמית ת"א-יפו',u:'https://applicants.mta.ac.il/conditions-for-applying/',sc:{i:['i34'],p:/כלכלה וניהול/}},
     {id:'b-iv',t:'ראיון אישי בניהול ובחשבונאות במכללות',d:'במרכז האקדמי לב מופיע ראיון אישי בתנאי הקבלה לניהול עסקים ולחשבונאות, ובכנרת בניהול משאבי אנוש. לא ברור מהטקסט מתי הראיון חל ומי פטור ממנו, ולכן בודקים באתר המוסד.',give:['admission','interview'],st:'unverified',b:'site',by:'המרכז האקדמי לב והמכללה האקדמית כנרת',u:'https://www.jct.ac.il/מועמדים/תנאי-קבלה/',sc:{i:['i9','i1'],p:/ניהול|חשבונאות/}},
     {id:'b-mech',t:'מכינה מחליפת פסיכומטרי במכללות',d:'בכמה מכללות (ת"א-יפו, קולמן, נתניה) יש מכינה או מסלול שמאפשרים קבלה בלי פסיכומטרי, בחלק מהתוכניות. התנאים שונים בין מוסדות וחוגים, ועמידה בהם אינה מבטיחה קבלה.',give:['admission'],st:'verified',b:'srch',by:'אתרי המכללות',u:'https://www.mta.ac.il/program/prepatory',n:'שלושה מוסדות עצמאיים מציגים מסלול כזה. פרטים כמו מועדים ומחירים לא נבדקו.',sc:{i:['i34','i32','i24']}}],
   design:[
@@ -5513,7 +5518,7 @@ const RECS={
     {id:'d-jamd',t:'אודישן ובחינת קבלה באקדמיה למוסיקה ולמחול',d:'באקדמיה למוסיקה ולמחול בירושלים הקבלה כוללת בחינה בכלי או בשירה ולעיתים ראיון אישי. בזמרה צריך לדעת את הטקסטים בעל פה ולהציג שירים בסגנונות שונים, במחול מופיע ראיון אישי, ובמוסיקה מזרחית יש תרגילי סולפז\' והכתבה. בנוסף צריך בגרות או שוות ערך.',give:['admission','interview'],st:'unverified',b:'site',by:'האקדמיה למוסיקה ולמחול בירושלים',u:'https://jamd.ac.il/dance_requirements',n:'הנתונים לפי עמודי הדרישות של כל מסלול.',sc:{i:['i18']}}],
   hum:[
     bon('hu-bon',['lit','bible','hist']),
-    {id:'hu-kin',t:'ראיון קבלה בלימודי ארץ ישראל (כנרת)',d:'בלימודי ארץ ישראל במכללת כנרת נדרש ראיון קבלה, ובטקסט מופיע ממוצע 75. זו דוגמה למסלול בהומניסטיקה שבו שיחה אישית היא חלק מהקבלה.',give:['admission','interview'],st:'unverified',b:'site',by:'המכללה האקדמית כנרת',u:'https://kinneret.ac.il/program/%d7%aa%d7%97%d7%95%d7%9e%d7%99-%d7%9c%d7%99%d7%9e%d7%95%d7%93/%d7%91%d7%99%d7%aa-%d7%94%d7%a1%d7%a4%d7%a8-%d7%9c%d7%9e%d7%93%d7%a2%d7%99-%d7%94%d7%a8%d7%95%d7%97/',sc:{i:['i1'],p:/ארץ ישראל/}},
+    {id:'hu-kin',t:'ראיון קבלה בלימודי ארץ ישראל (כנרת)',d:'בלימודי ארץ ישראל במכללת כנרת נדרש ראיון קבלה, ובטקסט מופיע ממוצע 75. זו דוגמה למסלול בהומניסטיקה שבו שיחה אישית היא חלק מהקבלה.',give:['admission','interview'],st:'unverified',b:'site',by:'המכללה האקדמית כנרת',u:admU('i1','לימודי ארץ ישראל'),sc:{i:['i1'],p:/ארץ ישראל/}},
     {id:'hu-exc',t:'תוכנית מצטיינים במדעי הרוח (אמירים בעברית)',d:'בעברית, במדעי הרוח, תוכנית המצטיינים כוללת הרשמה מקוונת וראיון אישי, ומומלץ להגיש גם לחוג נוסף כגיבוי. זו שיחה והתרשמות, לא נקודות על פעילות.',give:['admission','interview','scholarship'],st:'unverified',b:'srch',by:'האוניברסיטה העברית',u:'https://info.huji.ac.il/registration-process/honors-programs',y:'תשפ"ז',n:'לפי תקציר חיפוש של דפי אותו גוף, בלי מקור עצמאי.',sc:{i:['huji']}}],
   teach:[
     {id:'te-ono',t:'חינוך וחברה באונו: ראיון קבלה',d:'באונו, בחינוך וחברה, מסלולי קבלה עם ממוצע 80 עד 84 (או פסיכומטרי 520), למי שמעל גיל 30 או עם רקע לימודי קודם מותנים בראיון קבלה. למכללות הוראה אחרות אין לנו טקסט תנאי קבלה בנתונים, ולכן בודקים בעמוד המוסד אם יש ראיון או שלב מיון.',give:['admission','interview'],st:'unverified',b:'site',by:'הקריה האקדמית אונו',u:'https://www.ono.ac.il/curriculum/education-and-society-ba/',sc:{i:['i51'],p:/חינוך וחברה/}},
@@ -5521,11 +5526,12 @@ const RECS={
     {id:'te-moe',t:'הלוואות מותנות ומענקים של משרד החינוך (מסלולי הוראה)',d:'משרד החינוך מציע הלוואה מותנית שהופכת למענק למי שמסיימים ועובדים בהוראה. הבקשה נבחנת לפי מצב אישי, הכנסה, יישוב מגורים ושירות צבאי. מועדי תשפ"ז לא נמצאו, וההגשה דרך מזכירות המוסד.',give:['scholarship'],st:'verified',b:'srch',by:'משרד החינוך',u:'https://edu.gov.il/special/students/Scholarships/Pages/scholarships-students.aspx',y:'תשפ"ו; מועדי תשפ"ז לא נמצאו',n:'אחד העמודים מציין שתקופת ההגשה הסתיימה.'}]};
 /* every item that is not a computed bonus gets a provenance record, so its chip, its sheet and the error report work like those of every other fact */
 Object.values(RECS).forEach(L=>L.forEach(r=>{if(r.f||r.o)return;
-  const f={id:'rec.'+r.id,t:r.t,v:r.d,by:r.by||'',scope:r.y||(r.b==='site'?`לפי הטקסט שנאסף ב-${DATA.built||FT_D}`:''),src:r.u||'',srcType:r.u?'official':'',status:r.st,checked:r.st==='verified'||r.b==='srch'?FT_D:(DATA.built||FT_D),note:`${REC_NOTE[r.b]}${r.n?` ${r.n}`:''}`};
+  const f={id:'rec.'+r.id,t:r.t,v:r.d,by:r.by||'',scope:r.y||(r.b==='site'?`לפי הטקסט שנאסף ב-${dLong(DATA.built||FT_D)}`:''),src:r.abs?'':r.u||'',srcType:r.u&&!r.abs?'official':'',status:r.st,checked:r.st==='verified'||r.b==='srch'?FT_D:(DATA.built||FT_D),col:r.b==='site'?1:0,note:`${r.abs?REC_NOTE.abs:REC_NOTE[r.b]}${r.n?` ${r.n}`:''}`};
   FACTS.push(f);FACTM.set(f.id,f)}));
 /* the items that fit a degree (and an institution): scoped by the institutions that offer it, by its name and by its kind. A bonus item is read from the rules of the institution I chose, else of the universities that offer the degree */
 function recsFor(d,iid){
   const off=d.of.map(o=>o.i),uni=off.filter(i=>UNI_RULES[i]),out=[];
+  if(!off.includes(iid))iid=''; /* an institution that does not offer this degree is not "mine" here, and its rules say nothing about it */
   (RECS[d.c]||[]).forEach(r=>{const sc=r.sc||{};
     if(sc.pro&&!sc.pro.includes(d.pro))return;
     if(sc.p&&!sc.p.test(d.n))return;
@@ -5540,7 +5546,7 @@ const recTag=t=>`<span class="rc-tg ${t}">${ki(REC_TAGS[t][0])}${REC_TAGS[t][1]}
 function recItemHTML(x){const r=x.r,u=httpUrl(r.u||''),
   chip=r.o?(x.ids.length===1&&BONF[x.ids[0]]?factChip(BONF[x.ids[0]]):factChip('bonus.generic')):factChip(r.f||'rec.'+r.id);
   return `<li class="rc-i${x.rel===0?' mine':''}"><div class="rc-h"><b>${esc(x.t)}</b>${x.rel===0?`<span class="rc-me">${ki('check')}המוסד שבחרתי</span>`:''}</div><p>${esc(x.txt)}</p>
-    <div class="rc-m">${r.give.map(recTag).join('')}${chip}${u?`<a class="rc-src" href="${esc(u)}" target="_blank" rel="noopener">${esc(siteHost(u)||'המקור')}<span class="sr"> (נפתח בלשונית חדשה)</span></a>`:''}</div>
+    <div class="rc-m">${r.give.map(recTag).join('')}${chip}${u?`${r.abs?'<span class="rc-ck">לבדיקה באתר:</span>':''}<a class="rc-src" href="${esc(u)}" target="_blank" rel="noopener">${esc(siteHost(u)||'המקור')}<span class="sr"> (נפתח בלשונית חדשה)</span></a>`:''}</div>
     ${x.ins.length?`<small class="rc-ins">רלוונטי ל${x.ins.length>1?'מוסדות':'מוסד'}: ${x.ins.map(esc).join(' · ')}</small>`:''}</li>`}
 /* the list, the honest line about points, and what each sign means (only the signs that appear) */
 function recsListHTML(L){
@@ -5782,11 +5788,13 @@ const QDEF={house:{q:'איפה אני מתכנן/ת לגור בזמן הלימו
 const todayISO=()=>{const t=today0();return isoOf(t.getFullYear(),t.getMonth()+1,t.getDate())};
 /* days since the last step I took on the road; -1 when there is none yet */
 const idleDays=()=>{const P=pth(),L=P&&P.log;if(!L||!L.length)return -1;return Math.floor((today0().getTime()-new Date(new Date(L[L.length-1]).toDateString()).getTime())/864e5)};
+/* the exam date is a fact with its own status: when it is not verified the sentence says so, like every other dated step */
+const hoursFt=X=>{const f=X.np&&factGet('psy.date.'+X.np.id);return f&&f.status!=='verified'?` ${f.status==='conflict'?'מקורות סותרים לגבי מועד הבחינה':'מועד הבחינה לא אומת'}, בדקו באתר מאל"ו.`:''};
 /* plain arithmetic on the exam date and my own answer: how many hours of preparation add up. Not a promise of a score */
-function hoursText(X){const h=HRS[X.prof.hrs],np=X.np;if(!h||!np||!np.d)return '';const w=Math.floor(daysTo(np.d)/7);if(w<1)return '';
+function hoursText(X,noFt){const h=own(HRS,X.prof.hrs)&&HRS[X.prof.hrs],np=X.np;if(!h||!np||!np.d)return '';const w=Math.floor(daysTo(np.d)/7);if(w<1)return '';
   const lo=h[0]*w,hi=h[1]*w;
-  return `בקצב של ${h[2]} שסיפרתי, עד הבחינה ב-${dShort(np.d)} (${w===1?'שבוע אחד':`${w} שבועות`}) יצטברו ${h[1]?(lo?`${lo} עד ${hi}`:`עד ${hi}`):`לפחות ${lo}`} שעות הכנה. זה חישוב פשוט, לא הבטחה לציון.`}
-const hoursLine=X=>{const t=hoursText(X);return t?`<p class="kp-tip">${esc(t)}</p>`:''};
+  return `בקצב של ${h[2]} שסיפרתי, עד הבחינה ב-${dShort(np.d)} (${w===1?'שבוע אחד':`${w} שבועות`}) יצטברו ${h[1]?(lo?`${lo} עד ${hi}`:`עד ${hi}`):`לפחות ${lo}`} שעות הכנה. זה חישוב פשוט, לא הבטחה לציון.${noFt?'':hoursFt(X)}`}
+const hoursLine=X=>{const t=hoursText(X,1);return t?`<p class="kp-tip">${esc(t)} ${factChip('psy.date.'+X.np.id)}</p>`:''};
 const schOpen=k=>!(schS().skip||{})[k]; /* a question I declined on the scholarships page stays declined */
 const schCount=()=>SCH.filter(r=>schEval(r).st!=='check').length;
 /* what an answer about me did to the scholarships page, counted by the same rule the page uses */
@@ -5797,12 +5805,12 @@ function schFx(a){const b=schCount();
 const sq=k=>SCQ().find(x=>x.k===k);
 const Q_STEP=(pl,id)=>pl.tasks.find(t=>t.id===id);
 const QBANK=()=>[
-  {id:'block',moment:1,when:(X,pl)=>idleDays()>=10&&pl.done<pl.total&&!(pth().qa.block&&daysTo(pth().qa.block)>-30),
+  {id:'block',moment:1,when:(X,pl)=>idleDays()>=10&&pl.done<pl.total,
     q:'מה הכי מעכב אותי עכשיו?',why:'כדי להציע צעד אחד שמתאים למה שקורה לי עכשיו, במקום רשימה ארוכה. אפשר גם לא לענות.',
     o:()=>[['time','אין לי זמן כרגע'],['unsure','לא ברור לי מה הצעד הבא'],['wait','מחכה לציון או לבחינה']],
     apply:(v,pl)=>{const P=pth(),X=pl.X,nx=pl.next||pl.tasks.find(t=>!t.done);
-      if(v==='time'){if(nx)KP.fid=nx.id;QBANK().forEach(q=>{if(q.id!=='block')P.qs[q.id]=todayISO()});
-        return `השארתי לפניי צעד אחד בלבד${nx?`: ${nx.t}`:''}. את שאר השאלות השתקתי ל-${Q_SNOOZE} ימים, והדרך לא ממהרת.`}
+      if(v==='time'){if(nx)KP.fid=nx.id;QBANK().forEach(q=>{if(q.id!=='block'&&safe(()=>qOpen(q,X,pl),false))P.qs[q.id]=todayISO()}); /* only the questions that are waiting now: the others stay as they are */
+        return `השארתי לפניי צעד אחד בלבד${nx?`: ${nx.t}`:''}. את שאר השאלות שממתינות עכשיו השתקתי ל-${Q_SNOOZE} ימים, והדרך לא ממהרת.`}
       if(v==='wait'){const n=Q_STEP(pl,'numbers'),r=X.real?null:n,t=r||(!X.hasP&&Q_STEP(pl,'psyReg'))||nx;if(t)KP.fid=t.id;
         return r?`פתחתי את הצעד "${n.t}". אפשר להמשיך גם בלי ציון סופי: מזינים ציונים צפויים, ורואים כמה חסר.`:`פתחתי את הצעד "${t?t.t:''}". הציונים שלי כבר במערכת, ובינתיים אפשר להתקדם בו.`}
       if(nx)KP.fid=nx.id;return nx?`פתחתי את הצעד הבא: ${nx.t}. מתחת לכותרת מוסבר איך עושים אותו.`:'כל הצעדים הושלמו.'}},
@@ -5864,7 +5872,7 @@ function qCardHTML(pl){
   const X=pl.X,[lo,hi]=endRange();
   return `<section class="kp-qc" aria-labelledby="kqT"><p class="kp-qk">שאלה קטנה, אפשר לדלג</p><h2 id="kqT" tabindex="-1">${esc(qTxt(q,X))}</h2>
     ${q.t==='date'?`<div class="kp-qd"><label class="sr" for="kqD">התאריך</label><input type="date" id="kqD" min="${lo}" max="${hi}"><button class="btn primary sm" data-kqd="${q.id}">שמירה</button></div>`
-      :`<div class="pick">${qOpts(q,pl).map(([v,l])=>`<button type="button" class="chip" data-kq="${q.id}|${esc(v)}" aria-pressed="false" style="--c2:#FF8A65"><i></i>${esc(l)}</button>`).join('')}</div>`}
+      :`<div class="pick">${qOpts(q,pl).map(([v,l])=>`<button type="button" class="chip" data-kq="${q.id}|${esc(v)}" style="--c2:#FF8A65"><i></i>${esc(l)}</button>`).join('')}</div>`}
     <div class="kp-btns"><button class="btn soft sm" data-kqskip="${q.id}">לא עכשיו</button></div>
     <details class="kp-qwy"${KP.qwy?' open':''}><summary>למה אנחנו שואלים</summary><p>${esc(q.why)} התשובה נשמרת בדפדפן הזה בלבד, ואפשר לשנות או למחוק אותה ב"עליי". אם בחרתי "לא עכשיו", לא תהיה שאלה כזאת ${Q_SNOOZE} ימים.</p></details></section>`}
 /* an answer: the change is made by the question itself, then its visible effect replaces the card */
@@ -5928,7 +5936,7 @@ function renderPath(){
   if(KP.wiz.active)return safe(wizardHTML,'');
   safe(visitNote); /* F2a: the day of my last visit, decided once per page load */
   /* arriving from another page starts at the landing (all my targets when I have several); a redraw in place keeps where I am */
-  if(typeof NAVT!=='undefined'&&KP.navT!==NAVT){KP.navT=NAVT;if(S.navDir!=='back'||KP.land){KP.view=KP.land;KP.tab='now'}KP.land=''}
+  if(typeof NAVT!=='undefined'&&KP.navT!==NAVT){KP.navT=NAVT;KP.qfx=null;KP.qpause=false;if(S.navDir!=='back'||KP.land){KP.view=KP.land;KP.tab='now'}KP.land=''}
   /* the landing is decided once, on arrival; after that the view stays where I put it (adding a target from the options must not throw me to the hub) */
   if(!KP.view)KP.view=tList().length>1?'hub':'road';
   if(curView()==='hub')return safe(hubPageHTML,'');
@@ -5954,7 +5962,7 @@ function updateRing(){const n=$('#links .path-l');if(n)n.innerHTML='המסלול
 function jump(id,smooth=true){const e=$('#'+id);if(!e)return;const y=e.getBoundingClientRect().top+scrollY-(innerWidth<760?116:150);window.scrollTo({top:Math.max(0,y),behavior:smooth&&!RM()?'smooth':'instant'})}
 function gotoTab(k,o={}){
   if(!TABS.some(t=>t[0]===k))k='now';
-  if(k!==KP.tab)KP.qpause=false; /* F2b: leaving the tab and coming back allows the next question */
+  if(k!==KP.tab){KP.qpause=false;KP.qfx=null} /* F2b: leaving the tab and coming back allows the next question, and an old effect is not kept */
   KP.tab=k;const n=$('#kpNav'),b=$('#kpTab'),pl=safe(plan);
   if(!n||!b||!pl){render();return}
   n.innerHTML=navHTML();b.innerHTML=tabInner(pl);afterTab();
@@ -6425,7 +6433,7 @@ document.addEventListener('click',e=>{
   /* about me */
   else if(ds.kme!==undefined){
     if(ds.kme===''){openMe();return}
-    const j=ds.kme.indexOf(':'),k=ds.kme.slice(0,j),v=ds.kme.slice(j+1);setMe(k,k==='start'?+v:v);
+    const j=ds.kme.indexOf(':'),k=ds.kme.slice(0,j),v=ds.kme.slice(j+1);setMe(k,k==='start'?+v:v);KP.qfx=null;
     document.querySelectorAll(`[data-kme^="${k}:"]`).forEach(b=>b.setAttribute('aria-pressed',String(meVal(k))===b.dataset.kme.slice(k.length+1)));
     if(S.route.v==='path'&&!KP.wiz.active)paint()}
   else if(ds.kwel!==undefined){KP.wbDone=true;focusOn(ds.kwel)}
@@ -6436,7 +6444,7 @@ document.addEventListener('click',e=>{
   else if(ds.kqskip!==undefined)qSkip(ds.kqskip);
   else if(ds.kqok!==undefined){KP.qfx=null;KP.qpause=true;paint();const h=$('#kpf-h');if(h){h.tabIndex=-1;h.focus({preventScroll:true})}}
   else if(ds.kqgo!==undefined){KP.qfx=null;KP.qpause=true;focusOn(ds.kqgo)}
-  else if(ds.kqask!==undefined){const P0=pth();if(P0){delete P0.qs[ds.kqask];pthSave();KP.qpause=false}openMe();if(S.route.v==='path'&&!KP.wiz.active)paint()}
+  else if(ds.kqask!==undefined){const P0=pth();if(P0){delete P0.qs[ds.kqask];pthSave();KP.qpause=false}openMe();const d=$('#ov details.kp-more-me');if(d){d.open=true;(d.querySelector('[data-kqask]')||d.querySelector('summary')).focus({preventScroll:true})}if(S.route.v==='path'&&!KP.wiz.active)paint()}
   else if(ds.kendx!==undefined){qSnooze('end');setEnd('');const i=$('#kpEnd');if(i){i.value='';i.focus({preventScroll:true})}endSync()}
   else if(ds.kmedone!==undefined){closeOv(true);if(S.route.v==='path'&&!KP.wiz.active)keepY(render)}
   /* my targets */
@@ -6965,7 +6973,7 @@ const SCQ=()=>[
     why:'הטבות למשרתי מילואים נקבעות לפי מספר ימי השירות, ולכל אחת סף משלה.'},
   {k:'reg',q:`איפה אני ${gx('גר','גרה','גר/ה')}?`,o:Object.entries(REGN),
     why:'מלגות פריפריה תלויות ביישוב המגורים. האזור כאן הוא רמז בלבד, וההגדרה המדויקת אצל הגוף המעניק.'},
-  {k:'first',q:`האם אני ${gx('הראשון','הראשונה','הראשון/ה')} במשפחה שלומד לתואר?`,o:[['y','כן'],['n','לא']],
+  {k:'first',q:`האם אני ${gx('הראשון','הראשונה','הראשון/ה')} במשפחה ${gx('שלומד','שלומדת','שלומד/ת')} לתואר?`,o:[['y','כן'],['n','לא']],
     why:'יש מלגות שמיועדות לדור ראשון להשכלה גבוהה.'},
   {k:'inc',q:`איך אני ${gx('מתאר','מתארת','מתאר/ת')} את המצב הכלכלי של המשפחה?`,o:[['low','מתחת לממוצע'],['mid','בסביבות הממוצע'],['high','מעל הממוצע']],
     why:'מלגות לפי צורך כלכלי נבחנות לפי הכנסה ותנאים נוספים. זו שאלה אישית, ולכן היא אופציונלית, ואפשר להמשיך בלעדיה.'}];
