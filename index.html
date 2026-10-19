@@ -763,6 +763,7 @@ p.intro .linkbtn{color:var(--primary-dark);text-decoration:underline;text-underl
 .botnav{overflow-x:auto;scrollbar-width:none}.botnav::-webkit-scrollbar{display:none}.botnav .link{flex:1 0 auto;white-space:nowrap}
 @media(max-width:1480px){#uniBtn span,#quizBtn span{display:none}#uniBtn,#quizBtn{padding:9px 11px}}
 @media(max-width:1260px){.link{font-size:14px;padding:7px 10px}.hdr-in{gap:12px}#acctBtn:not(.in) span{display:none}}
+@media(min-width:1481px){.hdr-in{max-width:1380px}} /* F3: one more nav link: with the tool labels shown (wide screens) the bar needs this much room */
 @media(max-width:1080px) and (min-width:721px){
   .links{display:none}.tools{margin-inline-start:auto}
   .botnav{display:flex;position:fixed;bottom:0;inset-inline:0;z-index:44;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:6px 8px}
@@ -1495,7 +1496,7 @@ button.ft-chip:hover{box-shadow:0 1px 0 rgba(31,37,68,.22)}
 .sc-form .hint{font-size:14px;color:var(--muted)}
 .tl-i.sch .tl-dot{border-color:#7048E8}
 @media(max-width:820px){.sc-two{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:520px){.sc-card{padding:14px}.sc-h{flex-direction:column;gap:6px}.sc-dl>div{grid-template-columns:76px minmax(0,1fr)}.sc-il li{flex-wrap:wrap}.sc-q{padding:16px}}
+@media(max-width:520px){.sc-card{padding:14px}.sc-h{flex-direction:column;gap:6px}.sc-dl>div{grid-template-columns:76px minmax(0,1fr)}.sc-il li{flex-direction:column;align-items:flex-start;gap:6px}.sc-q{padding:16px}}
 html.rm .kp-next.soon,html.rm .kp-focus.soon{animation:none}
 
 </style>
@@ -5492,6 +5493,7 @@ function coach(pl){
   else lines.push('כל צעד שאני מסמן כאן מקרב אותי ליום הראשון. הקצב שלי הוא הקצב הנכון.');
   if(sx>=2)lines.push(`${sx} ימים ברצף שבהם התקדמתי. ממשיכים.`);
   if(z&&z.total&&z.done===z.total)lines.push(`סיימתי את כל המשימות של "${z.t}". אפשר לעבור הלאה.`);
+  const sn=schNext();if(sn&&daysTo(sn.d)<=30)lines.push(`המלגה הקרובה שלי: ${esc(sn.nm)}, ${esc(inN(daysTo(sn.d)))}.`); /* F3: my next scholarship deadline (user text: escaped) */
   return `<div class="kp-coach"><span class="kp-ci">${ki('compass')}</span><p>${lines.join(' ')}</p></div>`}
 /* the step in focus: the one I chose, else the soonest deadline, else the first open step of the road */
 function focusTask(pl){
@@ -6463,7 +6465,7 @@ let SCHS=null;
 const schId=()=>'s'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
 function schS(){if(SCHS)return SCHS;const x=store.get('sch',null),s={v:1,items:[],notif:0,seen:0,skip:{},nday:''};
   if(x&&typeof x==='object'&&!Array.isArray(x)){
-    if(Array.isArray(x.items))x.items.forEach(i=>{if(!i||typeof i!=='object'||s.items.length>=60)return;const n=String(i.n||'').trim().slice(0,80);if(!n)return;
+    if(Array.isArray(x.items))x.items.forEach(i=>{if(!i||typeof i!=='object'||s.items.length>=60)return;const n=String(i.n||'').replace(/[\r\n\u2028\u2029]+/g,' ').trim().slice(0,80);if(!n)return; /* no line breaks: the name goes into the calendar file */
       s.items.push({id:String(i.id||'').replace(/[^\w-]/g,'').slice(0,40)||schId(),n,u:httpUrl(i.u)||'',d:isoOk(i.d)?i.d:'',st:typeof i.st==='string'&&own(SC_ST,i.st)?i.st:'interested',note:String(i.note||'').slice(0,300),rid:/^[\w-]{1,40}$/.test(String(i.rid||''))?String(i.rid):'',ts:+i.ts||0})});
     s.notif=x.notif?1:0;s.seen=x.seen?1:0;s.nday=isoOk(x.nday)?x.nday:'';
     if(x.skip&&typeof x.skip==='object')['svc','res','reg','first','inc'].forEach(k=>{if(x.skip[k])s.skip[k]=1})}
@@ -6560,7 +6562,7 @@ function schWhyHTML(e,full){const row=(c,i,t,l)=>t.length?`<span class="${c}"><i
 function schCard(r,e){const st=SC_STATE[e.st],id=esc(r.id),tr=schTrack(r.id);
   return `<article class="sc-card ${e.st}" aria-labelledby="sch-h-${id}">
     <div class="sc-h"><h3 id="sch-h-${id}">${esc(r.name)}</h3><span class="sc-st ${e.st}"><i aria-hidden="true">${st[0]}</i>${st[1]}</span></div>
-    <p class="sc-by">${esc(r.by||r.provider)} · ${esc(SC_TY[r.type]||'')}</p>
+    <p class="sc-by">${esc(r.by||r.provider)} · ${r.kind==='service'?'שירות תמורת לימודים':esc(SC_TY[r.type]||'')}</p>
     ${r.kind==='service'?'<p class="sc-svc"><i aria-hidden="true">!</i>שירות תמורת לימודים, לא מלגה: בסיום משרתים.</p>':''}
     <p class="sc-aud">${esc(r.audience)}</p>${schWhyHTML(e)}${schMoney(r)}
     ${r.soon?`<p class="sc-soon">${ki('cal')}<span>לפי מקור אחד, ההגשה לשנה הזו עשויה להיסגר בקרוב. בודקים את המועד בדף של הגוף.</span></p>`:''}
@@ -6623,15 +6625,15 @@ function schRailHTML(){const road=hasGoal(),L=timeline(safe(plan,null)).filter(x
     <div class="kp-btns">${hasS&&!inViewer()?KB('data-sch="ics"',`${ki('down')}המלגות שלי ליומן`):''}${schNotifyBtn()}</div>
     <p class="fine">מועדים שנקראים "בערך" הם הערכה לפי המחזור האחרון שפורסם, ולא תאריך רשמי. ביומן יש תזכורות 14, 7 ויומיים לפני כל מועד של מלגה.</p></div>`}
 function schNotifyBtn(){if(!('Notification' in window))return '';const on=schS().notif&&Notification.permission==='granted';
-  return `<button type="button" class="btn soft sm" data-sch="notif" aria-pressed="${on}">${on?'✓ התראות בדפדפן פועלות':'התראות בדפדפן'}</button><span class="sc-fine">התראות פועלות רק כשהאתר פתוח בדפדפן.</span>`}
+  return `<button type="button" class="btn soft sm" data-sch="notif" aria-pressed="${on}">${on?'✓ התראות בדפדפן פועלות':'התראות בדפדפן'}</button><span class="sc-fine">התראות פועלות רק כשהאתר פתוח בדפדפן, ומוצגות פעם ביום בפתיחת האתר.</span>`}
 function schSoonHTML(){const L=schEvents().filter(x=>daysTo(x.d)<=7).sort((a,b)=>a.d.localeCompare(b.d));
-  return L.length?`<div class="sc-alert" role="status">${ki('cal')}<div><b>בשבוע הקרוב:</b> ${L.slice(0,3).map(x=>`${esc(x.nm||x.t)} (${esc(inN(daysTo(x.d)))})`).join(' · ')}</div></div>`:''}
+  return L.length?`<div class="sc-alert" role="status">${ki('cal')}<div><b>בשבוע הקרוב:</b> ${L.slice(0,3).map(x=>`${esc(x.nm||x.t)} (${esc(inN(daysTo(x.d)))})`).join(' · ')}${inViewer()?'':`<div class="kp-btns" style="margin-top:6px">${KB('data-sch="ics"','לשמור זמן ביומן?')}</div>`}</div></div>`:''}
 function schQHTML(){const q=schNextQ();if(!q)return '';
   return `<div class="sc-q" role="group" aria-labelledby="scqT"><p class="sc-qk">עוד שאלה אחת</p><h2 id="scqT" class="sc-qh" tabindex="-1">${q.q}</h2>
     <div class="pick">${q.o.map(([v,l])=>`<button type="button" class="chip" data-sch="q|${q.k}|${esc(v)}" aria-pressed="false" style="--c2:#FF8A65"><i></i>${esc(l)}</button>`).join('')}<button type="button" class="btn soft sm" data-sch="qskip|${q.k}">לא רוצה לענות</button></div>
     <details class="sc-wy"><summary>למה אנחנו שואלים</summary><p>${esc(q.why)} התשובה משפיעה רק על הסדר והסימון בדף הזה, נשמרת בדפדפן הזה בלבד, ואפשר לשנות או למחוק אותה בכל רגע.</p></details></div>`}
 function schMeHTML(){const p=S.prof||{},s=schS(),Q=SCQ(),any=Q.some(q=>p[q.k]||s.skip[q.k]);
-  if(!SCF.edit)return any||!schNextQ()?`<p class="sc-fine"><button type="button" class="linkbtn" data-sch="edit">עריכת מה שסיפרתי להתאמה</button></p>`:'';
+  if(!SCF.edit)return any||!schNextQ()?`<div class="kp-btns" style="margin-top:0">${KB('data-sch="edit"','עריכת מה שסיפרתי להתאמה')}</div>`:'';
   return `<div class="kp-card sc-me"><div class="pc-h"><h2>${ki('user')}מה סיפרתי להתאמה</h2></div>
     ${Q.map(q=>`<div class="field kp-mq"><label>${q.q}</label><div class="pick">${q.o.map(([v,l])=>`<button type="button" class="chip" data-sch="q|${q.k}|${esc(v)}" aria-pressed="${p[q.k]===v}" style="--c2:#FF8A65"><i></i>${esc(l)}</button>`).join('')}</div>
       ${s.skip[q.k]?`<span class="sc-fine">בחרתי לא לענות. <button type="button" class="linkbtn" data-sch="qask|${q.k}">לשאול שוב</button></span>`:''}</div>`).join('')}
