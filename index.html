@@ -1316,7 +1316,8 @@ input[type=range]{accent-color:var(--primary);height:28px}
 .kp-b.on{background:#12A26B;border-color:#12A26B;color:#fff}.kp-b.on b,.kp-b.on .kp-bt{color:#fff}
 .kp-sv{margin-top:2px}
 /* F4: doors */
-.kp-dr{border-top:1px solid var(--line);padding-top:16px}.kp-dr h3{font-size:17px;margin-bottom:4px;display:flex;align-items:center;gap:8px}.kp-dr h3 svg{width:20px;height:20px;color:var(--primary);flex:none}
+.kp-dr{border-top:1px solid var(--line);padding-top:16px}#kpDoors{scroll-margin-top:130px}
+.kp-dsum{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 12px;margin:8px 0 0;font-size:14.5px;font-weight:600}.kp-dsum>span{display:flex;gap:8px;align-items:center}.kp-dsum svg{width:18px;height:18px;color:var(--primary);flex:none}.kp-dsum .linkbtn{min-height:40px;min-width:44px;color:var(--primary-dark);text-decoration:underline;text-underline-offset:3px}.kp-dr h3{font-size:17px;margin-bottom:4px;display:flex;align-items:center;gap:8px}.kp-dr h3 svg{width:20px;height:20px;color:var(--primary);flex:none}
 .kp-dr h4{font-family:var(--head);font-size:16px;margin:0 0 4px;display:flex;align-items:center;gap:8px}.kp-dr h5{font-family:var(--head);font-size:14px;margin:12px 0 4px;color:var(--ink);display:flex;gap:8px;align-items:center}.kp-dr h5 span{font-size:12.5px;font-weight:600;color:var(--muted)}
 .kp-dt4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0}
 .kp-dtile{background:#F7F8FC;border:1px solid var(--line);border-radius:14px;padding:10px 12px;min-width:0;display:flex;flex-direction:column;gap:2px}
@@ -1329,7 +1330,7 @@ input[type=range]{accent-color:var(--primary);height:28px}
 .kp-dl li{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:2px 10px;border:1px solid var(--line);border-radius:12px;padding:4px 12px;background:#fff}
 .kp-dn{display:flex;flex-wrap:wrap;align-items:center;gap:0 8px;min-width:0;flex:1 1 220px}.kp-dr .linkbtn{min-height:40px;min-width:44px;display:inline-flex;align-items:center}.kp-dn .linkbtn{font-weight:700;font-size:15px;color:var(--ink);text-align:start;padding:0}.kp-dn .linkbtn:hover{color:var(--primary-dark);text-decoration:underline}
 .kp-dn small{color:var(--muted);font-size:13px}.kp-dn .kp-dx{font-size:12.5px;overflow-wrap:anywhere;flex-basis:100%;padding-bottom:4px}
-.kp-dtag{font-size:12.5px;font-weight:700;border-radius:999px;padding:3px 10px;background:#E3F7EE;color:#0B5A3E;white-space:normal}.kp-dtag.near{background:#FFF1D6;color:#7A4B00}
+.kp-dtag{font-size:12.5px;font-weight:700;border-radius:999px;padding:3px 10px;background:#E3F7EE;color:#0B5A3E;white-space:normal}.kp-dtag i{font-style:normal}.kp-dtag.near{background:#FFF1D6;color:#7A4B00}
 .kp-dfold{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
 .kp-dfb{font:inherit;font-weight:700;font-size:14.5px;color:var(--ink);display:inline-flex;gap:8px;align-items:center;min-height:40px;padding:0 4px;cursor:pointer;background:none;border:0}.kp-dfb:hover{color:var(--primary-dark);text-decoration:underline}
 .kp-dcmb{display:flex;gap:10px;align-items:flex-start;background:#FFF7E6;border-radius:14px;padding:10px 12px;margin:12px 0 0;font-size:14.5px}.kp-dcmb svg{width:20px;height:20px;flex:none;margin-top:2px;color:#B8860B}
@@ -5123,7 +5124,7 @@ const DOOR_CAP=8; /* items shown before "show all" */
 const doorsByName=(a,b)=>BY[a.d].n.localeCompare(BY[b.d].n,'he')||INST[a.i].n.localeCompare(INST[b.i].n,'he');
 function doorItem(x,mode){
   const d=BY[x.d],I=INST[x.i],med=mode!=='far'&&doorMed(d,x.i);
-  const tag=mode==='near'?(med?`◐ קרוב להזמנה לשלב הבא (חסרות ${x.gap})`:`◐ חסרות ${x.gap} נקודות בפסיכומטרי`):mode==='open'?(med?'✓ מספיק להזמנה לשלב הבא (מיון אישי)':'✓ הציונים מגיעים לסף'):'';
+  const tx=mode==='near'?(med?`קרוב להזמנה לשלב הבא (חסרות ${x.gap})`:`חסרות ${x.gap} נקודות בפסיכומטרי`):mode==='open'?(med?'מספיק להזמנה לשלב הבא (מיון אישי)':'הציונים מגיעים לסף'):'',tag=tx?`<i aria-hidden="true">${mode==='near'?'◐':'✓'}</i> ${tx}`:'';
   return `<li><span class="kp-dn"><button type="button" class="linkbtn" data-open="${esc(d.id)}">${esc(d.n)}</button><small>${esc(I.n)}</small>${x.x&&mode!=='far'?`<small class="kp-dx">לשים לב: ${esc(x.x.length>110?x.x.slice(0,108)+'…':x.x)}</small>`:''}</span>${tag?`<span class="kp-dtag ${mode}">${tag}</span>`:''}</li>`}
 /* the open flags live in LAB.dopen: a repaint replaces the DOM on every input, so a <details> would close each time */
 function doorsList(key,items,mode){
@@ -5133,6 +5134,10 @@ function doorsList(key,items,mode){
 function doorsFold(key,label,items,mode){
   const on=!!LAB.dopen[key],g={};items.forEach(x=>(g[x.i]=g[x.i]||[]).push(x));
   return `<div class="kp-dfold"><button type="button" class="kp-dfb" data-lbd="${key}" aria-expanded="${on}"><span aria-hidden="true">${on?'▾':'◂'}</span>${on?'הסתרת':'הצגת'} ${label} (${items.length})</button>${on?Object.keys(g).sort((a,b)=>INST[a].n.localeCompare(INST[b].n,'he')).map(i=>`<h5>${esc(INST[i].n)} <span>${g[i].length}</span></h5><ul class="kp-dl">${g[i].sort(doorsByName).map(x=>doorItem(x,mode)).join('')}</ul>`).join(''):''}</div>`}
+/* one live line under the verdict, so the effect is visible next to the inputs (on a phone the full panel is far below) */
+function doorsSumHTML(X){
+  const f=labFinal(),sc=doorSc(f.rows,f.P);if(!doorOk(sc))return '';const C=doorsCount(doors(sc));
+  return `<p class="kp-dsum"><span>${ki('compass')}בתרחיש הזה: <b class="num">${C.open}</b> דלתות פתוחות, <b class="num">${C.near}</b> קרובות.</span><button type="button" class="linkbtn" data-scroll="kpDoors">לפירוט הדלתות</button></p>`}
 const doorsRowsKey=rows=>JSON.stringify(rows.map(r=>[r.k,r.u,r.g]).sort());
 function doorsHTML(X){
   const f=labFinal(),sc=doorSc(f.rows,f.P),head=`<h3>${ki('compass')}דלתות: מה נפתח בתרחיש הזה</h3>`;
@@ -6164,7 +6169,7 @@ function unitsNote(){const u=labBase().reduce((a,r)=>a+r.u,0);return u<20?`הז�
 
 /* the right side: the verdict, the admission map, the boosters, saving */
 function labOutHTML(X){
-  return `<div id="kpVerdict">${labVerdictHTML(X)}</div><div id="kpChart">${labChartHTML(X)}</div><div id="kpBoost">${boostersHTML(X)}</div><div id="kpDoors">${safe(()=>doorsHTML(X),'')}</div><div id="kpSave">${saveHTML(X)}</div>`}
+  return `<div id="kpVerdict">${labVerdictHTML(X)}${safe(()=>doorsSumHTML(X),'')}</div><div id="kpChart">${labChartHTML(X)}</div><div id="kpBoost">${boostersHTML(X)}</div><div id="kpDoors">${safe(()=>doorsHTML(X),'')}</div><div id="kpSave">${saveHTML(X)}</div>`}
 function labV(X){ /* the verdict of the current scenario, or an error code */
   const t={d:X.P.d,i:X.P.i},f=labFinal(t),sc=scFrom(f.rows,f.P,t.i);
   if(X.q.tier===0)return {v:verdict(t,sc,false),sc,f};
@@ -6251,7 +6256,7 @@ function saveHTML(X){
   return `${out.join('')}<p class="fine">הנתונים נשמרים בדפדפן הזה בלבד.</p>`}
 function labRepaint(parts){
   const X=safe(()=>plan().X);if(!X||!$('#kpOut'))return;
-  const m={v:['#kpVerdict',()=>labVerdictHTML(X)],c:['#kpChart',()=>labChartHTML(X)],b:['#kpBoost',()=>boostersHTML(X)],d:['#kpDoors',()=>doorsHTML(X)],s:['#kpSave',()=>saveHTML(X)]};
+  const m={v:['#kpVerdict',()=>labVerdictHTML(X)+safe(()=>doorsSumHTML(X),'')],c:['#kpChart',()=>labChartHTML(X)],b:['#kpBoost',()=>boostersHTML(X)],d:['#kpDoors',()=>doorsHTML(X)],s:['#kpSave',()=>saveHTML(X)]};
   (parts||['v','c','b','d','s']).forEach(k=>{const [sel,fn]=m[k],h=$(sel);if(h)h.innerHTML=safe(fn)});
   const u=$('#kpUnits');if(u)u.textContent=unitsNote();
   /* the slider and the typed number show the same value (the one being edited is left alone) */
