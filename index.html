@@ -1517,6 +1517,21 @@ button.ft-chip:hover{box-shadow:0 1px 0 rgba(31,37,68,.22)}
 /* touch size for the small buttons inside them, and long unbroken text (a pasted link) wraps */
 .kp-wel .linkbtn,.kp-endf .linkbtn{min-height:40px;display:inline-flex;align-items:center}.kp-ul li{overflow-wrap:anywhere}
 @media(max-width:520px){.kp-wel{padding:14px}.kp-weld>div{grid-template-columns:minmax(0,1fr)}.kp-bridge li{grid-template-columns:64px minmax(0,1fr)}}
+/* F2b: what to do before applying (rc-) */
+.rc{display:grid;gap:12px;min-width:0}.rc-h4{font-family:var(--head);font-size:17px;margin:16px 0 0}
+.rc-st{display:flex;gap:10px;align-items:flex-start;margin:0;padding:10px 12px;border-radius:14px;background:#E6EEFF;color:#1F3C88;font-size:15px;line-height:1.55}.rc-st svg{width:20px;height:20px;flex:none;margin-top:2px}.rc-st span{min-width:0;overflow-wrap:anywhere}
+.rc-l{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.rc-i{background:#F7F8FC;border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:7px;min-width:0}.rc-i.mine{border-color:#B5E8D0;background:#F3FBF7}
+.rc-i p{margin:0;font-size:15px;line-height:1.6;overflow-wrap:anywhere;white-space:pre-line}.rc-ins{color:var(--muted);font-size:13px;overflow-wrap:anywhere}
+.rc-h{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}.rc-h b{font-family:var(--head);font-size:15.5px;line-height:1.4;min-width:0;overflow-wrap:anywhere}
+.rc-me{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:700;color:#0B5A3E;background:#E3F7EE;border-radius:999px;padding:2px 10px 2px 8px}.rc-me svg{width:14px;height:14px}
+.rc-m{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.rc-m .ft-chip{margin-inline-start:0;min-height:40px}
+.rc-tg{display:inline-flex;align-items:center;gap:5px;min-height:28px;padding:2px 11px 2px 9px;border-radius:999px;font:600 13px/1.35 var(--body);background:#F0F1F6;color:#4A5068}.rc-tg svg{width:14px;height:14px;flex:none}
+.rc-tg.official{background:#E3F7EE;color:#0B5A3E}.rc-tg.admission{background:#E6EEFF;color:#1F3C88}.rc-tg.interview{background:#F1ECFF;color:#4B2FA0}.rc-tg.scholarship{background:#FFEAE4;color:#8E2418}
+.rc-src{display:inline-flex;align-items:center;min-height:40px;padding-inline:4px;font-size:13px;color:var(--primary-dark);text-decoration:underline;overflow-wrap:anywhere;direction:ltr}
+.rc-leg{display:grid;gap:8px;margin:2px 0 0;padding:10px 12px;border-radius:14px;border:1px dashed var(--line)}.rc-leg>div{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px;align-items:start}.rc-leg dt{margin:0}.rc-leg dd{margin:0;font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+.rc-none{margin:0;padding:10px 12px;border-radius:14px;background:#FFF7E6;font-size:15px}
+@media(max-width:520px){.rc-leg>div{grid-template-columns:minmax(0,1fr);gap:4px}.rc-i{padding:11px 12px}}
 html.rm .kp-next.soon,html.rm .kp-focus.soon{animation:none}
 
 </style>
@@ -5417,7 +5432,108 @@ function bridgeHTML(X){
     <p class="fine">השיפורים מחושבים לפי הנוסחאות שבאתר, כל אחד לבד, והם לא הבטחה להתקבל. מועדי הפסיכומטרי והבגרות הם כפי שפורסמו, ויכולים להשתנות.</p>${BTNS([KB('data-kgo="lab"','לבדוק בתרחיש','primary'),KB('data-kgo="opt"','תוכנית גיבוי'),KB('data-kmark="bridge"',M.bridge?'✓ התחלתי את התוכנית':'התחלתי את התוכנית')])}`}
 
 /* my story: notes kept in the path (P.story, plain text, escaped when shown). The recommendations catalog of F2b plugs in at storyRecsHTML */
-function storyRecsHTML(X){return ''}
+/* ---------- F2b: what to do before applying ---------- */
+/* An honest frame: outside activity usually adds no admission points. What does count is (a) grades and units (an official bonus), (b) conditions that a program's own published text names (interview, portfolio, audition, prep course) and (c) scholarships that ask for volunteering.
+   Items come from the research file: only items with an evidence page, or derived from the site's own data (UNI_RULES, DATA.adm). Advice that rests on general knowledge alone is left out.
+   Fields: t title, d text (or a function of the institutions whose rules it describes), g tags, st status, b basis (site = the admission text collected in DATA.adm, srch = cross-checked in a search summary), by publisher, u page, y period, n caveat,
+   sc scope (i institutions that must offer the degree, p degree-name pattern, pro degree kinds, o bonus subjects), f an existing fact id (otherwise the item gets its own record in FACTS) */
+const REC_STMT='בדרך כלל פעילות חוץ-אקדמית לא מוסיפה נקודות לקבלה. מה שכן משפיע: ציונים ויחידות לימוד (בונוס רשמי), תנאים שפורסמו בתוכנית (ראיון, תיק עבודות, אודישן, קורס הכנה, מכינה), ומלגות שדורשות התנדבות.';
+const REC_TAGS={official:['chart','בונוס רשמי','בונוס בנוסחה מפורסמת של המוסד, למשל על יחידות לימוד מוגברות. זה לא נקודות על פעילות חוץ-אקדמית.'],
+  admission:['doc','תנאי בתוכנית','תנאי שכתוב בטקסט הקבלה המפורסם של התוכנית (ראיון, תיק עבודות, אודישן, קורס הכנה, מכינה). הוא מתייחס לתוכנית ולמוסד מסוימים.'],
+  interview:['chat','חומר לראיון','חומר לראיון, לשאלון אישי או למכתב מוטיבציה. לא ניקוד.'],
+  cv:['bag','לקורות חיים','חומר לקורות חיים ולהמשך הדרך. לא קשור לקבלה.'],
+  scholarship:['coin','מלגה','קריטריון או תנאי במלגה, למשל התנדבות בתמורה למלגה.'],
+  fit:['compass','בדיקת התאמה','עוזר לבדוק אם התחום מתאים לי, בלי השפעה על הקבלה.']};
+const REC_NOTE={site:'נגזר מטקסט תנאי הקבלה שנאסף מאתר המוסד, ולא נבדק מחדש מול העמוד החי. התנאים משתנים בין תוכניות, מוסדות ושנים.',
+  srch:'לפי סיכומי חיפוש של שלב קודם, לא לפי קריאה ישירה של העמוד הרשמי. מועדים וסכומים לא נבדקו.'};
+const U_B={tau:'באוניברסיטת תל אביב',huji:'באוניברסיטה העברית',bgu:'בבן-גוריון',haifa:'בחיפה',technion:'בטכניון'};
+const joinHe=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+(/^\d/.test(a[a.length-1])?' ו-':' ו')+a[a.length-1];
+/* the bonus a university's published rule gives for 5 units, read from UNI_RULES (never typed by hand) */
+function bonusRecText(subs,ids){
+  const v=(i,k)=>UNI_RULES[i].bonus(k,5,[]);
+  if(ids.length===1){const i=ids[0];return `${U_B[i]}: 5 יח"ל מוסיפות לציון הבגרות המחושב ${joinHe(subs.map(k=>`${v(i,k)} נקודות ב${SN[k]}`))}, לפי הנוסחה שפורסמה. 4 יח"ל מוסיפות פחות${i==='technion'?', ובמקצועות הליבה בטכניון לא פורסם להן בונוס':''}.`}
+  return `5 יח"ל מוסיפות לציון הבגרות המחושב, לפי הנוסחאות שפורסמו:\n${subs.map(k=>{const g={};ids.forEach(i=>(g[v(i,k)]=g[v(i,k)]||[]).push(i));
+    return `ב${SN[k]}: ${Object.entries(g).sort((a,b)=>b[0]-a[0]).map(([p,L])=>`${p} נקודות ${joinHe(L.map(i=>U_B[i]))}`).join(', ')}`}).join('\n')}\n4 יח"ל מוסיפות פחות${ids.includes('technion')?', ובמקצועות הליבה בטכניון לא פורסם להן בונוס':''}.`}
+const RECS={
+  health:[
+    {id:'h-vol',t:'התנדבות (גם במד"א) ורפואה: לא מצאנו נקודות רשמיות',d:'בנוסחאות ובספי הקבלה שבאתר אין רכיב של התנדבות: הסף לרפואה נשען על בגרות ופסיכומטרי. לא מצאנו נוסחה מפורסמת שמוסיפה נקודות על התנדבות. זה לא הוכחה שאין שקלול בשלב המיון האישי, ולכן בודקים בדף הקבלה של הפקולטה לפני שמסתמכים על זה.',g:[],st:'unverified',b:'site',by:'מאל"ו',u:'https://www.nite.org.il/other-tests/mor-mirkam/',sc:{pro:['md','dmd']}},
+    {id:'h-mor',t:'מיון אישי ברפואה: מו"ר ומרק"ם',d:'אחרי שלב הציונים מוזמנים לשלב אישי: שאלון אישי-ביוגרפי, מרכז הערכה ושאלון שאו"ל, והזימון מגיע ממאל"ו. עמידה בסף הציונים לבדה מזמינה לשלב הבא ואינה אישור קבלה. משקל כל מרכיב אצל כל פקולטה ומה נשאל בשאלון לא נבדקו.',g:['admission','interview'],st:'unverified',b:'site',f:'mor.structure',u:'https://www.nite.org.il/other-tests/mor-mirkam/',sc:{pro:['md','dmd']}},
+    {id:'h-nur',t:'ראיון קבלה בסיעוד',d:'בטקסט תנאי הקבלה של סיעוד באונו מופיע ראיון קבלה, ובהסבת אקדמאים לסיעוד בלב מופיע ראיון אישי. בהכנה כדאי לדעת להסביר למה בחרתי בתחום ומה ראיתי ממנו.',g:['admission','interview'],st:'unverified',b:'site',by:'הקריה האקדמית אונו והמרכז האקדמי לב',u:'https://www.ono.ac.il/curriculum/nursing/',sc:{i:['i51','i9'],p:/סיעוד|אחיות/}},
+    {id:'h-svc',t:'סיעוד: קבלה לפי שירות צבאי (אונו)',d:'במכללת אונו, בסיעוד, הטקסט שנאסף מציע קבלה על בסיס ממוצע בגרות בלבד (85 ומעלה) ועמידה בראיון ללוחמים בשירות סדיר, למשרתי מילואים, למפונים מקו העימות ולבני משפחה מדרגה ראשונה של נופלים. זה תנאי של מוסד אחד, וייתכן שהוא זמני: בודקים שהוא חל עליי ובשנה שלי.',g:['admission'],st:'unverified',b:'site',by:'הקריה האקדמית אונו',u:'https://www.ono.ac.il/curriculum/nursing/',sc:{i:['i51'],p:/סיעוד|אחיות/}},
+    {id:'h-zef',t:'ראיון קבלה במדעי המעבדה הרפואית ובריפוי בעיסוק (צפת)',d:'במדעי המעבדה הרפואית בצפת נכתב שראיון אישי הכרחי. בריפוי בעיסוק נכתב שמי שעמדו בדרישות הבגרות והפסיכומטרי יוזמנו לראיון אישי, ושלראיון יינתן משקל משמעותי בקבלה.',g:['admission','interview'],st:'unverified',b:'site',by:'המכללה האקדמית צפת',u:'https://www.zefat.ac.il/דפי-תוכן-כלליים/תנאי-קבלה/תנאי-קבלה-ריפוי-בעיסוק/',sc:{i:['i33'],p:/מעבדה הרפואית|ריפוי בעיסוק/}},
+    {id:'h-bon',o:['bio','chem','phys'],g:['official'],st:'unverified',b:'site'}],
+  tech:[
+    {id:'t-bon',o:['math','cs','phys'],g:['official'],st:'unverified',b:'site'},
+    {id:'t-prep',t:'מכינה או קורס הכנה במתמטיקה',d:'במכללות מופיעה לפעמים רמת מתמטיקה נדרשת, ולמי שחסר מציעים קורס הכנה או מכינה. ברמת גן, במדעי המחשב: מתמטיקה 5 יח"ל בציון 70 או 4 יח"ל בציון 85, ואחרת חובת מכינה במתמטיקה או מבחן פטור. בת"א-יפו מופיעה גם אפשרות למכינה שמחליפה את הפסיכומטרי.',g:['admission'],st:'unverified',b:'site',by:'המכללה האקדמית רמת גן והמכללה האקדמית ת"א-יפו',u:'https://applicants.mta.ac.il/conditions-for-applying/',sc:{i:['i38','i34'],p:/מדעי המחשב/}},
+    {id:'t-swe',t:'מסלול קבלה לבעלי תעודת הנדסאי (שנקר)',d:'בשנקר, בהנדסת תוכנה, מופיע מסלול קבלה לבעלי תעודת הנדסאי: ממוצע דיפלומה 80 ומעלה שהושג במבחנים החיצוניים, פרויקט גמר ותעודת בגרות מלאה. זו דרך קבלה, לא נקודות על פעילות.',g:['admission'],st:'unverified',b:'site',by:'שנקר',u:'https://www.shenkar.ac.il/engineering/bachelors/software_engineering/admission/',sc:{i:['i43'],p:/הנדסת תוכנה/}},
+    {id:'t-exc',t:'תוכניות מצטיינים: הגשה נפרדת, ראיון והטבות',d:'באוניברסיטאות יש תוכניות מצטיינים (למשל הטכניון למצוינים, אמירים בעברית, לאוטמן בתל אביב) עם הגשה נפרדת וראיון אישי. למתקבלים יש הטבות כמו פטור משכר לימוד. זה המקום שבו מתאים להציג פרויקטים והישגים מעבר לציונים, והקריטריונים בדף התוכנית.',g:['admission','interview','scholarship'],st:'verified',b:'srch',by:'אתרי הטכניון, אוניברסיטת תל אביב והאוניברסיטה העברית',u:'https://admissions.technion.ac.il/en/the-rothschild-scholars-program/',y:'תשפ"ז (מחזור שנסגר)',n:'מועדי תשפ"ח לא נמצאו. דפי הטכניון נושאים כותרות שונות לאותה תוכנית.',sc:{i:['technion','tau','huji']}}],
+  eng:[
+    {id:'e-bon',o:['math','phys','chem'],g:['official'],st:'unverified',b:'site'},
+    {id:'e-enh',t:'בטכניון: בונוס מוגבר לשילוב מתמטיקה ומדעים',d:()=>{const R=UNI_RULES.technion,rows=[{k:'math',u:5,g:60},{k:'phys',u:5,g:60},{k:'chem',u:5,g:60}];
+      return `בטכניון, מתמטיקה ב-5 יח"ל יחד עם שני מקצועות מדעיים ב-5 יח"ל (או מקצוע מדעי אחד ומגמה טכנולוגית ב-5 יח"ל), כולם בציון 60 לפחות, מעלים את הבונוס על המקצועות המדעיים מ-${R.bonus('phys',5,[])} ל-${R.bonus('phys',5,rows)} נקודות. מגמה טכנולוגית ב-5 יח"ל נחשבת כאן כמקצוע.`},g:['official'],st:'unverified',b:'site',f:'bonus.technion',u:'https://admissions.technion.ac.il/calculation-of-the-median-grade/',sc:{i:['technion']}},
+    {id:'e-exc',t:'הטכניון למצוינים',d:'לפי תקציר של דף התוכנית, כ-20 מתקבלים בכל מחזור, אחרי סינון ראשוני וראיון אישי, והטבות כוללות פטור משכר לימוד ומגורים. יש להגיש גם בקשת קבלה רגילה לטכניון.',g:['admission','interview','scholarship'],st:'unverified',b:'srch',by:'הטכניון',u:'https://admissions.technion.ac.il/en/the-rothschild-scholars-program/',y:'תשפ"ז (מחזור שנסגר)',n:'הנתון מכמה דפים של הטכניון בלבד, ובלי מקור עצמאי. כותרת אחד הדפים שונה מהשם הזה. מועדי תשפ"ח לא נמצאו.',sc:{i:['technion']}}],
+  science:[
+    {id:'s-bon',o:['bio','chem','phys','math'],g:['official'],st:'unverified',b:'site'},
+    {id:'s-achva',t:'מדעי החיים באחווה: 5 יח"ל במקצוע מדעי',d:'בתנאי הקבלה שנאספו למדעי החיים באחווה מופיעה בגרות מלאה עם 4 יח"ל באנגלית בציון 70 לפחות, 4 יח"ל במתמטיקה ו-5 יח"ל במקצוע מדעי מורחב בציון 70 לפחות. הנוסח המלא והמסלולים באתר המכללה.',g:['admission'],st:'unverified',b:'site',by:'המכללה האקדמית אחוה',u:'https://achva.ac.il/%D7%AA%D7%95%D7%90%D7%A8-%D7%A8%D7%90%D7%A9%D7%95%D7%9F/%D7%AA%D7%95%D7%90%D7%A8-%D7%A8%D7%90%D7%A9%D7%95%D7%9F-%D7%91%D7%9E%D7%93%D7%A2%D7%99-%D7%94%D7%97%D7%99%D7%99%D7%9D/',sc:{i:['i5'],p:/מדעי החיים/}},
+    {id:'s-exc',t:'תוכניות מצטיינים במדעים',d:'באמירים בעברית (מדעי הטבע, חקלאות ומחשבים) יש הרשמה מקוונת וראיון אישי, ומלגת שכר לימוד לשלוש שנים לפי העמוד הראשי. באחווה, בתוכנית במדעי החיים, מתקבלים כ-12 מי שסיימו שנה א\' בהצטיינות, לאחר ראיון אישי. אלה הכרעות לפי ציונים והתרשמות, לא נקודות על פעילות.',g:['admission','interview','scholarship'],st:'unverified',b:'srch',by:'האוניברסיטה העברית והמכללה האקדמית אחוה',u:'https://info.huji.ac.il/registration-process/honors-programs',y:'תשפ"ז (אמירים); אחוה: מחזור לא מצוין',n:'שני מוסדות, ולא אותה תוכנית. אמירים לפי תקציר חיפוש, אחוה לפי טקסט תנאי הקבלה שנאסף.',sc:{i:['huji','i5']}},
+    {id:'s-mech',t:'מכינה קדם-אקדמית משותפת לתל אביב ולבר-אילן',d:'במכינה האוניברסיטאית ציון הגמר מחליף את ממוצע הבגרות בחישוב ציון ההתאמה, והפסיכומטרי נשאר חלק מהחישוב. נדרשים לפחות ארבעה מקצועות וציון גמר 60 לפחות בכל אחד. זו דרך להגדיל ציון בגרות נמוך, לא דרך לדלג על הפסיכומטרי.',g:['admission'],st:'unverified',b:'srch',by:'אוניברסיטת תל אביב',u:'https://go.tau.ac.il/he/ba/mechina-kdam',n:'לפי תקציר של דפי אוניברסיטת תל אביב בלבד. התנאים משתנים בין חוגים ושנים.',sc:{i:['tau','biu']}}],
+  social:[
+    {id:'so-crim',t:'קרימינולוגיה בבית ברל: התנדבות חברתית בתנאי הקבלה',d:'בבית ברל, בקרימינולוגיה בקהילה ובחינוך, הטקסט שנאסף מזכיר "פעילות התנדבותית חברתית משמעותית" כמקרה שבו נדרש פסיכומטרי 420 ו/או בגרות 85 ומעלה, לצד ראיון קבלה ומכתב קבלה אישי. הטקסט לא מגדיר מהי פעילות משמעותית ואיך מוכיחים אותה, וזה יוצא דופן ומוגבל לתוכנית אחת, ולכן שואלים במכללה לפני שמסתמכים על זה.',g:['admission','interview'],st:'unverified',b:'site',by:'המכללה האקדמית בית-ברל',u:'https://www.beitberl.ac.il/admission/criminology/',sc:{i:['i3'],p:/קרימינולוגיה/}},
+    {id:'so-law',t:'משפטים: ראיון או מכתב אישי במכללות',d:'באונו, במשפטים, מסלולי הקבלה עם ממוצע 80 עד 94, למי שמעל גיל 30 או עם רקע לימודי קודם מותנים בראיון קבלה. בצפת מופיעים בעמוד התנאים גם מסלולים עם מכתב פנייה אישי לבית הספר למשפטים או עם ראיון קבלה. באוניברסיטאות אין לנו נתון על ראיון או מכתב.',g:['admission','interview'],st:'unverified',b:'site',by:'הקריה האקדמית אונו והמכללה האקדמית צפת',u:'https://www.ono.ac.il/curriculum/llb/',n:'לא ברור מהטקסט של צפת לאיזה מסלול כל שורה שייכת.',sc:{i:['i51','i33'],p:/משפטים/}},
+    {id:'so-psy',t:'פסיכולוגיה: מכינה מחליפת פסיכומטרי בת"א-יפו',d:'לתואר בפסיכולוגיה הקבלה מבוססת בעיקר על בגרות ופסיכומטרי. בתנאי הקבלה של המכללה האקדמית ת"א-יפו מופיעה מכינה שמחליפה את הבחינה הפסיכומטרית, למי שלא עומדים בתנאי הקבלה.',g:['admission'],st:'unverified',b:'srch',by:'המכללה האקדמית ת"א-יפו',u:'https://www.mta.ac.il/program/prepatory',n:'מכינה כזאת מוצגת בעוד שני מוסדות לפי החיפוש. פרטים, מועדים ומחירים לא נבדקו.',sc:{i:['i34'],p:/פסיכולוגיה/}},
+    {id:'so-sw',t:'עבודה סוציאלית: ראיון קבלה באשקלון',d:'בטקסט הקבלה לעבודה סוציאלית במכללת אשקלון מופיע ראיון קבלה, במסלול למי שהציגו תעודת הנדסאי ופסיכומטרי 500 לפחות. כדאי לבדוק מראש אם יש שלב ראיון ולהתכונן להסביר למה בחרתי בתחום.',g:['admission','interview'],st:'unverified',b:'site',by:'המכללה האקדמית אשקלון',u:'https://www.aac.ac.il/economy/b-%D7%91%D7%9B%D7%9C%D7%9B%D7%9C%D7%94-%D7%95%D7%A0%D7%99%D7%94%D7%95%D7%9C/%D7%AA%D7%A0%D7%90%D7%99-%D7%A7%D7%91%D7%9C%D7%94-%D7%94%D7%97%D7%95%D7%92-%D7%9C%D7%9B%D7%9C%D7%9B%D7%9C%D7%94-%D7%95%D7%A0%D7%99%D7%94%D7%95%D7%9C/',sc:{i:['i4'],p:/עבודה סוציאלית/}},
+    {id:'so-vol',t:'מלגות בתמורה להתנדבות: מפעל הפיס ופר"ח',d:'התנדבות לא מוסיפה נקודות לקבלה, אבל היא תנאי בכמה מלגות. במלגות מפעל הפיס (עם הרשות המקומית) ובפר"ח (חונכות לילדים ולבני נוער) מתנדבים בתמורה למלגה. ההרשמה והתנאים נקבעים אצל הגוף המעניק, ולכן בודקים באתר שלו.',g:['scholarship'],st:'verified',b:'srch',by:'מפעל הפיס ופר"ח',u:'https://www.pais.co.il/info/Scholarships.aspx',y:'תשפ"ו/תשפ"ז',n:'שעות ההתנדבות במפעל הפיס סותרות בין מקורות, ולכן לא מוצג מספר שעות. מועדי תשפ"ח לא נמצאו.'},
+    {id:'so-ayl',t:'כפרי סטודנטים של איילים: מלגת מעורבות חברתית',d:'בכפרי הסטודנטים של איילים מקבלים מלגה ודיור מוזל בתמורה למעורבות חברתית (מפגש חודשי, ובכמה כפרים 140 שעות התנדבות). ההרשמה לכל כפר פתוחה עד שהכפר מתמלא. סכומים ומקומות בודקים אצל העמותה.',g:['scholarship'],st:'unverified',b:'srch',by:'איילים',u:'https://www.ayalim.org.il/students',n:'הסכומים מופיעים רק באתר העמותה, בלי שנת מחזור, ולכן לא מוצגים.'}],
+  biz:[
+    {id:'b-bon',o:['math','eng'],g:['official'],st:'unverified',b:'site'},
+    {id:'b-math',t:'כלכלה וניהול בת"א-יפו: רמת מתמטיקה וקורס הכנה',d:'בכלכלה וניהול באקדמית ת"א-יפו מופיעה דרישת רמת מתמטיקה בבגרות (4 יח"ל בציון 80 או 5 יח"ל בציון 55). מי שעומד באחת מחלופות הקבלה האוטומטיות אבל לא בדרישת המתמטיקה, ויש לו 4 יח"ל בציון 55 לפחות, יכול לעבור קורס הכנה במתמטיקה בקיץ או לגשת לבגרות. זה מה שמפריד בין קבלה ישירה לקבלה דרך הכנה.',g:['admission'],st:'unverified',b:'site',by:'המכללה האקדמית ת"א-יפו',u:'https://applicants.mta.ac.il/conditions-for-applying/',sc:{i:['i34'],p:/כלכלה וניהול/}},
+    {id:'b-iv',t:'ראיון אישי בניהול ובחשבונאות במכללות',d:'במרכז האקדמי לב מופיע ראיון אישי בתנאי הקבלה לניהול עסקים ולחשבונאות, ובכנרת בניהול משאבי אנוש. לא ברור מהטקסט מתי הראיון חל ומי פטור ממנו, ולכן בודקים באתר המוסד.',g:['admission','interview'],st:'unverified',b:'site',by:'המרכז האקדמי לב והמכללה האקדמית כנרת',u:'https://www.jct.ac.il/מועמדים/תנאי-קבלה/',sc:{i:['i9','i1'],p:/ניהול|חשבונאות/}},
+    {id:'b-mech',t:'מכינה מחליפת פסיכומטרי במכללות',d:'בכמה מכללות (ת"א-יפו, קולמן, נתניה) יש מכינה או מסלול שמאפשרים קבלה בלי פסיכומטרי, בחלק מהתוכניות. התנאים שונים בין מוסדות וחוגים, ועמידה בהם אינה מבטיחה קבלה.',g:['admission'],st:'verified',b:'srch',by:'אתרי המכללות',u:'https://www.mta.ac.il/program/prepatory',n:'שלושה מוסדות עצמאיים מציגים מסלול כזה. פרטים כמו מועדים ומחירים לא נבדקו.',sc:{i:['i34','i32','i24']}}],
+  design:[
+    {id:'d-shen',t:'שנקר: ראיון, תיק עבודות ותרגילי בית',d:'בשנקר תנאי הקבלה לעיצוב כוללים ראיון אישי והצגת תיק עבודות: באופנה גם בגד לביש עם סקיצות ומבחן רישום וצבע, בטקסטיל גם תרגילי בית ומצגת, בתקשורת חזותית תיק ולעיתים תרגיל בית ובחינה מעשית, באמנות רב-תחומית מביאים עבודות מקור. כאן תיק העבודות הוא תנאי קבלה ממשי.',g:['admission','interview'],st:'unverified',b:'site',by:'שנקר',u:'https://www.shenkar.ac.il/design/bachelors/fashion/admission/',n:'באופנה כתוב שלא נדרש ידע מוקדם בראיון. התנאים משתנים בין מחלקות.',sc:{i:['i43'],p:/עיצוב|תקשורת חזותית|אמנות/}},
+    {id:'d-bez',t:'בצלאל: תיק מועמדות, ראיון ותרגילי בית',d:'בבצלאל, בתרבות חזותית וחומרית, תנאי הקבלה: ממוצע גבוה מ-90, הגשת תיק מועמדות וראיון אישי. במחלקה לאמנות נכתב שהתהליך מתעדכן מדי שנה וכולל לרוב ראיונות, תרגילי בית ותיק עבודות.',g:['admission','interview'],st:'unverified',b:'site',by:'בצלאל',u:'https://www.bezalel.ac.il/department/arts/apply',n:'התנאים משתנים בין מחלקות ושנים.',sc:{i:['i19']}},
+    {id:'d-jamd',t:'אודישן ובחינת קבלה באקדמיה למוסיקה ולמחול',d:'באקדמיה למוסיקה ולמחול בירושלים הקבלה כוללת בחינה בכלי או בשירה ולעיתים ראיון אישי. בזמרה צריך לדעת את הטקסטים בעל פה ולהציג שירים בסגנונות שונים, במחול מופיע ראיון אישי, ובמוסיקה מזרחית יש תרגילי סולפז\' והכתבה. בנוסף צריך בגרות או שוות ערך.',g:['admission','interview'],st:'unverified',b:'site',by:'האקדמיה למוסיקה ולמחול בירושלים',u:'https://jamd.ac.il/dance_requirements',n:'הנתונים לפי עמודי הדרישות של כל מסלול.',sc:{i:['i18']}}],
+  hum:[
+    {id:'hu-bon',o:['lit','bible','hist'],g:['official'],st:'unverified',b:'site'},
+    {id:'hu-kin',t:'ראיון קבלה בלימודי ארץ ישראל (כנרת)',d:'בלימודי ארץ ישראל במכללת כנרת נדרש ראיון קבלה, ובטקסט מופיע ממוצע 75. זו דוגמה למסלול בהומניסטיקה שבו שיחה אישית היא חלק מהקבלה.',g:['admission','interview'],st:'unverified',b:'site',by:'המכללה האקדמית כנרת',u:'https://kinneret.ac.il/program/%d7%aa%d7%97%d7%95%d7%9e%d7%99-%d7%9c%d7%99%d7%9e%d7%95%d7%93/%d7%91%d7%99%d7%aa-%d7%94%d7%a1%d7%a4%d7%a8-%d7%9c%d7%9e%d7%93%d7%a2%d7%99-%d7%94%d7%a8%d7%95%d7%97/',sc:{i:['i1'],p:/ארץ ישראל/}},
+    {id:'hu-exc',t:'תוכנית מצטיינים במדעי הרוח (אמירים בעברית)',d:'בעברית, במדעי הרוח, תוכנית המצטיינים כוללת הרשמה מקוונת וראיון אישי, ומומלץ להגיש גם לחוג נוסף כגיבוי. זו שיחה והתרשמות, לא נקודות על פעילות.',g:['admission','interview','scholarship'],st:'unverified',b:'srch',by:'האוניברסיטה העברית',u:'https://info.huji.ac.il/registration-process/honors-programs',y:'תשפ"ז',n:'לפי תקציר חיפוש של דפי אותו גוף, בלי מקור עצמאי.',sc:{i:['huji']}}],
+  teach:[
+    {id:'te-ono',t:'חינוך וחברה באונו: ראיון קבלה',d:'באונו, בחינוך וחברה, מסלולי קבלה עם ממוצע 80 עד 84 (או פסיכומטרי 520), למי שמעל גיל 30 או עם רקע לימודי קודם מותנים בראיון קבלה. למכללות הוראה אחרות אין לנו טקסט תנאי קבלה בנתונים, ולכן בודקים בעמוד המוסד אם יש ראיון או שלב מיון.',g:['admission','interview'],st:'unverified',b:'site',by:'הקריה האקדמית אונו',u:'https://www.ono.ac.il/curriculum/education-and-society-ba/',sc:{i:['i51'],p:/חינוך וחברה/}},
+    {id:'te-per',t:'פר"ח: מלגה בתמורה לחונכות',d:'סטודנטים באוניברסיטאות ובמכללות, כולל מכללות להכשרת מורים, חונכים ילדים ובני נוער בהיקף שבועי קבוע ומקבלים מלגה. הסכום והמועדים נקבעים אצל פר"ח ומשתנים, ולכן לא מציגים מספר.',g:['scholarship'],st:'verified',b:'srch',by:'פר"ח',u:'https://www.perach.org.il/',y:'תשפ"ז',n:'סכומים ומועדי תשפ"ז מופיעים במקור יחיד ולא אומתו, ולכן הושמטו.'},
+    {id:'te-moe',t:'הלוואות מותנות ומענקים של משרד החינוך (מסלולי הוראה)',d:'משרד החינוך מציע הלוואה מותנית שהופכת למענק למי שמסיימים ועובדים בהוראה. הבקשה נבחנת לפי מצב אישי, הכנסה, יישוב מגורים ושירות צבאי. מועדי תשפ"ז לא נמצאו, וההגשה דרך מזכירות המוסד.',g:['scholarship'],st:'verified',b:'srch',by:'משרד החינוך',u:'https://edu.gov.il/special/students/Scholarships/Pages/scholarships-students.aspx',y:'תשפ"ו; מועדי תשפ"ז לא נמצאו',n:'אחד העמודים מציין שתקופת ההגשה הסתיימה.'}]};
+/* every item that is not a computed bonus gets a provenance record, so its chip, its sheet and the error report work like those of every other fact */
+Object.values(RECS).forEach(L=>L.forEach(r=>{if(r.f||r.o)return;
+  const f={id:'rec.'+r.id,t:r.t,v:r.d,by:r.by||'',scope:r.y||(r.b==='site'?`לפי הטקסט שנאסף ב-${DATA.built||FT_D}`:''),src:r.u||'',srcType:r.u?'official':'',status:r.st,checked:r.st==='verified'||r.b==='srch'?FT_D:(DATA.built||FT_D),note:`${REC_NOTE[r.b]}${r.n?` ${r.n}`:''}`};
+  FACTS.push(f);FACTM.set(f.id,f)}));
+/* the items that fit a degree (and an institution): scoped by the institutions that offer it, by its name and by its kind. A bonus item is read from the rules of the institution I chose, else of the universities that offer the degree */
+function recsFor(d,iid){
+  const off=d.of.map(o=>o.i),uni=off.filter(i=>UNI_RULES[i]),out=[];
+  (RECS[d.c]||[]).forEach(r=>{const sc=r.sc||{};
+    if(sc.pro&&!sc.pro.includes(d.pro))return;
+    if(sc.p&&!sc.p.test(d.n))return;
+    if(sc.i&&!sc.i.some(i=>off.includes(i)))return;
+    let ids=[],t=r.t,txt=r.d;
+    if(r.o){ids=iid&&UNI_RULES[iid]?[iid]:uni;if(!ids.length)return;t=`5 יח"ל ב${joinHe(r.o.map(k=>SN[k]))}: בונוס רשמי`;txt=bonusRecText(r.o,ids)}
+    else if(typeof txt==='function')txt=txt();
+    const mine=!!iid&&((sc.i&&sc.i.includes(iid))||(r.o&&ids.length===1&&ids[0]===iid));
+    out.push({r,t,txt,ids,rel:mine?0:(sc.i||r.o)?1:2,ins:sc.i?sc.i.filter(i=>off.includes(i)&&INST[i]).map(i=>INST[i].n):[]})});
+  return out.map((x,k)=>({...x,k})).sort((a,b)=>a.rel-b.rel||a.k-b.k)}
+const recTag=t=>`<span class="rc-tg ${t}">${ki(REC_TAGS[t][0])}${REC_TAGS[t][1]}</span>`;
+function recItemHTML(x){const r=x.r,u=httpUrl(r.u||''),
+  chip=r.o?(x.ids.length===1&&BONF[x.ids[0]]?factChip(BONF[x.ids[0]]):factChip('bonus.generic')):factChip(r.f||'rec.'+r.id);
+  return `<li class="rc-i${x.rel===0?' mine':''}"><div class="rc-h"><b>${esc(x.t)}</b>${x.rel===0?`<span class="rc-me">${ki('check')}המוסד שבחרתי</span>`:''}</div><p>${esc(x.txt)}</p>
+    <div class="rc-m">${r.g.map(recTag).join('')}${chip}${u?`<a class="rc-src" href="${esc(u)}" target="_blank" rel="noopener">${esc(siteHost(u)||'המקור')}<span class="sr"> (נפתח בלשונית חדשה)</span></a>`:''}</div>
+    ${x.ins.length?`<small class="rc-ins">רלוונטי ל${x.ins.length>1?'מוסדות':'מוסד'}: ${x.ins.map(esc).join(' · ')}</small>`:''}</li>`}
+/* the list, the honest line about points, and what each sign means (only the signs that appear) */
+function recsListHTML(L){
+  const tg=Object.keys(REC_TAGS).filter(t=>L.some(x=>x.r.g.includes(t)));
+  return `<p class="rc-st">${ki('star')}<span>${esc(REC_STMT)}</span></p>
+    ${L.length?`<ul class="rc-l">${L.map(recItemHTML).join('')}</ul>
+    <dl class="rc-leg">${tg.map(t=>`<div><dt>${recTag(t)}</dt><dd>${esc(REC_TAGS[t][2])}</dd></div>`).join('')}</dl>`
+    :'<p class="rc-none">עוד אין לנו בנתונים תנאי קבלה מיוחדים או מלגות שקשורות לתואר הזה, מעבר לציונים. בודקים את תנאי הקבלה המלאים בעמוד התוכנית באתר המוסד.</p>'}
+    <p class="fine">הרשימה נלקחה מנתוני האתר ומחיפוש שנעשה בשלב קודם, ואינה מלאה. היא לא מבטיחה קבלה ולא מחליפה את הנוסח באתר המוסד. <button class="linkbtn" data-ftr="gen">מצאתי טעות</button></p>`}
+function storyRecsHTML(X){return `<div class="rc"><h4 class="rc-h4">מה כדאי לעשות לפני?</h4>${recsListHTML(recsFor(X.d,X.P.i))}</div>`}
+const recsBlockHTML=d=>`<section class="blk" id="recs"><h2>מה כדאי לעשות לפני?</h2><p class="intro">לפני שמגישים אפשר לשאול מה עוד אפשר להכין. הנה מה שמצאנו בתנאי הקבלה, ביחידות הלימוד ובמלגות, עם סימון של מה כל דבר נותן ומה לא.</p><div class="rc">${recsListHTML(recsFor(d,S.uni))}</div></section>`;
 const storyCount=n=>`${n} מתוך ${STORY_MAX} תווים`;
 function storyHTML(X){
   const P=X.P,M=X.M,fl=[X.q.fl.iv?'ראיון':'',X.q.fl.port?'תיק עבודות':'',X.q.fl.test?'מבחן קבלה או מיון':''].filter(Boolean),txt=P.story||'';
@@ -6512,6 +6628,8 @@ function renderDegree(d){
       ${tierBox(d)}
       <div class="offers">${offers.map(offerHTML).join('')}</div></section>
 
+
+    ${safe(()=>recsBlockHTML(d),'')}
 
     ${ctxQA('deg:'+d.id,d.n)}
 
