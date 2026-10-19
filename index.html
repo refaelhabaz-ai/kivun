@@ -1317,7 +1317,7 @@ input[type=range]{accent-color:var(--primary);height:28px}
 .kp-sv{margin-top:2px}
 /* F4: doors */
 .kp-dr{border-top:1px solid var(--line);padding-top:16px}#kpDoors{scroll-margin-top:130px}
-.kp-dsum{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 12px;margin:8px 0 0;font-size:14.5px;font-weight:600}.kp-dsum>span{display:flex;gap:8px;align-items:center}.kp-dsum svg{width:18px;height:18px;color:var(--primary);flex:none}.kp-dsum .linkbtn{min-height:40px;min-width:44px;color:var(--primary-dark);text-decoration:underline;text-underline-offset:3px}.kp-dr h3{font-size:17px;margin-bottom:4px;display:flex;align-items:center;gap:8px}.kp-dr h3 svg{width:20px;height:20px;color:var(--primary);flex:none}
+.kp-dsum{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 12px;margin:8px 0 0;font-size:14.5px;font-weight:600}.kp-dsum>span{display:block;min-width:0}.kp-dsum svg{width:18px;height:18px;color:var(--primary);display:inline-block;vertical-align:-3px;margin-inline-end:8px}.kp-dsum .linkbtn{min-height:40px;min-width:44px;color:var(--primary-dark);text-decoration:underline;text-underline-offset:3px}.kp-dr h3{font-size:17px;margin-bottom:4px;display:flex;align-items:center;gap:8px}.kp-dr h3 svg{width:20px;height:20px;color:var(--primary);flex:none}
 .kp-dr h4{font-family:var(--head);font-size:16px;margin:0 0 4px;display:flex;align-items:center;gap:8px}.kp-dr h5{font-family:var(--head);font-size:14px;margin:12px 0 4px;color:var(--ink);display:flex;gap:8px;align-items:center}.kp-dr h5 span{font-size:12.5px;font-weight:600;color:var(--muted)}
 .kp-dt4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0}
 .kp-dtile{background:#F7F8FC;border:1px solid var(--line);border-radius:14px;padding:10px 12px;min-width:0;display:flex;flex-direction:column;gap:2px}
@@ -1335,7 +1335,7 @@ input[type=range]{accent-color:var(--primary);height:28px}
 .kp-dfb{font:inherit;font-weight:700;font-size:14.5px;color:var(--ink);display:inline-flex;gap:8px;align-items:center;min-height:40px;padding:0 4px;cursor:pointer;background:none;border:0}.kp-dfb:hover{color:var(--primary-dark);text-decoration:underline}
 .kp-dcmb{display:flex;gap:10px;align-items:flex-start;background:#FFF7E6;border-radius:14px;padding:10px 12px;margin:12px 0 0;font-size:14.5px}.kp-dcmb svg{width:20px;height:20px;flex:none;margin-top:2px;color:#B8860B}
 .kp-dok{background:#E9F8F1;border:1px solid #BFE3CF;border-radius:14px;padding:12px 14px;margin-top:14px;display:grid;gap:6px;font-size:14.5px}.kp-dok:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
-.kp-dok>b{display:flex;gap:8px;align-items:center;font-family:var(--head);color:#0B5A3E}.kp-dok>b svg{width:18px;height:18px;flex:none}.kp-dok ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}.kp-dok li b{margin-inline-end:6px}.kp-dok p{margin:0}
+.kp-dok>b{display:flex;gap:8px;align-items:center;font-family:var(--head);color:#0B5A3E}.kp-dok>b svg{width:18px;height:18px;flex:none}.kp-dok ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}.kp-dok li b{margin-inline-end:6px}.kp-dok li .ft-chip{display:flex;width:fit-content;margin-top:4px}.kp-dok p{margin:0}
 @media(max-width:620px){.kp-dt4{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:900px){.kp-lab{grid-template-columns:1fr}.kp-in{position:static}}
 @media(max-width:520px){.kp-row{grid-template-columns:minmax(0,1fr) 54px 64px 26px}}
@@ -5050,7 +5050,7 @@ function labInit(force){
   else{LAB.mode='quick';LAB.avg=sc.b?Math.max(55,Math.min(100,Math.round(sc.b))):85;LAB.m=4;LAB.e=4;LAB.x=1;LAB.rows=[]}
   /* with no score of mine, start at the average of those admitted (when known): a neutral, informative first view */
   const q=P.d&&P.i&&BY[P.d]?reqOf(BY[P.d],P.i):null,bp=q&&q.bench&&q.bench.p?Math.max(200,Math.min(800,Math.round(q.bench.p/10)*10)):0;
-  LAB.p=sc.p||(sv&&sv.p)||P.goalP||bp||600;
+  LAB.p=[sc.p,sv&&sv.p,P.goalP,bp].map(Number).find(v=>v>=200&&v<=800)||600; /* a saved score outside 200..800 (damaged storage) is skipped, as the input box would refuse it */
   LAB.on=true;LAB.base=labSnap();LAB.r0=labBase().map(r=>({k:r.k,u:r.u,g:r.g}));LAB.p0=LAB.p;LAB.dopen={};LAB.dplan=null}
 function labSave(){const P=pth();if(!P||hasReal())return;P.lab={mode:LAB.mode,avg:LAB.avg,m:LAB.m,e:LAB.e,x:LAB.x,rows:LAB.rows,p:LAB.p};pthSave()}
 function quickRows(){const a=LAB.avg,r=[{k:'heb',u:2,g:a},{k:'hist',u:2,g:a},{k:'civ',u:2,g:a},{k:'lit',u:2,g:a},{k:'bible',u:2,g:a},{k:'math',u:LAB.m,g:a},{k:'eng',u:LAB.e,g:a}];
@@ -5123,8 +5123,8 @@ const DOOR_ST={open:['✓','פתוחות','הציונים מגיעים לסף'],
 const DOOR_CAP=8; /* items shown before "show all" */
 const doorsByName=(a,b)=>BY[a.d].n.localeCompare(BY[b.d].n,'he')||INST[a.i].n.localeCompare(INST[b.i].n,'he');
 function doorItem(x,mode){
-  const d=BY[x.d],I=INST[x.i],med=mode!=='far'&&doorMed(d,x.i);
-  const tx=mode==='near'?(med?`קרוב להזמנה לשלב הבא (חסרות ${x.gap})`:`חסרות ${x.gap} נקודות בפסיכומטרי`):mode==='open'?(med?'מספיק להזמנה לשלב הבא (מיון אישי)':'הציונים מגיעים לסף'):'',tag=tx?`<i aria-hidden="true">${mode==='near'?'◐':'✓'}</i> ${tx}`:'';
+  const d=BY[x.d],I=INST[x.i],med=mode!=='far'&&doorMed(d,x.i),one=x.gap===1; /* one point is singular, as gapLine writes it */
+  const tx=mode==='near'?(med?`קרוב להזמנה לשלב הבא (${one?'חסרה נקודה אחת':`חסרות ${x.gap}`})`:`${one?'חסרה נקודה אחת':`חסרות ${x.gap} נקודות`} בפסיכומטרי`):mode==='open'?(med?'מספיק להזמנה לשלב הבא (מיון אישי)':'הציונים מגיעים לסף'):'',tag=tx?`<i aria-hidden="true">${mode==='near'?'◐':'✓'}</i> ${tx}`:'';
   return `<li><span class="kp-dn"><button type="button" class="linkbtn" data-open="${esc(d.id)}">${esc(d.n)}</button><small>${esc(I.n)}</small>${x.x&&mode!=='far'?`<small class="kp-dx">לשים לב: ${esc(x.x.length>110?x.x.slice(0,108)+'…':x.x)}</small>`:''}</span>${tag?`<span class="kp-dtag ${mode}">${tag}</span>`:''}</li>`}
 /* the open flags live in LAB.dopen: a repaint replaces the DOM on every input, so a <details> would close each time */
 function doorsList(key,items,mode){
@@ -5144,9 +5144,9 @@ function doorsHTML(X){
   if(!doorOk(sc))return `<div class="kp-dr">${head}<p class="fine">${f.rows.length?`${unitsNote()} בלי זה אי אפשר לספור דלתות.`:'מזינים ציוני בגרות (גם צפויים), ואספור לאילו תארים הציונים מגיעים.'}</p></div>`;
   const D=doors(sc),C=doorsCount(D),cov=doorsCov(),calc=C.open+C.near+C.far;
   /* deltas only against a starting point made of my own numbers; a placeholder average or score would make them meaningless */
-  const own=!!(S.sc&&S.sc.p&&(S.sc.b||bagRows().length)&&LAB.r0.length),b0=own?doorSc(LAB.r0,LAB.p0):null,B=doorOk(b0)?doors(b0):null,CB=B&&doorsCount(B);
+  const ps=S.sc&&+S.sc.p,own=!!(ps>=200&&ps<=800&&(+S.sc.b>0||bagRows().length)&&LAB.r0.length), /* a damaged saved score is not a starting point */b0=own?doorSc(LAB.r0,LAB.p0):null,B=doorOk(b0)?doors(b0):null,CB=B&&doorsCount(B);
   const tile=k=>{const [ic,lb,hint]=DOOR_ST[k],dl=CB?C[k]-CB[k]:0;
-    return `<div class="kp-dtile ${k}"><span><i aria-hidden="true">${ic}</i>${lb}</span><b class="num">${C[k]}</b>${dl?`<em class="kp-dd">${dl>0?'+':'−'}${Math.abs(dl)} מול ההתחלה</em>`:''}<small>${hint}</small></div>`};
+    return `<div class="kp-dtile ${k}"><span><i aria-hidden="true">${ic}</i>${lb}</span><b class="num">${C[k]}</b>${dl?`<em class="kp-dd"><bdi dir="ltr">${dl>0?'+':'−'}${Math.abs(dl)}</bdi> מול ההתחלה</em>`:''}<small>${hint}</small></div>`};
   const df=B?doorsDiff(B,D):null,opened=df?df.opened.slice().sort(doorsByName):[],near=D.filter(x=>x.st==='near').sort((a,b)=>a.gap-b.gap||doorsByName(a,b));
   const changed=!!B&&B!==D,out=[];
   if(B&&opened.length)out.push(`<div class="kp-dsec"><h4>נפתחו בזכות התרחיש <span class="kp-cnt">${opened.length}</span></h4>${doorsList('opened',opened,'open')}</div>`);
@@ -5162,29 +5162,34 @@ function doorsHTML(X){
   if(D.some(x=>(x.st==='open'||x.st==='near')&&doorMed(BY[x.d],x.i)))out.push(`<p class="fine">ברפואה, ברפואת שיניים ובתוכניות עם מיון אישי (מו"ר, מרק"ם) הסף רק מזמין לשלב הבא. זו לא קבלה.</p>`);
   /* turn the boosters I chose into dated steps */
   if(LAB.dplan){const p=LAB.dplan;
-    out.push(`<div class="kp-dok" id="kpDPlan" tabindex="-1" role="status"><b>${ki('check')}${p.n?`התוכנית נוספה: ${p.n===1?'תאריך אחד':p.n+' תאריכים'} בלשונית "התאריכים שלי"`:'התוכנית נשמרה בלי תאריכים'}</b>${p.n?`<ul>${p.steps.map(s=>`<li><b class="num">${esc(dShort(s.d))}</b> ${esc(s.t)}</li>`).join('')}</ul>`:''}${p.undated.length?`<p>בלי מועד שפורסם, ולכן בלי תאריך: ${p.undated.map(esc).join(', ')}. את התאריך אפשר להוסיף בעצמי בלשונית התאריכים.</p>`:''}${BTNS([KB('data-kgo="dates"','לתאריכים שלי')])}</div>`)}
+    out.push(`<div class="kp-dok" id="kpDPlan" tabindex="-1" role="status"><b>${ki('check')}${p.n?`התוכנית נוספה: ${p.n===1?'תאריך אחד':p.n+' תאריכים'} בלשונית "התאריכים שלי"`:'התוכנית נשמרה בלי תאריכים'}</b>${p.n?`<ul>${p.steps.map(s=>`<li><b class="num">${esc(dShort(s.d))}</b> ${esc(s.t)}${s.f?factChip(s.f,{lg:1}):''}</li>`).join('')}</ul>`:''}${p.undated.length?`<p>בלי מועד שפורסם, ולכן בלי תאריך: ${p.undated.map(esc).join(', ')}. את התאריך אפשר להוסיף בעצמי בלשונית התאריכים.</p>`:''}${BTNS([KB('data-kgo="dates"','לתאריכים שלי')])}</div>`)}
   else if(X.real&&LAB.boost.size)out.push(`<div class="kp-btns">${KB('data-lbplan','להפוך לתוכנית','primary')}</div><p class="fine">הבוסטרים שבחרתי הופכים לצעדים בלשונית התאריכים, רק כשיש להם מועד שפורסם. אפשר למחוק כל צעד אחר כך.</p>`);
   return `<div class="kp-dr">${head}<p class="fine">לכל תואר ומוסד שפורסם לו סף מספרי: דלת פתוחה כשהציונים בתרחיש מגיעים לסף, וקרובה כשחסרות עד ${DOOR_NEAR} נקודות בפסיכומטרי. זו השוואה לספים שפורסמו, לא הבטחה להתקבל.</p>
     <div class="kp-dt4" role="group" aria-label="ספירת הדלתות בתרחיש">${['open','near','far','na'].map(tile).join('')}</div>
-    <p class="fine">מחושב ל-${fmt(calc)} מתוך ${fmt(cov.all)} הצעות לימוד. למכללות אין עדיין סף מספרי במאגר.${C.na?` עוד ${fmt(C.na)} הצעות באוניברסיטאות עם סף שאי אפשר לחשב מהציונים (למשל ציוני משנה או סף שיפורסם בהמשך).`:''}${!B?(X.real?' אין לי עדיין גם בגרות וגם פסיכומטרי, ולכן זו ספירה של התרחיש בלבד, בלי השוואה למצב שלי.':' אלה מספרים לדוגמה, ולכן אין השוואה למצב שלי.'):''}</p>
+    <p class="fine">מחושב ל-${fmt(calc)} מתוך ${fmt(cov.all)} הצעות לימוד. למכללות אין עדיין סף מספרי במאגר.${C.na?` עוד ${fmt(C.na)} הצעות באוניברסיטאות עם סף שאי אפשר לחשב מהציונים (למשל ציוני משנה או סף שעדיין לא פורסם).`:''}${!B?(X.real?' אין לי עדיין גם בגרות וגם פסיכומטרי, ולכן זו ספירה של התרחיש בלבד, בלי השוואה למצב שלי.':' אלה מספרים לדוגמה, ולכן אין השוואה למצב שלי.'):''}</p>
     ${cycleNote()}${out.join('')}</div>`}
 /* "להפוך לתוכנית": the boosters I chose become dated steps in my dates (P.dates) and the bridge step is marked. Only dates that exist: the psychometric sessions and the
    Ministry's draft bagrut calendar. A step with no published date is listed but gets no date. Ids are stable, so pressing twice replaces instead of duplicating. */
+/* the fact behind a step the plan made (its f when that is a known fact; for an older save, found from its date). Nothing else gets a fact: my own dates stay mine */
+function planFact(x){if(x.src!=='lab')return '';const f=String(x.f||''),bk=String(x.bk||'');if(f&&factGet(f))return f;
+  if(bk.startsWith('psy-')){const z=PSYD.find(z=>z.reg===x.d||z.d===x.d);return z&&factGet('psy.date.'+z.id)?'psy.date.'+z.id:''}
+  return bk.startsWith('bag-')?'bagrut.2027':''}
 function doorsPlan(){
   const P=pth();if(!P||!LAB.boost.size)return;
   const bs=labBoosters({d:P.d,i:P.i}).filter(b=>LAB.boost.has(b.key)),f=labFinal(),steps=[],undated=[],SEAS={w:'חורף',s:'קיץ',b:'מועד ב'};
-  const put=(id,d,t)=>steps.push({id:'my-bst-'+id,d,t:t.slice(0,80),bk:id});
+  const put=(id,d,t,f)=>steps.push({id:'my-bst-'+id,d,t:t.slice(0,80),bk:id,f}); /* f = the fact behind the date, so the step shows its status like the site's own rows */
   bs.forEach(b=>{
     if(b.kind==='p'){if(steps.some(s=>s.bk.startsWith('psy-')))return; /* one retake, however many psychometric boosters are on */
       const z=psyPick();
-      if(z){if(z.n>=0)put('psy-reg',z.reg,`פסיכומטרי חוזר: סוגרים הרשמה למועד ${z.lbl}`);put('psy-exam',z.d,`פסיכומטרי חוזר, מועד ${z.lbl}: יעד ${f.P}`)}
+      if(z){const pf='psy.date.'+z.id;if(z.n>=0)put('psy-reg',z.reg,`פסיכומטרי חוזר: סוגרים את ההרשמה הרגילה למועד ${z.lbl}`,pf);put('psy-exam',z.d,`פסיכומטרי חוזר, מועד ${z.lbl}: יעד ${f.P}`,pf)}
       else undated.push('בחינה פסיכומטרית חוזרת')}
     else{const ex=b.diff&&b.diff.k?bagNext(b.diff.k)[0]:null;
-      if(ex)put('bag-'+b.key.replace(/[^a-z0-9]+/gi,'-'),daysTo(ex[2])>=0?ex[2]:ex[4],`${b.lbl} · בגרות ${SEAS[ex[0]]} (טיוטת הלוח)`);
+      if(ex)put('bag-'+b.key.replace(/[^a-z0-9]+/gi,'-'),daysTo(ex[2])>=0?ex[2]:ex[4],`${b.lbl} · בגרות ${SEAS[ex[0]]} (טיוטת הלוח)`,'bagrut.2027');
       else undated.push(b.lbl)}});
-  steps.forEach(s=>{P.dates=P.dates.filter(c=>c.id!==s.id);P.dates.push({id:s.id,t:s.t,d:s.d,src:'lab',bk:s.bk})});
+  steps.forEach(s=>{P.dates=P.dates.filter(c=>c.id!==s.id);P.dates.push({id:s.id,t:s.t,d:s.d,src:'lab',bk:s.bk,f:s.f})});
+  if(steps.length)KD.all=true; /* the dates tab shows 6 rows until asked for all: the new steps must not sit behind that button */
   if(!P.marks.bridge)setMark('bridge',Date.now());
-  LAB.dplan={n:steps.length,steps:steps.map(s=>({t:s.t,d:s.d})),undated};
+  LAB.dplan={n:steps.length,steps:steps.map(s=>({t:s.t,d:s.d,f:s.f})),undated};
   logAct();pthSave();PLC=null}
 
 /* one normalized answer for "where do I stand for this target": tier 1 official formula, 2 published number routes, 3 averages only, 0 open to all */
@@ -6368,7 +6373,8 @@ function timeline(pl){
     (many?tInfos().map(x=>x.X):[pl.X]).forEach(X=>{if(!X.start||!REGD[X.P.i])return;const R=REGD[X.P.i],f=X.fam,Y=X.start;
       [...(R.ev||[]),...(f==='med'||f==='dent'?R.evmed||[]:[]),...(f==='arch'?R.evarch||[]:[])].forEach(([md,t])=>{const [m,d]=md.split('-'),id='regev-'+md+'-'+X.P.i+'-'+t;if(seen.has(id))return;seen.add(id);
         L.push({id,d:isoOf(Y,+m,+d),k:'idf',approx:1,t:`${t} (בערך, לפי ${R.cy})${many?` · ${X.I.n}`:''}`,sub:`${X.I.n}: לפי המחזור האחרון שפורסם. המועד לשנה שלי מתפרסם באתר המוסד.`,f:REGF[X.P.i],src:R.src})})})}
-  (P&&P.dates||[]).forEach(x=>L.push({id:x.id,d:x.d,k:'mine',t:x.t,mine:1}));
+  (P&&P.dates||[]).forEach(x=>{const f=planFact(x); /* F4: a step made from an exam date shows the status of that date, like the site's own row beside it */
+    L.push({id:x.id,d:x.d,k:'mine',t:x.t,mine:1,...(f?{f,sub:f==='bagrut.2027'?'לפי טיוטת לוח הבחינות של משרד החינוך.':'לפי לוח המועדים של מאל"ו.'}:{})})});
   schEvents().forEach(x=>L.push(x)); /* F3: my tracked scholarships and verified windows */
   if(P&&P.end)L.push({id:'end-mine',d:P.end,k:'mine',t:endTitle(),sub:'התאריך שהזנתי בעצמי.'}); /* F2a: my own date (no delete button: it is edited under "עליי") */
   return L.filter(x=>x.d&&daysTo(x.d2||x.d)>=0).sort((a,b)=>a.d.localeCompare(b.d))}
