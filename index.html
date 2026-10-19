@@ -761,9 +761,15 @@ p.intro .linkbtn{color:var(--primary-dark);text-decoration:underline;text-underl
 /* header with 6 tabs: labels never wrap; tool buttons shrink to icons first, then the tabs move to the bottom bar */
 .link{white-space:nowrap}
 .botnav{overflow-x:auto;scrollbar-width:none}.botnav::-webkit-scrollbar{display:none}.botnav .link{flex:1 0 auto;white-space:nowrap}
-@media(max-width:1480px){#uniBtn span,#quizBtn span{display:none}#uniBtn,#quizBtn{padding:9px 11px}}
+@media(max-width:1600px){#uniBtn span,#quizBtn span{display:none}#uniBtn,#quizBtn{padding:9px 11px}}
 @media(max-width:1260px){.link{font-size:14px;padding:7px 10px}.hdr-in{gap:12px}#acctBtn:not(.in) span{display:none}}
-@media(min-width:1481px){.hdr-in{max-width:1380px}} /* F3: one more nav link: with the tool labels shown (wide screens) the bar needs this much room */
+/* F3: eight nav links. From 1081px the links are compact, the tool labels (which need more room than a laptop has) show only above 1600px, and the signed-in name only above 1320px; below 1180px the bar is tighter still */
+@media(min-width:1081px) and (max-width:1680px){.link{font-size:14px;padding:7px 9px}.links{gap:2px}.hdr-in{gap:12px}}
+@media(min-width:1081px) and (max-width:1320px){#acctBtn.in span:not(.av){display:none}}
+@media(min-width:1081px) and (max-width:1180px){.link{padding:7px 7px}.hdr-in{gap:8px}.tools{gap:6px}}
+@media(min-width:1081px) and (max-width:1120px){.link{padding:7px 6px}}
+@media(min-width:1261px){.hdr-in{max-width:1380px}}
+@media(min-width:1601px){.hdr-in{max-width:1700px}#uniBtn{max-width:180px}}
 @media(max-width:1080px) and (min-width:721px){
   .links{display:none}.tools{margin-inline-start:auto}
   .botnav{display:flex;position:fixed;bottom:0;inset-inline:0;z-index:44;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:6px 8px}
@@ -1119,13 +1125,13 @@ input[type=range]{accent-color:var(--primary);height:28px}
 .tl-f{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
 .tl{list-style:none;margin:0;padding:0;position:relative}
 .tl::before{content:"";position:absolute;inset-block:8px;inset-inline-start:7px;width:2px;background:#EEF0F6}
-.tl-i{position:relative;display:grid;grid-template-columns:18px 64px 1fr auto;gap:10px;align-items:start;padding:8px 0}
+.tl-i{position:relative;display:grid;grid-template-columns:18px 64px minmax(0,1fr) auto;gap:10px;align-items:start;padding:8px 0}
 .tl-dot{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid #C9CEE0;margin-top:3px;z-index:1}
 .tl-i.psy .tl-dot{border-color:#3B5BDB}.tl-i.bag .tl-dot{border-color:#0C9E73}.tl-i.mine .tl-dot{border-color:#D6336C}
 .tl-i.reg .tl-dot{background:#FF6B4A;border-color:#FF6B4A}.tl-i.soon .tl-dot{box-shadow:0 0 0 5px rgba(255,107,74,.2);animation:pulse 1.8s infinite}
 @keyframes pulse{50%{box-shadow:0 0 0 9px rgba(255,107,74,0)}}
 .tl-d b{font-family:var(--head);font-size:15px;display:block}.tl-d small{color:var(--muted);font-size:12px}
-.tl-b b{font-weight:600;font-size:14.5px;display:block;line-height:1.4}.tl-b small{display:block;color:var(--muted);font-size:13px;line-height:1.45}
+.tl-b b{font-weight:600;font-size:14.5px;display:block;line-height:1.4}.tl-b small{display:block;color:var(--muted);font-size:13px;line-height:1.45}.tl-b{min-width:0}.tl-b b,.tl-b small{overflow-wrap:anywhere} /* a pasted URL as a date title must wrap, not widen the row */
 .tl-src{font-size:12.5px;color:var(--muted);text-decoration:underline}.tl-b .linkbtn{font-size:12.5px;color:#B4321F;text-decoration:underline}
 .tl-n{font-size:12.5px;font-weight:700;color:var(--muted);white-space:nowrap;background:#F5F6FB;border-radius:999px;padding:2px 9px}
 .tl-n.hot{color:#fff;background:var(--primary)}
@@ -1136,7 +1142,7 @@ input[type=range]{accent-color:var(--primary);height:28px}
 .tl-add-r{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .tl-add input{font:inherit;font-size:14.5px;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;background:#fff;flex:1;min-width:140px}.tl-add input[type=date]{flex:0 0 auto;min-width:0}
 .tl-add .btn svg{width:16px;height:16px}
-@media(max-width:520px){.tl-i{grid-template-columns:18px 54px 1fr}.tl-n{grid-column:3;justify-self:start}}
+@media(max-width:520px){.tl-i{grid-template-columns:18px 54px minmax(0,1fr)}.tl-n{grid-column:3;justify-self:start}}
 /* Q&A shortcuts and saving */
 .pq{display:flex;flex-wrap:wrap;gap:10px}
 .pq-b{display:flex;flex-direction:column;align-items:flex-start;gap:2px;background:#F7F8FC;border-radius:16px;padding:10px 14px;transition:background .2s,transform .2s;text-align:right}
@@ -1209,7 +1215,7 @@ input[type=range]{accent-color:var(--primary);height:28px}
 .kp-next.done{background:linear-gradient(120deg,#20C997,#12A26B)}
 .kp-coach{display:flex;gap:12px;background:#fff;border-radius:22px;padding:10px 16px;box-shadow:var(--shadow);align-items:center}
 .kp-ci{flex:none;width:38px;height:38px;border-radius:13px;background:#E6EEFF;color:#3B5BDB;display:grid;place-items:center}.kp-ci svg{width:20px;height:20px}
-.kp-coach p{color:#3B4262;font-size:15px;line-height:1.6;margin:0}
+.kp-coach p{color:#3B4262;font-size:15px;line-height:1.6;margin:0;min-width:0;overflow-wrap:anywhere}
 @media(max-width:900px){.kp-stand{grid-template-columns:auto minmax(0,1fr)}.kp-sx{grid-column:1/-1}}
 @media(max-width:620px){.kp-goal{flex-wrap:wrap}.kp-ged{flex-direction:row;flex-wrap:wrap;gap:4px 16px;width:100%}.kp-stand{padding:12px 14px;gap:8px 14px}.kp-stand .kp-ring{width:68px;height:68px}.kp-stand .kp-rin b{font-size:16px}}
 
@@ -1264,7 +1270,7 @@ input[type=range]{accent-color:var(--primary);height:28px}
 .kp-tb{grid-column:1/-1;padding:4px 6px 12px;margin-inline-start:46px;font-size:15.5px;line-height:1.65}.kp-tb p{margin-block:0 8px}.kp-tb b{font-family:var(--head)}
 .kp-ul{margin:6px 0 10px;padding-inline-start:20px;display:grid;gap:4px;font-size:15px}
 .kp-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.kp-tip{background:#FFF7E6;border-radius:14px;padding:10px 14px;font-size:14.5px;color:#6B4F3A}
+.kp-tip{background:#FFF7E6;border-radius:14px;padding:10px 14px;font-size:14.5px;color:#6B4F3A;overflow-wrap:anywhere}
 .kp-form{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 4px;background:#F7F8FC;border-radius:16px;padding:12px}.kp-form label{font-family:var(--head);font-weight:600;font-size:15px;width:100%}
 .kp-form input{font:inherit;font-size:15px;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;background:#fff;min-width:0;flex:1 1 160px}.kp-form input:focus{outline:none;box-shadow:0 0 0 3px #FFD0C3}
 .kp-form .btn svg{width:16px;height:16px}
@@ -1459,7 +1465,7 @@ button.ft-chip:hover{box-shadow:0 1px 0 rgba(31,37,68,.22)}
 .sc-sum{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;font-size:15px;color:var(--muted)}.sc-sum:focus{outline:none}
 .sc-sum b{font:700 20px/1 var(--head);color:var(--ink);margin-inline-end:4px}
 .sc-seen{display:inline-flex;align-items:center;gap:6px;color:#0B5A3E;font-weight:600}.sc-seen svg{width:18px;height:18px}
-.sc-alert{display:flex;gap:12px;align-items:flex-start;background:#FFF7E6;border:1px solid #F0D595;border-radius:18px;padding:12px 16px;color:#6B4F3A}.sc-alert svg{flex:none;width:22px;height:22px;margin-top:2px}
+.sc-alert{display:flex;gap:12px;align-items:flex-start;background:#FFF7E6;border:1px solid #F0D595;border-radius:18px;padding:12px 16px;color:#6B4F3A}.sc-alert svg{flex:none;width:22px;height:22px;margin-top:2px}.sc-alert>div{min-width:0;overflow-wrap:anywhere}
 .sc-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
 .sc-q{background:#fff;border-radius:24px;box-shadow:var(--shadow);padding:18px 20px;border-inline-start:6px solid var(--primary)}
 .sc-qk{font:600 13px/1 var(--head);color:var(--primary-dark);margin:0 0 6px}
@@ -1486,9 +1492,9 @@ button.ft-chip:hover{box-shadow:0 1px 0 rgba(31,37,68,.22)}
 .sc-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}.sc-cf{font-size:13px;color:var(--muted)}
 .sc-tr{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:#0B5A3E;min-height:42px}.sc-tr svg{width:18px;height:18px}
 .sc-h3{font-size:17px;margin:12px 0 4px}
-.sc-tl{list-style:none;margin:0;padding:0;display:grid;gap:10px}.sc-it{border:1px solid var(--line);border-radius:16px;padding:10px 14px;display:flex;flex-direction:column;gap:2px;background:#FAFBFF}
-.sc-it.soon{border-color:#F0D595;background:#FFF7E6}.sc-it small{color:var(--muted);font-size:13.5px}.sc-it .kp-btns{margin-top:6px}
-.sc-ib{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}.sc-ib b{font-weight:700;overflow-wrap:anywhere}
+.sc-tl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:10px}.sc-it{border:1px solid var(--line);border-radius:16px;padding:10px 14px;display:flex;flex-direction:column;gap:2px;background:#FAFBFF;min-width:0}
+.sc-it.soon{border-color:#F0D595;background:#FFF7E6}.sc-it small{color:var(--muted);font-size:13.5px;overflow-wrap:anywhere}.sc-it .kp-btns{margin-top:6px}
+.sc-ib{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}.sc-ib b{font-weight:700;overflow-wrap:anywhere;min-width:0}
 .sc-ps{flex:none;font-size:12.5px;font-weight:700;border-radius:999px;padding:2px 10px;background:#E6EEFF;color:#233A8B;white-space:nowrap}.sc-ps.done{background:#E3F7EE;color:#0B5A3E}
 .sc-rail .tl{margin-bottom:6px}.sc-rail .kp-btns{align-items:center}
 .sc-il{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr))}
@@ -5117,7 +5123,7 @@ function summaryText(pl){
     `פסיכומטרי: ${sc.p?sc.p+(S.sc&&S.sc.estP?' (צפוי)':''):'עוד אין'} · ממוצע בגרות: ${sc.b?fmt(sc.b,1)+(S.sc&&S.sc.est?' (צפוי)':''):'עוד אין'}`];
   const t=pl.tasks.filter(x=>!x.done).slice(0,5);
   if(t.length)L.push('','הצעדים הבאים:',...t.map(x=>'• '+x.t+(x.due?` (${dueText(x)})`:'')));
-  const ev=timeline(pl).filter(x=>!x.id.startsWith('psyres-')).slice(0,3);
+  const ev=timeline(pl).filter(x=>!x.id.startsWith('psyres-')&&x.k!=='sch').slice(0,3); /* my scholarship items are private: not in a summary I share */
   if(ev.length)L.push('','מועדים קרובים:',...ev.map(x=>{const f=x.f&&factGet(x.f);return `• ${dLong(x.d)}: ${x.t}${f&&f.status!=='verified'?' ('+factLabel(f)+')':''}`}));
   return L.join('\n')}
 
@@ -5891,7 +5897,7 @@ function meFieldsHTML(mode,keys){
   const attr=mode==='prof'?(k,v)=>`data-pq="${k}" data-pv="${v}"`:(k,v)=>`data-kme="${k}:${v}"`,p=S.prof||{};
   return MEQ().filter(q=>keys.includes(q.k)).map(q=>`<div class="field kp-mq"><label>${q.q}</label>${q.h?`<span class="hint">${q.h}</span>`:''}${meChips(q,mode==='prof'?p[q.k]:meVal(q.k),attr)}</div>`).join('')}
 /* the profile form shows the same questions, folded, under "עוד קצת עליי" */
-const PROF_OPT=['stage','stageAt','sex','reg','nat','svc','res','inc','first']; /* the last four come from the scholarships page (optional, sensitive, kept in this browser) */
+const PROF_OPT=['stage','stageAt','sex','reg','nat','svc','res','resAt','inc','first']; /* svc, res (with resAt), inc and first come from the scholarships page (optional, sensitive, kept in this browser) */
 function profMoreHTML(){const p=S.prof||{};
   return `<details class="kp-more-me" ${p.sex||p.reg||p.nat||p.stage?'open':''}><summary>עוד קצת עליי <small>(לא חובה, מדייק את המסלול)</small></summary>${meFieldsHTML('prof',['stage','sex','reg','nat'])}<p class="fine">${MENOTE}</p></details>`}
 const MENOTE='המידע נשמר רק בדפדפן הזה. הוא משמש להתאמת הניסוח, מועדי הבחינות והמוסדות שמוצגים לי, ואפשר לדלג על כל שאלה.';
@@ -6457,7 +6463,7 @@ const SC_DONE=['submitted','received','rejected']; /* after "הוגשה" the rem
 const SC_STATE={yes:['✓','מתאים'],maybe:['≈','כנראה מתאים'],check:['?','לבדוק']};
 const SC_CF={high:'גבוהה',medium:'בינונית',low:'נמוכה'};
 const SC_RES={'0':[0,0],'1':[1,19],'20':[20,49],'50':[50,99],'100':[100,1e9]}; /* the reserve-days buckets of the question: min and max */
-const SCF={f:'all',inst:'',more:{},insts:false,edit:false,rail:false}; /* screen state, never saved */
+const SCF={f:'all',inst:'',more:{},insts:false,edit:false,rail:false,wy:false}; /* screen state, never saved */
 const own=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
 const isoOk=s=>{if(typeof s!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(s))return false;const d=new Date(s+'T00:00:00');return !isNaN(d)&&isoOf(d.getFullYear(),d.getMonth()+1,d.getDate())===s&&d.getFullYear()>=2020&&d.getFullYear()<=2040};
 /* ---- my tracker: kivun3.sch = {v:1, items:[{id,n,u,d,st,note,rid,ts}], notif, seen, skip:{question:1}, nday}. Read defensively: it comes from storage ---- */
@@ -6471,6 +6477,7 @@ function schS(){if(SCHS)return SCHS;const x=store.get('sch',null),s={v:1,items:[
     if(x.skip&&typeof x.skip==='object')['svc','res','reg','first','inc'].forEach(k=>{if(x.skip[k])s.skip[k]=1})}
   return SCHS=s}
 const schSave=()=>store.set('sch',schS());
+const schKept=()=>persisted('sch',schS()); /* a failed write (private browsing) would make the items vanish on reload */
 const schTrack=rid=>schS().items.find(i=>i.rid===rid);
 /* the two badges: a mark when the road exists (GMARK), and the saved state when it does not yet */
 const schSeenOn=()=>{const s=schS();return !!(s.seen||s.items.length)};
@@ -6487,11 +6494,11 @@ const schRec=id=>SCH.find(r=>r.id===id)||schInstRecs().find(r=>r.id===id)||null;
 const schInsts=()=>{const P=pth();return P&&P.targets?P.targets.map(t=>t.i):[]};
 /* ---- matching: what the profile says about each condition. ok = it holds, pr = probably, no = it does not, un = not known yet ---- */
 function schEval(r){
-  const e=r.eligibility||{},p=S.prof||{},ok=[],pr=[],no=[],un=[],svc=p.svc||'',res=svc==='none'?'0':(p.res||'');
+  const e=r.eligibility||{},p=S.prof||{},ok=[],pr=[],no=[],un=[],svc=p.svc||'',res=svc==='none'?'0':schRes();let wk=0; /* wk: matches that say nothing about the main condition (the institution is one of my targets) */
   if(e.svc){const c=e.svc==='combat';
     if(!svc)un.push(c?'שירות בתפקיד לוחם או תומך לחימה':'שירות צבאי או לאומי');
     else if(svc==='none')no.push('מיועדת למי ששירתו, ולא שירתתי');
-    else if(c&&svc!=='combat')un.push('מיועדת ללוחמים, והשירות שלי היה בתפקיד אחר');
+    else if(c&&svc!=='combat')un.push('האם התפקיד שלי נחשב לוחם או תומך לחימה (המלגה מיועדת ללוחמים)');
     else ok.push(c?'שירתתי בתפקיד לוחם או תומך לחימה':'שירתתי שירות צבאי או לאומי')}
   if(e.res){const t=e.res,b=SC_RES[res];
     if(!b)un.push(t<=1?'שירות מילואים':`לפחות ${t} ימי מילואים`);
@@ -6506,7 +6513,7 @@ function schEval(r){
     else if(p.inc==='mid')pr.push('המצב הכלכלי בסביבות הממוצע, וההכרעה אצל הגוף');
     else if(p.inc==='high')no.push('מבוססת על צורך כלכלי');else un.push('מצב כלכלי')}
   if(e.inst&&INST[e.inst]){const T=schInsts();
-    if(T.includes(e.inst))ok.push('המוסד נמצא ביעדים שלי');
+    if(T.includes(e.inst)){ok.push('המוסד נמצא ביעדים שלי');wk++}
     else if(T.length&&!r.gen)no.push(`מיועדת ללומדים ${bIn(INST[e.inst].n)}`);else un.push(`לימודים ${bIn(INST[e.inst].n)}`)}
   if(e.stage){const cur=stageNow();
     if(!cur)un.push('השלב שלי: כיתה י"ב או בשירות');
@@ -6514,7 +6521,7 @@ function schEval(r){
     else if((cur==='g10'||cur==='g11')&&e.stage.includes('g12'))pr.push('אני עוד לפני כיתה י"ב');
     else no.push('מיועדת למי שבכיתה י"ב או בשירות')}
   if(e.open)pr.push('פתוחה לסטודנטים בכלל');
-  const chk=e.chk||[],st=no.length?'check':(!un.length&&!pr.length&&ok.length&&!chk.length&&r.status==='verified')?'yes':(ok.length||pr.length)?'maybe':'check';
+  const chk=e.chk||[],st=no.length?'check':(!un.length&&!pr.length&&ok.length&&!chk.length&&r.status==='verified')?'yes':((ok.length||pr.length)&&(ok.length+pr.length>wk||!(un.length||chk.length)))?'maybe':'check';
   return {st,ok,pr,no,un,chk}}
 const schHas=(r,k)=>{const e=r.eligibility||{};return k==='svc'?!!e.svc:k==='res'?!!e.res:k==='reg'?!!e.reg:k==='first'?!!e.first:k==='inc'?!!e.need:false};
 /* the "one more question" prompts: each sets one optional profile field (kept in this browser only) */
@@ -6529,8 +6536,11 @@ const SCQ=()=>[
     why:'יש מלגות שמיועדות לדור ראשון להשכלה גבוהה.'},
   {k:'inc',q:`איך אני ${gx('מתאר','מתארת','מתאר/ת')} את המצב הכלכלי של המשפחה?`,o:[['low','מתחת לממוצע'],['mid','בסביבות הממוצע'],['high','מעל הממוצע']],
     why:'מלגות לפי צורך כלכלי נבחנות לפי הכנסה ותנאים נוספים. זו שאלה אישית, ולכן היא אופציונלית, ואפשר להמשיך בלעדיה.'}];
-const schNextQ=()=>{const s=schS(),p=S.prof||{};return SCQ().find(q=>!p[q.k]&&!s.skip[q.k]&&!(q.k==='res'&&p.svc==='none')&&SCH.some(r=>schHas(r,q.k)))||null};
-function schSetProf(k,v){S.prof={...(S.prof||{})};if(S.prof[k]===v)delete S.prof[k];else S.prof[k]=v;store.set('prof',S.prof);PLC=null}
+/* the reserve-days answer is about the last year: after a year it counts as not answered (resAt is set with it) */
+const schRes=()=>{const p=S.prof||{};return p.res&&(!p.resAt||Date.now()-p.resAt<=365*864e5)?p.res:''};
+const schAns=k=>k==='res'?schRes():(S.prof||{})[k];
+const schNextQ=()=>{const s=schS();return SCQ().find(q=>!schAns(q.k)&&!s.skip[q.k]&&!(q.k==='res'&&(S.prof||{}).svc==='none')&&SCH.some(r=>schHas(r,q.k)))||null};
+function schSetProf(k,v){S.prof={...(S.prof||{})};if(S.prof[k]===v&&schAns(k)===v){delete S.prof[k];if(k==='res')delete S.prof.resAt}else{S.prof[k]=v;if(k==='res')S.prof.resAt=Date.now()}store.set('prof',S.prof);PLC=null}
 /* ---- dates: my own items and the verified windows become events of the road's calendar (timeline, dates tab, calendar file) ---- */
 function schEvents(){const s=schS(),L=[];
   s.items.forEach(it=>{if(it.d&&!SC_DONE.includes(it.st)&&daysTo(it.d)>=0)L.push({id:'sch-'+it.id,d:it.d,k:'sch',t:'מועד אחרון למלגה: '+it.n,nm:it.n,sub:'במעקב שלי · '+SC_ST[it.st],src:it.u,al:[14,7,2],tid:it.id})});
@@ -6600,18 +6610,19 @@ document.addEventListener('submit',e=>{if(e.target.id!=='scF')return;e.preventDe
   if(!n)return err('צריך שם למלגה');
   if(d&&!isoOk(d))return err('התאריך לא תקין');
   if(ur&&!u)return err('הקישור צריך להתחיל ב-https:// או ב-http://');
+  if(u&&new URL(u).hostname.includes('%'))return err('שם האתר בקישור לא תקין (אולי יש בו רווח)');
   if(!own(SC_ST,st))return err('הסטטוס לא תקין');
   const s=schS(),id=f.dataset.id;let it=id?s.items.find(i=>i.id===id):null;
   if(!it){if(s.items.length>=60)return err('אפשר לעקוב אחרי עד 60 מלגות. כדאי להסיר מלגות שכבר לא רלוונטיות');
     it={id:schId(),rid:/^[\w-]{1,40}$/.test(f.dataset.rid||'')?f.dataset.rid:'',ts:Date.now()};s.items.push(it)}
-  Object.assign(it,{n,u,d,st,note});schSave();schMarks();closeOv();schPaint();toast(SC_DONE.includes(st)?'נשמר. התזכורות למלגה הזו נעצרו':'נשמר במעקב')});
+  Object.assign(it,{n,u,d,st,note});schSave();schMarks();closeOv();schPaint('[data-sch="tedit|'+it.id+'"]','#scTrkH');toast(!schKept()?'נשמר, אבל הדפדפן לא מאפשר לשמור (אולי גלישה פרטית). המלגה תישאר רק עד שסוגרים את הדף':SC_DONE.includes(st)?'נשמר. התזכורות למלגה הזו נעצרו':'נשמר במעקב')});
 function schItemHTML(it){const done=SC_DONE.includes(it.st),n=it.d?daysTo(it.d):null,u=httpUrl(it.u),id=esc(it.id);
   const when=!it.d?'בלי מועד אחרון':done?`מועד אחרון ${dLong(it.d)}`:n<0?`מועד אחרון ${dLong(it.d)} · המועד עבר`:`מועד אחרון ${dLong(it.d)} · ${inN(n)}`;
   return `<li class="sc-it ${!done&&n!==null&&n>=0&&n<=7?'soon':''}"><div class="sc-ib"><b>${esc(it.n)}</b><span class="sc-ps ${done?'done':''}">${esc(SC_ST[it.st])}</span></div>
     <small>${esc(when)}${!done&&n!==null&&n>=0&&n<=7?' · השבוע':''}</small>${it.note?`<small>${esc(it.note.length>90?it.note.slice(0,90)+'…':it.note)}</small>`:''}
     <div class="kp-btns">${u?`<a class="btn soft sm" href="${esc(u)}" target="_blank" rel="noopener">לדף</a>`:''}${done?'':KB(`data-sch="sub|${id}"`,'הגשתי')}${KB(`data-sch="tedit|${id}"`,'עריכה')}</div></li>`}
 function schTrackHTML(){const s=schS(),L=[...s.items].sort((a,b)=>(SC_DONE.includes(a.st)-SC_DONE.includes(b.st))||(a.d||'9').localeCompare(b.d||'9'));
-  return `<div class="kp-card sc-trk"><div class="pc-h"><h2>${ki('coin')}המעקב שלי</h2><span class="pc-c num">${L.length}</span></div>
+  return `<div class="kp-card sc-trk"><div class="pc-h"><h2 id="scTrkH" tabindex="-1">${ki('coin')}המעקב שלי</h2><span class="pc-c num">${L.length}</span></div>
     ${L.length?`<ul class="sc-tl">${L.map(schItemHTML).join('')}</ul>`:'<p>עוד לא הוספתי מלגה. אפשר להוסיף מלגה מהרשימה או מלגה שמצאתי בעצמי, ולקבל ספירה לאחור ותזכורות.</p>'}
     <div class="kp-btns">${KB('data-sch="new"','הוספת מלגה משלי')}</div></div>`}
 function schTlRow(x){const n=daysTo(x.d),hot=n<=14;
@@ -6631,11 +6642,11 @@ function schSoonHTML(){const L=schEvents().filter(x=>daysTo(x.d)<=7).sort((a,b)=
 function schQHTML(){const q=schNextQ();if(!q)return '';
   return `<div class="sc-q" role="group" aria-labelledby="scqT"><p class="sc-qk">עוד שאלה אחת</p><h2 id="scqT" class="sc-qh" tabindex="-1">${q.q}</h2>
     <div class="pick">${q.o.map(([v,l])=>`<button type="button" class="chip" data-sch="q|${q.k}|${esc(v)}" aria-pressed="false" style="--c2:#FF8A65"><i></i>${esc(l)}</button>`).join('')}<button type="button" class="btn soft sm" data-sch="qskip|${q.k}">לא רוצה לענות</button></div>
-    <details class="sc-wy"><summary>למה אנחנו שואלים</summary><p>${esc(q.why)} התשובה משפיעה רק על הסדר והסימון בדף הזה, נשמרת בדפדפן הזה בלבד, ואפשר לשנות או למחוק אותה בכל רגע.</p></details></div>`}
-function schMeHTML(){const p=S.prof||{},s=schS(),Q=SCQ(),any=Q.some(q=>p[q.k]||s.skip[q.k]);
+    <details class="sc-wy"${SCF.wy?' open':''}><summary>למה אנחנו שואלים</summary><p>${esc(q.why)} התשובה משפיעה רק על הסדר והסימון בדף הזה, נשמרת בדפדפן הזה בלבד, ואפשר לשנות או למחוק אותה בכל רגע.</p></details></div>`}
+function schMeHTML(){const s=schS(),Q=SCQ(),any=Q.some(q=>schAns(q.k)||s.skip[q.k]);
   if(!SCF.edit)return any||!schNextQ()?`<div class="kp-btns" style="margin-top:0">${KB('data-sch="edit"','עריכת מה שסיפרתי להתאמה')}</div>`:'';
-  return `<div class="kp-card sc-me"><div class="pc-h"><h2>${ki('user')}מה סיפרתי להתאמה</h2></div>
-    ${Q.map(q=>`<div class="field kp-mq"><label>${q.q}</label><div class="pick">${q.o.map(([v,l])=>`<button type="button" class="chip" data-sch="q|${q.k}|${esc(v)}" aria-pressed="${p[q.k]===v}" style="--c2:#FF8A65"><i></i>${esc(l)}</button>`).join('')}</div>
+  return `<div class="kp-card sc-me"><div class="pc-h"><h2 id="scMeH" tabindex="-1">${ki('user')}מה סיפרתי להתאמה</h2></div>
+    ${Q.map(q=>`<div class="field kp-mq"><label>${q.q}</label><div class="pick">${q.o.map(([v,l])=>`<button type="button" class="chip" data-sch="q|${q.k}|${esc(v)}" aria-pressed="${schAns(q.k)===v}" style="--c2:#FF8A65"><i></i>${esc(l)}</button>`).join('')}</div>
       ${s.skip[q.k]?`<span class="sc-fine">בחרתי לא לענות. <button type="button" class="linkbtn" data-sch="qask|${q.k}">לשאול שוב</button></span>`:''}</div>`).join('')}
     <p class="fine">הפרטים נשמרים בדפדפן הזה בלבד. לחיצה על תשובה שנבחרה מוחקת אותה.</p><div class="kp-btns">${KB('data-sch="edit"','סיום')}</div></div>`}
 const schPass=r=>(SCF.f==='all'||[r.type,...(r.also||[])].some(t=>SC_GRP[SCF.f].includes(t)))&&(!SCF.inst||!r.inst||r.inst===SCF.inst);
@@ -6668,31 +6679,33 @@ function renderSch(){
   return pageHead('מלגות וזכויות','מלגות, הטבות וזכויות ללומדים, עם מקור ומצב בדיקה לכל אחת. הדף עובד גם בלי פרופיל, ומתאים את עצמו למה שאספר עליי.')+
   `<section class="sec" style="padding-top:8px"><div class="wrap sc-wrap"><div class="srcnote sc-trust">${ICON.check}<div><b>מה אפשר לסמוך עליו כאן:</b> סכום ומועד מוצגים רק כשהוצלבו בכמה מקורות, ואז עם המחזור שבו פורסמו. בכל מקרה אחר כתוב "לפי פרסום הגוף המעניק" והקישור לדף שלו. את הפרטים האישיים שאספר כאן אפשר להשאיר ריקים, והם נשמרים בדפדפן הזה בלבד.</div></div>
     <div id="schHost">${schBody()}</div></div></section>`}
-const schPaint=sel=>{const h=$('#schHost');if(!h)return;h.innerHTML=schBody();if(sel)refocus(sel)};
-document.addEventListener('click',e=>{const b=e.target.closest('[data-sch]');if(!b)return;const [a,x,y]=b.dataset.sch.split('|'),s=schS();
-  if(a==='f'){SCF.f=own(SC_GRP,x)?x:'all';SCF.more={};schPaint()}
-  else if(a==='more'){if(['maybe','check'].includes(x)){SCF.more[x]=!SCF.more[x];schPaint()}}
-  else if(a==='insts'){SCF.insts=!SCF.insts;schPaint()}
-  else if(a==='rail'){SCF.rail=!SCF.rail;schPaint()}
-  else if(a==='edit'){SCF.edit=!SCF.edit;schPaint()}
+/* repaint, then focus the first selector that still exists: the control that was activated keeps the keyboard focus (the host is rebuilt) */
+const schPaint=(...sel)=>{const h=$('#schHost');if(!h)return;h.innerHTML=schBody();for(const q of sel){const e=$(q);if(e){e.focus({preventScroll:true});break}}};
+document.addEventListener('toggle',e=>{if(e.target.classList&&e.target.classList.contains('sc-wy'))SCF.wy=e.target.open},true);
+document.addEventListener('click',e=>{const b=e.target.closest('[data-sch]');if(!b)return;const [a,x,y]=b.dataset.sch.split('|'),s=schS(),self='[data-sch="'+CSS.escape(b.dataset.sch)+'"]';
+  if(a==='f'){SCF.f=own(SC_GRP,x)?x:'all';SCF.more={};schPaint(self)}
+  else if(a==='more'){if(['maybe','check'].includes(x)){SCF.more[x]=!SCF.more[x];schPaint(self)}}
+  else if(a==='insts'){SCF.insts=!SCF.insts;schPaint(self)}
+  else if(a==='rail'){SCF.rail=!SCF.rail;schPaint(self)}
+  else if(a==='edit'){SCF.edit=!SCF.edit;schPaint(SCF.edit?'#scMeH':self)}
   else if(a==='q'){const q=SCQ().find(q=>q.k===x);if(!q||!q.o.some(o=>String(o[0])===y))return;schSetProf(x,y);
-    const n=SCH.filter(r=>schEval(r).st!=='check').length;schPaint('#scqT,#scSum');toast(`נשמר בדפדפן הזה. ${n} רשומות נראות מתאימות או כנראה מתאימות`)}
-  else if(a==='qskip'){if(['svc','res','reg','first','inc'].includes(x)){s.skip[x]=1;schSave();schPaint('#scqT,#scSum')}}
-  else if(a==='qask'){delete s.skip[x];schSave();schPaint()}
+    const n=SCH.filter(r=>schEval(r).st!=='check').length;SCF.wy=false;schPaint(...(b.closest('.sc-me')?['.sc-me '+self]:['#scqT','#scSum']));toast(`נשמר בדפדפן הזה. ${n?n===1?'רשומה אחת נראית מתאימה או כנראה מתאימה':n+' רשומות נראות מתאימות או כנראה מתאימות':'עוד אין רשומות שנראות מתאימות'}`)}
+  else if(a==='qskip'){if(['svc','res','reg','first','inc'].includes(x)){s.skip[x]=1;schSave();SCF.wy=false;schPaint('#scqT','#scSum')}}
+  else if(a==='qask'){delete s.skip[x];schSave();schPaint('.sc-me [data-sch^="q|'+CSS.escape(x)+'|"]','#scMeH')}
   else if(a==='info')openSch(x);
   else if(a==='add')openSchForm('',x);
   else if(a==='new')openSchForm('','');
   else if(a==='tedit')openSchForm(x,'');
-  else if(a==='sub'){const it=s.items.find(i=>i.id===x);if(!it)return;it.st='submitted';schSave();schMarks();schPaint();toast('סימנתי כהגשה. התזכורות למלגה הזו נעצרו')}
+  else if(a==='sub'){const it=s.items.find(i=>i.id===x);if(!it)return;it.st='submitted';schSave();schMarks();schPaint('[data-sch="tedit|'+it.id+'"]','#scTrkH');toast(!schKept()?'סימנתי, אבל הדפדפן לא מאפשר לשמור (אולי גלישה פרטית). זה יישאר רק עד שסוגרים את הדף':'סימנתי כהגשה. התזכורות למלגה הזו נעצרו')}
   else if(a==='del'){const q=$('#scDelAsk');if(q){q.hidden=false;const ok=q.querySelector('button');if(ok)ok.focus()}}
   else if(a==='delno'){const q=$('#scDelAsk');if(q)q.hidden=true}
-  else if(a==='delok'){s.items=s.items.filter(i=>i.id!==x);schSave();schMarks();closeOv();schPaint();toast('המלגה הוסרה מהמעקב')}
+  else if(a==='delok'){s.items=s.items.filter(i=>i.id!==x);schSave();schMarks();closeOv();schPaint('#scTrkH');toast('המלגה הוסרה מהמעקב')}
   else if(a==='seen'){s.seen=1;schSave();schMarks();schPaint('#scSum');toast('סומן. התג "בדקתי מלגות" נוסף להישגים שלי')}
   else if(a==='ics'){dl('kivun-scholarship-dates.ics',icsFile(ev=>ev.k==='sch'),'text/calendar;charset=utf-8').then(ok=>ok&&toast('הקובץ נשמר. אפשר לפתוח אותו ביומן'))}
   else if(a==='notif'){
-    if(s.notif){s.notif=0;schSave();schPaint();toast('ההתראות כובו');return}
+    if(s.notif){s.notif=0;schSave();schPaint(self);toast('ההתראות כובו');return}
     if(!('Notification' in window)){toast('הדפדפן הזה לא תומך בהתראות');return}
-    let called=false;const done=p=>{if(called)return;called=true;if(p==='granted'){s.notif=1;schSave();schPaint();toast('ההתראות הופעלו. הן יופיעו רק כשהאתר פתוח בדפדפן')}else toast('הדפדפן לא אישר התראות')};
+    let called=false;const done=p=>{if(called)return;called=true;if(p==='granted'){s.notif=1;schSave();schPaint(self);toast('ההתראות הופעלו. הן יופיעו רק כשהאתר פתוח בדפדפן')}else toast('הדפדפן לא אישר התראות')};
     try{const r=Notification.requestPermission(done);if(r&&r.then)r.then(done)}catch(err){toast('אי אפשר להפעיל התראות בדפדפן הזה')}}
 });
 document.addEventListener('change',e=>{if(e.target.id==='scInst'){const v=e.target.value;SCF.inst=INST[v]?v:'';schPaint('#scInst')}});
@@ -6708,6 +6721,7 @@ function renderChrome(){
   $('#botnav').innerHTML=[lk('home','תארים'),lk('jobs','מקצועות'),lk('path','המסלול שלי',navRing()),lk('forum','שאלות'),more(['tech','list','calc','src','me','dir','sch'].includes(v))].join('');
   $('#uniLabel').textContent=S.uni?INST[S.uni].n:'כל המוסדות';
   $('#quizLabel').textContent=profileOK()?'הפרופיל שלי':'מילוי פרופיל';
+  $('#uniBtn').setAttribute('aria-label','מוסד לימודים: '+$('#uniLabel').textContent);$('#quizBtn').setAttribute('aria-label',$('#quizLabel').textContent); /* the visible labels hide below 1600px */
   $('#counts').textContent=`${fmt(DEG.length)} תארים ו-${fmt(DEG.reduce((a,d)=>a+d.of.length,0))} תוכניות ב-${DATA.inst.length} מוסדות, לפי המל"ג.`;
 }
 function openMore(){
