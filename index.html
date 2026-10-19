@@ -1452,6 +1452,50 @@ button.ft-chip:hover{box-shadow:0 1px 0 rgba(31,37,68,.22)}
 .ft-err{margin-top:10px}.ft-err .btn{min-height:42px}
 .ft-cov{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-block:12px}.ft-cov>div{border:1px solid var(--line);border-radius:14px;padding:10px 14px;background:#fff}.ft-cov b{display:block;font:700 26px/1.2 var(--head)}.ft-cov span{font-size:14px;color:var(--muted)}
 @media(max-width:520px){.ft-chip{font-size:12.5px}.ft-chip.lg{width:100%}.ft-tier{padding:12px}}
+/* F3 scholarships center (sc-): the state is always an icon plus words, never a color alone */
+.sc-wrap,#schHost{display:flex;flex-direction:column;gap:20px}
+.sc-wrap .srcnote{margin:0}.sc-fine{font-size:14px;color:var(--muted)}.sc-fine .linkbtn,.sc-foot .linkbtn{color:var(--primary-dark);text-decoration:underline}
+.sc-sum{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;font-size:15px;color:var(--muted)}.sc-sum:focus{outline:none}
+.sc-sum b{font:700 20px/1 var(--head);color:var(--ink);margin-inline-end:4px}
+.sc-seen{display:inline-flex;align-items:center;gap:6px;color:#0B5A3E;font-weight:600}.sc-seen svg{width:18px;height:18px}
+.sc-alert{display:flex;gap:12px;align-items:flex-start;background:#FFF7E6;border:1px solid #F0D595;border-radius:18px;padding:12px 16px;color:#6B4F3A}.sc-alert svg{flex:none;width:22px;height:22px;margin-top:2px}
+.sc-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.sc-q{background:#fff;border-radius:24px;box-shadow:var(--shadow);padding:18px 20px;border-inline-start:6px solid var(--primary)}
+.sc-qk{font:600 13px/1 var(--head);color:var(--primary-dark);margin:0 0 6px}
+.sc-qh{font-size:21px;line-height:1.35;margin:0 0 12px}.sc-qh:focus{outline:none}
+.sc-wy{margin-top:12px;font-size:14.5px;color:var(--muted)}.sc-wy summary{cursor:pointer;font-weight:600;color:var(--ink);min-height:40px;display:flex;align-items:center}.sc-wy p{margin:4px 0 0}
+.sc-me .kp-mq{margin-top:12px}
+.sc-filters{display:flex;flex-direction:column;gap:12px}.sc-fi{max-width:420px}
+.sc-in{font:inherit;font-size:16px;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;color:var(--ink);width:100%;box-sizing:border-box;min-height:44px}
+.sc-in:focus{outline:none;box-shadow:0 0 0 3px #FFD0C3;border-color:var(--primary)}textarea.sc-in{resize:vertical;line-height:1.5}
+.sc-g h2{font-size:clamp(22px,2.6vw,28px);margin-bottom:2px}.sc-g>.sc-fine{margin:0 0 12px}.sc-g .more{margin-top:14px}
+.sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:14px}
+.sc-card{background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:16px 18px;display:flex;flex-direction:column;gap:8px;border-inline-start:5px solid #B6BCD0;min-width:0}
+.sc-card.yes{border-inline-start-color:#0B5A3E}.sc-card.maybe{border-inline-start-color:#C98A00}
+.sc-card p{margin:0}.sc-card .kp-btns{margin-top:auto;padding-top:6px}
+.sc-h{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}.sc-h h3{font-size:18px;line-height:1.3;margin:0}
+.sc-st{flex:none;display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;border-radius:999px;padding:3px 10px;background:#F0F1F6;color:#4A5068;white-space:nowrap}.sc-st i{font-style:normal}
+.sc-st.yes{background:#E3F7EE;color:#0B5A3E}.sc-st.maybe{background:#FFF7E6;color:#7A4B00}
+.sc-by{font-size:14px;color:var(--muted)}.sc-aud{font-size:15px}
+.sc-svc{display:flex;gap:8px;align-items:flex-start;font-size:14.5px;font-weight:600;color:#7A4B00;background:#FFF7E6;border-radius:12px;padding:6px 10px}.sc-svc i{flex:none;font-style:normal;width:18px;height:18px;border-radius:50%;background:#8A5200;color:#fff;display:grid;place-items:center;font-size:12px;margin-top:1px}
+.sc-why{display:flex;flex-direction:column;gap:3px;font-size:14.5px}.sc-why span{display:flex;gap:7px;align-items:flex-start}.sc-why i{flex:none;font-style:normal;font-weight:800;width:16px;text-align:center}
+.sc-ok{color:#0B5A3E}.sc-no{color:#8E2418}.sc-pr,.sc-un,.sc-ck{color:#4A5068}
+.sc-dl{display:grid;gap:6px;margin:0;font-size:14.5px}.sc-dl>div{display:grid;grid-template-columns:82px minmax(0,1fr);gap:8px}.sc-dl dt{font-weight:700;color:var(--ink);white-space:nowrap}.sc-dl dd{margin:0}.sc-dl small{display:block;color:var(--muted);font-size:13px}
+.sc-soon{display:flex;gap:8px;align-items:flex-start;font-size:14px;color:#6B4F3A;background:#FFF7E6;border-radius:12px;padding:6px 10px}.sc-soon svg{flex:none;width:18px;height:18px;margin-top:2px}
+.sc-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}.sc-cf{font-size:13px;color:var(--muted)}
+.sc-tr{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:#0B5A3E;min-height:42px}.sc-tr svg{width:18px;height:18px}
+.sc-h3{font-size:17px;margin:12px 0 4px}
+.sc-tl{list-style:none;margin:0;padding:0;display:grid;gap:10px}.sc-it{border:1px solid var(--line);border-radius:16px;padding:10px 14px;display:flex;flex-direction:column;gap:2px;background:#FAFBFF}
+.sc-it.soon{border-color:#F0D595;background:#FFF7E6}.sc-it small{color:var(--muted);font-size:13.5px}.sc-it .kp-btns{margin-top:6px}
+.sc-ib{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}.sc-ib b{font-weight:700;overflow-wrap:anywhere}
+.sc-ps{flex:none;font-size:12.5px;font-weight:700;border-radius:999px;padding:2px 10px;background:#E6EEFF;color:#233A8B;white-space:nowrap}.sc-ps.done{background:#E3F7EE;color:#0B5A3E}
+.sc-rail .tl{margin-bottom:6px}.sc-rail .kp-btns{align-items:center}
+.sc-il{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr))}
+.sc-il li{display:flex;gap:10px;align-items:center;justify-content:space-between;background:#fff;border-radius:16px;padding:8px 14px;box-shadow:var(--shadow);min-width:0}.sc-il li>span{min-width:0;font-size:14.5px;overflow-wrap:anywhere}
+.sc-form .hint{font-size:14px;color:var(--muted)}
+.tl-i.sch .tl-dot{border-color:#7048E8}
+@media(max-width:820px){.sc-two{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:520px){.sc-card{padding:14px}.sc-h{flex-direction:column;gap:6px}.sc-dl>div{grid-template-columns:76px minmax(0,1fr)}.sc-il li{flex-wrap:wrap}.sc-q{padding:16px}}
 html.rm .kp-next.soon,html.rm .kp-focus.soon{animation:none}
 
 </style>
@@ -3710,7 +3754,7 @@ function renderTech(){
    Email or phone + password. No server yet: accounts live in this browser (localStorage), the password is never stored,
    only a PBKDF2-SHA256 hash with a random salt (Web Crypto, built into the browser). Same functions can later call a real backend. */
 const ACC={list:()=>store.get('accounts',{})||{},save:L=>store.set('accounts',L),cur(){const s=store.get('session',null);const L=ACC.list();return s&&L[s.id]?L[s.id]:null}};
-const SYNC_KEYS=['prof','scores','dir','path','list','calcRows','calcAr','uni'];
+const SYNC_KEYS=['prof','scores','dir','path','list','calcRows','calcAr','uni','sch'];
 /* called once at start-up (the store object is created after this file is inlined) */
 function initAccounts(){
   const set0=store.set;store.set=(k,v)=>{set0(k,v);if(SYNC_KEYS.includes(k)){const a=ACC.cur();if(a){const L=ACC.list();L[a.id].data={...(L[a.id].data||{}),[k]:v};set0('accounts',L)}}};
@@ -3782,8 +3826,8 @@ function signIn(uid,isNew){
   const L=ACC.list(), a=L[uid], d=a.data||{};
   /* my saved things follow me: an existing account brings back its data, a new account keeps what I already did on this browser */
   if(!isNew&&Object.keys(d).length){if(d.prof!==undefined){S.prof=d.prof;store.set('prof',d.prof)}if(d.scores!==undefined){S.sc=d.scores;store.set('scores',d.scores)}if(d.dir!==undefined){store.set('dir',d.dir);DIRS=null;DIRR=null}if(d.path!==undefined){store.set('path',d.path);PTH=null}if(d.calcRows!==undefined){store.set('calcRows',d.calcRows);CALC_ROWS=null;JR.sim=null}
-    if(d.list!==undefined){S.list=new Set(d.list||[]);store.set('list',d.list||[])}if(d.uni!==undefined){S.uni=d.uni&&INST[d.uni]?d.uni:null;store.set('uni',S.uni)}}
-  else{a.data={prof:S.prof,scores:S.sc,dir:store.get('dir',null),path:store.get('path',null),calcRows:store.get('calcRows',null),list:[...S.list],uni:S.uni};L[uid]=a;ACC.save(L)}
+    if(d.list!==undefined){S.list=new Set(d.list||[]);store.set('list',d.list||[])}if(d.uni!==undefined){S.uni=d.uni&&INST[d.uni]?d.uni:null;store.set('uni',S.uni)}if(d.sch!==undefined){store.set('sch',d.sch);SCHS=null}}
+  else{a.data={prof:S.prof,scores:S.sc,dir:store.get('dir',null),path:store.get('path',null),calcRows:store.get('calcRows',null),list:[...S.list],uni:S.uni,sch:store.get('sch',null)};L[uid]=a;ACC.save(L)}
   const then=AUTH.then;AUTH.then=null;closeOv(true);
   if(FM.local)localForum();
   acctBtn();render();toast(isNew?`ברוך הבא, ${a.name}! החשבון נוצר`:`שלום ${a.name}, התחברת`);
@@ -4556,7 +4600,7 @@ const factTxt=id=>{const f=factGet(id);return f?` (${factLabel(f)})`:''};
 
 /* ---- "מצאתי טעות": a sheet with a report text that is ready to copy ---- */
 /* the page a report is about, in words: the raw hash means nothing to whoever reads the report */
-const FT_PG={home:'דף הבית',path:'המסלול שלי',src:'דף המקורות',calc:'מחשבון ממוצע הבגרות',tech:'דף ההנדסאים והטכנאים',me:'הפרופיל שלי',dir:'השאלון "מה הכיוון שלי"',list:'הרשימה שלי',forum:'הפורום',jobs:'דף המשרות',specs:'דף ההתמחויות ברפואה',q:'שאלה בפורום'};
+const FT_PG={home:'דף הבית',path:'המסלול שלי',src:'דף המקורות',calc:'מחשבון ממוצע הבגרות',tech:'דף ההנדסאים והטכנאים',me:'הפרופיל שלי',dir:'השאלון "מה הכיוון שלי"',list:'הרשימה שלי',forum:'הפורום',jobs:'דף המשרות',specs:'דף ההתמחויות ברפואה',q:'שאלה בפורום',sch:'דף המלגות והזכויות'};
 function ftPage(){let r;try{r=parse()}catch(e){r={v:'home'}}
   const n=r.v==='deg'?(BY[r.id]||{}).n:r.v==='occ'?(OC[r.id]||{}).n:r.v==='sp'?(SPBY[r.id]||{}).n:r.v==='mh'?(MAHAT[r.id]||{}).n:'';
   return n?`${{deg:'דף התואר',occ:'דף המקצוע',sp:'דף ההתמחות',mh:'דף מסלול ההנדסאים'}[r.v]} "${n}"`:FT_PG[r.v]||'דף הבית'}
@@ -4725,7 +4769,7 @@ let PTH=null;
 const JR={sim:null}; /* kept: the account sign-in code resets it */
 const MAXT=6;
 /* steps that are about me, not about one target: ticking one ticks it for every target */
-const GMARK=['eng','psyReg','prep','cert','atuda','svcPlan','svcKeep','svcRights','explore','units'];
+const GMARK=['eng','psyReg','prep','cert','atuda','svcPlan','svcKeep','svcRights','explore','units','schSeen','schApplied'];
 const pthNew=()=>({v:4,created:Date.now(),targets:[],active:'',d:'',i:'',auto:0,marks:{},goalP:0,start:0,dates:[],lab:null,sess:'',log:[]});
 const tNew=(d,i,auto,marks)=>({id:'t'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),d,i,auto:auto?1:0,marks:marks||{},goalP:0,added:Date.now()});
 const tOk=t=>!!(t&&BY[t.d]&&INST[t.i]&&BY[t.d].of.some(o=>o.i===t.i));
@@ -5214,7 +5258,7 @@ function plan(){
     body:()=>`<p>${M.acc?'מזל טוב! 🎉 הדרך הזאת נגמרה, והדרך האמיתית מתחילה.':'כשמתקבלים, מסמנים כאן וחוגגים.'}</p>${BTNS([KB('data-kmark="acc"',M.acc?'✓ התקבלתי':'התקבלתי! 🎓','primary')])}`});
   /* ----- first day ----- */
   add(Z.go,{id:'fin',ic:'coin',t:'לסדר מימון ומלגות',s:'שכר לימוד, מלגות ומגורים',
-    body:()=>`<p>כדאי לבדוק את שכר הלימוד, המלגות והסיוע באתר המוסד כבר בזמן ההרשמה: חלק מהמלגות נסגרות לפני תחילת השנה, ויש מוסדות שמציעים מלגות לפי הצטיינות או מצב כלכלי.</p>${BTNS([instKA(I,'אתר המוסד: מלגות ושכר לימוד','primary'),KA(MOD_SCHOL,'מלגות למשוחררים'),KB('data-kmark="fin"',M.fin?'✓ סידרתי':'סימון: סידרתי')])}`});
+    body:()=>`<p>כדאי לבדוק את שכר הלימוד, המלגות והסיוע באתר המוסד כבר בזמן ההרשמה: חלק מהמלגות נסגרות לפני תחילת השנה, ויש מוסדות שמציעים מלגות לפי הצטיינות או מצב כלכלי.</p>${schNextLine()}${BTNS([KB('data-go="sch"','מרכז המלגות והזכויות','primary'),instKA(I,'אתר המוסד: מלגות ושכר לימוד'),KA(MOD_SCHOL,'מלגות למשוחררים'),KB('data-kmark="fin"',M.fin?'✓ סידרתי':'סימון: סידרתי')])}`});
   add(Z.go,{id:'first',ic:'cap',t:'להתכונן ליום הראשון',s:'הרשמה לקורסים והיכרות',
     body:()=>`<p>בשבועות שלפני הלימודים נרשמים לקורסים, מכירים את הקמפוס, ויש בדרך כלל ימי היכרות לסטודנטים חדשים. כדאי להגיע, לא רק בשביל המידע: כאן נפגשים עם מי שילמדו איתי.</p>${BTNS([KB(`data-kfq="deg:${d.id}"`,'לשאול בוגרים בפורום'),KB('data-kmark="first"',M.first?`✓ ${gx('מוכן','מוכנה')}`:`סימון: ${gx('מוכן','מוכנה')}`)])}`});
 
@@ -5539,7 +5583,7 @@ function pathHomeHTML(){
   return safe(()=>{const pl=plan(),t=pl.next,n=tList().length;
     const title=n>1?`המסלול שלי: ${n} יעדים`:`המסלול שלי: ${esc(pl.X.d.n)}`;
     const sub=n>1?`${esc(pl.X.d.n)} ${esc(bIn(pl.X.I.n))} · ${pl.pct}% מהדרך${t?` · הצעד הבא: ${esc(t.t)}`:''}`:(t?`הצעד הבא: ${esc(t.t)}${t.due?` · ${dueN(t)}`:''}`:'הדרך הושלמה!');
-    return `<div class="wrap"><button class="pth-home" data-go="path">${ring(pl.pct,52,6)}<span class="ph-t"><b>${title}</b><small>${sub}</small></span><span class="ph-go">להמשיך${ki('arrow')}</span></button></div>`},'')}
+    return `<div class="wrap"><button class="pth-home" data-go="path">${ring(pl.pct,52,6)}<span class="ph-t"><b>${title}</b><small>${sub}</small>${(sn=>sn?`<small>מלגה: ${esc(sn.nm)} · ${esc(inN(daysTo(sn.d)))}</small>`:'')(schNext())}</span><span class="ph-go">להמשיך${ki('arrow')}</span></button></div>`},'')}
 /* the home page link and the "add to my targets" buttons on degree pages */
 function pathBlurb(){const L=tList();return L.length>1?`${L.length} יעדים שהצבתי, והצעד הבא מחכה לי`:'היעד שלי: '+esc(BY[pth().d].n)+'. הצעד הבא מחכה לי'}
 function padLabel(id){const L=tList();return L.some(t=>t.d===id)?(L.length>1?'✓ ביעדים שלי':'✓ היעד שלי'):L.length?'הוספה ליעדים שלי':'זה היעד שלי'}
@@ -5792,6 +5836,7 @@ function timeline(pl){
       [...(R.ev||[]),...(f==='med'||f==='dent'?R.evmed||[]:[]),...(f==='arch'?R.evarch||[]:[])].forEach(([md,t])=>{const [m,d]=md.split('-'),id='regev-'+md+'-'+X.P.i+'-'+t;if(seen.has(id))return;seen.add(id);
         L.push({id,d:isoOf(Y,+m,+d),k:'idf',approx:1,t:`${t} (בערך, לפי ${R.cy})${many?` · ${X.I.n}`:''}`,sub:`${X.I.n}: לפי המחזור האחרון שפורסם. המועד לשנה שלי מתפרסם באתר המוסד.`,f:REGF[X.P.i],src:R.src})})})}
   (P&&P.dates||[]).forEach(x=>L.push({id:x.id,d:x.d,k:'mine',t:x.t,mine:1}));
+  schEvents().forEach(x=>L.push(x)); /* F3: my tracked scholarships and verified windows */
   return L.filter(x=>x.d&&daysTo(x.d2||x.d)>=0).sort((a,b)=>a.d.localeCompare(b.d))}
 /* in the list, all my bagrut exams of one season are one row; the calendar file keeps one event per exam */
 function groupBag(L){const out=[],seen={};
@@ -5808,8 +5853,8 @@ function datesHTML(pl){
       <div class="tl-b"><b>${esc(x.t)}</b>${x.pick?' <span class="kp-tag ok">המועד שלי</span>':''}${x.sub?`<small>${esc(x.sub)}${x.f?factChip(x.f,x.sub2?{pre:'מועד'}:null):''}</small>`:''}${x.sub2?`<small>${esc(x.sub2)}${x.f2?factChip(x.f2):''}</small>`:''}${x.src?` <a class="tl-src" href="${x.src}" target="_blank" rel="noopener">מקור</a>`:''}${x.mine?` <button class="linkbtn" data-kdel="${x.id}">מחיקה</button>`:''}</div>
       <span class="tl-n ${n<=14?'hot':''}">${inN(n)}</span></li>`}).join('')||'<li class="tl-empty">אין מועדים קרובים</li>'}</ol>
       ${L.length>6?`<div class="more"><button class="btn soft sm" data-kmore="dates">${KD.all?'להציג פחות':`להציג את כל ${L.length} המועדים`}</button></div>`:''}${dateAdd()}</div>`}
-function icsFile(){
-  const L=timeline(plan()).filter(x=>!x.approx),e=s=>String(s).replace(/[\\;,]/g,m=>'\\'+m).replace(/\n/g,'\\n'),
+function icsFile(only){
+  const L=timeline(plan()).filter(x=>!x.approx&&(!only||only(x))),e=s=>String(s).replace(/[\\;,]/g,m=>'\\'+m).replace(/\n/g,'\\n'),
     fs=x=>{const f=x.f&&factGet(x.f);return f?{t:'מצב הנתון: '+factLabel(f),un:f.status!=='verified'}:{t:'',un:false}}; /* the status of the date goes into the file: a reminder must not look surer than the site */
   const nd=s=>{const d=new Date(s+'T00:00:00');d.setDate(d.getDate()+1);return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`};
   const st=new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d+/,'');
@@ -5817,7 +5862,7 @@ function icsFile(){
   const ev=L.map(x=>{const F=fs(x),ds=[x.sub,x.sub2,F.t,x.src].filter(Boolean),at=e(x.t+(F.un?' (לא אומת, בדקו באתר)':''));
     return ['BEGIN:VEVENT','UID:'+x.id+'@kivun','DTSTAMP:'+st,'DTSTART;VALUE=DATE:'+x.d.replace(/-/g,''),'DTEND;VALUE=DATE:'+nd(x.d2||x.d),'SUMMARY:'+e(x.t),
     ...(ds.length?['DESCRIPTION:'+e(ds.join('\n'))]:[]),
-    ...(x.reg||x.k==='mine'?['BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+at,'TRIGGER:-P7D','END:VALARM','BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+at,'TRIGGER:-P1D','END:VALARM']:[]),'END:VEVENT'].map(fold).join('\r\n')});
+    ...(x.al||(x.reg||x.k==='mine'?[7,1]:[])).flatMap(n=>['BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+at,'TRIGGER:-P'+n+'D','END:VALARM']),'END:VEVENT'].map(fold).join('\r\n')});
   return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Kivun//My Path//HE','CALSCALE:GREGORIAN','X-WR-CALNAME:המסלול שלי (כיוון)',...ev,'END:VCALENDAR'].join('\r\n')}
 const inViewer=()=>!!(window.claude&&window.claude.use);
 async function dl(name,text,type){
@@ -5829,7 +5874,7 @@ async function dl(name,text,type){
 function badges(pl){
   const X=pl.X,M=X.M,st=id=>{const t=pl.tasks.find(x=>x.id===id);return !!(t&&t.done)};
   return [['יצאתי לדרך','target',true],['גיליתי את הכיוון שלי','compass',dirDone()],['המספרים שלי במערכת','chart',X.real],['יש לי ציון פסיכומטרי','bolt',X.hasP],['אנגלית סגורה','globe',!!M.eng],
-    ['מעל הסף','rocket',X.V.ok===true],['מסמכים מוכנים','doc',!!M.docs],['נרשמתי לתואר','pen',!!M.reg],['התקבלתי!','cap',!!M.acc]]}
+    ['מעל הסף','rocket',X.V.ok===true],['מסמכים מוכנים','doc',!!M.docs],['בדקתי מלגות','coin',!!M.schSeen||schSeenOn()],['הגשתי מלגה','check',!!M.schApplied||schAppliedOn()],['נרשמתי לתואר','pen',!!M.reg],['התקבלתי!','cap',!!M.acc]]}
 function badgesHTML(pl){const B=badges(pl);return `<div class="bdg">${B.map(([n,ic,on])=>`<div class="bd ${on?'on':''}" title="${on?'הושג':'עוד לא'}"><span>${ki(ic)}</span><small>${n}</small></div>`).join('')}</div>`}
 const MEQ=()=>[
   {k:'stage',q:'איפה אני עכשיו?',o:STAGES,off:0},
@@ -5844,7 +5889,7 @@ function meFieldsHTML(mode,keys){
   const attr=mode==='prof'?(k,v)=>`data-pq="${k}" data-pv="${v}"`:(k,v)=>`data-kme="${k}:${v}"`,p=S.prof||{};
   return MEQ().filter(q=>keys.includes(q.k)).map(q=>`<div class="field kp-mq"><label>${q.q}</label>${q.h?`<span class="hint">${q.h}</span>`:''}${meChips(q,mode==='prof'?p[q.k]:meVal(q.k),attr)}</div>`).join('')}
 /* the profile form shows the same questions, folded, under "עוד קצת עליי" */
-const PROF_OPT=['stage','stageAt','sex','reg','nat'];
+const PROF_OPT=['stage','stageAt','sex','reg','nat','svc','res','inc','first']; /* the last four come from the scholarships page (optional, sensitive, kept in this browser) */
 function profMoreHTML(){const p=S.prof||{};
   return `<details class="kp-more-me" ${p.sex||p.reg||p.nat||p.stage?'open':''}><summary>עוד קצת עליי <small>(לא חובה, מדייק את המסלול)</small></summary>${meFieldsHTML('prof',['stage','sex','reg','nat'])}<p class="fine">${MENOTE}</p></details>`}
 const MENOTE='המידע נשמר רק בדפדפן הזה. הוא משמש להתאמת הניסוח, מועדי הבחינות והמוסדות שמוצגים לי, ואפשר לדלג על כל שאלה.';
@@ -5995,7 +6040,7 @@ document.addEventListener('click',e=>{
   else if(ds.kcopy!==undefined){const txt=summaryText(plan());
     (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast('הסיכום הועתק. אפשר להדביק ולשלוח'),()=>{
       const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}ta.remove();toast(ok?'הסיכום הועתק. אפשר להדביק ולשלוח':'ההעתקה לא הצליחה')})}
-  else if(ds.kexp!==undefined){const keys=['path','dir','prof','scores','calcRows','calcAr','list'],o={kivun:1,ts:Date.now()};keys.forEach(k=>o[k]=store.get(k,null));dl('kivun-backup.json',JSON.stringify(o),'application/json').then(ok=>ok&&toast('הגיבוי נשמר כקובץ'))}
+  else if(ds.kexp!==undefined){const keys=['path','dir','prof','scores','calcRows','calcAr','list','sch'],o={kivun:1,ts:Date.now()};keys.forEach(k=>o[k]=store.get(k,null));dl('kivun-backup.json',JSON.stringify(o),'application/json').then(ok=>ok&&toast('הגיבוי נשמר כקובץ'))}
   /* deleting everything asks inside the page (a browser dialog can be blocked) */
   else if(ds.kreset!==undefined){KP.rst=true;keepY(render)}
   else if(ds.kresetno!==undefined){KP.rst=false;keepY(render)}
@@ -6037,8 +6082,8 @@ document.addEventListener('change',e=>{
   /* a typed number that ended outside its range goes back to the value in use */
   if(t.id==='kpPn'||t.id==='kpAn'){const v=+t.value,ok=t.id==='kpPn'?v>=200&&v<=800:v>=55&&v<=100;if(!ok||t.value==='')t.value=t.id==='kpPn'?LAB.p:LAB.avg;return}
   if(t.id==='pimp'&&t.files&&t.files[0]){const fr=new FileReader();fr.onload=()=>{try{const o=JSON.parse(fr.result);if(!o||o.kivun!==1)throw 0;
-      ['path','dir','prof','scores','calcRows','calcAr','list'].forEach(k=>{const v=o[k];if(v!==undefined&&v!==null&&(typeof v==='object'||typeof v==='boolean'))store.set(k,v)});
-      PTH=null;PLC=null;DIRS=null;DIRR=null;CALC_ROWS=null;LAB.on=false;KP.fid='';KP.skip.clear();KP.hist=[];KP.view='';S.prof=store.get('prof',null);S.sc=store.get('scores',null);S.list=new Set(store.get('list',[]));render();toast('המסלול שוחזר מהקובץ')}catch(err){toast('הקובץ לא נראה כמו גיבוי של כיוון')}};fr.readAsText(t.files[0])}
+      ['path','dir','prof','scores','calcRows','calcAr','list','sch'].forEach(k=>{const v=o[k];if(v!==undefined&&v!==null&&(typeof v==='object'||typeof v==='boolean'))store.set(k,v)});
+      PTH=null;PLC=null;DIRS=null;DIRR=null;CALC_ROWS=null;SCHS=null;LAB.on=false;KP.fid='';KP.skip.clear();KP.hist=[];KP.view='';S.prof=store.get('prof',null);S.sc=store.get('scores',null);S.list=new Set(store.get('list',[]));render();toast('המסלול שוחזר מהקובץ')}catch(err){toast('הקובץ לא נראה כמו גיבוי של כיוון')}};fr.readAsText(t.files[0])}
 });
 document.addEventListener('submit',e=>{
   if(e.target.id==='kpDate'){e.preventDefault();const t=$('#kpDT').value.trim(),d=$('#kpDD').value;if(!t||!d)return;const P=pth();P.dates.push({id:'my-'+Date.now(),t,d});logAct();pthSave();PLC=null;toast('התאריך נוסף');paint();e.target.reset()}
@@ -6330,6 +6375,7 @@ function renderSources(){
     <div class="srcnote">${ICON.check}<div><b>שכר, תעסוקה, תיאור התואר ותחומי עיסוק:</b> <a href="${AVURL}" target="_blank" rel="noopener">עבודאטה</a> של משרד העבודה, שמבוססת על עיבוד נתוני הלמ"ס (2023–2024). לכל תואר מוצג התחום התואם במאגר. כשהתאמת השמות אינה מלאה, העמוד אומר במפורש איזה תחום מוצג. ל-${DEG.filter(d=>!d.av).length} תארים לא נמצא תחום תואם, ולכן לא מוצגים בהם נתוני שכר.</div></div>
     <div class="srcnote">${ICON.check}<div><b>"מה הכיוון שלי?":</b> פרופיל של כל מקצוע לפי מאגר <a href="https://www.onetcenter.org/database.html" target="_blank" rel="noopener">O*NET</a> של משרד העבודה האמריקאי (גרסה 31.0, וערכים בעבודה מגרסה 30.2, ברישיון CC BY 4.0), שקושר למקצועות הישראליים לפי <a href="https://www.onetcenter.org/crosswalks.html" target="_blank" rel="noopener">טבלת ההצלבה הרשמית ESCO–O*NET</a> (קוד ISCO-08). השאלות נכתבו בעברית על ידי צוות כיוון לפי מודל RIASEC. כיוון תרגם, קישר ושקלל את הנתונים, ו-USDOL/ETA לא אישר או בדק את השינויים. זה כלי לחקירה ולא מבחן פסיכולוגי מתוקף.</div></div>
     <div class="srcnote">${ICON.check}<div><b>"המסלול שלי":</b> מועדי הבחינה הפסיכומטרית, מחירים ומידע על הבחינה הדו-תחומית ועל אמירנט לפי <a href="https://www.nite.org.il/two-domain-psychometric-entrance-test/" target="_blank" rel="noopener">המרכז הארצי לבחינות והערכה</a>. מועדי הבגרות לפי טיוטות לוח הבחינות של <a href="https://parents.education.gov.il/gov-education/school/matriculation/dates/" target="_blank" rel="noopener">משרד החינוך</a>, שעשויות להשתנות. הפערים מחושבים בנוסחאות ובספים הרשמיים של תשפ"ז שבאתר. לא מוצג אחוז סיכוי קבלה, כי אין לכך נתונים רשמיים.</div></div>
+    ${schSrcNote()}
     <div class="srcnote">${ICON.check}<div><b>"חם בשוק":</b> מקצוע מסומן כך רק אם לפי עבודאטה מתקיימים שלושה תנאים: מספר העובדים בו עולה מהר יותר מבמשק כולו (לפי הניסוח של עבודאטה עצמה), העלייה היא של ${HOT_MIN}% לפחות בין השנה הראשונה לאחרונה שמוצגות (2019–2023), והשכר בו גבוה מהממוצע (שוב, לפי הניסוח של עבודאטה). תואר מסומן "חם בשוק" כשעבודאטה מגדירה את הקשר בינו לבין המקצועות של הבוגרים כחזק ולפחות חצי מהמקצועות האלה חמים, או כבינוני וכל המקצועות חמים. תארים שהותאמו לתחום רחב יותר רק לפי השם לא מסומנים. אין נתונים רשמיים על עניין של משקיעים או יזמים, ולכן הם לא חלק מההגדרה.</div></div>
     <div class="srcnote">${ICON.check}<div><b>עמודי תחומי העיסוק:</b> שמות התפקידים, תיאור העבודה, השכר לאורך השנים והחלוקה לפי גיל, מגזר, אזור ומגדר, הכל מעמודי העיסוקים של עבודאטה.</div></div>
     <div class="srcnote">${ICON.check}<div><b>תנאי קבלה של מכללות ואוניברסיטאות נוספות:</b> נלקחו מעמודי הקבלה הרשמיים של ${Object.keys(DATA.adm||{}).length} מוסדות, ומוצגים כפי שפורסמו, עם קישור לכל עמוד. מוסדות שחסמו גישה אוטומטית (למשל בר-אילן) או שלא נמצא להם עמוד קבלה מוצגים עם קישור לאתר בלבד.</div></div>
@@ -6344,20 +6390,327 @@ function renderSources(){
   </div></section>`;
 }
 
+/* ================= F3: scholarships and rights center (sc-) =================
+   SCH: records seeded from the scholarship research (three files, merged by official URL). Every record has a real URL and the researchers' status and confidence.
+   Statuses mean "cross-checked through search summaries", never "read from the primary page" (same wording as the F1 chips).
+   amount and window exist ONLY where the researchers verified them (record status 'verified' and amount/window status verified). Everywhere else the card says
+   "לפי פרסום הגוף המעניק" and gives the last cycle we saw. kind:'service' = a service-for-study arrangement (the IDF academic reserve): never called a scholarship.
+   eligibility keys: svc 'combat'|'any', res (minimum reserve days), reg 'np' (periphery, only a hint), first, need (economic need), inst (institution id), stage [codes],
+   open (open to students in general), chk [conditions the profile cannot answer]. soon:1 = one source suggests this year's round closes soon (no date is shown).
+   The records of one-per-institution ("מלגות וסיוע במוסד") are generated from DATA.inst at runtime, and point to the institution site (status unverified, no numbers). */
+const SCH=[
+ {id:'mamdim',name:'ממדים ללימודים: מלגה ללוחמים משוחררים',provider:'האגף לחיילים משוחררים ומילואים, משרד הביטחון',by:'האגף לחיילים משוחררים',type:'veteran',audience:'לוחמות ולוחמים משוחררים ואוכלוסיות ייחודיות, בתואר ראשון או שני',sum:'החזר חלק משכר הלימוד שנשלם בפועל, עד שלוש שנות לימוד (ארבע בהנדסה, ברפואה ובאדריכלות). נדרשת תעודת שחרור בכבוד. לא חלה על מכינה, ולפי הדף הרשמי אי אפשר לממש אותה יחד עם סיוע המילואים לשכר לימוד באותה שנה.',eligibility:{svc:'combat',chk:['תעודת שחרור בכבוד','הזכאות כוללת גם אוכלוסיות ייחודיות']},year:'תשפ"ו',url:'https://www.hachvana.mod.gov.il/MainEducation/HachvanaScholarship/Pages/UniformToStudies.aspx',srcType:'official',status:'conflict',conf:'medium',checked:'2026-10-19',soon:1,note:'מועד ההרשמה סותר בין מקורות, ולכן לא מציגים סכום ומועד. בודקים בדף הרשמי.'},
+ {id:'periphery',name:'מלגות פריפריה של האגף (ייעוד 44, 45 ו-46)',provider:'האגף לחיילים משוחררים ומילואים, משרד הביטחון',by:'האגף לחיילים משוחררים',type:'region',also:['veteran','reservist'],audience:'משוחררים, מסיימי שירות לאומי ומשרתי מילואים פעילים שלומדים או מתגוררים בפריפריה, בשנה הראשונה לתואר',sum:'ייעוד 44 ללומדים במוסד באזור עדיפות לאומית, ייעוד 45 למי שכתובתו הרשומה באזור עדיפות לאומית ברוב השנים שלפני הלימודים, וייעוד 46 לבוגרי מכינה קדם-אקדמית במימון הקרן. ככלל אין כפל בין הייעודים.',eligibility:{svc:'any',reg:'np',chk:['כתובת רשומה או לימודים באזור עדיפות לאומית','שנה ראשונה לתואר ראשון']},amount:'ייעוד 45: עד 100% משכר הלימוד האוניברסיטאי של השנה הראשונה, ולא יותר מ-12,017 ₪ (תשפ"ו) או הסכום ששולם בפועל, הנמוך מביניהם',year:'תשפ"ו',url:'https://www.hachvana.mod.gov.il/MainEducation/HachvanaScholarship/Pages/Perypheria45.aspx',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',soon:1,note:'לא ברור אם אפשר לשלב עם ממדים ללימודים: בודקים בדף הרשמי.'},
+ {id:'mashpim',name:'משפיעים בלימודים: מלגת קיום',provider:'האגף לחיילים משוחררים ומילואים, בשיתוף קרן אדמונד דה רוטשילד והאגודה למען החייל',by:'האגף לחיילים משוחררים',type:'veteran',audience:'לוחמים ותומכי לחימה משוחררים מאוכלוסיות ייחודיות',sum:'לפי הדף הרשמי: תעודת שחרור בכבוד והשתייכות לאוכלוסייה ייחודית (בודדים, בני מיעוטים, יוצאי אתיופיה, עולים, חרדים ועוד), בתמורה לעשייה חברתית והכשרה.',eligibility:{svc:'combat',chk:['השתייכות לאוכלוסייה ייחודית','שעות עשייה חברתית והכשרה']},amount:'12,000 ₪ לדמי קיום, ותוספת של 6,000 ₪ למי שביצע לפחות 60 ימי מילואים ב-2026 (עד 18,000 ₪ בסך הכול)',year:'תשפ"ו',url:'https://www.hachvana.mod.gov.il/MainEducation/HachvanaScholarship/Pages/mashpim.aspx',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'ההרשמה לתשפ"ו נסגרה, ולא נמצא מידע על תשפ"ז.'},
+ {id:'mod-mechina',name:'מימון מכינה קדם-אקדמית למשוחררים ולמסיימי שירות לאומי',provider:'האגף והקרן לחיילים משוחררים, משרד הביטחון',by:'האגף לחיילים משוחררים',type:'veteran',audience:'משוחררים ומסיימי שירות לאומי-אזרחי שנרשמים למכינה קדם-אקדמית',sum:'סיוע בשכר הלימוד ובדמי קיום חודשיים לפי קריטריונים כלכליים-חברתיים, או במסלול ללא מבחן הכנסה לאוכלוסיות ייחודיות. ללוחמים עם תעודת שחרור בכבוד זהב: שכר לימוד מלא. ההרשמה דרך מזכירות המכינה, והיא בודקת את הזכאות מול האגף.',eligibility:{svc:'any',chk:['בתוך חלון הזכאות מהשחרור','הרשמה למכינה קדם-אקדמית מוכרת']},amount:'מימון מלא או חלקי של שכר הלימוד ודמי קיום, לפי הזכאות. ללוחמים עם תעודת שחרור בכבוד זהב: שכר לימוד מלא',url:'https://www.hachvana.mod.gov.il/MainEducation/TwelveYearsStudies/Pages/PreAcademic.aspx',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'המקורות חלוקים אם הזכאות עד 5 או עד 10 שנים מהשחרור (ייתכן שזה הבדל בין קבוצות). בודקים בדף הרשמי.'},
+ {id:'mechina-reservist',name:'הנחה בשכר לימוד במכינה קדם-אקדמית למשרתי מילואים',provider:'האגף והקרן לחיילים משוחררים, משרד הביטחון (תעודת משרת מילואים פעיל מצה"ל)',by:'האגף לחיילים משוחררים',type:'reservist',audience:'משרתי מילואים עם תעודת משרת מילואים פעיל שנרשמים למכינה קדם-אקדמית',sum:'לפי עמוד האגף וכל זכות: לפחות 20 ימי מילואים מצטברים בשלוש שנים רצופות או בחלק מהן, או 14 ימי מילואים בשנתיים רצופות למי שטרם עברו 3 שנים משחרורו. מציגים תעודה בתוקף בעת ההרשמה למכינה.',eligibility:{res:14,chk:['תעודת משרת מילואים פעיל בתוקף']},year:'תשפ"ו',url:'https://www.hachvana.mod.gov.il/ExtraBenefits/Pages/Education-for-Miluim.aspx',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'גובה ההנחה לא צוין במקורות שמצאנו.'},
+ {id:'idf-tuition',name:'סיוע בשכר לימוד למשרתי מילואים (צה"ל)',provider:'צה"ל (אגף המילואים) והאגף לחיילים משוחררים ומילואים, מכוח החלטות ממשלה',by:'אגף המילואים בצה"ל',type:'reservist',audience:'סטודנטים משרתי מילואים בתואר במוסד מוכר',sum:'לפחות 50 ימי מילואים בשירות מזכה בתקופה שהוגדרה ל-2025/26 מזכים בסיוע בשכר הלימוד של תשפ"ו. גובה הסיוע תלוי במדרג הפעילות של היחידה. מי שמקבל מלגה במימון המדינה זכאי רק ליתרת שכר הלימוד.',eligibility:{res:50},amount:'עד 100% משכר הלימוד השנתי שקבע המל"ג (במדרג פעילות א׳ ומעלה), ולא יותר מהסכום ששולם בפועל. במדרגים אחרים האחוז נמוך יותר',year:'תשפ"ו',url:'https://www.miluim.idf.il/articles-list/%D7%9E%D7%93%D7%99%D7%A0%D7%99%D7%95%D7%AA-2026/',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'לא נמצאו כללים לתשפ"ז. בשנים קודמות הסף והאחוזים היו שונים, ולכן בודקים באתר המילואים.'},
+ {id:'milgo',name:'מל-GO: מלגת קרן הסיוע לסטודנטים',provider:'המועצה להשכלה גבוהה (קרן הסיוע לסטודנטים), בהפעלת פר"ח ומכון דוידסון',by:'המל"ג',type:'need',audience:'סטודנטים לתואר ראשון, למכינה קדם-אקדמית ולהנדסאים וטכנאים',sum:'מלגה לפי קריטריונים סוציו-אקונומיים: הכנסה לנפש, אשכול חברתי-כלכלי, שירות צבאי או לאומי, שירות מילואים ומגורים באזור עדיפות. לא לתואר שני. השם הקודם: מלגת משרד החינוך.',eligibility:{need:true,chk:['ניקוד סוציו-אקונומי ביחס לשאר המבקשים']},amount:'ארבע דרגות: 5,000, 7,500, 10,000 ו-12,480 ₪ לשנה (תואר ראשון)',year:'תשפ"ו',url:'https://che.org.il/scholarships/milgo/',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'ההרשמה לתשפ"ו נסגרה, ומועד ההגשה לתשפ"ז טרם נמצא. בודקים באתר המל"ג.'},
+ {id:'tau-reservist',name:'הטבות ומלגות שכר לימוד למשרתי מילואים באוניברסיטת תל אביב',provider:'אוניברסיטת תל אביב',by:'אוניברסיטת תל אביב',type:'reservist',inst:'tau',audience:'סטודנטים לתואר ראשון ושני ששירתו במילואים',sum:'מלגת שכר לימוד מלאה לתשפ"ו למי ששירתו מעל 200 ימי מילואים בשנה שקדמה לה. לסטודנטים חדשים לתואר ראשון ששירתו 45 עד 199 ימים: מלגה חלקית, ללא כפל עם המלגה המלאה.',eligibility:{res:45,inst:'tau'},amount:'שכר לימוד שנתי מלא (מעל 200 ימים). מלגה חלקית: 1,000 ₪ (45 עד 99 ימים), 1,800 ₪ (100 עד 149) ו-2,500 ₪ (150 עד 199)',year:'תשפ"ו',url:'https://www.tau.ac.il/tau-reserved-forces-benefits',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'לא נמצאו תנאים לתשפ"ז.'},
+ {id:'biu-reservist',name:'אפוד אקדמי: מתווה בר-אילן למשרתי מילואים',provider:'אוניברסיטת בר-אילן',by:'אוניברסיטת בר-אילן',type:'reservist',inst:'biu',audience:'סטודנטים משרתי מילואים בבר-אילן',sum:'מעטפת שכוללת מלגות, פטור מעד שלושה קורסים, נקודות זכות אקדמיות, תגבורים, חונכים אישיים והקלטות קורסים. תנאי הזכאות המדויקים לא נמצאו.',eligibility:{res:1,inst:'biu'},year:'תשפ"ד',url:'https://www.biu.ac.il/en/article/582485',srcType:'official',status:'unverified',conf:'low',checked:'2026-10-19',note:'לא מצאנו אישור שהמתווה בתוקף לתשפ"ז.'},
+ {id:'wgalil-vet',name:'מלגות לחיילים משוחררים ולמשרתי מילואים באקדמית גליל מערבי',provider:'המכללה האקדמית גליל מערבי',by:'המכללה האקדמית גליל מערבי',type:'reservist',also:['veteran'],inst:'i2',audience:'חיילים משוחררים ומשרתי מילואים הלומדים באקדמית גליל מערבי',sum:'מסמך של המכללה שמרכז מלגות חיצוניות ופנימיות לחיילים משוחררים ולמשרתי מילואים. התנאים והסכומים משתנים לפי החלטות הקרנות ותקציבן.',eligibility:{svc:'any',inst:'i2'},url:'https://wgalil.ac.il/wp-content/uploads/2026/08/veteran_reservist_scholarships.pdf',srcType:'official',status:'unverified',conf:'low',checked:'2026-10-19',note:'נקרא רק בתקציר חיפוש של מסמך המכללה.'},
+ {id:'jce-gras',name:'מלגת גראס למשרתי מילואים (JCE)',provider:'המכללה האקדמית להנדסה ירושלים (JCE), בתמיכת קרן גראס',by:'JCE, המכללה האקדמית להנדסה ירושלים',type:'reservist',inst:'i40',audience:'משרתי מילואים בתפקיד לחימה, בתואר ראשון בלימודים מלאים',sum:'מספר מוגבל של מלגות. ועדה בוחנת מצב כלכלי, מצב לימודי ומשך שירות המילואים.',eligibility:{svc:'combat',res:1,inst:'i40'},year:'תשפ"ו',url:'https://www.jce.ac.il/wp-content/uploads/2025/10/%D7%AA%D7%A7%D7%A0%D7%95%D7%9F-%D7%9E%D7%9C%D7%92%D7%AA-%D7%92%D7%A8%D7%90%D7%A1-%D7%9E%D7%99%D7%9C%D7%95%D7%90%D7%99%D7%9D-%D7%AA%D7%A9%D7%A4%D7%95.pdf',srcType:'official',status:'unverified',conf:'low',checked:'2026-10-19',note:'לא נמצאו תנאים לתשפ"ז, והסכום לא אומת.'},
+ {id:'bgu-dorm-reserve',name:'מלגת מעונות למשרתי מילואים בכפר הסטודנטים (בן-גוריון)',provider:'אוניברסיטת בן-גוריון בנגב',by:'אוניברסיטת בן-גוריון',type:'reservist',inst:'bgu',audience:'מתקבלים לתואר ראשון לתשפ"ז ששירתו במילואים או בסדיר ונרשמים לכפר הסטודנטים',sum:'לפי עמוד האוניברסיטה: למספר מוגבל של הנרשמים הראשונים למגורים (כל הקודם זוכה), בתנאי שהתקבלו לתואר ראשון, שילמו מקדמת שכר לימוד, הציגו אישור על שירות מילואים פעיל וחתמו על חוזה מגורים.',eligibility:{res:1,inst:'bgu',chk:['אישור על שירות מילואים פעיל','קבלה לתואר ראשון והרשמה לכפר הסטודנטים']},year:'תשפ"ז',url:'https://www.bgu.ac.il/welcome/scholarship/dorms-scholarship/',srcType:'official',status:'conflict',conf:'low',checked:'2026-10-19',soon:1,note:'הסכום סותר בין עמודי האוניברסיטה, ולכן לא מציגים סכום.'},
+ {id:'haifa-dorm-reserve',name:'הנחה בשכר דירה למשרתי מילואים במעונות אוניברסיטת חיפה',provider:'אוניברסיטת חיפה, מעונות הסטודנטים',by:'אוניברסיטת חיפה',type:'reservist',inst:'haifa',audience:'סטודנטים משרתי מילואים הרשומים ללימודים ולמעונות בתשפ"ז',sum:'לפי תקנון המבצע לתשפ"ז: סטודנט רשום ללימודים שנרשם למעונות והציג אישור על ימי מילואים במהלך 2026. ההטבה: הנחה בשכר הדירה החודשי או שיבוץ בחדר יחיד, לפי שיקול האוניברסיטה.',eligibility:{res:1,inst:'haifa'},year:'תשפ"ז',url:'https://dekanat.haifa.ac.il/wp-content/uploads/2026/05/%D7%AA%D7%A7%D7%A0%D7%95%D7%9F-%D7%9E%D7%91%D7%A6%D7%A2-%D7%94%D7%98%D7%91%D7%95%D7%AA-%D7%9C%D7%A1%D7%98%D7%95%D7%93%D7%A0%D7%98%D7%99%D7%9D-%D7%9E%D7%A9%D7%A8%D7%AA%D7%99-%D7%9E%D7%99%D7%9C%D7%95%D7%90%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%A0%D7%95%D7%AA-%D7%94%D7%A1%D7%98%D7%95%D7%93%D7%A0%D7%98%D7%99%D7%9D-%D7%AA%D7%A9%D7%A4%D7%96.pdf',srcType:'official',status:'unverified',conf:'medium',checked:'2026-10-19',note:'לפי התקנון מועד ההרשמה למעונות לשנה הזו כבר חלף. הפריט כאן כדוגמה לסוג ההטבות, ובודקים אם יש מבצע דומה בשנה הבאה.'},
+ {id:'extend-studies',name:'הארכת לימודים בשני סמסטרים ללא תשלום נוסף אחרי 150 ימי מילואים',provider:'כללי זכויות הסטודנט (מל"ג); מימוש מול רכז המילואים במוסד',by:'כל זכות ומל"ג',type:'reservist',audience:'סטודנטים שהיו במילואים במהלך הלימודים',sum:'סטודנט שנעדר במצטבר 150 ימים בשל מילואים רשאי להאריך את לימודיו בשני סמסטרים בלי תשלום נוסף. נדרשות הודעה מוקדמת ואישור מצה"ל, והמימוש לפי נוהלי המוסד דרך רכז המילואים.',eligibility:{res:150},url:'https://www.kolzchut.org.il/he/%D7%94%D7%90%D7%A8%D7%9B%D7%AA_%D7%9C%D7%99%D7%9E%D7%95%D7%93%D7%99%D7%9D_%D7%9C%D7%A1%D7%98%D7%95%D7%93%D7%A0%D7%98_%D7%91%D7%9E%D7%99%D7%9C%D7%95%D7%90%D7%99%D7%9D',srcType:'secondary',status:'verified',conf:'medium',checked:'2026-10-19',note:'זו זכות ולא מלגה. התנאים הפרטניים נקבעים בכל מוסד.'},
+ {id:'malag-reserve',name:'הקלות ללומדים במילואים (פטור מנקודות זכות, ציון עובר, הערכה חלופית)',provider:'המועצה להשכלה גבוהה (הוראת שעה בכללי זכויות הסטודנט), בהפעלת המוסדות',by:'המל"ג',type:'reservist',audience:'סטודנטים לתואר ראשון ששירתו במילואים במלחמה, או הורים לילד קטן שבני או בנות זוגם שירתו',sum:'הקלות מדורגות לפי ימי שירות, ובהן פטור מנקודות זכות בקורסי בחירה, המרת ציון ל"עובר" והערכה חלופית לבחינות מסכמות. ההיקף המדויק משתנה בין מוסדות.',eligibility:{res:30},url:'https://law.haifa.ac.il/wp-content/uploads/2024/08/miluim-malag.pdf',srcType:'official',status:'conflict',conf:'low',checked:'2026-10-19',note:'הספים סותרים בין מקורות ולא נמצא נוסח מחייב לתשפ"ז. פונים לרכז המילואים במוסד.'},
+ {id:'practical-eng',name:'מימון שכר לימוד להנדסאים וטכנאים לחיילים משוחררים',provider:'האגף והקרן לחיילים משוחררים, משרד הביטחון',by:'האגף לחיילים משוחררים',type:'veteran',audience:'משוחררי צה"ל, מג"ב, משטרה ושב"ס ומסיימי שירות לאומי שלומדים הנדסאות או טכנאות',sum:'לומדי הנדסאי או טכנאי (שנה א׳ וב׳) ומכינות קדם-הנדסאים במכללה טכנולוגית בפיקוח מה"ט, ללא תלות במצב הכלכלי. הפרטים נמסרים במזכירות המכללה.',eligibility:{svc:'any',chk:['לימודים במכללה טכנולוגית בפיקוח מה"ט','בתוך חלון הזכאות מהשחרור']},amount:'כ-90% משכר הלימוד המתוקצב שאושר על ידי מה"ט',year:'תשפ"ד',url:'https://www.hachvana.mod.gov.il/MainEducation/PracticalEngineer/Pages/PracticalEngScholarship.aspx',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'השנה האחרונה שנמצאה היא תשפ"ד.'},
+ {id:'impact',name:'IMPACT!: מלגה ללוחמים משוחררים (ידידי צה"ל)',provider:'תוכנית IMPACT! של ידידי צה"ל (FIDF), בהפעלה במוסדות אקדמיים',by:'בר-אילן ואתר לימודים בישראל',type:'veteran',audience:'משוחררים מהמערך הלוחם ממשפחות מעוטות יכולת, בתואר ראשון',sum:'המלגה כרוכה בשעות התנדבות בקהילה. תנאים מדויקים לתשפ"ז לא נמצאו.',eligibility:{svc:'combat',need:true,chk:['משפחה מעוטת יכולת לפי הגוף','שעות התנדבות בקהילה']},amount:'כ-5,000 דולר לשנת לימוד',year:'תשפ"ו',url:'https://www.biu.ac.il/scholarship/10669',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'מקורות ישנים הזכירו סכום נמוך יותר.'},
+ {id:'gruss',name:'קרן גרוס: מלגות לחיילים משוחררים מאוכלוסיות ייחודיות',provider:'קרן גרוס, בשיתוף האגף לחיילים משוחררים',by:'האגף לחיילים משוחררים',type:'veteran',audience:'משוחררים תושבי פריפריה, בודדים, יוצאי אתיופיה, חרדים ובני מיעוטים',sum:'לפי עמוד הקרן באתר האגף: משוחררים ששירתו לפחות שנה ושטרם עברו 5 שנים מהשחרור, מאחת הקבוצות. הסיוע מהשנה השנייה ללימודים, אלא אם הפיקדון נוצל במלואו שלא ללימודים.',eligibility:{svc:'any',chk:['השתייכות לאחת הקבוצות','שירות של שנה לפחות ובתוך 5 שנים מהשחרור']},url:'https://www.hachvana.mod.gov.il/MainEducation/Scholarship/Pages/Gruss.aspx',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'סכום לא נמצא.'},
+ {id:'perach',name:'פר"ח: מלגה בתמורה לחונכות בקהילה',provider:'פר"ח (פרויקט חונכות)',by:'פר"ח',type:'volunteering',also:['reservist'],audience:'סטודנטים באוניברסיטאות, במכללות אקדמיות, במכללות להוראה ובבתי ספר להנדסאים',sum:'חונכות לילדים ולבני נוער בהיקף של כשלוש שעות שבועיות במשך שנת הלימודים, עם מפגשים חודשיים והדרכה. ההרשמה בשיטת כל הקודם זוכה. למשרתי מילואים יש תוספת למלגה.',eligibility:{open:true,chk:['הרשמה בשיטת כל הקודם זוכה']},amount:'7,000 ₪ לשנה (בפרויקטים מסוימים 10,000 ₪), ובנוסף כ-2,600 ₪ למשרתי מילואים. הסכומים עשויים להשתנות. התשלום ישירות לחשבון הבנק בשלושה תשלומים',year:'תשפ"ז',url:'https://www.perach.org.il/',srcType:'official',status:'verified',conf:'high',checked:'2026-10-19',soon:1,note:'מועדי ההרשמה לתשפ"ז מופיעים באתר פר"ח בלבד: בודקים שם.'},
+ {id:'irtika',name:'אירתקא: מלגת המל"ג בשיתוף פר"ח',provider:'המועצה להשכלה גבוהה, בשיתוף המשרד לשוויון חברתי ומשרד החינוך; מופעלת דרך פר"ח',by:'המל"ג ופר"ח',type:'general',audience:'סטודנטים מהחברה הערבית, הדרוזית והצ׳רקסית, בשנה א׳ לתואר ראשון',sum:'בתמורה לתרומה לקהילה (חונכות לילדים ולבני נוער בחברה הערבית), בלימודים במוסד מוכר ובהיקף לימודים מלא. לפי המל"ג עדיפות לרקע סוציו-אקונומי נמוך ולמקצועות מועדפים במשק.',eligibility:{chk:['השתייכות לקהל היעד: החברה הערבית, הדרוזית או הצ׳רקסית','שנה א׳ לתואר ראשון']},year:'תשפ"ז',url:'https://che.org.il/%D7%A7%D7%A8%D7%9F-%D7%9E%D7%9C%D7%92%D7%95%D7%AA-%D7%9C%D7%AA%D7%95%D7%90%D7%A8-%D7%A8%D7%90%D7%A9%D7%95%D7%9F-%D7%90%D7%99%D7%A8%D7%AA%D7%A7%D7%90/',srcType:'official',status:'verified',conf:'high',checked:'2026-10-19',soon:1,note:'הסכומים סותרים בין מקורות, ולכן לא מציגים סכום.'},
+ {id:'marom',name:'מלגת מרום: סטודנטים יוצאי אתיופיה',provider:'המועצה להשכלה גבוהה; מופעלת בידי פר"ח',by:'המל"ג ופר"ח',type:'general',audience:'יוצאי אתיופיה בשנה א׳ ואילך, בתואר ראשון או שני',sum:'המל"ג ופר"ח מפעילים. התנאים משתנים החל מתשפ"ז והפרטים המלאים מתפרסמים לקראת ההרשמה. לפי אתר צד שלישי בוטלה חובת ההתנדבות (לא אומת).',eligibility:{chk:['השתייכות לקהל היעד: יוצאי אתיופיה']},year:'תשפ"ז',url:'https://che.org.il/scholarships/marom/',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'לא מציגים סכום, כי הוא עשוי להשתנות בתשפ"ז.'},
+ {id:'tena',name:'טנא: סיוע בשכר לימוד לבוגרי החינוך החרדי',provider:'פרויקט טנא (בהובלת המל"ג; לפי כל זכות מופעל על ידי גוף בשם Aluma)',by:'כל זכות',type:'general',audience:'סטודנטים חרדים ובוגרי החינוך החרדי, בתואר ראשון או שני',sum:'סיוע במימון שכר לימוד לבוגרי ישיבה קטנה בפיקוח חרדי או תיכון חרדי במוסד מוכר, בהיקף לימודים מלא, לימוד תואר ראשון או שני בפעם הראשונה בלבד ועמידה במבחני הכנסה. מהתשפ"ד חובה להשתתף בתוכנית "זרקור" (ייעוץ והכוונה).',eligibility:{need:true,chk:['בוגר/ת החינוך החרדי','תואר ראשון או שני בפעם הראשונה']},year:'תשפ"ז',url:'https://www.kolzchut.org.il/he/%D7%98%D7%A0%D7%90_-_%D7%A1%D7%99%D7%95%D7%A2_%D7%9B%D7%9C%D7%9B%D7%9C%D7%99_%D7%9C%D7%A1%D7%98%D7%95%D7%93%D7%A0%D7%98%D7%99%D7%9D_%D7%91%D7%95%D7%92%D7%A8%D7%99_%D7%94%D7%97%D7%99%D7%A0%D7%95%D7%9A_%D7%94%D7%97%D7%A8%D7%93%D7%99',srcType:'secondary',status:'verified',conf:'medium',checked:'2026-10-19',note:'הסכום סותר בין מקורות, ולא נמצא אתר רשמי של התוכנית עצמה.'},
+ {id:'isef-ba',name:'מלגות אייסף לתואר ראשון',provider:'ISEF אייסף - קרן המלגות הבינלאומית לחינוך',by:'קרן אייסף',type:'region',audience:'צעירים מבטיחים מהפריפריה החברתית-גיאוגרפית, דור ראשון להשכלה גבוהה',sum:'נדרש מעמד של דור ראשון להשכלה גבוהה, עדיפות לשירות צבאי, לאומי או אזרחי מלא, ולימודים במוסד שיש לו תוכנית משותפת עם הקרן. בתמורה: תוכנית מנהיגות חברתית ועבודה בפרויקט קהילתי. ההליך כולל סדנת מיון וראיון.',eligibility:{first:true,reg:'np',chk:['לימודים במוסד שיש לו תוכנית משותפת עם הקרן']},window:{closes:'2026-07-31',txt:'ההרשמה נפתחת בדרך כלל בתחילת יוני ונסגרת בסוף יולי שלפני שנת הלימודים. הרשמה לתשפ"ז נסגרה ב-31.7.2026.'},year:'תשפ"ז',url:'https://www.isef.org.il/%D7%9E%D7%9C%D7%92%D7%95%D7%AA-%D7%9C%D7%AA%D7%95%D7%90%D7%A8-%D7%A8%D7%90%D7%A9%D7%95%D7%9F/',srcType:'official',status:'verified',conf:'high',checked:'2026-10-19',note:'הסכומים שונים בין עמודי הקרן, ולכן לא מציגים סכום.'},
+ {id:'mifal-hapais',name:'מלגות מפעל הפיס להשכלה גבוהה (בשיתוף הרשות המקומית)',provider:'מפעל הפיס והרשות המקומית',by:'מפעל הפיס',type:'volunteering',audience:'תושבי רשויות מקומיות שהצטרפו לתוכנית, לתואר אקדמי, תעודת הוראה או הנדסאים',sum:'המלגה ניתנת בתמורה להתנדבות בקהילה. הרישום והקריטריונים מנוהלים על ידי הרשות המקומית ולא על ידי הפיס, והיקף ההתנדבות שונה בין מקורות.',eligibility:{chk:['תושבות ברשות מקומית שהצטרפה לתוכנית']},amount:'10,000 ₪ לשנת לימודים: 5,000 ₪ מהרשות המקומית ו-5,000 ₪ ממפעל הפיס',year:'תשפ"ד',url:'https://www.pais.co.il/info/Scholarships.aspx',srcType:'official',status:'verified',conf:'high',checked:'2026-10-19',note:'אין מועד אחיד: כל רשות מקומית מפרסמת את ההרשמה בעצמה. לא נמצא עמוד שמאשר את תנאי תשפ"ז.'},
+ {id:'poalim',name:'פועלים להצלחה: מלגות בנק הפועלים',provider:'בנק הפועלים, בשיתוף עמותת "חינוך לפסגות"',by:'בנק הפועלים',type:'region',audience:'סטודנטים מהפריפריה החברתית או הגיאוגרפית (בעיקר דור ראשון להשכלה גבוהה), בתואר ראשון או שני',sum:'בתמורה מתנדבים במרכזי "חינוך לפסגות" ויש מסלול כישורי קריירה. לפי דף הבנק סבב 2025-2026 נסגר.',eligibility:{first:true,reg:'np',chk:['בחירה בתהליך תחרותי','התנדבות בתמורה למלגה']},year:'תשפ"ז',url:'https://www.bankhapoalim.co.il/he/social-banking/poalim-for-success',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'הסכום והמועד מופיעים רק בכתבה עיתונאית אחת ולא אומתו מול הבנק, ולכן לא מוצגים.'},
+ {id:'ayalim',name:'איילים: כפרי סטודנטים (מלגת מעורבות חברתית ומגורים מוזלים)',provider:'עמותת איילים',by:'עמותת איילים',type:'volunteering',audience:'סטודנטים המתגוררים בכפרי סטודנטים בנגב, בגליל ובפריפריה החברתית',sum:'תושבי כפר סטודנטים זכאים למלגת מעורבות חברתית ולמגורים מוזלים, בתמורה לפעילות חברתית (מפגש חודשי או שעות התנדבות בשנה, לפי הכפר). ההרשמה לכל כפר נסגרת כשהכפר מתמלא.',eligibility:{reg:'np',chk:['הרשמה לכפר סטודנטים לפי זמינות']},url:'https://www.ayalim.org.il/students',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'הסכומים משתנים בין כפרים ולא אומתו, ולכן לא מוצגים.'},
+ {id:'hazinek',name:'הזנק לאקדמיה (עמותת הזנק לעתיד)',provider:'עמותת הזנק לעתיד',by:'עמותת הזנק לעתיד',type:'region',audience:'סטודנטים מהפריפריה החברתית-גיאוגרפית, מאוכלוסיות מגוון ופגועי המלחמה',sum:'ליווי אישי ומלגות לאורך הלימודים. לפי מסמך אחד של מכללה (אוגוסט 2026) מיועדת לשנים הראשונות ולתחומי רפואה, הנדסה, מדעי המחשב ופיננסים, והיקף המלגה נקבע לפי נתונים אישיים ומצב סוציו-אקונומי.',eligibility:{reg:'np',chk:['תחום ושנת לימודים מתאימים']},year:'תשפ"ז',url:'https://wgalil.ac.il/wp-content/uploads/2026/08/august_hot_scholarships.pdf',srcType:'official',status:'unverified',conf:'medium',checked:'2026-10-19',note:'מקור יחיד, ולא נמצא אתר רשמי של העמותה.'},
+ {id:'moe-loans',name:'משרד החינוך: הלוואות מותנות ומענקים לסטודנטים',provider:'משרד החינוך',by:'משרד החינוך',type:'need',audience:'סטודנטים במוסדות מוכרים, בעיקר במסלולי הכשרת הוראה',sum:'הבקשה מוגשת דרך מזכירות המוסד. הלוואה מותנית הופכת למענק אם הסטודנט מסיים בהצלחה ועובד בהוראה. אין זכאות למאזינים ולקורסי השלמה. הבקשות נבחנות לפי מצב אישי, הכנסה, יישוב מגורים, שירות צבאי ואזורי עדיפות.',eligibility:{need:true,chk:['בחינה לפי מצב אישי והכנסה ביחס לשאר המבקשים','לימודים בתואר ראשון או שני']},year:'תשפ"ו',url:'https://edu.gov.il/special/students/Scholarships/Pages/scholarships-students.aspx',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'לא נמצאו מועדי תשפ"ז, וסכומים שעלו בחיפוש ישנים או של מסלולי הוראה ספציפיים.'},
+ {id:'aliyah',name:'מימון שכר לימוד לסטודנטים עולים',provider:'משרד העלייה והקליטה - המינהל לסטודנטים עולים',by:'משרד העלייה והקליטה',type:'general',audience:'עולים חדשים בתואר ראשון או שני',sum:'המשרד מממן שכר לימוד במוסדות המוכרים למינהל, בתנאי ביצוע שירות חברתי קהילתי. הלימודים צריכים להתחיל בדרך כלל זמן קצר יחסית לקבלת המעמד. הבקשה מוגשת מקוונת באתר המינהל.',eligibility:{chk:['עולה חדש/ה','בתוך תקופת הזכאות מקבלת המעמד']},url:'https://www.gov.il/he/service/online_application_administration_assistance_for_immigrant_students',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'מועד ההגשה מופיע במקור יחיד וללא שנה, ולכן לא מוצג.'},
+ {id:'technion-sechem',name:'מלגת שכר לימוד למצטייני סכם (הטכניון)',provider:'הטכניון - רישום וקבלה לתואר ראשון',by:'הטכניון',type:'merit',inst:'technion',audience:'מתקבלים חדשים לתואר ראשון בטכניון עם נתוני קבלה גבוהים',sum:'לפי דף הקבלה של הטכניון: ציון פסיכומטרי וסכם גבוהים מסף הזכאות של מסלול הקבלה, למי שלומד לראשונה במוסד אקדמי. זוכי "הטכניון למצוינים" אינם זכאים בנוסף.',eligibility:{inst:'technion',chk:['ציון פסיכומטרי וסכם גבוהים מסף המסלול']},year:'תשפ"ז',url:'https://admissions.technion.ac.il/scholarships-assistance-and-dormitories/scholarship-for-outstanding-summary/',srcType:'official',status:'conflict',conf:'medium',checked:'2026-10-19',note:'אתרים לא רשמיים מציגים סכומים ותנאים שונים מהדף של הטכניון, ולכן לא מציגים סכום. בודקים בדף הקבלה של הטכניון.'},
+ {id:'biu-incentive',name:'מלגות עידוד למועמדים חדשים בבר-אילן',provider:'אוניברסיטת בר-אילן',by:'אוניברסיטת בר-אילן',type:'excellence',inst:'biu',audience:'מועמדים חדשים לתואר ראשון עם ממוצע בגרות ופסיכומטרי גבוהים',sum:'מלגות עידוד ללא קשר למצב כלכלי. המלגה מותנית בלימודים סדירים, והיקף המלגות תלוי במקורות הכספיים של האוניברסיטה.',eligibility:{inst:'biu',chk:['הישגים גבוהים בבגרות ובפסיכומטרי']},url:'https://www.biu.ac.il/en/node/1402',srcType:'official',status:'unverified',conf:'low',checked:'2026-10-19',note:'לא נראו ספי ציונים או סכומים. נקרא בתקציר חיפוש בלבד.'},
+ {id:'afeka',name:'מלגת נשיא ומלגות הצטיינות באפקה',provider:'אפקה - המכללה האקדמית להנדסה בתל אביב',by:'אפקה, המכללה האקדמית להנדסה בתל אביב',type:'excellence',inst:'i11',audience:'סטודנטים מן המניין באפקה, בתואר ראשון ושני',sum:'לפי תקנון המכללה: מלגת הנשיא מוענקת לסטודנט בשנתו האחרונה שהשיג את הממוצע המצטבר הגבוה ביותר בכל התוכניות. מלגות מצטייני תוכנית מוענקות לסטודנט אחד מכל תוכנית. לסטודנטים מן המניין בלבד.',eligibility:{inst:'i11',chk:['הישגים לימודיים בתוך המכללה, בתהליך תחרותי']},year:'תשפ"ה',url:'https://www.afeka.ac.il/student-experience/student-services/students-dean/scholarships-for-excellence/',srcType:'official',status:'unverified',conf:'medium',checked:'2026-10-19',note:'הנתונים מתקנון המכללה בלבד ולא אומתו מול מקור נוסף.'},
+ {id:'dean-aid',name:'סיוע כלכלי מדיקנאט הסטודנטים באוניברסיטאות',provider:'דיקנאט הסטודנטים בכל מוסד (טכניון, תל אביב, העברית, חיפה, בן-גוריון)',by:'דיקנאטי הסטודנטים',type:'need',audience:'סטודנטים לתואר ראשון (אזרחי ישראל) במוסדות המצוינים',sum:'מלגות סיוע כלכלי לפי קריטריונים סוציו-אקונומיים (הכנסה ומצב משפחתי), ביחס לשאר המבקשים. ההגשה דרך הפורטל של המוסד, בצירוף אישורי הכנסה. מועדי ההגשה והסכומים שונים בין המוסדות.',eligibility:{need:true,chk:['ניקוד סוציו-אקונומי ביחס לשאר המבקשים']},year:'תשפ"ז',url:'https://www.kolzchut.org.il/he/%D7%9E%D7%9C%D7%92%D7%95%D7%AA_%D7%A1%D7%99%D7%95%D7%A2_%D7%9C%D7%A1%D7%98%D7%95%D7%93%D7%A0%D7%98%D7%99%D7%9D',srcType:'secondary',status:'verified',conf:'medium',checked:'2026-10-19',soon:1,note:'מועדים וסכומים נקבעים בכל מוסד, ולא אומתו בין מקורות.',links:[{i:'technion',u:'https://dean.technion.ac.il/financeaid/%D7%9E%D7%9C%D7%92%D7%95%D7%AA-%D7%A1%D7%99%D7%95%D7%A2-%D7%9B%D7%9C%D7%9B%D7%9C%D7%99-%D7%9C%D7%A1%D7%98%D7%95%D7%93%D7%A0%D7%98%D7%99%D7%9D-%D7%95%D7%AA-%D7%97%D7%93%D7%A9%D7%99%D7%9D-%D7%95%D7%AA/',t:'הגשה לסטודנטים חדשים בבקשה מקוונת בפורטל, פעם אחת בשנה. הקריטריונים סוציו-אקונומיים.'},{i:'haifa',u:'https://dekanat.haifa.ac.il/%D7%94%D7%99%D7%97%D7%99%D7%93%D7%94-%D7%9C%D7%9E%D7%9C%D7%92%D7%95%D7%AA/%D7%9E%D7%9C%D7%92%D7%95%D7%AA-%D7%A1%D7%99%D7%95%D7%A2-%D7%9B%D7%9C%D7%9B%D7%9C%D7%99-2/%D7%9E%D7%9C%D7%92%D7%AA-%D7%A1%D7%99%D7%95%D7%A2-%D7%9B%D7%9C%D7%9B%D7%9C%D7%99-%D7%9E%D7%98%D7%A2%D7%9D-%D7%93%D7%99%D7%A7%D7%A0%D7%90%D7%98-%D7%94%D7%A1%D7%98%D7%95%D7%93%D7%A0%D7%98%D7%99%D7%9D',t:'דרך פורטל הסטודנטים, לפי קריטריונים בסיסיים וניקוד סוציו-אקונומי.'},{i:'tau',u:'https://deanstudents.tau.ac.il/financial-aid-explanation',t:'לסטודנטים מן המניין בהיקף לימודים גבוה, דרך מערכת המידע האישי ועם אישורי הכנסה.'},{i:'huji',u:'https://info.huji.ac.il/submission-curriculum/ba_siua',t:'הגשה דרך אתר המידע האישי (מלגות), מומלץ בסמוך לקבלה. הזכאות לפי שילוב של מצב כלכלי והישגים.'},{i:'bgu',u:'https://in.bgu.ac.il/Dekanat/Pages/scholarships.aspx',t:'מלגות בעיקר על בסיס כלכלי. הקריטריונים בטופס הבקשה.'}]},
+ {id:'bgu-first-gen',name:'"ראשונים לתואר" ומלגת BBK: דור ראשון להשכלה גבוהה (בן-גוריון)',provider:'אוניברסיטת בן-גוריון בנגב',by:'אוניברסיטת בן-גוריון',type:'general',inst:'bgu',audience:'מתחילי תואר ראשון בבן-גוריון שהם דור ראשון להשכלה גבוהה',sum:'"ראשונים לתואר" בתחומי מדעי החברה, הרוח, סיעוד וניהול, עם דרישת פסיכומטרי מינימלי וללא כפל מלגות. מלגת BBK לסטודנטים חדשים בתשפ"ז שלאף אחד מהוריהם אין תואר אקדמי.',eligibility:{first:true,inst:'bgu',chk:['תחום לימודים מתאים']},year:'תשפ"ז',url:'https://www.bgu.ac.il/welcome/scholarship/first-to-degree/',srcType:'official',status:'unverified',conf:'medium',checked:'2026-10-19',note:'הנתונים מאתר הקבלה של האוניברסיטה בלבד ולא אומתו מול מקור נוסף.'},
+ {id:'huji-prizes',name:'פרסי הצטיינות לשנה א׳ (האוניברסיטה העברית)',provider:'האוניברסיטה העברית בירושלים',by:'האוניברסיטה העברית',type:'merit',inst:'huji',audience:'מתקבלים חדשים לתואר ראשון עם נתוני קבלה גבוהים, ובהם מקדימים להירשם',sum:'הזכאות לפי ציון משוקלל של בגרות ופסיכומטרי, והסף משתנה בין תחומי הלימוד. הפרס לשנת הלימודים הראשונה בלבד, בלי כפל עם מלגה ממקור אחר. ניתן גם למשתתפי אולימפיאדות בינלאומיות ולזוכי חידון התנ"ך העולמי.',eligibility:{inst:'huji',chk:['ציון משוקלל של בגרות ופסיכומטרי מעל הסף של התחום']},year:'תשפ"ז',url:'https://info.huji.ac.il/registration-process/prizes',srcType:'official',status:'unverified',conf:'medium',checked:'2026-10-19',note:'הנתונים מעמוד אחד באתר ההרשמה ולא אומתו. מועדי השנה הבאה לא נמצאו.'},
+ {id:'atuda',name:'העתודה האקדמית של צה"ל: שירות תמורת לימודים, לא מלגה',provider:'צה"ל, העתודה האקדמית (מנט"א)',by:'צה"ל, העתודה האקדמית',type:'general',kind:'service',audience:'תלמידי י"ב ומלש"בים, וחיילים בשירות חובה דרך "מחובה לעתודה"',sum:'העתודה היא הסדר של שירות תמורת לימודים: הגיוס נדחה לתקופת התואר, ובסיומו משרתים כקצין אקדמי ובשירות קבע בתחום שנלמד. במהלך הלימודים העתודאי מקבל מענקים וסיוע, אבל לא מצאנו מקור שקובע שהצבא משלם את כל שכר הלימוד לכל עתודאי. יש ציון פסיכומטרי מינימלי לכניסה למיון, ואחריו מיון אישיותי וראיון.',eligibility:{stage:['g12','svc'],chk:['קבלה למוסד אקדמי','מיון אישיותי וראיון','צורכי הצבא']},url:'https://atuda.org.il/faq/',srcType:'official',status:'conflict',conf:'medium',checked:'2026-10-19',note:'מספרי שנות החובה והקבע סותרים בין מקורות, ולכן לא מציגים אותם. בודקים בהסכם המחויבות של המסלול.'},
+ {id:'atuda-elite',name:'מסלולי עילית בעתודה (אביבים, פסגות ועוד)',provider:'צה"ל, העתודה האקדמית (מנט"א)',by:'צה"ל, העתודה האקדמית',type:'excellence',kind:'service',audience:'מצטייני י"ב עם פסיכומטרי גבוה, בעיקר בהנדסה, מדעים והייטק',sum:'סף פסיכומטרי גבוה יותר לכניסה למיון ושלבי מיון נוספים, כמו ראיון פסיכולוג וועדת מיון סופית. עתודאים בתוכניות עילית אינם זכאים למענק "מועדון המאה". זה חלק מהסדר השירות תמורת לימודים.',eligibility:{stage:['g12','svc'],chk:['ציון פסיכומטרי גבוה','מיון אישיותי וראיון']},amount:'מענק עילית נוסף של 5,000 ₪ לשנה על גבי מענק העתודה',url:'https://atuda.org.il/jobs/%D7%AA%D7%9B%D7%A0%D7%99%D7%AA-%D7%90%D7%91%D7%99%D7%91%D7%99%D7%9D/',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'הדפים ללא תאריך עדכון ברור, ובחלקם נאמר שהם ישנים.'},
+ {id:'atuda-nursing',name:'מסלול פסגה (סיעוד) בחיל הרפואה',provider:'צה"ל, חיל הרפואה והעתודה האקדמית',by:'צה"ל, חיל הרפואה',type:'general',kind:'service',audience:'מלש"בים שרוצים ללמוד סיעוד במסלול של חיל הרפואה',sum:'מסלול ייעודי ללימודי סיעוד, נפרד מתוכנית העילית "פסגות". תנאי הקבלה והמחויבות הספציפיים לא נמצאו, ובודקים בדף המסלול. כמו בעתודה, זה הסדר של שירות תמורת לימודים.',eligibility:{stage:['g12','svc'],chk:['קבלה למסלול הסיעוד של חיל הרפואה']},amount:'מימון מלא של שכר הלימוד ושל המעונות, לפי דפי המסלול',url:'https://atuda.org.il/jobs/%D7%A4%D7%A1%D7%92%D7%94-%D7%A2%D7%AA%D7%95%D7%93%D7%AA-%D7%94%D7%90%D7%97%D7%99%D7%9D-%D7%95%D7%94%D7%90%D7%97%D7%99%D7%95%D7%AA-%D7%A9%D7%9C-%D7%97%D7%99%D7%9C-%D7%94%D7%A8%D7%A4%D7%95%D7%90/',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'הפרטים (סף, מחויבות) לא נמצאו בתקצירי החיפוש.'},
+ {id:'tau-lautman',name:'תוכנית עדי לאוטמן למצטיינים (תל אביב)',provider:'אוניברסיטת תל אביב',by:'אוניברסיטת תל אביב',type:'excellence',inst:'tau',audience:'מצטייני תיכון המתעניינים בלימודים בין-תחומיים ובמחקר',sum:'בתוכנית הבין-תחומית מתקבלים כ-15 תלמידים בשנה לפי ציוני בגרות ופסיכומטרי, מכתב מועמדות, ראיונות אישיים ויום הערכה אקדמי. בתוכנית החד-תחומית יש מלגות לפי צורך כלכלי, התנדבות והצטיינות.',eligibility:{inst:'tau',stage:['g11','g12'],chk:['קבלה בתהליך תחרותי']},amount:'פטור מלא משכר לימוד לארבע שנות הלימוד בתוכנית הבין-תחומית. מלגות קיום לפי מצב כלכלי, הצטיינות ופעילות חברתית, בלי סכום שצוין',year:'תשפ"ז',url:'https://excellent.tau.ac.il/melagot',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'מועדי ההגשה לשנה הבאה לא נמצאו.'},
+ {id:'tau-new-grant',name:'מענק הצטיינות לתלמידים חדשים (תל אביב)',provider:'אוניברסיטת תל אביב',by:'אוניברסיטת תל אביב',type:'merit',inst:'tau',audience:'מתקבלים חדשים לתואר ראשון עם נתוני קבלה גבוהים',sum:'מענק חד-פעמי למצטיינים חדשים העומדים בדרישות שפורסמו. ציון ההתאמה הקובע הוא הרגיל, ללא הטבות שניתנו לצורך הקבלה. סך המענק והמלגות האחרות לא יעלה על שכר הלימוד המלא.',eligibility:{inst:'tau',chk:['עמידה בדרישות שפורסמו']},url:'https://go.tau.ac.il/he/ba/milgot',srcType:'official',status:'unverified',conf:'low',checked:'2026-10-19',note:'הסכום והספים של המחזור הנוכחי לא אומתו, ולכן לא מוצגים.'},
+ {id:'tau-tracks',name:'מסלולי מצוינות בביולוגיה ובמתמטיקה (תל אביב)',provider:'אוניברסיטת תל אביב, הפקולטה למדעי החיים ובית הספר למתמטיקה',by:'אוניברסיטת תל אביב',type:'excellence',inst:'tau',audience:'מצטיינים בתואר ראשון במדעי החיים ובמתמטיקה',sum:'ביולוגיה: מסלול חד-חוגי מחקרי למצטיינים. מתמטיקה: מסלול מצוינות עם הקלות בשנה השלישית והמשך לתואר שני עם מלגה, בכפוף להישגים. תנאי הכניסה המדויקים לא נמצאו.',eligibility:{inst:'tau',chk:['קבלה בתהליך תחרותי']},url:'https://go.tau.ac.il/he/life/ba/bio-excel',srcType:'official',status:'unverified',conf:'low',checked:'2026-10-19',note:'הסכומים מגיעים מעמוד נוכחי ומידיעון ישן ולא אומתו, ולכן לא מוצגים.'},
+ {id:'technion-excellence',name:'תוכנית הטכניון למצוינים',provider:'הטכניון',by:'הטכניון',type:'excellence',inst:'technion',audience:'מצטייני תיכון שמתחילים בסמסטר חורף',sum:'כ-20 מתקבלים בכל מחזור (האחוזון העליון) לפי פאנל בוחנים, סינון ראשוני וראיון אישי. חובה להירשם גם לטכניון. משתתפי התוכנית אינם זכאים למלגות או פרסים אחרים של הטכניון.',eligibility:{inst:'technion',stage:['g11','g12'],chk:['קבלה בתהליך תחרותי']},amount:'פטור משכר לימוד, מגורים חינם במעונות, מחשב נייד ומלגת קיום חודשית (בלי סכומים בתקציר)',year:'תשפ"ז',url:'https://admissions.technion.ac.il/en/the-rothschild-scholars-program/',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'מועדי השנה הבאה לא נמצאו.'},
+ {id:'huji-amirim',name:'אמירים: תוכנית מצטיינים (האוניברסיטה העברית)',provider:'האוניברסיטה העברית בירושלים',by:'האוניברסיטה העברית',type:'excellence',inst:'huji',audience:'מצטייני תיכון ותלמידי שנה א׳ (לפי המסלול): מדעי הטבע, חקלאות, מחשבים, רוח',sum:'הרשמה מקוונת וראיון אישי. לכל מסלול יש ציון סף משוקלל בדף שלו. במדעי הרוח ההרשמה בשילוב חוג נוסף, ומומלץ להגיש מועמדות גם לחוג נוסף כגיבוי.',eligibility:{inst:'huji',chk:['קבלה בתהליך תחרותי']},amount:'מלגת שכר לימוד מלאה לשלוש שנות התואר הראשון',year:'תשפ"ז',url:'https://info.huji.ac.il/bachelor/amirim-honors-program?p2df=',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'לא נמצאו ספי קבלה מספריים לתוכנית.'},
+ {id:'bgu-entrance',name:'פרס כניסה למועמדים מצטיינים (בן-גוריון)',provider:'אוניברסיטת בן-גוריון בנגב',by:'אוניברסיטת בן-גוריון',type:'merit',inst:'bgu',audience:'מתקבלים חדשים לתואר ראשון עם נתוני קבלה גבוהים, בלי לימודים אקדמיים קודמים',sum:'שנת הלימודים הראשונה בלבד, בלי לימודים קודמים במוסד להשכלה גבוהה. נדרשות זכאות לבגרות ועמידה בסף סכם שנקבע לפי פקולטה ומסלול. חובה ללמוד בהיקף מלא בכל סמסטר, ואין כפל מלגות שכר לימוד.',eligibility:{inst:'bgu',chk:['סכם מעל הסף של הפקולטה והמסלול']},amount:'עד שכר לימוד בסיסי מלא לשנה הראשונה בלבד. היתרה מועברת לחשבון הבנק בסוף כל סמסטר',year:'תשפ"ז',url:'https://www.bgu.ac.il/welcome/excellence/ba-prizes/entranceprize/',srcType:'official',status:'verified',conf:'medium',checked:'2026-10-19',note:'סף הסכם המדויק לא אומת.'},
+ {id:'haifa-ofakim',name:'אופקים: תוכנית המצטיינים של אוניברסיטת חיפה',provider:'אוניברסיטת חיפה',by:'אוניברסיטת חיפה',type:'excellence',inst:'haifa',audience:'מצטייני תיכון בתוכנית דו-חוגית בת שלוש שנים (מדעי הרוח)',sum:'תוכנית דו-חוגית: נרשמים במקביל לחוג נוסף ועומדים בתנאי הקבלה של שני החוגים, וראיון אישי. ההטבה היא מלגה לשנה א׳ ופטור בהמשך, בכפוף לקריטריונים.',eligibility:{inst:'haifa',stage:['g11','g12'],chk:['קבלה בתהליך תחרותי']},url:'https://admissions.haifa.ac.il/humanities/program/3025/?lang=en',srcType:'official',status:'conflict',conf:'medium',checked:'2026-10-19',note:'סף הקבלה סותר בין עמודי האוניברסיטה, ולכן לא מציגים אותו. כדאי לפנות למזכירות התוכנית לפני שמסתמכים.'},
+ {id:'biu-ilanot',name:'אילנות: תוכנית מצטיינים (בר-אילן)',provider:'אוניברסיטת בר-אילן',by:'אוניברסיטת בר-אילן',type:'excellence',inst:'biu',audience:'מועמדים עם נתוני קבלה גבוהים מאוד',sum:'תוכנית מצטיינים לתואר ראשון עם מספר מלגות מוגבל, ודרישה לשמור על ממוצע גבוה בכל סמסטר.',eligibility:{inst:'biu',chk:['קבלה בתהליך תחרותי']},url:'https://www.biu.ac.il/about-biu/management-and-faculty/university-administration/ilanot-program-outstanding-undergraduates',srcType:'official',status:'unverified',conf:'low',checked:'2026-10-19',note:'הספים והסכומים לא אומתו, ולכן לא מוצגים.'},
+ {id:'biu-karmim',name:'כרמים: מלגת מצטיינים במדעי היהדות (בר-אילן)',provider:'אוניברסיטת בר-אילן, המחלקה הרב-תחומית למדעי היהדות',by:'אוניברסיטת בר-אילן',type:'excellence',inst:'biu',audience:'מצטיינים הלומדים במחלקה הרב-תחומית למדעי היהדות',sum:'מלגה למצטיינים בלימודי חד-חוגי או דו-חוגי במחלקה הרב-תחומית למדעי היהדות, בכפוף לתקנון התוכנית.',eligibility:{inst:'biu',chk:['קבלה בתהליך תחרותי']},year:'תשפ"ב',url:'https://www.biu.ac.il/scholarship/10783',srcType:'official',status:'unverified',conf:'low',checked:'2026-10-19',note:'כל הנתונים שנמצאו ממחזור 2022. לא נמצא אישור למחזור הנוכחי.'}
+];
+const SC_TY={reservist:'מילואים',veteran:'משוחררים',merit:'הצטיינות',excellence:'מצטיינים',need:'צורך כלכלי',region:'פריפריה ואזור',volunteering:'התנדבות',general:'כללית'};
+const SC_FIL=[['all','הכול'],['svc','שירות ומילואים'],['merit','הצטיינות'],['need','צורך כלכלי'],['region','פריפריה'],['vol','התנדבות'],['gen','כלליות']];
+const SC_GRP={svc:['reservist','veteran'],merit:['merit','excellence'],need:['need'],region:['region'],vol:['volunteering'],gen:['general']};
+const SC_ST={interested:'בהתעניינות',preparing:'בהכנה',submitted:'הוגשה',received:'התקבלה',rejected:'לא התקבלה'};
+const SC_DONE=['submitted','received','rejected']; /* after "הוגשה" the reminders stop */
+const SC_STATE={yes:['✓','מתאים'],maybe:['≈','כנראה מתאים'],check:['?','לבדוק']};
+const SC_CF={high:'גבוהה',medium:'בינונית',low:'נמוכה'};
+const SC_RES={'0':[0,0],'1':[1,19],'20':[20,49],'50':[50,99],'100':[100,1e9]}; /* the reserve-days buckets of the question: min and max */
+const SCF={f:'all',inst:'',more:{},insts:false,edit:false,rail:false}; /* screen state, never saved */
+const own=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
+const isoOk=s=>{if(typeof s!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(s))return false;const d=new Date(s+'T00:00:00');return !isNaN(d)&&isoOf(d.getFullYear(),d.getMonth()+1,d.getDate())===s&&d.getFullYear()>=2020&&d.getFullYear()<=2040};
+/* ---- my tracker: kivun3.sch = {v:1, items:[{id,n,u,d,st,note,rid,ts}], notif, seen, skip:{question:1}, nday}. Read defensively: it comes from storage ---- */
+let SCHS=null;
+const schId=()=>'s'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+function schS(){if(SCHS)return SCHS;const x=store.get('sch',null),s={v:1,items:[],notif:0,seen:0,skip:{},nday:''};
+  if(x&&typeof x==='object'&&!Array.isArray(x)){
+    if(Array.isArray(x.items))x.items.forEach(i=>{if(!i||typeof i!=='object'||s.items.length>=60)return;const n=String(i.n||'').trim().slice(0,80);if(!n)return;
+      s.items.push({id:String(i.id||'').replace(/[^\w-]/g,'').slice(0,40)||schId(),n,u:httpUrl(i.u)||'',d:isoOk(i.d)?i.d:'',st:typeof i.st==='string'&&own(SC_ST,i.st)?i.st:'interested',note:String(i.note||'').slice(0,300),rid:/^[\w-]{1,40}$/.test(String(i.rid||''))?String(i.rid):'',ts:+i.ts||0})});
+    s.notif=x.notif?1:0;s.seen=x.seen?1:0;s.nday=isoOk(x.nday)?x.nday:'';
+    if(x.skip&&typeof x.skip==='object')['svc','res','reg','first','inc'].forEach(k=>{if(x.skip[k])s.skip[k]=1})}
+  return SCHS=s}
+const schSave=()=>store.set('sch',schS());
+const schTrack=rid=>schS().items.find(i=>i.rid===rid);
+/* the two badges: a mark when the road exists (GMARK), and the saved state when it does not yet */
+const schSeenOn=()=>{const s=schS();return !!(s.seen||s.items.length)};
+const schAppliedOn=()=>schS().items.some(i=>SC_DONE.includes(i.st));
+function schMarks(){const s=schS();if(s.items.length&&!s.seen){s.seen=1;schSave()}
+  if(hasGoal()){const P=pth();setMark('schSeen',schSeenOn()?(P.marks.schSeen||Date.now()):0);setMark('schApplied',schAppliedOn()?(P.marks.schApplied||Date.now()):0);pthSave()}
+  PLC=null}
+/* ---- records ---- */
+let SCI=null;
+const schInstRecs=()=>SCI||(SCI=DATA.inst.map(I=>({id:'inst-'+I.id,gen:1,name:'מלגות וסיוע '+bIn(I.n),provider:I.n,by:I.n,type:'general',inst:I.id,audience:'סטודנטים ומועמדים '+bIn(I.n),
+  sum:'מוסדות להשכלה גבוהה בדרך כלל מפעילים דיקנאט סטודנטים עם מלגות והטבות משלהם. אין לנו כתובת מאומתת של עמוד המלגות במוסד הזה, ולכן הקישור הוא לאתר המוסד. שם מחפשים "מלגות" או "דיקנאט הסטודנטים".',
+  eligibility:{inst:I.id},url:instUrl(I.id),srcType:'official',status:'unverified',conf:'low',checked:FT_D,note:'לא נבדקו סכומים ומועדים, ולכן אין כאן מספרים.'})));
+const schRec=id=>SCH.find(r=>r.id===id)||schInstRecs().find(r=>r.id===id)||null;
+const schInsts=()=>{const P=pth();return P&&P.targets?P.targets.map(t=>t.i):[]};
+/* ---- matching: what the profile says about each condition. ok = it holds, pr = probably, no = it does not, un = not known yet ---- */
+function schEval(r){
+  const e=r.eligibility||{},p=S.prof||{},ok=[],pr=[],no=[],un=[],svc=p.svc||'',res=svc==='none'?'0':(p.res||'');
+  if(e.svc){const c=e.svc==='combat';
+    if(!svc)un.push(c?'שירות בתפקיד לוחם או תומך לחימה':'שירות צבאי או לאומי');
+    else if(svc==='none')no.push('מיועדת למי ששירתו, ולא שירתתי');
+    else if(c&&svc!=='combat')un.push('מיועדת ללוחמים, והשירות שלי היה בתפקיד אחר');
+    else ok.push(c?'שירתתי בתפקיד לוחם או תומך לחימה':'שירתתי שירות צבאי או לאומי')}
+  if(e.res){const t=e.res,b=SC_RES[res];
+    if(!b)un.push(t<=1?'שירות מילואים':`לפחות ${t} ימי מילואים`);
+    else if(b[1]<t)no.push(t<=1?'מיועדת למי ששירתו במילואים':`מיועדת למי שעשו לפחות ${t} ימי מילואים`);
+    else if(b[0]>=t)ok.push(t<=1?'עשיתי ימי מילואים':`עשיתי לפחות ${t} ימי מילואים`);
+    else un.push(`לפחות ${t} ימי מילואים (בטווח שסימנתי אי אפשר לדעת)`)}
+  if(e.reg){if(p.reg==='n'||p.reg==='s')pr.push(`אני ${gx('גר','גרה','גר/ה')} בצפון או בדרום, שבהם יש הרבה יישובי פריפריה (ההגדרה לפי יישוב)`);
+    else un.push('מגורים או לימודים בפריפריה (ההגדרה לפי יישוב)')}
+  if(e.first){if(p.first==='y')ok.push(`אני ${gx('הראשון','הראשונה','הראשון/ה')} במשפחה שלומד לתואר`);
+    else if(p.first==='n')no.push('מיועדת לדור ראשון להשכלה גבוהה');else un.push('דור ראשון להשכלה גבוהה')}
+  if(e.need){if(p.inc==='low')ok.push('המצב הכלכלי במשפחה מתחת לממוצע');
+    else if(p.inc==='mid')pr.push('המצב הכלכלי בסביבות הממוצע, וההכרעה אצל הגוף');
+    else if(p.inc==='high')no.push('מבוססת על צורך כלכלי');else un.push('מצב כלכלי')}
+  if(e.inst&&INST[e.inst]){const T=schInsts();
+    if(T.includes(e.inst))ok.push('המוסד נמצא ביעדים שלי');
+    else if(T.length&&!r.gen)no.push(`מיועדת ללומדים ${bIn(INST[e.inst].n)}`);else un.push(`לימודים ${bIn(INST[e.inst].n)}`)}
+  if(e.stage){const cur=stageNow();
+    if(!cur)un.push('השלב שלי: כיתה י"ב או בשירות');
+    else if(e.stage.includes(cur))ok.push('אני בשלב המתאים');
+    else if((cur==='g10'||cur==='g11')&&e.stage.includes('g12'))pr.push('אני עוד לפני כיתה י"ב');
+    else no.push('מיועדת למי שבכיתה י"ב או בשירות')}
+  if(e.open)pr.push('פתוחה לסטודנטים בכלל');
+  const chk=e.chk||[],st=no.length?'check':(!un.length&&!pr.length&&ok.length&&!chk.length&&r.status==='verified')?'yes':(ok.length||pr.length)?'maybe':'check';
+  return {st,ok,pr,no,un,chk}}
+const schHas=(r,k)=>{const e=r.eligibility||{};return k==='svc'?!!e.svc:k==='res'?!!e.res:k==='reg'?!!e.reg:k==='first'?!!e.first:k==='inc'?!!e.need:false};
+/* the "one more question" prompts: each sets one optional profile field (kept in this browser only) */
+const SCQ=()=>[
+  {k:'svc',q:'האם שירתתי שירות צבאי או לאומי?',o:[['combat','כן, כלוחם או כתומך לחימה'],['other','כן, בתפקיד אחר או בשירות לאומי'],['none','לא שירתתי']],
+    why:'חלק מהמלגות והזכויות מיועדות למי ששירתו, וחלקן ללוחמים בלבד.'},
+  {k:'res',q:'כמה ימי מילואים עשיתי בשנה האחרונה?',o:[['0','אף יום'],['1','1 עד 19'],['20','20 עד 49'],['50','50 עד 99'],['100','100 ומעלה']],
+    why:'הטבות למשרתי מילואים נקבעות לפי מספר ימי השירות, ולכל אחת סף משלה.'},
+  {k:'reg',q:`איפה אני ${gx('גר','גרה','גר/ה')}?`,o:Object.entries(REGN),
+    why:'מלגות פריפריה תלויות ביישוב המגורים. האזור כאן הוא רמז בלבד, וההגדרה המדויקת אצל הגוף המעניק.'},
+  {k:'first',q:`האם אני ${gx('הראשון','הראשונה','הראשון/ה')} במשפחה שלומד לתואר?`,o:[['y','כן'],['n','לא']],
+    why:'יש מלגות שמיועדות לדור ראשון להשכלה גבוהה.'},
+  {k:'inc',q:`איך אני ${gx('מתאר','מתארת','מתאר/ת')} את המצב הכלכלי של המשפחה?`,o:[['low','מתחת לממוצע'],['mid','בסביבות הממוצע'],['high','מעל הממוצע']],
+    why:'מלגות לפי צורך כלכלי נבחנות לפי הכנסה ותנאים נוספים. זו שאלה אישית, ולכן היא אופציונלית, ואפשר להמשיך בלעדיה.'}];
+const schNextQ=()=>{const s=schS(),p=S.prof||{};return SCQ().find(q=>!p[q.k]&&!s.skip[q.k]&&!(q.k==='res'&&p.svc==='none')&&SCH.some(r=>schHas(r,q.k)))||null};
+function schSetProf(k,v){S.prof={...(S.prof||{})};if(S.prof[k]===v)delete S.prof[k];else S.prof[k]=v;store.set('prof',S.prof);PLC=null}
+/* ---- dates: my own items and the verified windows become events of the road's calendar (timeline, dates tab, calendar file) ---- */
+function schEvents(){const s=schS(),L=[];
+  s.items.forEach(it=>{if(it.d&&!SC_DONE.includes(it.st)&&daysTo(it.d)>=0)L.push({id:'sch-'+it.id,d:it.d,k:'sch',t:'מועד אחרון למלגה: '+it.n,nm:it.n,sub:'במעקב שלי · '+SC_ST[it.st],src:it.u,al:[14,7,2],tid:it.id})});
+  SCH.forEach(r=>{const w=r.status==='verified'&&r.window;if(!w||!w.closes||daysTo(w.closes)<0)return;const it=schTrack(r.id);
+    if(it&&(SC_DONE.includes(it.st)||it.d))return; /* the date I wrote myself wins, and a submitted one stays quiet */
+    if(it||schEval(r).st!=='check')L.push({id:'schw-'+r.id,d:w.closes,k:'sch',t:'נסגרת ההגשה: '+r.name,sub:w.txt,src:httpUrl(r.url),al:[14,7,2]})});
+  return L}
+const schNext=()=>{const x=schEvents().filter(x=>x.tid).sort((a,b)=>a.d.localeCompare(b.d))[0];return x&&daysTo(x.d)<=120?x:null};
+const schNextLine=()=>{const x=schNext();return x?`<p class="kp-tip">${ki('coin')} המלגה הקרובה שלי: <b>${esc(x.nm)}</b>, ${esc(inN(daysTo(x.d)))}.</p>`:''};
+/* opt-in notifications: only while the site is open. On opening, items due within a week are shown once a day */
+function schNotify(){const s=schS();if(!s.notif||!('Notification' in window)||Notification.permission!=='granted')return;
+  const t=today0(),iso=isoOf(t.getFullYear(),t.getMonth()+1,t.getDate());if(s.nday===iso)return;
+  const L=schEvents().filter(x=>daysTo(x.d)<=7).sort((a,b)=>a.d.localeCompare(b.d));if(!L.length)return;
+  s.nday=iso;schSave();
+  try{new Notification('מועדי מלגות בשבוע הקרוב',{body:L.slice(0,4).map(x=>`${x.nm||x.t} · ${inN(daysTo(x.d))}`).join('\n'),lang:'he',dir:'rtl'})}catch(e){}}
+setTimeout(()=>{try{schNotify()}catch(e){}},1500);
+/* ---- screen pieces ---- */
+const schLab=r=>factLabel({status:r.status,by:r.by,checked:r.checked});
+function schChip(r,stat){const lbl=schLab(r),inner=`<span class="ft-i" aria-hidden="true">${FT_IC[r.status]}</span><span>${esc(lbl)}</span>`;
+  return stat?`<span class="ft-chip lg ${r.status}">${inner}</span>`:`<button type="button" class="ft-chip lg ${r.status}" data-sch="info|${esc(r.id)}" aria-haspopup="dialog" aria-label="${esc(lbl)}. פרטים ודיווח על טעות">${inner}</button>`}
+/* money and dates: a number only for a verified record, with its cycle. Otherwise the pointer to the body that gives it */
+function schMoney(r){const v=r.status==='verified',y=r.year?` · לפי מחזור ${esc(r.year)}`:' · השנה לא צוינה במקור',
+  pt=`לפי פרסום הגוף המעניק${r.year?` (המחזור האחרון שמצאנו: ${esc(r.year)})`:''}`;
+  return `<dl class="sc-dl"><div><dt>סכום</dt><dd>${v&&r.amount?`${esc(r.amount)}<small>${y}. הסכום יכול להשתנות משנה לשנה.</small>`:pt}</dd></div>
+    <div><dt>מועד הגשה</dt><dd>${v&&r.window?esc(r.window.txt):'לפי פרסום הגוף המעניק'}</dd></div></dl>`}
+function schWhyHTML(e,full){const row=(c,i,t,l)=>t.length?`<span class="${c}"><i aria-hidden="true">${i}</i>${l?l+': ':''}${esc(t.join(', '))}</span>`:'';
+  const s=row('sc-ok','✓',e.ok)+row('sc-pr','≈',e.pr)+row('sc-no','✕',e.no)+row('sc-un','?',e.un,'עוד לא ידוע')+(full?row('sc-ck','•',e.chk,'לבדוק מול הגוף'):'');
+  return s?`<p class="sc-why">${s}</p>`:''}
+function schCard(r,e){const st=SC_STATE[e.st],id=esc(r.id),tr=schTrack(r.id);
+  return `<article class="sc-card ${e.st}" aria-labelledby="sch-h-${id}">
+    <div class="sc-h"><h3 id="sch-h-${id}">${esc(r.name)}</h3><span class="sc-st ${e.st}"><i aria-hidden="true">${st[0]}</i>${st[1]}</span></div>
+    <p class="sc-by">${esc(r.by||r.provider)} · ${esc(SC_TY[r.type]||'')}</p>
+    ${r.kind==='service'?'<p class="sc-svc"><i aria-hidden="true">!</i>שירות תמורת לימודים, לא מלגה: בסיום משרתים.</p>':''}
+    <p class="sc-aud">${esc(r.audience)}</p>${schWhyHTML(e)}${schMoney(r)}
+    ${r.soon?`<p class="sc-soon">${ki('cal')}<span>לפי מקור אחד, ההגשה לשנה הזו עשויה להיסגר בקרוב. בודקים את המועד בדף של הגוף.</span></p>`:''}
+    <div class="sc-meta">${schChip(r)}<span class="sc-cf">רמת ביטחון בבדיקה: ${esc(SC_CF[r.conf]||'')}</span></div>
+    <div class="kp-btns"><a class="btn soft sm" href="${esc(r.url)}" target="_blank" rel="noopener">${r.srcType==='official'?'לדף הרשמי':'לדף המידע'}</a><button type="button" class="btn soft sm" data-sch="info|${id}">פרטים</button>
+      ${tr?`<span class="sc-tr">${ki('check')}במעקב שלי</span>`:`<button type="button" class="btn soft sm" data-sch="add|${id}">הוספה למעקב</button>`}</div></article>`}
+function openSch(id){const r=schRec(id);if(!r)return;const e=schEval(r),u=httpUrl(r.url),st=SC_STATE[e.st];
+  openOv(`<h2>${esc(r.name)}</h2><p class="s">${esc(r.provider||r.by)}</p>
+    <div class="ft-card"><p><span class="sc-st ${e.st}"><i aria-hidden="true">${st[0]}</i>${st[1]}</span> <small class="sc-fine">לפי מה שסיפרתי עליי. ההכרעה בזכאות היא של הגוף המעניק.</small></p>${schWhyHTML(e,1)}
+      <p>${esc(r.sum)}</p>${r.kind==='service'?'<p class="sc-svc"><i aria-hidden="true">!</i>שירות תמורת לימודים, לא מלגה: בסיום משרתים.</p>':''}${schMoney(r)}${r.note?`<p>${esc(r.note)}</p>`:''}
+      ${r.links?`<h3 class="sc-h3">הדפים של המוסדות</h3><ul class="kp-ul">${r.links.filter(l=>INST[l.i]&&httpUrl(l.u)).map(l=>`<li><a href="${esc(httpUrl(l.u))}" target="_blank" rel="noopener"><b>${esc(INST[l.i].n)}</b></a>: ${esc(l.t)}</li>`).join('')}</ul>`:''}
+      <p>${schChip(r,1)}</p><p>${esc(FT_EX[r.status])}</p>
+      <p class="fine">${u?`הדף שמצאנו: <a href="${esc(u)}" target="_blank" rel="noopener">${esc(siteHost(u))}</a> (${r.srcType==='official'?'אתר רשמי':'מקור משני'}). `:''}רמת הביטחון בבדיקה: ${esc(SC_CF[r.conf]||'')}. נבדק לאחרונה ב-${esc(dLong(r.checked))}, בחיפוש ולא בקריאה ישירה של העמוד.</p></div>
+    <div class="kp-btns">${u?`<a class="btn primary sm" href="${esc(u)}" target="_blank" rel="noopener">לדף של הגוף</a>`:''}${schTrack(r.id)?'':KB(`data-sch="add|${esc(r.id)}"`,'הוספה למעקב')}</div>
+    ${reportHTML({what:r.name,val:r.gen?'':(r.year?`מחזור ${r.year}`:''),src:u,st:schLab(r)})}`,'wide')}
+/* the tracker sheet: add, edit, delete (the confirmation is inside the sheet: no browser dialog) */
+function openSchForm(id,rid){const it=id?schS().items.find(i=>i.id===id):null;if(id&&!it)return;
+  const r=!it&&rid?schRec(rid):null,v=it||{n:r?r.name.slice(0,80):'',u:r?r.url:'',d:'',st:'interested',note:'',rid:r?r.id:''};
+  const ov=openOv(`<h2>${it?'עריכת מלגה במעקב':'הוספה למעקב'}</h2><p class="s">${r?'אפשר להשלים את מועד ההגשה אחרי שבדקתי אותו בדף של הגוף. אנחנו לא ממלאים תאריך בשבילי.':'המלגה נשמרת בדפדפן הזה בלבד.'}</p>
+    <form id="scF" class="form sc-form" novalidate data-id="${esc(it?it.id:'')}" data-rid="${esc(v.rid||'')}">
+      <div class="field"><label for="scN">שם המלגה</label><input id="scN" class="sc-in" maxlength="80" required value="${esc(v.n)}" autocomplete="off"></div>
+      <div class="field"><label for="scD">מועד אחרון להגשה</label><input id="scD" class="sc-in" type="date" value="${esc(v.d)}"><span class="hint">אם המועד לא ידוע, משאירים ריק. כשיש מועד, מקבלים ספירה לאחור ותזכורות.</span></div>
+      <div class="field"><label for="scU">קישור לדף של המלגה (לא חובה)</label><input id="scU" class="sc-in" dir="ltr" inputmode="url" maxlength="300" placeholder="https://" value="${esc(v.u)}" autocomplete="off"></div>
+      <div class="field"><label for="scS">איפה אני עומד/ת</label><select id="scS" class="sc-in">${Object.entries(SC_ST).map(([k,l])=>`<option value="${k}" ${v.st===k?'selected':''}>${l}</option>`).join('')}</select><span class="hint">אחרי "הוגשה" התזכורות למלגה הזו נעצרות.</span></div>
+      <div class="field"><label for="scNt">הערות</label><textarea id="scNt" class="sc-in" rows="3" maxlength="300">${esc(v.note)}</textarea></div>
+      <span class="err" id="scErr" role="alert" hidden></span>
+      <div class="kp-btns"><button class="btn primary" type="submit">שמירה</button>${it?`<button type="button" class="btn soft" data-sch="del|${esc(it.id)}">מחיקה מהמעקב</button>`:''}</div>
+      ${it?`<div id="scDelAsk" class="kp-btns" hidden><span class="kp-ask">להסיר את המלגה מהמעקב?</span><button type="button" class="btn soft sm" data-sch="delok|${esc(it.id)}">כן, להסיר</button><button type="button" class="linkbtn" data-sch="delno">ביטול</button></div>`:''}
+    </form>`,'');
+  return ov}
+document.addEventListener('submit',e=>{if(e.target.id!=='scF')return;e.preventDefault();
+  const f=e.target,err=m=>{const x=$('#scErr');x.textContent=m;x.hidden=false;$('#scN').focus()};
+  const n=$('#scN').value.trim().slice(0,80),d=$('#scD').value,ur=$('#scU').value.trim(),st=$('#scS').value,note=$('#scNt').value.trim().slice(0,300);
+  const u=ur?httpUrl(/^[a-z][a-z0-9+.-]*:/i.test(ur)?ur:'https://'+ur):'';
+  if(!n)return err('צריך שם למלגה');
+  if(d&&!isoOk(d))return err('התאריך לא תקין');
+  if(ur&&!u)return err('הקישור צריך להתחיל ב-https:// או ב-http://');
+  if(!own(SC_ST,st))return err('הסטטוס לא תקין');
+  const s=schS(),id=f.dataset.id;let it=id?s.items.find(i=>i.id===id):null;
+  if(!it){if(s.items.length>=60)return err('אפשר לעקוב אחרי עד 60 מלגות. כדאי להסיר מלגות שכבר לא רלוונטיות');
+    it={id:schId(),rid:/^[\w-]{1,40}$/.test(f.dataset.rid||'')?f.dataset.rid:'',ts:Date.now()};s.items.push(it)}
+  Object.assign(it,{n,u,d,st,note});schSave();schMarks();closeOv();schPaint();toast(SC_DONE.includes(st)?'נשמר. התזכורות למלגה הזו נעצרו':'נשמר במעקב')});
+function schItemHTML(it){const done=SC_DONE.includes(it.st),n=it.d?daysTo(it.d):null,u=httpUrl(it.u),id=esc(it.id);
+  const when=!it.d?'בלי מועד אחרון':done?`מועד אחרון ${dLong(it.d)}`:n<0?`מועד אחרון ${dLong(it.d)} · המועד עבר`:`מועד אחרון ${dLong(it.d)} · ${inN(n)}`;
+  return `<li class="sc-it ${!done&&n!==null&&n>=0&&n<=7?'soon':''}"><div class="sc-ib"><b>${esc(it.n)}</b><span class="sc-ps ${done?'done':''}">${esc(SC_ST[it.st])}</span></div>
+    <small>${esc(when)}${!done&&n!==null&&n>=0&&n<=7?' · השבוע':''}</small>${it.note?`<small>${esc(it.note.length>90?it.note.slice(0,90)+'…':it.note)}</small>`:''}
+    <div class="kp-btns">${u?`<a class="btn soft sm" href="${esc(u)}" target="_blank" rel="noopener">לדף</a>`:''}${done?'':KB(`data-sch="sub|${id}"`,'הגשתי')}${KB(`data-sch="tedit|${id}"`,'עריכה')}</div></li>`}
+function schTrackHTML(){const s=schS(),L=[...s.items].sort((a,b)=>(SC_DONE.includes(a.st)-SC_DONE.includes(b.st))||(a.d||'9').localeCompare(b.d||'9'));
+  return `<div class="kp-card sc-trk"><div class="pc-h"><h2>${ki('coin')}המעקב שלי</h2><span class="pc-c num">${L.length}</span></div>
+    ${L.length?`<ul class="sc-tl">${L.map(schItemHTML).join('')}</ul>`:'<p>עוד לא הוספתי מלגה. אפשר להוסיף מלגה מהרשימה או מלגה שמצאתי בעצמי, ולקבל ספירה לאחור ותזכורות.</p>'}
+    <div class="kp-btns">${KB('data-sch="new"','הוספת מלגה משלי')}</div></div>`}
+function schTlRow(x){const n=daysTo(x.d),hot=n<=14;
+  return `<li class="tl-i ${x.k} ${x.reg?'reg':''} ${hot?'soon':''}"><span class="tl-dot" aria-hidden="true"></span><div class="tl-d num"><b>${dShort(x.d)}</b><small>${new Date(x.d+'T00:00:00').getFullYear()}</small></div>
+    <div class="tl-b"><b>${esc(x.t)}</b>${x.approx?'<small>תאריך משוער (בערך)</small>':''}${x.sub?`<small>${esc(x.sub)}</small>`:''}</div><span class="tl-n ${hot?'hot':''}">${inN(n)}</span></li>`}
+/* one rail: my scholarship dates next to the road's dates (psychometric registration, registration windows, dates I added), sorted by date */
+function schRailHTML(){const road=hasGoal(),L=timeline(safe(plan,null)).filter(x=>x.k==='sch'||x.k==='mine'||(road&&(x.reg||x.k==='idf'))),shown=SCF.rail?L:L.slice(0,6),hasS=schEvents().length>0;
+  return `<div class="kp-card sc-rail"><div class="pc-h"><h2>${ki('cal')}המועדים הקרובים שלי</h2></div>
+    ${L.length?`<ol class="tl">${shown.map(schTlRow).join('')}</ol>${L.length>6?`<div class="more"><button type="button" class="btn soft sm" data-sch="rail">${SCF.rail?'להציג פחות':`להציג את כל ${L.length} המועדים`}</button></div>`:''}`
+      :'<p>אין עדיין מועדים. כשאוסיף מלגה עם מועד אחרון, או יעד בדרך שלי, המועדים יופיעו כאן לפי הסדר.</p>'}
+    <div class="kp-btns">${hasS&&!inViewer()?KB('data-sch="ics"',`${ki('down')}המלגות שלי ליומן`):''}${schNotifyBtn()}</div>
+    <p class="fine">מועדים שנקראים "בערך" הם הערכה לפי המחזור האחרון שפורסם, ולא תאריך רשמי. ביומן יש תזכורות 14, 7 ויומיים לפני כל מועד של מלגה.</p></div>`}
+function schNotifyBtn(){if(!('Notification' in window))return '';const on=schS().notif&&Notification.permission==='granted';
+  return `<button type="button" class="btn soft sm" data-sch="notif" aria-pressed="${on}">${on?'✓ התראות בדפדפן פועלות':'התראות בדפדפן'}</button><span class="sc-fine">התראות פועלות רק כשהאתר פתוח בדפדפן.</span>`}
+function schSoonHTML(){const L=schEvents().filter(x=>daysTo(x.d)<=7).sort((a,b)=>a.d.localeCompare(b.d));
+  return L.length?`<div class="sc-alert" role="status">${ki('cal')}<div><b>בשבוע הקרוב:</b> ${L.slice(0,3).map(x=>`${esc(x.nm||x.t)} (${esc(inN(daysTo(x.d)))})`).join(' · ')}</div></div>`:''}
+function schQHTML(){const q=schNextQ();if(!q)return '';
+  return `<div class="sc-q" role="group" aria-labelledby="scqT"><p class="sc-qk">עוד שאלה אחת</p><h2 id="scqT" class="sc-qh" tabindex="-1">${q.q}</h2>
+    <div class="pick">${q.o.map(([v,l])=>`<button type="button" class="chip" data-sch="q|${q.k}|${esc(v)}" aria-pressed="false" style="--c2:#FF8A65"><i></i>${esc(l)}</button>`).join('')}<button type="button" class="btn soft sm" data-sch="qskip|${q.k}">לא רוצה לענות</button></div>
+    <details class="sc-wy"><summary>למה אנחנו שואלים</summary><p>${esc(q.why)} התשובה משפיעה רק על הסדר והסימון בדף הזה, נשמרת בדפדפן הזה בלבד, ואפשר לשנות או למחוק אותה בכל רגע.</p></details></div>`}
+function schMeHTML(){const p=S.prof||{},s=schS(),Q=SCQ(),any=Q.some(q=>p[q.k]||s.skip[q.k]);
+  if(!SCF.edit)return any||!schNextQ()?`<p class="sc-fine"><button type="button" class="linkbtn" data-sch="edit">עריכת מה שסיפרתי להתאמה</button></p>`:'';
+  return `<div class="kp-card sc-me"><div class="pc-h"><h2>${ki('user')}מה סיפרתי להתאמה</h2></div>
+    ${Q.map(q=>`<div class="field kp-mq"><label>${q.q}</label><div class="pick">${q.o.map(([v,l])=>`<button type="button" class="chip" data-sch="q|${q.k}|${esc(v)}" aria-pressed="${p[q.k]===v}" style="--c2:#FF8A65"><i></i>${esc(l)}</button>`).join('')}</div>
+      ${s.skip[q.k]?`<span class="sc-fine">בחרתי לא לענות. <button type="button" class="linkbtn" data-sch="qask|${q.k}">לשאול שוב</button></span>`:''}</div>`).join('')}
+    <p class="fine">הפרטים נשמרים בדפדפן הזה בלבד. לחיצה על תשובה שנבחרה מוחקת אותה.</p><div class="kp-btns">${KB('data-sch="edit"','סיום')}</div></div>`}
+const schPass=r=>(SCF.f==='all'||[r.type,...(r.also||[])].some(t=>SC_GRP[SCF.f].includes(t)))&&(!SCF.inst||!r.inst||r.inst===SCF.inst);
+const schRank=r=>({verified:0,unverified:1,conflict:2}[r.status]||0);
+function schBody(){
+  const all=SCH.map(r=>({r,e:schEval(r)})),cnt={yes:0,maybe:0,check:0};all.forEach(x=>cnt[x.e.st]++);
+  const L=all.filter(x=>schPass(x.r)).sort((a,b)=>({yes:0,maybe:1,check:2}[a.e.st]-{yes:0,maybe:1,check:2}[b.e.st])||(a.e.no.length-b.e.no.length)||(schRank(a.r)-schRank(b.r))),G={yes:[],maybe:[],check:[]};L.forEach(x=>G[x.e.st].push(x));
+  const grp=(k,t,sub,lim)=>G[k].length?`<section class="sc-g" aria-labelledby="scg-${k}"><h2 id="scg-${k}">${t} <span class="num">(${G[k].length})</span></h2><p class="sc-fine">${sub}</p><div class="sc-grid">${(lim&&!SCF.more[k]?G[k].slice(0,lim):G[k]).map(x=>schCard(x.r,x.e)).join('')}</div>
+      ${lim&&G[k].length>lim?`<div class="more"><button type="button" class="btn soft sm" data-sch="more|${k}">${SCF.more[k]?'להציג פחות':`להציג את כל ${G[k].length}`}</button></div>`:''}</section>`:'';
+  const I=schInstRecs().filter(r=>!SCF.inst||r.inst===SCF.inst),noProf=!(S.prof&&(S.prof.svc||S.prof.res||S.prof.first||S.prof.inc||S.prof.reg));
+  return `${schSoonHTML()}
+    <div class="sc-sum" id="scSum" tabindex="-1"><span><b class="num">${all.length}</b> מלגות, הטבות וזכויות במאגר</span><span><b class="num">${cnt.yes}</b> מתאימות</span><span><b class="num">${cnt.maybe}</b> כנראה מתאימות</span>
+      ${schSeenOn()?`<span class="sc-seen">${ki('check')}בדקתי מלגות</span>`:KB('data-sch="seen"','סימון: בדקתי מלגות')}</div>
+    <div class="sc-two">${schTrackHTML()}${schRailHTML()}</div>
+    ${schQHTML()}${schMeHTML()}
+    <div class="sc-filters"><div class="pick" role="group" aria-label="סוג המלגה">${SC_FIL.map(([k,l])=>`<button type="button" class="chip ftog" data-sch="f|${k}" aria-pressed="${SCF.f===k}"><i></i>${l}</button>`).join('')}</div>
+      <div class="field sc-fi"><label for="scInst">מוסד</label><select id="scInst" class="sc-in"><option value="">כל המוסדות</option>${DATA.inst.slice().sort((a,b)=>a.n.localeCompare(b.n,'he')).map(I=>`<option value="${esc(I.id)}" ${SCF.inst===I.id?'selected':''}>${esc(I.n)}</option>`).join('')}</select>
+        ${SCF.inst?'<span class="hint">מוצגות מלגות של המוסד ותוכניות ארציות שפתוחות ללומדים בו.</span>':''}</div></div>
+    ${noProf?'<p class="nodata">עוד לא סיפרתי עליי, ולכן רוב הרשומות מסומנות "לבדוק". שאלה אחת או שתיים מספיקות כדי למיין, ואפשר גם לדלג ולעבור על הרשימה.</p>':''}
+    ${grp('yes','נראות מתאימות','לפי מה שסיפרתי, התנאים שאנחנו מכירים מתקיימים. ההכרעה בזכאות היא של הגוף המעניק.')}
+    ${grp('maybe','כנראה מתאימות','חלק מהתנאים מתקיימים וחלק עוד לא ידועים או נבדקים רק מול הגוף.',8)}
+    ${grp('check','לבדוק','אין לנו מספיק מידע כדי לדעת, או שיש תנאי שלא נראה שמתקיים. כדאי לקרוא את התנאים בדף של הגוף.',8)}
+    ${L.length?'':'<div class="empty"><h3>אין רשומות לסינון הזה</h3><p>אפשר לשנות את סוג המלגה או להציג את כל המוסדות.</p></div>'}
+    <section class="sc-g" aria-labelledby="scg-i"><h2 id="scg-i">מלגות וסיוע לפי מוסד <span class="num">(${I.length})</span></h2>
+      <p class="sc-fine">כל מוסד מפרסם בעצמו מלגות והטבות. אין לנו כתובת מאומתת של עמוד המלגות בכל מוסד, ולכן הקישורים כאן הם לאתרי המוסדות, ושם מחפשים "מלגות" או "דיקנאט הסטודנטים".</p>
+      ${SCF.inst?'':`<button type="button" class="btn soft sm" data-sch="insts" aria-expanded="${SCF.insts}">${SCF.insts?'הסתרת הרשימה':'הצגת כל המוסדות'}</button>`}
+      ${SCF.inst||SCF.insts?`<ul class="sc-il">${I.map(r=>{const e=schEval(r);return `<li><span><b>${esc(r.provider)}</b>${e.st==='maybe'?' <span class="sc-st maybe"><i aria-hidden="true">≈</i>ביעדים שלי</span>':''}</span><a class="btn soft sm" href="${esc(r.url)}" target="_blank" rel="noopener">${INST[r.inst].site?'לאתר המוסד':'לדף המוסד במל"ג'}</a></li>`}).join('')}</ul>`:''}</section>
+    <div class="srcnote sc-foot">${ICON.check}<div><b>על הנתונים:</b> אנחנו לא גוף מעניק ולא קובעים זכאות. כל רשומה מציינת מי מפרסם אותה, ומה מצב הבדיקה שלה. הבדיקה נעשתה בחיפוש ב-${esc(dLong(FT_D))}, ולא בקריאה ישירה של הדפים הרשמיים. <button type="button" class="linkbtn" data-go="src">איך אנחנו בודקים</button> · מצאת טעות? ספרו לנו. כל דיווח נבדק. <button type="button" class="btn soft sm" data-ftr="gen">מצאתי טעות</button></div></div>`}
+function renderSch(){
+  return pageHead('מלגות וזכויות','מלגות, הטבות וזכויות ללומדים, עם מקור ומצב בדיקה לכל אחת. הדף עובד גם בלי פרופיל, ומתאים את עצמו למה שאספר עליי.')+
+  `<section class="sec" style="padding-top:8px"><div class="wrap sc-wrap"><div class="srcnote sc-trust">${ICON.check}<div><b>מה אפשר לסמוך עליו כאן:</b> סכום ומועד מוצגים רק כשהוצלבו בכמה מקורות, ואז עם המחזור שבו פורסמו. בכל מקרה אחר כתוב "לפי פרסום הגוף המעניק" והקישור לדף שלו. את הפרטים האישיים שאספר כאן אפשר להשאיר ריקים, והם נשמרים בדפדפן הזה בלבד.</div></div>
+    <div id="schHost">${schBody()}</div></div></section>`}
+const schPaint=sel=>{const h=$('#schHost');if(!h)return;h.innerHTML=schBody();if(sel)refocus(sel)};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-sch]');if(!b)return;const [a,x,y]=b.dataset.sch.split('|'),s=schS();
+  if(a==='f'){SCF.f=own(SC_GRP,x)?x:'all';SCF.more={};schPaint()}
+  else if(a==='more'){if(['maybe','check'].includes(x)){SCF.more[x]=!SCF.more[x];schPaint()}}
+  else if(a==='insts'){SCF.insts=!SCF.insts;schPaint()}
+  else if(a==='rail'){SCF.rail=!SCF.rail;schPaint()}
+  else if(a==='edit'){SCF.edit=!SCF.edit;schPaint()}
+  else if(a==='q'){const q=SCQ().find(q=>q.k===x);if(!q||!q.o.some(o=>String(o[0])===y))return;schSetProf(x,y);
+    const n=SCH.filter(r=>schEval(r).st!=='check').length;schPaint('#scqT,#scSum');toast(`נשמר בדפדפן הזה. ${n} רשומות נראות מתאימות או כנראה מתאימות`)}
+  else if(a==='qskip'){if(['svc','res','reg','first','inc'].includes(x)){s.skip[x]=1;schSave();schPaint('#scqT,#scSum')}}
+  else if(a==='qask'){delete s.skip[x];schSave();schPaint()}
+  else if(a==='info')openSch(x);
+  else if(a==='add')openSchForm('',x);
+  else if(a==='new')openSchForm('','');
+  else if(a==='tedit')openSchForm(x,'');
+  else if(a==='sub'){const it=s.items.find(i=>i.id===x);if(!it)return;it.st='submitted';schSave();schMarks();schPaint();toast('סימנתי כהגשה. התזכורות למלגה הזו נעצרו')}
+  else if(a==='del'){const q=$('#scDelAsk');if(q){q.hidden=false;const ok=q.querySelector('button');if(ok)ok.focus()}}
+  else if(a==='delno'){const q=$('#scDelAsk');if(q)q.hidden=true}
+  else if(a==='delok'){s.items=s.items.filter(i=>i.id!==x);schSave();schMarks();closeOv();schPaint();toast('המלגה הוסרה מהמעקב')}
+  else if(a==='seen'){s.seen=1;schSave();schMarks();schPaint('#scSum');toast('סומן. התג "בדקתי מלגות" נוסף להישגים שלי')}
+  else if(a==='ics'){dl('kivun-scholarship-dates.ics',icsFile(ev=>ev.k==='sch'),'text/calendar;charset=utf-8').then(ok=>ok&&toast('הקובץ נשמר. אפשר לפתוח אותו ביומן'))}
+  else if(a==='notif'){
+    if(s.notif){s.notif=0;schSave();schPaint();toast('ההתראות כובו');return}
+    if(!('Notification' in window)){toast('הדפדפן הזה לא תומך בהתראות');return}
+    let called=false;const done=p=>{if(called)return;called=true;if(p==='granted'){s.notif=1;schSave();schPaint();toast('ההתראות הופעלו. הן יופיעו רק כשהאתר פתוח בדפדפן')}else toast('הדפדפן לא אישר התראות')};
+    try{const r=Notification.requestPermission(done);if(r&&r.then)r.then(done)}catch(err){toast('אי אפשר להפעיל התראות בדפדפן הזה')}}
+});
+document.addEventListener('change',e=>{if(e.target.id==='scInst'){const v=e.target.value;SCF.inst=INST[v]?v:'';schPaint('#scInst')}});
+function schSrcNote(){const n=SCH.length,c=SCH.reduce((a,r)=>(a[r.status]=(a[r.status]||0)+1,a),{}),m=SCH.filter(r=>r.status==='verified'&&r.amount).length;
+  return `<div class="srcnote">${ICON.check}<div><b>מלגות וזכויות:</b> ${n} רשומות שנאספו בחיפוש (${c.verified||0} הוצלבו מול כמה מקורות, ${c.unverified||0} לא אומתו, ${c.conflict||0} עם מקורות סותרים), ועוד רשומה לכל מוסד שמפנה לאתר שלו. סכום מוצג רק ב-${m} רשומות שהוצלבו, ותמיד עם המחזור שלו. מועד הגשה מוצג רק כשהוצלב, וכרגע זה קורה ברשומה אחת. הבדיקה בוצעה בחיפוש ולא בקריאה של הדפים הרשמיים, ולכן לפני הגשה בודקים בדף של הגוף. <button type="button" class="linkbtn" data-go="sch">למרכז המלגות</button></div></div>`}
+
 /* ================= CHROME ================= */
 function renderChrome(){
   const v=S.route.v;
   const lk=(k,l,x='')=>`<button class="link ${k==='path'?'path-l':''}" data-go="${k}" aria-current="${v===k}">${l}${x}</button>`;
   const cnt=S.list.size?`<span class="cnt num">${S.list.size}</span>`:'', more=on=>`<button class="link" data-navmore aria-current="${on}">עוד${cnt}</button>`;
-  $('#links').innerHTML=[lk('home','תארים'),lk('jobs','מקצועות וקריירה'),lk('dir','מה הכיוון שלי?'),lk('path','המסלול שלי',navRing()),lk('me','מה אני יכול ללמוד'),lk('forum','שאלות ותשובות'),more(['tech','list','calc','src'].includes(v))].join('');
-  $('#botnav').innerHTML=[lk('home','תארים'),lk('jobs','מקצועות'),lk('path','המסלול שלי',navRing()),lk('forum','שאלות'),more(['tech','list','calc','src','me','dir'].includes(v))].join('');
+  $('#links').innerHTML=[lk('home','תארים'),lk('jobs','מקצועות וקריירה'),lk('dir','מה הכיוון שלי?'),lk('path','המסלול שלי',navRing()),lk('sch','מלגות'),lk('me','מה אני יכול ללמוד'),lk('forum','שאלות ותשובות'),more(['tech','list','calc','src'].includes(v))].join('');
+  $('#botnav').innerHTML=[lk('home','תארים'),lk('jobs','מקצועות'),lk('path','המסלול שלי',navRing()),lk('forum','שאלות'),more(['tech','list','calc','src','me','dir','sch'].includes(v))].join('');
   $('#uniLabel').textContent=S.uni?INST[S.uni].n:'כל המוסדות';
   $('#quizLabel').textContent=profileOK()?'הפרופיל שלי':'מילוי פרופיל';
   $('#counts').textContent=`${fmt(DEG.length)} תארים ו-${fmt(DEG.reduce((a,d)=>a+d.of.length,0))} תוכניות ב-${DATA.inst.length} מוסדות, לפי המל"ג.`;
 }
 function openMore(){
   const it=[['dir','מה הכיוון שלי?','שאלון התאמה: תחומי עניין, ערכים וחוזקות'],['me','מה אני יכול ללמוד','התארים שאני יכול להתקבל אליהם'],['tech','הנדסאים וטכנאים','לימודי מה"ט במכללות הטכנולוגיות'],
-    ['list','הרשימה שלי',S.list.size?S.list.size+' תארים שמורים':'התארים ששמרתי'],['calc','מחשבון ממוצע בגרות','לפי הכללים של כל אוניברסיטה'],['src','המקורות שלנו','מאיפה כל נתון מגיע']];
+    ['list','הרשימה שלי',S.list.size?S.list.size+' תארים שמורים':'התארים ששמרתי'],['calc','מחשבון ממוצע בגרות','לפי הכללים של כל אוניברסיטה'],['sch','מלגות וזכויות','מלגות, הטבות ומועדי הגשה, עם מקור לכל אחת'],['src','המקורות שלנו','מאיפה כל נתון מגיע']];
   openOv(`<h2>עוד בכיוון</h2><div class="unis">${it.map(([k,l,s])=>`<button class="uni ${S.route.v===k?'on':''}" data-go="${k}"><b>${l}</b><span>${s}</span></button>`).join('')}</div>${motionHTML()}`,'more-sheet');
 }
 function renderTray(){
@@ -6383,6 +6736,7 @@ function render(){
   else if(r.v==='tech')html=renderTech();
   else if(r.v==='list')html=renderList();
   else if(r.v==='src')html=renderSources();
+  else if(r.v==='sch')html=renderSch();
   else html=renderHome();
   if(r.v==='deg'||r.v==='occ'||r.v==='mh')html+=qaFab();
   app.innerHTML=`<div class="view ${S.navDir==='back'?'vw-ret':S.navDir==='fwd'?'vw-new':''}">${html}</div>`;S.navDir='';
@@ -6402,7 +6756,7 @@ function parse(){const h=decodeURIComponent(location.hash.slice(1));
   if(h==='forum')return{v:'forum'};
   if(h==='jobs')return{v:'jobs'};
   if(h.startsWith('q-'))return{v:'q',id:h.slice(2)};
-  if(h==='calc'||h==='tech'||h==='me'||h==='dir'||h==='path')return{v:h};
+  if(h==='calc'||h==='tech'||h==='me'||h==='dir'||h==='path'||h==='sch')return{v:h};
   if(h==='list'||h==='src')return{v:h};return{v:'home'}}
 /* history stack: "חזרה" always returns to the screen you came from, at the same scroll position */
 const NAV={stack:[location.hash.slice(1)],y:{}};
