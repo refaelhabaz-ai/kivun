@@ -1532,6 +1532,17 @@ button.ft-chip:hover{box-shadow:0 1px 0 rgba(31,37,68,.22)}
 .rc-leg{display:grid;gap:8px;margin:2px 0 0;padding:10px 12px;border-radius:14px;border:1px dashed var(--line)}.rc-leg>div{display:grid;grid-template-columns:132px minmax(0,1fr);gap:10px;align-items:start}.rc-leg dt{margin:0}.rc-leg dd{margin:0;font-size:14px;color:var(--muted);overflow-wrap:anywhere}
 .rc-none{margin:0;padding:10px 12px;border-radius:14px;background:#FFF7E6;font-size:15px}
 @media(max-width:520px){.rc-leg>div{grid-template-columns:minmax(0,1fr);gap:4px}.rc-i{padding:11px 12px}}
+/* F2b: the one-question card (kp-qc) */
+.kp-qc{background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:14px 18px 12px;margin:14px 0;border-inline-start:6px solid var(--primary);display:grid;gap:8px}
+.kp-qc.fx{border-inline-start-color:var(--good);background:#F3FBF7}
+.kp-qk{display:flex;align-items:center;gap:6px;font:600 13px/1.2 var(--head);color:var(--primary-dark);margin:0}.kp-qc.fx .kp-qk{color:#0B5A3E}.kp-qk svg{width:16px;height:16px}
+.kp-qc h2{font-size:19px;line-height:1.4;margin:0;overflow-wrap:anywhere}.kp-qc h2:focus{outline:none}
+.kp-qc.fx h2{font-size:17px;font-weight:600}
+.kp-qc .pick{margin:0}.kp-qc .kp-btns{margin:0}
+.kp-qd{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.kp-qd input{box-sizing:border-box;min-height:44px;font:inherit;font-size:16px;border:1.5px solid var(--line);border-radius:12px;padding:6px 12px;background:#fff;color:var(--ink)}
+.kp-qd input:focus{outline:none;box-shadow:0 0 0 3px #FFD0C3;border-color:var(--primary)}
+.kp-qwy{font-size:14.5px;color:var(--muted)}.kp-qwy summary{cursor:pointer;font-weight:600;color:var(--ink);min-height:40px;display:flex;align-items:center}.kp-qwy p{margin:2px 0 0;overflow-wrap:anywhere}
+@media(max-width:520px){.kp-qc{padding:12px 14px 10px}.kp-qc h2{font-size:18px}}
 html.rm .kp-next.soon,html.rm .kp-focus.soon{animation:none}
 
 </style>
@@ -4812,7 +4823,8 @@ const JR={sim:null}; /* kept: the account sign-in code resets it */
 const MAXT=6,STORY_MAX=2000;
 /* steps that are about me, not about one target: ticking one ticks it for every target */
 const GMARK=['eng','psyReg','prep','cert','atuda','svcPlan','svcKeep','svcRights','explore','units','schSeen','schApplied','story','schol']; /* story and schol are about me, not about one target */
-const pthNew=()=>({v:4,created:Date.now(),targets:[],active:'',d:'',i:'',auto:0,marks:{},goalP:0,start:0,dates:[],lab:null,sess:'',log:[],end:'',seen:'',story:''});
+const qMap=m=>{const o={};if(m&&typeof m==='object'&&!Array.isArray(m))Object.keys(m).slice(0,60).forEach(k=>{if(/^[A-Za-z0-9:_-]{1,40}$/.test(k)&&isoOk(m[k]))o[k]=m[k]});return o};
+const pthNew=()=>({v:4,created:Date.now(),targets:[],active:'',d:'',i:'',auto:0,marks:{},goalP:0,start:0,dates:[],lab:null,sess:'',log:[],end:'',seen:'',story:'',qs:{},qa:{}});
 const tNew=(d,i,auto,marks)=>({id:'t'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),d,i,auto:auto?1:0,marks:marks||{},goalP:0,added:Date.now()});
 const tOk=t=>!!(t&&BY[t.d]&&INST[t.i]&&BY[t.d].of.some(o=>o.i===t.i));
 function pth(){
@@ -4831,6 +4843,8 @@ function pth(){
   p.dates=Array.isArray(p.dates)?p.dates.filter(x=>x&&typeof x==='object'&&/^\d{4}-\d{2}-\d{2}$/.test(x.d)).map(x=>({...x,id:String(x.id??''),t:String(x.t??'')})):[];if(!Array.isArray(p.log))p.log=[]; /* only real dates: a null or a number in storage would break the lists */
   /* F2a: when I finish school or service (end), the last day I was on the road (seen) and my story notes; old saves have none of them */
   if(!isoOk(p.end))p.end='';if(!isoOk(p.seen))p.seen='';p.story=typeof p.story==='string'?p.story.slice(0,STORY_MAX):'';
+  /* F2b: the day I said "not now" to a question (qs) and the day I answered a one-moment question (qa): a date per question id, nothing else */
+  p.qs=qMap(p.qs);p.qa=qMap(p.qa);
   /* before v4 there was a single goal in d / i / auto / marks / goalP: it becomes the first target */
   if(!Array.isArray(x.targets)){p.targets=p.d&&p.i?[{id:'t1',d:p.d,i:p.i,auto:p.auto?1:0,marks:p.marks,goalP:+p.goalP||0,added:p.created||Date.now()}]:[];p.active=p.targets.length?'t1':''}
   const seen=new Set();
@@ -4843,7 +4857,7 @@ function loadT(P,t){P.active=t?t.id:'';P.d=t?t.d:'';P.i=t?t.i:'';P.auto=t?t.auto
 function syncActive(){const P=PTH;if(!P)return;const t=P.targets.find(t=>t.id===P.active);if(t){t.d=P.d;t.i=P.i;t.auto=P.auto?1:0;t.goalP=P.goalP||0;t.marks=P.marks}}
 const pthSave=()=>{syncActive();store.set('path',PTH)};
 /* everything that was built for the previous target is dropped */
-function freshView(){PLC=null;JR.sim=null;LAB.on=false;KP.open.clear();KP.zt={};KP.fid='';KP.skip.clear();KP.rm=''}
+function freshView(){KP.qfx=null;PLC=null;JR.sim=null;LAB.on=false;KP.open.clear();KP.zt={};KP.fid='';KP.skip.clear();KP.rm=''}
 /* run fn as if target t were the active one (for the plan of a target I am not looking at); the real state is restored */
 function withTarget(t,fn){const P=pth();if(!P||!t||t.id===P.active)return fn();
   const s={d:P.d,i:P.i,auto:P.auto,marks:P.marks,goalP:P.goalP,active:P.active};
@@ -5241,7 +5255,7 @@ function plan(){
           body:()=>`<p>בוחרים מועד ונרשמים באתר מאל"ו. אפשר להיבחן שוב בכל מועד: אין הגבלה על מספר הפעמים.${factChip('psy.retake')}</p>${UL([`ההרשמה הרגילה עולה ${fact('psy.fee.reg')} (מדצמבר 2026)${factChip('psy.fee.reg')}`,`הרשמה מאוחרת עולה ${fact('psy.fee.late')}, ולא בכל מועד היא מוצעת${factChip('psy.fee.late')}`,`הרשמה ביום הבחינה עולה ${fact('psy.fee.day')}, ולא בכל מועד היא מוצעת${factChip('psy.fee.day')}`])}${psyTip(X)}${q.fl.noPsy||(q.tier>=2&&instKind(P.i)==='c')?'<p class="kp-tip">בחלק מהמכללות והתוכניות אפשר להתקבל גם בלי פסיכומטרי (למשל לפי ממוצע בגרות או אחרי מכינה). בודקים בתנאי הקבלה של התוכנית שבחרתי לפני שמתחייבים לבחינה.</p>':''}${sessHTML(X)}${BTNS([KA(NITE.reg,'להרשמה באתר מאל"ו','primary'),KB('data-kmark="psyReg"',M.psyReg?'✓ נרשמתי':'נרשמתי למועד')])}`});
         const goalP=P.goalP||(V.tier===1&&V.needP!=null&&isFinite(V.needP)&&V.needP<=800?V.needP:0);
         add(Z.ready,{id:'prep',ic:'rocket',t:'להתכונן לבחינה',s:goalP?`היעד שלי: פסיכומטרי ${goalP}${P.goalP?'':', לפי הבגרות שלי'}`:'בחינות להתנסות ותרגול קבוע',
-          body:()=>`<p>ההכנה הכי יעילה היא תרגול על בחינות מלאות בתנאי אמת. כדאי להתחיל כמה שבועות לפני המועד, ולהקדיש קצת זמן כל כמה ימים במקום הכול ביום אחד.</p>${UL(['בחינות להתנסות רשמיות באתר מאל"ו','לתרגל את החלק הכמותי ואת החלק המילולי בנפרד, ואחר כך יחד','לשמור את הציון הראשון כנקודת התחלה: אפשר לשפר בבחינה חוזרת'])}${BTNS([KA(NITE.prep,'בחינות להתנסות','primary'),KB('data-kmark="prep"',M.prep?'✓ התחלתי להתכונן':'התחלתי להתכונן')])}`});
+          body:()=>`<p>ההכנה הכי יעילה היא תרגול על בחינות מלאות בתנאי אמת. כדאי להתחיל כמה שבועות לפני המועד, ולהקדיש קצת זמן כל כמה ימים במקום הכול ביום אחד.</p>${UL(['בחינות להתנסות רשמיות באתר מאל"ו','לתרגל את החלק הכמותי ואת החלק המילולי בנפרד, ואחר כך יחד','לשמור את הציון הראשון כנקודת התחלה: אפשר לשפר בבחינה חוזרת'])}${hoursLine(X)}${BTNS([KA(NITE.prep,'בחינות להתנסות','primary'),KB('data-kmark="prep"',M.prep?'✓ התחלתי להתכונן':'התחלתי להתכונן')])}`});
         add(Z.ready,{id:'psy',nm:1,ic:'bolt',t:'להיבחן ולקבל ציון',s:M.psyReg&&np?`הבחינה: ${np.days}`:'אחרי הבחינה מזינים את הציון',due:np&&M.psyReg?np.d:null,df:np?'psy.date.'+np.id:'',
           body:()=>`<p>הציונים נשלחים למוסדות ולנבחנים תוך 45 ימים לכל היותר מיום הבחינה (לפי מאל"ו).${factChip('psy.results')} כשהציון מגיע, מזינים אותו כאן, והמסלול כולו מתעדכן.</p>${scoreForm()}`});
       }else{
@@ -5313,7 +5327,7 @@ function plan(){
     body:()=>`<p>${M.acc?'מזל טוב! 🎉 הדרך הזאת נגמרה, והדרך האמיתית מתחילה.':'כשמתקבלים, מסמנים כאן וחוגגים.'}</p>${BTNS([KB('data-kmark="acc"',M.acc?'✓ התקבלתי':'התקבלתי! 🎓','primary')])}`});
   /* ----- first day ----- */
   add(Z.go,{id:'fin',ic:'coin',t:'לסדר מימון ומלגות',s:'שכר לימוד, מלגות ומגורים',
-    body:()=>`<p>כדאי לבדוק את שכר הלימוד, המלגות והסיוע באתר המוסד כבר בזמן ההרשמה: חלק מהמלגות נסגרות לפני תחילת השנה, ויש מוסדות שמציעים מלגות לפי הצטיינות או מצב כלכלי.</p>${schNextLine()}${BTNS([KB('data-go="sch"','מרכז המלגות והזכויות','primary'),instKA(I,'אתר המוסד: מלגות ושכר לימוד'),KA(MOD_SCHOL,'מלגות למשוחררים'),KB('data-kmark="fin"',M.fin?'✓ סידרתי':'סימון: סידרתי')])}`});
+    body:()=>`<p>כדאי לבדוק את שכר הלימוד, המלגות והסיוע באתר המוסד כבר בזמן ההרשמה: חלק מהמלגות נסגרות לפני תחילת השנה, ויש מוסדות שמציעים מלגות לפי הצטיינות או מצב כלכלי.</p>${workTip(X,'fin')}${schNextLine()}${BTNS([KB('data-go="sch"','מרכז המלגות והזכויות','primary'),instKA(I,'אתר המוסד: מלגות ושכר לימוד'),KA(MOD_SCHOL,'מלגות למשוחררים'),KB('data-kmark="fin"',M.fin?'✓ סידרתי':'סימון: סידרתי')])}`});
   /* the weeks before the first day: small steps that are easy to forget. They are generic on purpose: every institution sets its own dates and systems */
   add(Z.go,{id:'courses',ic:'book',t:'להירשם לקורסים של הסמסטר הראשון',s:'מערכת שעות ראשונה',
     body:()=>`<p>אחרי הקבלה נרשמים לקורסים של הסמסטר הראשון במערכת של ${esc(I.n)}, ומשם נבנית מערכת השעות.${factChip('courses.reg')} פותחים את תוכנית הלימודים של התואר, בודקים אילו קורסים הם חובה בסמסטר הראשון, ומתי נפתחת ההרשמה אליהם.</p>${BTNS([KB(`data-open="${d.id}"`,'לעמוד התואר'),instKA(I,'לאתר המוסד'),KB('data-kmark="courses"',M.courses?'✓ נרשמתי לקורסים':'נרשמתי לקורסים')])}`});
@@ -5321,12 +5335,14 @@ function plan(){
     body:()=>`<p>מוסדות רבים מקיימים לפני תחילת הלימודים ימי היכרות והתארגנות לסטודנטים חדשים.${factChip('orient.days')} שווה להגיע: מקבלים מידע שימושי, מכירים את הקמפוס ופוגשים את מי שילמדו איתי. את המועדים בודקים באתר המוסד או בהודעות שמגיעות אחרי ההרשמה.</p>${BTNS([instKA(I,'לאתר המוסד'),KB('data-kmark="orient"',M.orient?'✓ הייתי':'הייתי / התעדכנתי')])}`});
   add(Z.go,{id:'tuition',ic:'coin',t:'לשלם שכר לימוד ולאשר מלגות',s:'תשלום, פריסה ואישורי מלגה',
     body:()=>`<p>אחרי הקבלה מגיעות הוראות התשלום. את סכום שכר הלימוד ואת הפריסה בודקים באתר המוסד.${factChip('tuition.uniform')} אם אני אמור/ה לקבל מלגה או הטבה, מוודאים שהאישור הגיע למוסד לפני מועד התשלום, ושומרים עותק של כל אישור.</p>${schNextLine()}${BTNS([KB('data-go="sch"','מעקב המלגות שלי'),instKA(I,'אתר המוסד: שכר לימוד'),KB('data-kmark="tuition"',M.tuition?'✓ סידרתי':'סידרתי תשלום ואישורים')])}`});
-  add(Z.go,{id:'dorm',ic:'pin',t:'לסגור מעונות או מגורים',s:'מקום לגור בו, אם הקמפוס רחוק מהבית',
+  const hs=X.prof.house; /* F2b: where I said I will live shapes this step; living at home makes it not needed (counted as done) */
+  add(Z.go,{id:'dorm',ic:'pin',t:hs==='rent'?'לסגור דירה או מגורים':'לסגור מעונות או מגורים',done:!!M.dorm||hs==='home',
+    s:hs==='home'?`אני ${gx('ממשיך','ממשיכה','ממשיך/ה')} לגור בבית, אין צורך בצעד הזה`:hs==='dorm'?'בחרתי מעונות: בודקים מתי ההרשמה נפתחת':hs==='rent'?'דירה שכורה, לבד או עם שותפים':'מקום לגור בו, אם הקמפוס רחוק מהבית',
     body:()=>dormHTML(X)});
   add(Z.go,{id:'commute',ic:'map',t:'לתכנן הגעה לקמפוס',s:'דרך, זמן ועלות',
     body:()=>`<p>בודקים כמה זמן לוקח להגיע ${esc(lIn(I.n))} בשעות הלימודים, ואיזו דרך מתאימה לי: תחבורה ציבורית, רכב או מגורים קרובים יותר. לסטודנטים יש הנחה בתחבורה הציבורית (${esc(fact('transport'))}), ולכן בודקים איך מקבלים אותה.${factChip('transport')}</p>${BTNS([instKA(I,'אתר המוסד: הגעה לקמפוס'),KB('data-kmark="commute"',M.commute?'✓ תכננתי':'תכננתי את ההגעה')])}`});
   add(Z.go,{id:'routine',ic:'fire',t:'לבנות שגרת לימוד לשבוע הראשון',s:'שעות קבועות וקצב שאפשר להחזיק',
-    body:()=>`<p>בשבוע הראשון קובעים שגרה קטנה שאפשר להחזיק. לא צריך שגרה מושלמת, צריך משהו שחוזר.</p>${UL(['שעות קבועות ללמידה בכל יום, גם אם הן מעטות','מקום שקט אחד ללמוד בו, בקמפוס או בבית','יום אחד בשבוע לסדר, לסכם ולהתכונן לשבוע הבא'])}${BTNS([KB('data-kmark="routine"',M.routine?'✓ תכננתי':'תכננתי שגרה')])}`});
+    body:()=>`<p>בשבוע הראשון קובעים שגרה קטנה שאפשר להחזיק. לא צריך שגרה מושלמת, צריך משהו שחוזר.</p>${UL(['שעות קבועות ללמידה בכל יום, גם אם הן מעטות','מקום שקט אחד ללמוד בו, בקמפוס או בבית','יום אחד בשבוע לסדר, לסכם ולהתכונן לשבוע הבא',...workItem(X)])}${BTNS([KB('data-kmark="routine"',M.routine?'✓ תכננתי':'תכננתי שגרה')])}`});
   add(Z.go,{id:'copies',ic:'doc',t:'לשמור עותקים דיגיטליים של המסמכים',s:'אישורים, תשלומים ותעודות במקום אחד',
     body:()=>`<p>אחרי הקבלה מצטברים מסמכים: אישור קבלה, אישורי תשלום, אישורי מלגה, תעודת בגרות וגיליון ציונים. שומרים מכל אחד עותק דיגיטלי בתיקייה אחת, עם גיבוי, כדי שאפשר יהיה להציג אותם בכל רגע. גיליון ציונים דיגיטלי אפשר להפיק באתר gov.il.${factChip('digital.cert')}</p>${BTNS([KA(EDU.cert,'גיליון ציונים דיגיטלי'),KB('data-kmark="copies"',M.copies?'✓ שמרתי':'שמרתי עותקים')])}`});
   add(Z.go,{id:'community',ic:'chat',t:'להכיר סטודנטים ולשאול שאלות',s:'לא מתחילים לבד',
@@ -5549,11 +5565,19 @@ let STT=0;
 
 /* housing: the institution's page and my own date in the calendar (the dates I add here are ordinary custom dates, so they can be deleted from the dates tab) */
 function dormHTML(X){
-  const I=X.I,M=X.M,mine=(X.P.dates||[]).filter(x=>String(x.id).startsWith('my-dorm-')&&isoOk(x.d)&&(!x.i||x.i===X.P.i));
-  return `<p>מי שלומד רחוק מהבית צריך מקום לגור בו. במוסדות רבים ההרשמה למעונות נפרדת מההרשמה לתואר ויש לה מועדים משלה.${factChip('dorm.separate')} בודקים באתר ${esc(I.n)} או בדיקנאט הסטודנטים אם יש מעונות, איך נרשמים ועד מתי. אפשר גם לשקול דירה משותפת, או להמשיך לגור בבית.</p>
+  const I=X.I,M=X.M,hs=X.prof.house,mine=(X.P.dates||[]).filter(x=>String(x.id).startsWith('my-dorm-')&&isoOk(x.d)&&(!x.i||x.i===X.P.i));
+  if(hs==='home'&&!M.dorm)return `<p>סיפרתי שאני ${gx('ממשיך','ממשיכה','ממשיך/ה')} לגור בבית, ולכן הצעד הזה לא נדרש והוא נספר בהתקדמות. אם זה משתנה, אפשר לעדכן את מה שסיפרתי.</p>${BTNS([KB('data-kme','לשנות את מה שסיפרתי')])}`;
+  /* F2b: the opening follows where I said I will live; the date form and the buttons are the same */
+  const intro=hs==='rent'?`סיפרתי שאני ${gx('מתכנן','מתכננת','מתכנן/ת')} לגור בדירה שכורה. כדאי להתחיל לחפש מוקדם, לפני תחילת השנה: לבדוק מרחק מהקמפוס, עלות ומה כלול בשכירות, ולשאול סטודנטים ובוגרים איך מוצאים דירה באזור. מעונות הם אפשרות נוספת: במוסדות רבים ההרשמה אליהם נפרדת מההרשמה לתואר ויש לה מועדים משלה.${factChip('dorm.separate')}`
+    :`${hs==='dorm'?`סיפרתי שאני ${gx('מתכנן','מתכננת','מתכנן/ת')} לגור במעונות. `:'מי שלומד רחוק מהבית צריך מקום לגור בו. '}במוסדות רבים ההרשמה למעונות נפרדת מההרשמה לתואר ויש לה מועדים משלה.${factChip('dorm.separate')} בודקים באתר ${esc(I.n)} או בדיקנאט הסטודנטים אם יש מעונות, איך נרשמים ועד מתי.${hs==='dorm'?'':' אפשר גם לשקול דירה משותפת, או להמשיך לגור בבית.'}`;
+  return `<p>${intro}</p>
     ${mine.length?`<ul class="kp-ul">${mine.map(x=>`<li>${esc(x.t)}: ${dLong(x.d)} (${inN(daysTo(x.d))}) <button class="linkbtn" data-kdel="${esc(x.id)}">מחיקה</button></li>`).join('')}</ul>`:''}
-    <form class="kp-form" id="kpDorm"><label for="kpDormD">מועד שחשוב לי במעונות (למשל סגירת ההרשמה)</label><input id="kpDormD" type="date" required><button class="btn soft sm" type="submit">${FIC.plus}הוספה ליומן</button></form>
-    ${BTNS([instKA(I,'אתר המוסד: מעונות'),KB('data-kmark="dorm"',M.dorm?'✓ סגרתי מעונות או מגורים':'סגרתי מעונות או מגורים אחרים')])}`}
+    <form class="kp-form" id="kpDorm"><label for="kpDormD">${hs==='rent'?'מועד שחשוב לי במגורים (למשל תחילת השכירות)':'מועד שחשוב לי במעונות (למשל סגירת ההרשמה)'}</label><input id="kpDormD" type="date" required><button class="btn soft sm" type="submit">${FIC.plus}הוספה ליומן</button></form>
+    ${BTNS([instKA(I,'אתר המוסד: מעונות'),...(hs==='rent'?[KB(`data-kfq="deg:${X.d.id}"`,'לשאול בפורום איך מוצאים דירה')]:[]),KB('data-kmark="dorm"',M.dorm?'✓ סגרתי מעונות או מגורים':hs==='rent'?'סגרתי דירה או מגורים':'סגרתי מעונות או מגורים אחרים')])}`}
+/* F2b: work next to studies (my own answer) adds one line to the money step and one to the weekly routine */
+const workOn=X=>X.prof.work==='full'||X.prof.work==='part';
+function workTip(X){return workOn(X)?`<p class="kp-tip">סיפרתי שאני ${gx('מתכנן','מתכננת','מתכנן/ת')} לעבוד לצד הלימודים. כדאי לבדוק מראש אם ואיך עבודה משפיעה על זכאות למלגות ועל פריסת התשלומים, ולשאול על כך את מדור שכר הלימוד או המלגות במוסד.</p>`:''}
+function workItem(X){return workOn(X)?[`אני ${gx('עובד','עובדת','עובד/ת')} לצד הלימודים: לקבוע שעות לימוד קבועות סביב שעות העבודה, ולבדוק באתר המוסד אם יש קורסים בשעות גמישות`]:[]}
 /* what a threshold built from sub-scores says, in words */
 const engLevel=V=>(V.row&&V.row.eng)||(V.pubBest&&V.pubBest.eng)||'';
 const pubDesc=r=>[r.why,r.extra,r.minP?(r.andor==='או'?`אפשר להתקבל גם עם פסיכומטרי ${r.minP} לפחות`:`ובנוסף נדרש פסיכומטרי ${r.minP} לפחות`):'',r.bag?`אפשר גם עם ממוצע בגרות ${r.bag} לפחות, לפי חישוב המוסד`:''].filter(Boolean).join('. ');
@@ -5742,6 +5766,122 @@ function welcomeHTML(pl){
     <div><dt>עד עכשיו</dt><dd><b class="num">${pl.done}</b> מתוך <b class="num">${pl.total}</b> צעדים, ${pl.pct}% מהדרך</dd></div>
     ${nx?`<div><dt>הצעד הבא</dt><dd>${esc(nx.t)}${nx.due&&!nx.done?` · ${esc(dueText(nx))}`:''}</dd></div>`:''}</dl>
     <div class="kp-btns">${nx?KB(`data-kwel="${nx.id}"`,'להמשיך מהצעד הזה','primary'):''}<button class="linkbtn" data-kweld>סגירה</button></div></section>`}
+/* ---------- F2b: one small question at a time ---------- */
+/* QBANK: micro-questions that fit the moment. Each has an id, when(X,pl) (the situation that makes it worth asking), q, why, o (options [value,label], or a function of the plan) and apply(value,pl), which makes the change and returns the visible effect (a text, or {t,go,goL} with a button to the step it touched; null = refused).
+   An answer lives in the profile (S.prof) or on the path. "Not now" is remembered for 14 days (P.qs); a one-moment question remembers the day I answered (P.qa). One card at a time, after the coach line and before the step in focus; nothing here is required. */
+const Q_SNOOZE=14;
+const HRS={h3:[0,3,'עד 3 שעות בשבוע'],h7:[4,7,'4 עד 7 שעות בשבוע'],h12:[8,12,'8 עד 12 שעות בשבוע'],h13:[13,0,'יותר מ-12 שעות בשבוע']};
+const QDEF={house:{q:'איפה אני מתכנן/ת לגור בזמן הלימודים?',o:[['dorm','במעונות'],['rent','בדירה שכורה'],['home','בבית']],
+    why:'התשובה מתאימה את הצעד "לסגור מעונות או מגורים": מעונות, דירה או הבית. אפשר לשנות אותה בכל רגע.'},
+  work:{q:'האם אני מתכנן/ת לעבוד לצד הלימודים?',o:[['full','כן, במשרה מלאה'],['part','כן, במשרה חלקית'],['no','לא']],
+    why:'התשובה מוסיפה לצעדים "לבנות שגרת לימוד" ו"לסדר מימון ומלגות" שורה שמתאימה לעבודה לצד הלימודים.'},
+  hrs:{q:'כמה שעות בשבוע אפשר להקדיש להכנה לפסיכומטרי?',o:Object.entries(HRS).map(([k,v])=>[k,v[2]]),
+    why:'כדי לחשב כמה שעות הכנה יצטברו עד הבחינה הקרובה. זה חישוב פשוט על התאריך ועל מה שסיפרתי, לא תחזית לציון.'}};
+const todayISO=()=>{const t=today0();return isoOf(t.getFullYear(),t.getMonth()+1,t.getDate())};
+/* days since the last step I took on the road; -1 when there is none yet */
+const idleDays=()=>{const P=pth(),L=P&&P.log;if(!L||!L.length)return -1;return Math.floor((today0().getTime()-new Date(new Date(L[L.length-1]).toDateString()).getTime())/864e5)};
+/* plain arithmetic on the exam date and my own answer: how many hours of preparation add up. Not a promise of a score */
+function hoursText(X){const h=HRS[X.prof.hrs],np=X.np;if(!h||!np||!np.d)return '';const w=Math.floor(daysTo(np.d)/7);if(w<1)return '';
+  const lo=h[0]*w,hi=h[1]*w;
+  return `בקצב של ${h[2]} שסיפרתי, עד הבחינה ב-${dShort(np.d)} (${w===1?'שבוע אחד':`${w} שבועות`}) יצטברו ${h[1]?(lo?`${lo} עד ${hi}`:`עד ${hi}`):`לפחות ${lo}`} שעות הכנה. זה חישוב פשוט, לא הבטחה לציון.`}
+const hoursLine=X=>{const t=hoursText(X);return t?`<p class="kp-tip">${esc(t)}</p>`:''};
+const schOpen=k=>!(schS().skip||{})[k]; /* a question I declined on the scholarships page stays declined */
+const schCount=()=>SCH.filter(r=>schEval(r).st!=='check').length;
+/* what an answer about me did to the scholarships page, counted by the same rule the page uses */
+function schFx(a){const b=schCount();
+  return b>a?`עדכנתי את עמוד המלגות: עכשיו ${b} מלגות וזכויות מסומנות "מתאים" או "כנראה מתאים", לעומת ${a} קודם.`
+    :b<a?`עדכנתי את עמוד המלגות לפי התשובה: ${b} מלגות וזכויות מסומנות "מתאים" או "כנראה מתאים" (היו ${a}), כי בחלק מהן יש תנאי שלא מתקיים אצלי.`
+    :'עמוד המלגות מכיר עכשיו את התשובה ומסדר לפיה את ההתאמות. כרגע לא נוספה התאמה חדשה.'}
+const sq=k=>SCQ().find(x=>x.k===k);
+const Q_STEP=(pl,id)=>pl.tasks.find(t=>t.id===id);
+const QBANK=()=>[
+  {id:'block',moment:1,when:(X,pl)=>idleDays()>=10&&pl.done<pl.total&&!(pth().qa.block&&daysTo(pth().qa.block)>-30),
+    q:'מה הכי מעכב אותי עכשיו?',why:'כדי להציע צעד אחד שמתאים למה שקורה לי עכשיו, במקום רשימה ארוכה. אפשר גם לא לענות.',
+    o:()=>[['time','אין לי זמן כרגע'],['unsure','לא ברור לי מה הצעד הבא'],['wait','מחכה לציון או לבחינה']],
+    apply:(v,pl)=>{const P=pth(),X=pl.X,nx=pl.next||pl.tasks.find(t=>!t.done);
+      if(v==='time'){if(nx)KP.fid=nx.id;QBANK().forEach(q=>{if(q.id!=='block')P.qs[q.id]=todayISO()});
+        return `השארתי לפניי צעד אחד בלבד${nx?`: ${nx.t}`:''}. את שאר השאלות השתקתי ל-${Q_SNOOZE} ימים, והדרך לא ממהרת.`}
+      if(v==='wait'){const n=Q_STEP(pl,'numbers'),r=X.real?null:n,t=r||(!X.hasP&&Q_STEP(pl,'psyReg'))||nx;if(t)KP.fid=t.id;
+        return r?`פתחתי את הצעד "${n.t}". אפשר להמשיך גם בלי ציון סופי: מזינים ציונים צפויים, ורואים כמה חסר.`:`פתחתי את הצעד "${t?t.t:''}". הציונים שלי כבר במערכת, ובינתיים אפשר להתקדם בו.`}
+      if(nx)KP.fid=nx.id;return nx?`פתחתי את הצעד הבא: ${nx.t}. מתחת לכותרת מוסבר איך עושים אותו.`:'כל הצעדים הושלמו.'}},
+  {id:'closed',moment:1,perT:1,when:(X,pl)=>!!X.M.acc&&!X.M.arrived&&Q_OPEN.some(([id])=>Q_STEP(pl,id)&&!Q_STEP(pl,id).done),
+    q:'מה עוד לא סגור אחרי הקבלה?',why:'כדי לפתוח ישר את הצעד שעוד מחכה לי, במקום לחפש אותו ברשימה.',
+    o:pl=>[...Q_OPEN.filter(([id])=>Q_STEP(pl,id)&&!Q_STEP(pl,id).done),['none','הכול סגור']],
+    apply:(v,pl)=>{const t=Q_STEP(pl,v==='none'?'first':v);if(!t)return 'לא נמצא הצעד הזה בדרך.';KP.fid=t.id;
+      return v==='none'?`מעולה. נשאר מבט אחרון: ${t.t}. פתחתי אותו.`:`פתחתי את הצעד "${t.t}".`}},
+  {id:'end',when:X=>!X.P.end&&['g12','svc'].includes(X.stg),t:'date',
+    q:X=>X.stg==='svc'?`מתי אני ${gx('מסיים','מסיימת','מסיים/ת')} את השירות?`:`מתי אני ${gx('מסיים','מסיימת','מסיים/ת')} את י"ב?`,
+    why:'התאריך עוזר לחשב כמה זמן נשאר ומתי כדאי להתחיל ללמוד. תאריך משוער מספיק, ואפשר לשנות או למחוק אותו בכל רגע.',
+    apply:v=>{if(!setEnd(v))return null;const n=daysTo(v);
+      return `${endTitle()}: ${dLong(v)}${n>=0?`, ${inN(n)}`:' (התאריך כבר עבר)'}. הוספתי אותו לספירה לאחור, ללשונית "מועדים" ולקובץ היומן${!startPicked()&&startFromEnd()?`. ההתחלה המוקדמת שמתאימה לתאריך הזה: אוקטובר ${startFromEnd()}`:''}.`}},
+  {id:'start',when:X=>!startPicked()&&!startFromEnd(),q:'מתי אני רוצה להתחיל ללמוד?',
+    why:'התשובה קובעת לאיזו שנה מוצגות ההרשמות והמועדים בדרך. אפשר להחליף אותה בכל רגע.',
+    o:()=>startOpts().slice(0,3).map(y=>[y,`אוקטובר ${y}`]),
+    apply:v=>{setMe('start',+v);return `קבעתי התחלה באוקטובר ${v} (${HY[v]||''}). התאמתי לשנה הזו את השלב "להירשם לתואר" ואת המועדים המשוערים, כשיש כאלה.`}},
+  {id:'svc',...sq('svc'),when:X=>!X.prof.svc&&['svc','after'].includes(X.stg)&&schOpen('svc')&&SCH.some(r=>schHas(r,'svc')),
+    apply:v=>{const a=schCount();schSetProf('svc',v);return schFx(a)}},
+  {id:'res',...sq('res'),when:X=>['combat','other'].includes(X.prof.svc)&&!schRes()&&schOpen('res')&&SCH.some(r=>schHas(r,'res')),
+    apply:v=>{const a=schCount();schSetProf('res',v);return schFx(a)}},
+  {id:'first',...sq('first'),when:X=>!X.prof.first&&schOpen('first')&&SCH.some(r=>schHas(r,'first')),
+    apply:v=>{const a=schCount();schSetProf('first',v);return schFx(a)}},
+  {id:'house',...QDEF.house,when:X=>!X.prof.house&&!['g10','g11'].includes(X.stg),
+    apply:(v,pl)=>{setMe('house',v);const I=pl.X.I;
+      return {t:v==='dorm'?`עדכנתי את הצעד "לסגור מעונות או מגורים": הוא מתמקד עכשיו במעונות של ${I.n}.`
+        :v==='rent'?'שיניתי את הצעד לשם "לסגור דירה או מגורים", ובו כמה דברים לבדוק לפני שמחפשים דירה.'
+        :`סימנתי את הצעד "לסגור מעונות או מגורים" כצעד שלא נדרש, כי אני ${gx('ממשיך','ממשיכה','ממשיך/ה')} לגור בבית. הוא נספר בהתקדמות, ואפשר לשנות את זה ב"עליי".`,go:'dorm',goL:'לראות את הצעד'}}},
+  {id:'work',...QDEF.work,when:X=>!X.prof.work&&!['g10','g11'].includes(X.stg),
+    apply:v=>{setMe('work',v);
+      return v==='no'?{t:'רשמתי. לא הוספתי כלום לצעדים, ואם זה ישתנה אפשר לעדכן ב"עליי".'}
+        :{t:'הוספתי שורה על עבודה לצד הלימודים לצעד "לבנות שגרת לימוד", ושורה על שכר לימוד ומלגות לצעד "לסדר מימון ומלגות".',go:'routine',goL:'לראות את הצעד'}}},
+  {id:'hours',...QDEF.hrs,when:X=>!X.prof.hrs&&!X.hasP&&!!X.np&&daysTo(X.np.d)>=14,
+    apply:v=>{setMe('hrs',v);const t=hoursText(plan().X);
+      return {t:t?`הוספתי לצעד "להתכונן לבחינה" חישוב שעות. ${t}`:'רשמתי. כשיהיה מועד בחינה קרוב, אחשב לפי זה כמה שעות הכנה יצטברו.',go:'prep',goL:'לראות את הצעד'}}},
+  {id:'backup',moment:1,perT:1,when:(X,pl)=>X.q.tier>0&&!X.M.planB&&tList().length<2&&!['g10','g11'].includes(X.stg)&&!!Q_STEP(pl,'planB'),
+    q:'כמה אפשרויות גיבוי יש לי להרשמה?',why:'כדי שהדרך לא תהיה תלויה בתוכנית אחת. אם כבר יש לי גיבוי אסמן את הצעד, ואם לא אפתח אותו.',
+    o:()=>[['none','אין לי עדיין'],['one','יש לי אחת'],['many','יש לי כמה']],
+    apply:v=>{if(v==='none'){KP.fid='planB';return 'העברתי את הצעד "לבחור תוכנית גיבוי" למוקד. שם אפשר לראות תארים ומוסדות דומים שפתוחים לי.'}
+      setMark('planB',Date.now());return 'סימנתי את הצעד "לבחור תוכנית גיבוי" כבוצע. אפשר לבטל את הסימון בכל רגע.'}}];
+const Q_OPEN=[['dorm','מעונות או מגורים'],['tuition','שכר לימוד ומלגה'],['courses','קורסים ומערכת שעות'],['commute','הגעה לקמפוס']];
+const qTxt=(q,X)=>typeof q.q==='function'?q.q(X):q.q;
+const qOpts=(q,pl)=>typeof q.o==='function'?q.o(pl):(q.o||[]);
+const qKey=(q,P)=>q.perT?`${q.id}:${P.active}`:q.id;
+/* is this question open: its situation holds, I have not answered it, and I did not say "not now" in the last 14 days */
+function qOpen(q,X,pl){const P=pth();
+  if(q.moment&&P.qa[qKey(q,P)])return false;
+  if(P.qs[q.id]&&daysTo(P.qs[q.id])>-Q_SNOOZE)return false;
+  return !!q.when(X,pl)}
+const qNext=pl=>QBANK().find(q=>safe(()=>qOpen(q,pl.X,pl),false))||null;
+function qDoneNote(q){const P=pth();if(!P)return;P.qs[q.id]&&delete P.qs[q.id];if(q.moment)P.qa[qKey(q,P)]=todayISO()}
+/* the card: the effect of the last answer, else the first open question. Nothing is asked while the welcome-back card is open, or again until I leave this tab and come back */
+function qCardHTML(pl){
+  if(KP.qfx){const f=KP.qfx;
+    return `<section class="kp-qc fx" aria-labelledby="kqfxT"><p class="kp-qk">${ki('check')}נשמר</p><h2 id="kqfxT" tabindex="-1">${esc(f.t)}</h2>
+      <div class="kp-btns">${f.go?`<button class="btn soft sm" data-kqgo="${esc(f.go)}">${esc(f.goL||'לראות')}</button>`:''}<button class="linkbtn" data-kqok>הבנתי, ממשיכים</button></div></section>`}
+  if(KP.qpause||(KP.away>=7&&!KP.wbDone))return '';
+  const q=qNext(pl);if(!q)return '';
+  const X=pl.X,[lo,hi]=endRange();
+  return `<section class="kp-qc" aria-labelledby="kqT"><p class="kp-qk">שאלה קטנה, אפשר לדלג</p><h2 id="kqT" tabindex="-1">${esc(qTxt(q,X))}</h2>
+    ${q.t==='date'?`<div class="kp-qd"><label class="sr" for="kqD">התאריך</label><input type="date" id="kqD" min="${lo}" max="${hi}"><button class="btn primary sm" data-kqd="${q.id}">שמירה</button></div>`
+      :`<div class="pick">${qOpts(q,pl).map(([v,l])=>`<button type="button" class="chip" data-kq="${q.id}|${esc(v)}" aria-pressed="false" style="--c2:#FF8A65"><i></i>${esc(l)}</button>`).join('')}</div>`}
+    <div class="kp-btns"><button class="btn soft sm" data-kqskip="${q.id}">לא עכשיו</button></div>
+    <details class="kp-qwy"${KP.qwy?' open':''}><summary>למה אנחנו שואלים</summary><p>${esc(q.why)} התשובה נשמרת בדפדפן הזה בלבד, ואפשר לשנות או למחוק אותה ב"עליי". אם בחרתי "לא עכשיו", לא תהיה שאלה כזאת ${Q_SNOOZE} ימים.</p></details></section>`}
+/* an answer: the change is made by the question itself, then its visible effect replaces the card */
+function qAnswer(id,v){
+  const pl=safe(plan),P=pth(),q=pl&&QBANK().find(x=>x.id===id);if(!q||!P)return;
+  if(!safe(()=>qOpen(q,pl.X,pl),false))return; /* only the question that is on the card can be answered */
+  if(q.t!=='date'&&!qOpts(q,pl).some(o=>String(o[0])===String(v)))return;
+  if(q.t==='date'&&!isoOk(v)){toast('כדאי לבחור תאריך');return}
+  const r=q.apply(v,pl);if(r==null)return;
+  const fx=typeof r==='string'?{t:r}:r;
+  qDoneNote(q);pthSave();PLC=null;KP.qfx={id,...fx};KP.qpause=true;paint();refocus('#kqfxT')}
+function qSkip(id){const P=pth();if(!P||!QBANK().some(q=>q.id===id))return;P.qs[id]=todayISO();pthSave();KP.qpause=true;KP.qfx=null;paint();
+  toast(`בסדר, לא נשאל על זה ${Q_SNOOZE} ימים`);const h=$('#kpf-h');if(h){h.tabIndex=-1;h.focus({preventScroll:true})}}
+const qSnooze=id=>{const P=pth();if(P){P.qs[id]=todayISO();pthSave()}}; /* an answer I cleared is not asked again at once */
+document.addEventListener('toggle',e=>{if(e.target.classList&&e.target.classList.contains('kp-qwy'))KP.qwy=e.target.open},true);
+/* from the "about me" sheet: questions I postponed, and a way to be asked again */
+function qPostponedHTML(){const P=pth(),X=safe(()=>plan().X,null);if(!P||!X)return '';
+  const L=QBANK().filter(q=>P.qs[q.id]&&daysTo(P.qs[q.id])>-Q_SNOOZE);if(!L.length)return '';
+  return `<div class="field"><label>שאלות שדחיתי</label><ul class="kp-ul">${L.map(q=>`<li>${esc(qTxt(q,X))} <button type="button" class="linkbtn" data-kqask="${q.id}">לשאול שוב</button></li>`).join('')}</ul></div>`}
 /* the step in focus: the one I chose, else the soonest deadline, else the first open step of the road */
 function focusTask(pl){
   let t=KP.fid&&pl.tasks.find(x=>x.id===KP.fid);if(t)return t;
@@ -5768,7 +5908,7 @@ function queueHTML(pl,cur){
 function doneHTML(pl){return `<div class="kp-next done"><span class="kn-i">${ki('cap')}</span><div class="kn-b"><small>הדרך הושלמה</small><h3>${gx('התקבלתי','התקבלתי')} ל${esc(pl.X.d.n)}!</h3></div></div>`}
 function nowHTML(pl){
   const t=focusTask(pl);
-  return `${safe(()=>welcomeHTML(pl),'')}${coach(pl)}${t?focusHTML(pl,t):doneHTML(pl)}${queueHTML(pl,t)}
+  return `${safe(()=>welcomeHTML(pl),'')}${coach(pl)}${safe(()=>qCardHTML(pl),'')}${t?focusHTML(pl,t):doneHTML(pl)}${queueHTML(pl,t)}
     <div class="kp-mini"><small>הדרך במבט אחד, גם אחרי י"ב · לוחצים על שלב כדי לראות מה עושים בו</small>${stepsHTML(pl)}</div>
     <div class="kp-whyc">${safe(()=>whyHTML(pl))}</div>`}
 const roadHTML=pl=>`<div class="sec-h"><div><h2>${ki('map')}הדרך המלאה</h2><p>כל השלבים עד היום הראשון, גם אלה שאחרי י"ב. שום דבר לא נעול: פותחים שלב כדי לראות מה בו, ומסמנים ✓ כשמסיימים צעד.</p></div></div><div id="kpZones">${zonesHTML(pl)}</div>`;
@@ -5812,6 +5952,7 @@ function updateRing(){const n=$('#links .path-l');if(n)n.innerHTML='המסלול
 function jump(id,smooth=true){const e=$('#'+id);if(!e)return;const y=e.getBoundingClientRect().top+scrollY-(innerWidth<760?116:150);window.scrollTo({top:Math.max(0,y),behavior:smooth&&!RM()?'smooth':'instant'})}
 function gotoTab(k,o={}){
   if(!TABS.some(t=>t[0]===k))k='now';
+  if(k!==KP.tab)KP.qpause=false; /* F2b: leaving the tab and coming back allows the next question */
   KP.tab=k;const n=$('#kpNav'),b=$('#kpTab'),pl=safe(plan);
   if(!n||!b||!pl){render();return}
   n.innerHTML=navHTML();b.innerHTML=tabInner(pl);afterTab();
@@ -6135,8 +6276,10 @@ const MEQ=()=>[
   {k:'end',q:'מתי אני מסיים/ת את י"ב או את השירות?',h:'תאריך משוער מספיק, ואפשר להשאיר ריק. הוא נשמר בדפדפן הזה ומשמש רק לחישוב כמה זמן נשאר',t:'date'},
   {k:'sex',q:'אני',o:[['m','זכר'],['f','נקבה'],['x','מעדיף/ה לא לציין']],off:1},
   {k:'reg',q:'איפה אני גר/ה?',o:Object.entries(REGN),off:1},
-  {k:'nat',q:'שפת האם שלי',h:'משפיעה על מועדי הפסיכומטרי שמתאימים לי',o:LANGS,off:1}];
-const meVal=k=>k==='start'?(pth()||{}).start:k==='end'?(pth()||{}).end||'':(S.prof||{})[k];
+  {k:'nat',q:'שפת האם שלי',h:'משפיעה על מועדי הפסיכומטרי שמתאימים לי',o:LANGS,off:1},
+  /* F2b: the one-question card asks these on the road; here they can be changed or cleared (svc, res and first are the scholarships page's questions, with the same writer) */
+  ...['house','work','hrs'].map(k=>({k,q:QDEF[k].q,o:QDEF[k].o,off:1})),...['svc','res','first'].map(k=>{const s=sq(k);return {k,q:s.q,o:s.o,off:1}})];
+const meVal=k=>k==='start'?(pth()||{}).start:k==='end'?(pth()||{}).end||'':k==='res'?schRes():(S.prof||{})[k];
 /* chips for the "about me" questions; the profile form and the path use the same markup with different attributes */
 function meChips(q,cur,attr){return `<div class="pick">${q.o.map(([v,l])=>`<button type="button" class="chip" ${attr(q.k,v)} aria-pressed="${String(cur)===String(v)}" style="--c2:#FF8A65"><i></i>${l}</button>`).join('')}</div>`}
 function meFieldsHTML(mode,keys){
@@ -6164,23 +6307,26 @@ function endChange(t,left){
 function endSync(){const h=$('#kpEndH'),b=$('[data-kendx]'),v=(pth()||{}).end||'';if(h)h.textContent=endHint();if(b)b.hidden=!v;
   if(S.route.v==='path'&&!KP.wiz.active)paint()}
 /* the profile form shows the same questions, folded, under "עוד קצת עליי" */
-const PROF_OPT=['stage','stageAt','sex','reg','nat','svc','res','resAt','inc','first']; /* svc, res (with resAt), inc and first come from the scholarships page (optional, sensitive, kept in this browser) */
+const PROF_OPT=['stage','stageAt','sex','reg','nat','svc','res','resAt','inc','first','house','work','hrs']; /* svc, res (with resAt), inc and first come from the scholarships page (optional, sensitive, kept in this browser) */
 function profMoreHTML(){const p=S.prof||{};
-  return `<details class="kp-more-me" ${p.sex||p.reg||p.nat||p.stage?'open':''}><summary>עוד קצת עליי <small>(לא חובה, מדייק את המסלול)</small></summary>${meFieldsHTML('prof',['stage','sex','reg','nat'])}<p class="fine">${MENOTE}</p></details>`}
+  return `<details class="kp-more-me" ${p.sex||p.reg||p.nat||p.stage?'open':''}><summary>עוד קצת עליי <small>(לא חובה, מדייק את המסלול)</small></summary>${meFieldsHTML('prof',['stage','sex','reg','nat'])}<p class="fine">${MENOTE}</p></details>
+    <details class="kp-more-me" ${p.house||p.work||p.first||p.svc?'open':''}><summary>שאלות קצרות מהמסלול <small>(לא חובה)</small></summary>${meFieldsHTML('prof',['house','work','first','svc'])}<p class="fine">${MENOTE}</p></details>`}
 const MENOTE='המידע נשמר רק בדפדפן הזה. הוא משמש להתאמת הניסוח, מועדי הבחינות והמוסדות שמוצגים לי, ואפשר לדלג על כל שאלה.';
 function setMe(k,v){
   if(k==='start'){const P=pth()||pthNew();P.start=+v;PTH=P;pthSave();return}
+  if(k==='svc'||k==='res'||k==='first'){const had=schAns(k)===v;schSetProf(k,v);if(had)qSnooze(k);return} /* the scholarships page's writer: res keeps its date */
   const cur=(S.prof||{})[k],off=(MEQ().find(q=>q.k===k)||{}).off;
   S.prof={...(S.prof||{})};
   if(off&&cur===v)delete S.prof[k];else S.prof[k]=v;
   if(k==='stage')S.prof.stageAt=Date.now();
-  store.set('prof',S.prof);PLC=null}
+  store.set('prof',S.prof);PLC=null;if(off&&cur===v&&QDEF[k])qSnooze(k)}
 function openMe(){
   openOv(`<h2>עליי</h2><p class="s">כמה פרטים שעוזרים למסלול להתאים לי: הכיתה, מתי להתחיל, וגם ניסוח נכון ומועדים שמתאימים לשפה שלי. הכול אופציונלי.</p>
-    <div class="form kp-me">${meFieldsHTML('path',['stage','start','end','sex','reg','nat'])}</div><p class="fine">${MENOTE}</p><div class="kp-btns"><button class="btn primary" data-kmedone>סיום</button></div>`,'')}
+    <div class="form kp-me">${meFieldsHTML('path',['stage','start','end','sex','reg','nat'])}
+    <details class="kp-more-me"><summary>שאלות קצרות מהמסלול <small>(מגורים, עבודה, שעות הכנה, שירות)</small></summary>${meFieldsHTML('path',['house','work','hrs','svc','res','first'])}${qPostponedHTML()}</details></div><p class="fine">${MENOTE}</p><div class="kp-btns"><button class="btn primary" data-kmedone>סיום</button></div>`,'')}
 function moreHTML(pl){
   const X=pl.X,P=X.P,B=badges(pl),sx=streak(),p=X.prof;
-  const me=[(STAGES.find(s=>s[0]===p.stage)||[])[1],P.end?`${endTitle()}: ${dLong(P.end)}`:'',p.sex?{m:'זכר',f:'נקבה',x:''}[p.sex]:'',p.reg?REGN[p.reg]:'',p.nat?(LANGS.find(l=>l[0]===p.nat)||[])[1]:''].filter(Boolean);
+  const me=[(STAGES.find(s=>s[0]===p.stage)||[])[1],P.end?`${endTitle()}: ${dLong(P.end)}`:'',p.sex?{m:'זכר',f:'נקבה',x:''}[p.sex]:'',p.reg?REGN[p.reg]:'',p.nat?(LANGS.find(l=>l[0]===p.nat)||[])[1]:'',p.house&&QDEF.house.o.find(o=>o[0]===p.house)?'מגורים: '+QDEF.house.o.find(o=>o[0]===p.house)[1]:'',p.work==='full'||p.work==='part'?'עובד/ת לצד הלימודים':''].filter(Boolean);
   return `<div class="kp-two">
     <div class="kp-card"><div class="pc-h"><h2>${ki('cap')}ההישגים שלי</h2><span class="pc-c num">${B.filter(b=>b[2]).length}/${B.length}</span></div>${badgesHTML(pl)}${sx>=2?`<p class="kp-streak">${ki('fire')}${sx} ימים של התקדמות. ממשיכים מכאן</p><p class="fine">ימי מנוחה הם חלק מהקצב: עד יומיים בשבוע.</p>`:''}</div>
     <div class="kp-card"><div class="pc-h"><h2>${ki('user')}עליי</h2></div><p>${me.length?esc(me.join(' · ')):'עוד לא סיפרתי. אפשר לדלג, אבל כדאי: זה משפר את הניסוח, המועדים והאפשרויות.'}</p><div class="kp-btns">${KB('data-kme','עריכה')}${KB('data-prof','הפרופיל והציונים')}</div><p class="fine">${MENOTE}</p></div></div>
@@ -6237,7 +6383,7 @@ function celebrate(el,n=30){if(!el)return;const r=el.getBoundingClientRect();bur
 
 
 /* ---------- events ---------- */
-const KSEL='[data-padd],[data-ppick],[data-pswap],[data-kwd],[data-kwi],[data-kwauto],[data-kwb],[data-kwdone],[data-kme],[data-kmedone],[data-kc],[data-kt],[data-kz],[data-kjump],[data-kgo],[data-ktab],[data-ktgt],[data-khub],[data-kadd],[data-krm],[data-krmok],[data-krmno],[data-kfocus],[data-kfprev],[data-kfnext],[data-kfskip],[data-knext],[data-kmark],[data-kinst],[data-kchange],[data-kpick],[data-ksess],[data-kfq],[data-kmore],[data-kdel],[data-kendx],[data-kwel],[data-kweld],[data-kics],[data-khelp],[data-kcopy],[data-kexp],[data-kreset],[data-kresetok],[data-kresetno],[data-lb],[data-lbm],[data-lbe],[data-lbx],[data-lbmode],[data-lbadd],[data-lbrm],[data-lbsave],[data-lbok],[data-lbno],[data-lbreal],[data-lbsavep],[data-lbreset]';
+const KSEL='[data-padd],[data-ppick],[data-pswap],[data-kwd],[data-kwi],[data-kwauto],[data-kwb],[data-kwdone],[data-kme],[data-kmedone],[data-kc],[data-kt],[data-kz],[data-kjump],[data-kgo],[data-ktab],[data-ktgt],[data-khub],[data-kadd],[data-krm],[data-krmok],[data-krmno],[data-kfocus],[data-kfprev],[data-kfnext],[data-kfskip],[data-knext],[data-kmark],[data-kinst],[data-kchange],[data-kpick],[data-ksess],[data-kfq],[data-kmore],[data-kdel],[data-kendx],[data-kwel],[data-kweld],[data-kq],[data-kqd],[data-kqskip],[data-kqok],[data-kqgo],[data-kqask],[data-kics],[data-khelp],[data-kcopy],[data-kexp],[data-kreset],[data-kresetok],[data-kresetno],[data-lb],[data-lbm],[data-lbe],[data-lbx],[data-lbmode],[data-lbadd],[data-lbrm],[data-lbsave],[data-lbok],[data-lbno],[data-lbreal],[data-lbsavep],[data-lbreset]';
 const wizReset=(change,add)=>{KP.wiz={active:true,step:1,tq:'',d:'',i:'',change:!!change,add:!!add}};
 const top0=()=>window.scrollTo({top:0,behavior:'instant'});
 const refocus=sel=>{const e=$(sel);if(e)e.focus({preventScroll:true})};
@@ -6282,7 +6428,14 @@ document.addEventListener('click',e=>{
     if(S.route.v==='path'&&!KP.wiz.active)paint()}
   else if(ds.kwel!==undefined){KP.wbDone=true;focusOn(ds.kwel)}
   else if(ds.kweld!==undefined){KP.wbDone=true;paint();const h=$('#kpf-h');if(h){h.tabIndex=-1;h.focus({preventScroll:true})}}
-  else if(ds.kendx!==undefined){setEnd('');const i=$('#kpEnd');if(i){i.value='';i.focus({preventScroll:true})}endSync()}
+  /* F2b: the one-question card */
+  else if(ds.kq!==undefined){const [id,...v]=ds.kq.split('|');qAnswer(id,v.join('|'))}
+  else if(ds.kqd!==undefined){const i=$('#kqD');qAnswer(ds.kqd,i?i.value:'')}
+  else if(ds.kqskip!==undefined)qSkip(ds.kqskip);
+  else if(ds.kqok!==undefined){KP.qfx=null;KP.qpause=true;paint();const h=$('#kpf-h');if(h){h.tabIndex=-1;h.focus({preventScroll:true})}}
+  else if(ds.kqgo!==undefined){KP.qfx=null;KP.qpause=true;focusOn(ds.kqgo)}
+  else if(ds.kqask!==undefined){const P0=pth();if(P0){delete P0.qs[ds.kqask];pthSave();KP.qpause=false}openMe();if(S.route.v==='path'&&!KP.wiz.active)paint()}
+  else if(ds.kendx!==undefined){qSnooze('end');setEnd('');const i=$('#kpEnd');if(i){i.value='';i.focus({preventScroll:true})}endSync()}
   else if(ds.kmedone!==undefined){closeOv(true);if(S.route.v==='path'&&!KP.wiz.active)keepY(render)}
   /* my targets */
   else if(ds.ktgt!==undefined){if(activate(ds.ktgt)){KP.view='road';KP.tab='now';KP.land='road';if(S.route.v==='path'){render();top0()}else go('path')}}
@@ -6369,7 +6522,7 @@ document.addEventListener('change',e=>{
 document.addEventListener('focusout',e=>{const t=e.target;if(t&&t.dataset&&t.dataset.kend!==undefined)endChange(t,true)});
 document.addEventListener('submit',e=>{
   if(e.target.id==='kpDorm'){e.preventDefault();const d=$('#kpDormD').value,P=pth();if(!P||!isoOk(d)){toast('בוחרים תאריך');return}
-    P.dates.push({id:'my-dorm-'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),t:`מעונות ${bIn(INST[P.i].n)}`.slice(0,80),d,i:P.i});logAct();pthSave();PLC=null;toast('התאריך נוסף ליומן שלי');paint();refocus('#kpDormD');return}
+    P.dates.push({id:'my-dorm-'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),t:((S.prof||{}).house==='rent'?'מגורים: מועד שסימנתי':`מעונות ${bIn(INST[P.i].n)}`).slice(0,80),d,i:P.i});logAct();pthSave();PLC=null;toast('התאריך נוסף ליומן שלי');paint();refocus('#kpDormD');return}
   if(e.target.id==='kpDate'){e.preventDefault();const t=$('#kpDT').value.trim(),d=$('#kpDD').value;if(!t||!d)return;const P=pth();P.dates.push({id:'my-'+Date.now(),t,d});logAct();pthSave();PLC=null;toast('התאריך נוסף');paint();e.target.reset()}
   else if(e.target.id==='kpScore'){e.preventDefault();const v=Math.round(+$('#kpSc').value);if(!(v>=200&&v<=800)){toast('ציון פסיכומטרי הוא בין 200 ל-800');return}
     /* a real score replaces an expected one; between two real scores the higher counts (most institutions use the best one) */
