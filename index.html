@@ -1258,6 +1258,8 @@ input[type=range]{accent-color:var(--primary);height:28px}
 .kp-tt{flex:1;min-width:0;display:flex;flex-direction:column}.kp-tt b{font-family:var(--head);font-weight:600;font-size:16px;line-height:1.35}.kp-tt small{color:var(--muted);font-size:13.5px}
 .kp-t.done .kp-tt b{color:#6B7391}.kp-t.done .kp-ti{background:#E3F7EE;color:#12A26B}
 .kp-due{flex:none;font-size:12.5px;font-weight:700;color:var(--muted);background:#F5F6FB;border-radius:999px;padding:2px 10px;white-space:nowrap}.kp-due.hot{background:var(--primary);color:#fff}
+.kp-due.ft{display:inline-flex;flex-direction:column;align-items:center;white-space:normal;text-align:center;line-height:1.3;border-radius:14px}.kp-due small{font-size:11.5px;font-weight:600}.kp-due i{font-style:normal}
+@media(max-width:520px){.kp-th{flex-wrap:wrap}.kp-th>.kp-tt{flex:1 1 110px}.kp-th>.kp-due{order:9}} /* a narrow row: the date goes under the title instead of squeezing it */
 .kp-tb{grid-column:1/-1;padding:4px 6px 12px;margin-inline-start:46px;font-size:15.5px;line-height:1.65}.kp-tb p{margin-block:0 8px}.kp-tb b{font-family:var(--head)}
 .kp-ul{margin:6px 0 10px;padding-inline-start:20px;display:grid;gap:4px;font-size:15px}
 .kp-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
@@ -1442,6 +1444,7 @@ button.ft-chip:hover{box-shadow:0 1px 0 rgba(31,37,68,.22)}
 .ft-ta{display:block;width:100%;box-sizing:border-box;margin-block:8px 12px;padding:12px 14px;border:1.5px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);font:inherit;font-size:16px;line-height:1.55;resize:vertical}
 .ft-ta:focus{outline:none;box-shadow:0 0 0 3px #FFD0C3;border-color:var(--primary)}
 .tag.ft-t{display:inline-flex;align-items:center;gap:5px}.tag.ft-t i{font-style:normal;font-size:11px}
+.dc-adm .tag.ft-t{margin-inline-start:auto;font-size:12.5px}
 .tag.ft-t.num{background:var(--good-soft);color:#0B5A3E}.tag.ft-t.txt{background:#E6EEFF;color:#233A8B}.tag.ft-t.none{background:#F0F1F6;color:#4A5068}.tag.ft-t.open{background:var(--good-soft);color:#0B5A3E}
 .ft-cy{margin-top:8px;line-height:1.55}
 .ft-tier{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-block:0 14px;padding:12px 16px;border-radius:16px;background:var(--bg);font-size:15px}.ft-tier .tag{font-size:14px}
@@ -2772,8 +2775,8 @@ function dataAnswer(text,ctx,inst,topic){
         if(st.length){const y=st.filter(x=>x.c.s==='yes');L.push(`לפי הפרופיל שלי: עומד/ת בתנאים ב-${y.length} מתוך ${st.length} מוסדות שאפשר לבדוק${y.length?' ('+y.slice(0,3).map(x=>INST[x.i].n).join(', ')+')':''}.`)}}
       if(!L.length)L.push(`${d.n} נלמד ב-${nI} מוסדות. ${I?`ל${INST[I].n} `:''}לא נאספו ספי קבלה מספריים, והתנאים מופיעים באתר המוסד.`);
     }
-    if(want('study')){if(du)L.push(`משך הלימודים: ${du.txt} שנים${d.pro==='md'?', ואחריהן סטאז\' של 9 חודשים':''}.`);
-      if(d.pro==='md')L.push('המסלול: 3 שנים קדם-קליניות, 3 שנים קליניות, סטאז\', רישיון, ואז התמחות של 4–6 שנים.');
+    if(want('study')){if(du)L.push(`משך הלימודים: ${du.txt} שנים${d.pro==='md'?', ואחריהן סטאז\' של 9 חודשים'+factTxt('md.stage'):''}.`);
+      if(d.pro==='md')L.push('המסלול: 3 שנים קדם-קליניות, 3 שנים קליניות, סטאז\', רישיון, ואז התמחות של 4–6 שנים.'+factTxt('md.spec'));
       else if(f&&f.desc&&d.avHow==='exact')L.push('מה לומדים: '+f.desc.slice(0,200).replace(/\s\S*$/,'')+'…');
       if(!d.pro)L.push(`נלמד ב-${nI} מוסדות${d.of.some(o=>o.i==='open')?', כולל האוניברסיטה הפתוחה (בלי תנאי קבלה)':''}.`)}
     if(want('jobs')){const ps=proSal(d);
@@ -3904,7 +3907,7 @@ const CMP_ROWS=[
  {sec:'כסף ועבודה',l:'במה עובדים הבוגרים',h:'לפי עבודאטה',f:x=>{const L=((x.f&&x.f.occ)||[]).slice(0,3);return x.d.pro==='md'?'רופאים (ההתמחויות בעמוד התואר)':L.length?`<span class="occl">${L.map(o=>`<button data-occ="${o.id}">${esc(o.n)}</button>`).join('')}</span>`:null}},
  {sec:'הלימודים',l:'משך הלימודים',h:'משך תקני',v:x=>x.du?x.du.min:null,f:x=>x.du?x.du.txt+' שנים':null,best:'min',bl:'הכי קצר'},
  {sec:'הלימודים',l:'מסיימים בזמן',h:'שיעור הסטודנטים שמסיימים במשך התקני',v:x=>x.exact&&!x.d.pro?x.s.ontime:null,f:x=>x.exact&&!x.d.pro&&x.s.ontime!=null?x.s.ontime+'%':null,best:'max',bl:'הכי גבוה'},
- {sec:'הלימודים',l:'מה צריך אחרי התואר כדי לעבוד במקצוע',h:'רישיון, התמחות או תואר נוסף',f:x=>x.d.pro==='md'?'<ol class="cstep"><li>סטאז\' (9 חודשים)</li><li>רישיון ממשרד הבריאות</li><li>התמחות</li></ol>':x.path?`<ol class="cstep">${x.path.steps.slice(1).map(s=>`<li>${esc(s)}</li>`).join('')}</ol>`:'<span class="muted">אין שלבי רישוי במקורות שנאספו</span>'},
+ {sec:'הלימודים',l:'מה צריך אחרי התואר כדי לעבוד במקצוע',h:'רישיון, התמחות או תואר נוסף',fc:X=>X.some(x=>x.d.pro==='md')?'md.stage':'',f:x=>x.d.pro==='md'?'<ol class="cstep"><li>סטאז\' (9 חודשים)</li><li>רישיון ממשרד הבריאות</li><li>התמחות</li></ol>':x.path?`<ol class="cstep">${x.path.steps.slice(1).map(s=>`<li>${esc(s)}</li>`).join('')}</ol>`:'<span class="muted">אין שלבי רישוי במקורות שנאספו</span>'},
  {sec:'הקבלה',l:'פסיכומטרי ממוצע של המתקבלים',h:'לא סף, אלא ממוצע. נמוך יותר = נגיש יותר',v:x=>x.exact&&!x.d.pro?x.s.psy:null,f:x=>x.exact&&!x.d.pro&&x.s.psy?fmt(x.s.psy):null,best:'min',bl:'הכי נגיש'},
  {sec:'הקבלה',l:'ממוצע בגרות משוקלל של המתקבלים',h:'יכול לעלות על 100 בגלל בונוסים. נמוך יותר = נגיש יותר',fc:'avodata.bagrut',v:x=>x.exact&&!x.d.pro?x.s.bagrut:null,f:x=>x.exact&&!x.d.pro&&x.s.bagrut?String(x.s.bagrut):null,best:'min',bl:'הכי נגיש'},
  {sec:'הקבלה',l:'אני יכול להתקבל',h:'לפי הפרופיל שלי',v:x=>x.yes,f:x=>x.yes==null?null:x.yes?`<span class="yesc">✓ ל-${x.yes} מתוך ${x.d.of.length}</span>`:'<span class="noc">עוד לא</span>',best:'max',bl:'הכי הרבה',prof:true},
@@ -3930,7 +3933,7 @@ function cmpHTML(){
     if(cells.every(c=>c==null))continue;
     const have=vals?vals.filter(v=>v!=null):[], best=vals&&have.length>=2&&new Set(have).size>1?(row.best==='max'?Math.max(...have):Math.min(...have)):null, mx=vals&&have.length?Math.max(...have):0;
     if(row.sec!==sec){sec=row.sec;body+=`<h3 class="cmp-sec">${sec}</h3>`}
-    body+=`<div class="cmp-row"><div class="cmp-l"><b>${row.l}</b><small>${row.h}${row.fc?factChip(row.fc,{static:1}):''}</small></div><div class="cmp-cells" style="--n:${n}">${X2.map((x,i)=>{const c=cells[i],v=vals?vals[i]:null,isB=best!=null&&v===best;
+    body+=`<div class="cmp-row"><div class="cmp-l"><b>${row.l}</b><small>${row.h}${row.fc?factChip(typeof row.fc==='function'?row.fc(X2):row.fc,{static:1,named:typeof row.fc==='function'}):''}</small></div><div class="cmp-cells" style="--n:${n}">${X2.map((x,i)=>{const c=cells[i],v=vals?vals[i]:null,isB=best!=null&&v===best;
       return `<div class="cmp-c ${isB?'best':''}">${c==null?'<span class="muted">אין נתון רשמי</span>':c}${isB?`<span class="bestc">${row.bl}</span>`:''}${v!=null&&mx&&row.best==='max'?`<i class="cbar"><i style="width:${Math.max(6,v/mx*100)}%"></i></i>`:''}</div>`}).join('')}</div></div>`;
   }
   return `<h2>השוואה בין תארים</h2><p class="s">הנתונים מעבודאטה (משרד העבודה), מהמועצה להשכלה גבוהה ומהמקורות הרשמיים של כל מקצוע. בכל שורה מודגש מי מוביל.</p>
@@ -4301,6 +4304,10 @@ function admLine(d){
   if(n)return {s:'yes',t:`הציונים שלי מספיקים ${n===1?'במוסד אחד':'ב-'+n+' מוסדות'}`};
   if(d.of.some(o=>o.i==='open'))return {s:'yes',t:'אפשר להתחיל באוניברסיטה הפתוחה, בלי תנאי קבלה'};
   if(!BAG_EQUIV(S.prof))return {s:'no',t:'צריך קודם להשלים בגרות או מכינה'};
+  /* without a program-level threshold in the data, "not yet" would be a verdict we cannot back */
+  const k=tierKey(degTier(d));
+  if(k==='none')return {s:'na',t:'עדיין אין לנו סף מפורסם לתוכנית הזו, ולכן אי אפשר לדעת אם הציונים מספיקים',go:'path'};
+  if(k==='txt')return {s:'na',t:'תנאי הקבלה פורסמו בטקסט בלבד, ואי אפשר לחשב מהם',go:'path'};
   return {s:'no',t:'עוד לא. ב"המסלול שלי" רואים בדיוק מה חסר',go:'path'};
 }
 function dDegCard(d,R,rank){
@@ -4321,7 +4328,7 @@ function dDegCard(d,R,rank){
         ${du?`<span><small>משך הלימודים</small><b>${du.txt} שנים</b></span>`:''}
         <span><small>מוסדות</small><b>${d.of.length}</b></span>${R.more&&R.more.get(d.id)?`<span><small>מסלולים דומים</small><b>עוד ${R.more.get(d.id)}</b></span>`:''}
       </div>
-      <div class="dc-adm ${a.s}"><span class="cki" aria-hidden="true">${CKI[a.s]}</span>${esc(a.t)}${a.go==='prof'?' <button class="linkbtn" data-prof>מילוי פרופיל</button>':a.go==='path'?' <button class="linkbtn" data-padd="'+d.id+'">לבחור כיעד במסלול שלי</button>':''}</div>
+      <div class="dc-adm ${a.s}"><span class="cki" aria-hidden="true">${CKI[a.s]}</span>${esc(a.t)}${a.go==='prof'?' <button class="linkbtn" data-prof>מילוי פרופיל</button>':a.go==='path'?' <button class="linkbtn" data-padd="'+d.id+'">לבחור כיעד במסלול שלי</button>':''}${tierTag(d)}</div>
       <div class="dc-act"><button class="btn soft sm" data-open="${d.id}">לעמוד התואר</button><button class="btn soft sm" data-padd="${d.id}">${FIC.plus}${padLabel(d.id)}</button><button class="btn soft sm ${S.list.has(d.id)?'on':''}" data-save="${d.id}">${S.list.has(d.id)?'✓ שמור ברשימה שלי':'שמירה לרשימה'}</button></div>
     </div></article>`;
 }
@@ -4543,8 +4550,6 @@ function factChip(id,o){o=o||{};const f=factGet(id);if(!f)return '';
   const lbl=(o.pre||o.named?(o.pre||f.t)+': ':'')+factLabel(f),cl=`ft-chip ${f.status}${o.lg?' lg':''}`,inner=`<span class="ft-i" aria-hidden="true">${FT_IC[f.status]}</span><span>${esc(lbl)}</span>`;
   return o.static?`<span class="${cl}">${inner}</span>`:`<button type="button" class="${cl}" data-ftc="${esc(id)}" aria-haspopup="dialog" aria-label="${esc(lbl)}. פרטים ודיווח על טעות">${inner}</button>`}
 const factRow=(ids,o)=>`<div class="ft-row">${ids.map(i=>factChip(i,{lg:1,...o})).join('')}</div>`;
-/* the same text for a sentence that carries several facts: the weakest status wins */
-const factWorst=ids=>ids.map(factGet).filter(Boolean).reduce((w,f)=>({conflict:3,unverified:2,verified:1}[f.status]>({conflict:3,unverified:2,verified:1}[w]||0)?f.status:w),'verified');
 const httpUrl=u=>{try{const x=new URL(String(u));return /^https?:$/.test(x.protocol)?x.href:''}catch(e){return ''}};
 /* plain-text version for the forum answers (they are escaped text, not HTML): the chip's words in brackets */
 const factTxt=id=>{const f=factGet(id);return f?` (${factLabel(f)})`:''};
@@ -4589,7 +4594,6 @@ function cycleNote(iid){
   const ys=(iid?[(THR[iid]||{}).year]:Object.values(THR).map(t=>t.year)).map(cyY).filter(Boolean);if(!ys.length)return '';
   const cy=Math.max(...ys),lab=HY[cy],s=startY(),est=!s||s>cy;
   return `<p class="cite ft-cy">${est?`זו הערכה לפי ספי ${esc(lab)} (לימודים מאוקטובר ${cy}), המחזור האחרון שפורסם. ${s?`התכנון הוא להתחיל ב-${s}, ו`:''}ספי המחזור הבא טרם פורסמו, ולכן בודקים באתר המוסד לפני הגשה.`:`אלה ספי ${esc(lab)}, המחזור הנוכחי שפורסם. הם יכולים להשתנות עד סוף ההרשמה, ולכן בודקים באתר המוסד לפני הגשה.`}</p>`}
-const cycleTxt=iid=>cycleNote(iid).replace(/<[^>]+>/g,'');
 
 /* ---- data coverage tiers, computed from DATA on the fly (nothing is stored) ---- */
 const TIER_L={num:'סף מספרי',txt:'תנאי קבלה בטקסט',none:'אין נתון במאגר',open:'פתוח לכולם'};
@@ -5141,18 +5145,18 @@ function plan(){
       /* psychometric: register, sit, retake */
       const np=X.np;
       if(!X.hasP){
-        add(Z.ready,{id:'psyReg',ic:'pen',t:'להירשם לבחינה הפסיכומטרית',s:np?`ההרשמה למועד ${np.lbl} נסגרת ${inN(np.n)}`:'נרשמים באתר מאל"ו',due:np?np.reg:null,
+        add(Z.ready,{id:'psyReg',ic:'pen',t:'להירשם לבחינה הפסיכומטרית',s:np?`ההרשמה למועד ${np.lbl} נסגרת ${inN(np.n)}`:'נרשמים באתר מאל"ו',due:np?np.reg:null,df:np?'psy.date.'+np.id:'',
           body:()=>`<p>בוחרים מועד ונרשמים באתר מאל"ו. אפשר להיבחן שוב בכל מועד: אין הגבלה על מספר הפעמים.${factChip('psy.retake')}</p>${UL([`ההרשמה הרגילה עולה ${fact('psy.fee.reg')} (מדצמבר 2026)${factChip('psy.fee.reg')}`,`הרשמה מאוחרת עולה ${fact('psy.fee.late')}, ולא בכל מועד היא מוצעת${factChip('psy.fee.late')}`,`הרשמה ביום הבחינה עולה ${fact('psy.fee.day')}, ולא בכל מועד היא מוצעת${factChip('psy.fee.day')}`])}${psyTip(X)}${q.fl.noPsy||(q.tier>=2&&instKind(P.i)==='c')?'<p class="kp-tip">בחלק מהמכללות והתוכניות אפשר להתקבל גם בלי פסיכומטרי (למשל לפי ממוצע בגרות או אחרי מכינה). בודקים בתנאי הקבלה של התוכנית שבחרתי לפני שמתחייבים לבחינה.</p>':''}${sessHTML(X)}${BTNS([KA(NITE.reg,'להרשמה באתר מאל"ו','primary'),KB('data-kmark="psyReg"',M.psyReg?'✓ נרשמתי':'נרשמתי למועד')])}`});
         const goalP=P.goalP||(V.tier===1&&V.needP!=null&&isFinite(V.needP)&&V.needP<=800?V.needP:0);
         add(Z.ready,{id:'prep',ic:'rocket',t:'להתכונן לבחינה',s:goalP?`היעד שלי: פסיכומטרי ${goalP}${P.goalP?'':', לפי הבגרות שלי'}`:'בחינות להתנסות ותרגול קבוע',
           body:()=>`<p>ההכנה הכי יעילה היא תרגול על בחינות מלאות בתנאי אמת. כדאי להתחיל כמה שבועות לפני המועד, ולהקדיש קצת זמן כל כמה ימים במקום הכול ביום אחד.</p>${UL(['בחינות להתנסות רשמיות באתר מאל"ו','לתרגל את החלק הכמותי ואת החלק המילולי בנפרד, ואחר כך יחד','לשמור את הציון הראשון כנקודת התחלה: אפשר לשפר בבחינה חוזרת'])}${BTNS([KA(NITE.prep,'בחינות להתנסות','primary'),KB('data-kmark="prep"',M.prep?'✓ התחלתי להתכונן':'התחלתי להתכונן')])}`});
-        add(Z.ready,{id:'psy',nm:1,ic:'bolt',t:'להיבחן ולקבל ציון',s:M.psyReg&&np?`הבחינה: ${np.days}`:'אחרי הבחינה מזינים את הציון',due:np&&M.psyReg?np.d:null,
+        add(Z.ready,{id:'psy',nm:1,ic:'bolt',t:'להיבחן ולקבל ציון',s:M.psyReg&&np?`הבחינה: ${np.days}`:'אחרי הבחינה מזינים את הציון',due:np&&M.psyReg?np.d:null,df:np?'psy.date.'+np.id:'',
           body:()=>`<p>הציונים נשלחים למוסדות ולנבחנים תוך 45 ימים לכל היותר מיום הבחינה (לפי מאל"ו).${factChip('psy.results')} כשהציון מגיע, מזינים אותו כאן, והמסלול כולו מתעדכן.</p>${scoreForm()}`});
       }else{
         add(Z.ready,{id:'psy',nm:1,ic:'bolt',t:`יש לי ציון פסיכומטרי: ${X.sc.p}`,s:'אפשר להזין ציון חדש אם נבחנתי שוב',done:true,
           body:()=>`<p>הציון שלי הוא <b>${X.sc.p}</b>. רוב המוסדות מתחשבים בציון הגבוה, ולכן שיפור תמיד שווה לנסות.${factChip('psy.highest')}</p>${scoreForm()}`});
         if(V.ok===false&&V.tier>0){
-          add(Z.ready,{id:'psyRe',ic:'rocket',t:'לשקול בחינה חוזרת',s:X.gap!=null?`חסרות ${X.gap} נקודות, והמועד הבא ${np?np.lbl:'בקרוב'}`:'לשפר את הציון',due:np?np.reg:null,
+          add(Z.ready,{id:'psyRe',ic:'rocket',t:'לשקול בחינה חוזרת',s:X.gap!=null?`חסרות ${X.gap} נקודות, והמועד הבא ${np?np.lbl:'בקרוב'}`:'לשפר את הציון',due:np?np.reg:null,df:np?'psy.date.'+np.id:'',
             body:()=>`<p>${X.gap!=null?`עם הבגרות שלי חסרות ${X.gap} נקודות בפסיכומטרי. `:''}אין הגבלה על מספר הניסיונות,${factChip('psy.retake')} והמוסדות בדרך כלל מחשיבים את הציון הגבוה.${factChip('psy.highest')} מי שמתכונן שוב, בדרך כלל מכיר את הבחינה ומרגיש בטוח יותר.</p>${sessHTML(X)}${BTNS([KA(NITE.reg,'להרשמה באתר מאל"ו','primary'),KA(NITE.prep,'בחינות להתנסות')])}`})}
       }
     }
@@ -5229,7 +5233,6 @@ function plan(){
 function thrCredit(X,T){const t=T.find(x=>x.id==='thr');if(!t||t.done)return 0;
   const V=X.V;if(V.tier!==1||V.gapP==null||!isFinite(V.gapP)||V.gapP<=0)return 0;
   return Math.max(0,Math.min(.9,.9*(1-V.gapP/120)))}
-/* the IDF academic-reserve questionnaire closed on 28 February in the last published cycle; only shown while it is still ahead */
 /* when to register: what the big universities did in the last published cycle, and a typical pattern for the rest (never presented as next year's dates) */
 function regWindow(X,long){
   const Y=X.start,uni=instKind(X.P.i)==='u';
@@ -5348,8 +5351,12 @@ function zoneRange(id,X){
   if(id==='go')return Y?`אוקטובר ${Y} (${HY[Y]||''})`:'כשמתחילים';
   return ''}
 const zOpen=(z,pl)=>KP.zt[z.id]!==undefined?KP.zt[z.id]:z.id===pl.focus;
-const dueText=t=>t.due?`${t.approx?'בערך ':''}${dShort(t.due)} · ${inN(t.n)}`:'';
-function dueChip(t){return t.due?`<span class="kp-due ${t.soon?'hot':''}">${dueText(t)}</span>`:''}
+/* a date whose source is not cross-checked says so wherever it is shown (df = the fact that holds the date) */
+const dueFt=t=>{const f=t.df&&factGet(t.df);return f&&f.status!=='verified'?(f.status==='conflict'?'מקורות סותרים':'לא אומת'):''};
+const dueN=t=>inN(t.n)+(dueFt(t)?` (${dueFt(t)})`:'');
+const dueMain=t=>`${t.approx?'בערך ':''}${dShort(t.due)} · ${inN(t.n)}`;
+const dueText=t=>t.due?dueMain(t)+(dueFt(t)?` · ${dueFt(t)}`:''):'';
+function dueChip(t){if(!t.due)return '';const fl=dueFt(t);return `<span class="kp-due ${t.soon?'hot':''}${fl?' ft':''}">${dueMain(t)}${fl?`<small><i aria-hidden="true">?</i> ${fl}</small>`:''}</span>`}
 function taskHTML(t){
   const open=KP.open.has(t.id);
   return `<li class="kp-t ${t.done?'done':''} ${t.soon?'soon':''} ${open?'open':''}" id="kpt-${t.id}">
@@ -5396,7 +5403,7 @@ function hubCard(x,P){
     </button>
     <div class="kp-hcs ${s.k}"><b>${esc(s.h)}</b>${gauge?'':`<small>${esc(thrLine(x))}</small>`}</div>
     ${gauge}
-    <div class="kp-hcn"><span>${done} מתוך ${total} צעדים</span>${next?`<span>הצעד הבא: <b>${esc(next.t)}</b>${next.due?` · ${inN(next.n)}`:''}</span>`:'<span>הדרך הושלמה</span>'}</div>
+    <div class="kp-hcn"><span>${done} מתוך ${total} צעדים</span>${next?`<span>הצעד הבא: <b>${esc(next.t)}</b>${next.due?` · ${dueN(next)}`:''}</span>`:'<span>הדרך הושלמה</span>'}</div>
     <div class="kp-hca">${ask?`<span class="kp-ask">להסיר את היעד הזה?</span><button class="btn soft sm" data-krmok="${t.id}">כן, להסיר</button><button class="linkbtn" data-krmno>ביטול</button>`:`<button class="btn primary" data-ktgt="${t.id}">להמשיך במסלול${ki('arrow')}</button><button class="linkbtn" data-krm="${t.id}">הסרה</button>`}</div></article>`}
 function hubPageHTML(){
   const P=pth(),L=tInfos(),best=L.length>1?L.slice().sort((a,b)=>b.pct-a.pct)[0]:null;
@@ -5531,7 +5538,7 @@ function pathHomeHTML(){
   if(!hasGoal())return '';
   return safe(()=>{const pl=plan(),t=pl.next,n=tList().length;
     const title=n>1?`המסלול שלי: ${n} יעדים`:`המסלול שלי: ${esc(pl.X.d.n)}`;
-    const sub=n>1?`${esc(pl.X.d.n)} ${esc(bIn(pl.X.I.n))} · ${pl.pct}% מהדרך${t?` · הצעד הבא: ${esc(t.t)}`:''}`:(t?`הצעד הבא: ${esc(t.t)}${t.due?` · ${inN(t.n)}`:''}`:'הדרך הושלמה!');
+    const sub=n>1?`${esc(pl.X.d.n)} ${esc(bIn(pl.X.I.n))} · ${pl.pct}% מהדרך${t?` · הצעד הבא: ${esc(t.t)}`:''}`:(t?`הצעד הבא: ${esc(t.t)}${t.due?` · ${dueN(t)}`:''}`:'הדרך הושלמה!');
     return `<div class="wrap"><button class="pth-home" data-go="path">${ring(pl.pct,52,6)}<span class="ph-t"><b>${title}</b><small>${sub}</small></span><span class="ph-go">להמשיך${ki('arrow')}</span></button></div>`},'')}
 /* the home page link and the "add to my targets" buttons on degree pages */
 function pathBlurb(){const L=tList();return L.length>1?`${L.length} יעדים שהצבתי, והצעד הבא מחכה לי`:'היעד שלי: '+esc(BY[pth().d].n)+'. הצעד הבא מחכה לי'}
@@ -5751,7 +5758,7 @@ function optHTML(pl){
     ${sim.length?`<h3 class="kp-h3">תארים קרובים שהמספרים שלי מספיקים להם</h3><div class="grid kp-sg">${sim.slice(0,4).map((x,i)=>card(x.d,{delay:i*30,foot:foot(x)})).join('')}</div>`:''}
     <div class="sec-h" style="margin-top:28px"><div><h3 class="kp-h3" style="margin:0">מה אפשר ללמוד עם המספרים האלה? <span class="kp-cnt num">${fmt(reach.length)}</span></h3><p>דוגמאות מתוך כל התארים, לפי הנתונים שפורסמו. תחילה תחום היעד שלי.</p></div>${arrows('kp-strip')}</div>
     ${reach.length?`<div class="strip" id="kp-strip">${reach.slice(0,16).map(x=>card(x.d,{foot:foot(x)})).join('')}</div>${hasReal()?`<div class="more" style="margin-top:12px"><button class="btn soft" data-go="me">לכל ${fmt(reach.length)} התארים</button></div>`:''}`:'<div class="empty"><h3>במספרים האלה עוד לא נמצאו תארים שנבדקו</h3><p>אפשר להזיז את המספרים בלשונית "כמה חסר לי?", או להתחיל באוניברסיטה הפתוחה.</p></div>'}
-    <p class="fine">הרשימה מבוססת רק על תנאי קבלה שפורסמו ונאספו כאן. לא מכל המוסדות נאספו ספים (למשל בר-אילן), ולכן היא חלקית. עמידה בתנאים אינה מבטיחה קבלה.</p>
+    <p class="fine">הרשימה מבוססת רק על תנאי קבלה שפורסמו ונאספו כאן. לא מכל המוסדות נאספו ספים (למשל בר-אילן), ולכן היא חלקית. עמידה בתנאים אינה מבטיחה קבלה.</p>${cycleNote()}
     ${typeof progsHTML==='function'?safe(()=>progsHTML(pl),''):''}`}
 
 /* ---------- why it is worth it ---------- */
@@ -5776,10 +5783,9 @@ function timeline(pl){
   PSYD.forEach(z=>{const pick=P&&P.sess===z.id;
     L.push({id:'psyreg-'+z.id,d:z.reg,k:'psy',reg:1,pick,t:`סגירת ההרשמה הרגילה לפסיכומטרי (מועד ${z.lbl})`,sub:'לפי לוח המועדים של מאל"ו.',f:'psy.date.'+z.id,sub2:`הרשמה רגילה: ${fact('psy.fee.reg')} (מאל"ו, מדצמבר 2026).`,f2:'psy.fee.reg',src:NITE.td});
     L.push({id:'psy-'+z.id,d:z.d,d2:z.d2,k:'psy',pick,t:`בחינה פסיכומטרית: ${z.days}`,sub:'לפי לוח המועדים של מאל"ו.',f:'psy.date.'+z.id,src:NITE.td});
-    if(z.res)L.push({id:'psyres-'+z.id,d:z.res,k:'psy',t:`תחזית לפרסום הציונים (מועד ${z.lbl})`,src:NITE.td})});
+    if(z.res)L.push({id:'psyres-'+z.id,d:z.res,k:'psy',t:`תחזית לפרסום הציונים (מועד ${z.lbl})`,f:'psy.results',src:NITE.td})});
   BAGD.forEach(([s,k,d,n,d2])=>{if(mine.has(k)){const se=s==='w'?'חורף':s==='s'?'קיץ':'מועד ב';L.push({id:'bag-'+s+'-'+k,d,d2,k:'bag',grp:'bag-'+s,gt:`בגרויות ${se} 2027`,sn:n,t:`בגרות ${se}: ${n}`,sub:'לפי טיוטת לוח הבחינות של משרד החינוך.',f:'bagrut.2027',src:s==='w'?EDU.win:EDU.sum})}});
   if(stageNow()==='g12'&&!mine.size)[['2027-01-04','תחילת בחינות הבגרות: מועד חורף',EDU.win],['2027-05-05','תחילת בחינות הבגרות: מועד קיץ',EDU.sum]].forEach(([d,t,src])=>L.push({id:'bagstart-'+d,d,k:'bag',t,sub:'לפי טיוטת לוח הבחינות של משרד החינוך. את המועדים של המקצועות שלי רואים בלוח.',f:'bagrut.2027',src}));
-  if(pl)pl.tasks.filter(t=>t.due&&t.approx&&!t.done).forEach(t=>L.push({id:'task-'+t.id,d:t.due,k:'idf',approx:1,t:t.t+' (מועד אחרון משוער)',sub:'לפי הנתונים האחרונים שפורסמו. המועד משתנה משנה לשנה.',f:'atuda.deadline',src:IDF_ATUDA}));
   /* registration of each of my targets, estimated from the last published cycle: shown, but never put in the calendar file */
   if(pl){const many=tList().length>1,seen=new Set();
     (many?tInfos().map(x=>x.X):[pl.X]).forEach(X=>{if(!X.start||!REGD[X.P.i])return;const R=REGD[X.P.i],f=X.fam,Y=X.start;
@@ -6468,6 +6474,9 @@ function openOv(html,cls=''){
     const a=t[0],z=t[t.length-1],c=document.activeElement;
     if(e.shiftKey&&(c===a||!ov.contains(c))){e.preventDefault();z.focus()}else if(!e.shiftKey&&(c===z||!ov.contains(c))){e.preventDefault();a.focus()}});
   const f=ov.querySelector('input,.uni');(f||ov.querySelector('[data-close]')).focus({preventScroll:true});
+  if(!ov.contains(document.activeElement)){ /* the first input can be a hidden one (profile sheet): focus stayed outside, so Tab would walk into the page behind */
+    const v=[...ov.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled])')].find(x=>x.getClientRects().length),sh=ov.firstElementChild;
+    if(v)v.focus({preventScroll:true});else{sh.tabIndex=-1;sh.focus({preventScroll:true})}}
   return ov;
 }
 function closeOv(instant){const ov=$('#ov');if(!ov)return;ov.remove();document.body.style.overflow='';if(!instant&&lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true})}
