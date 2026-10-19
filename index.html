@@ -1426,6 +1426,29 @@ input[type=range]{accent-color:var(--primary);height:28px}
   .kp-tc{max-width:220px;padding-inline:10px 12px}.kp-hc{padding:16px}
   .kp-fh .kp-num{font-size:24px;width:96px}
 }
+/* F1 trust layer (ft-): provenance chips, coverage tiers, error reports. State = icon + words, never color alone */
+.ft-chip{display:inline-flex;align-items:center;gap:6px;min-height:28px;max-width:100%;margin-inline-start:6px;padding:2px 11px 2px 9px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);font:600 13px/1.35 var(--body);text-align:start;vertical-align:middle;position:relative}
+button.ft-chip{cursor:pointer}button.ft-chip::after{content:"";position:absolute;inset:-8px -3px}
+button.ft-chip:hover{box-shadow:0 1px 0 rgba(31,37,68,.22)}
+.ft-chip.lg{min-height:40px;padding-inline:12px 14px;margin-inline-start:0}
+.ft-i{flex:none;width:18px;height:18px;border-radius:50%;display:inline-grid;place-items:center;font-size:12px;font-weight:800;line-height:1;color:#fff}
+.ft-chip.verified{background:#E3F7EE;border-color:#B5E8D0;color:#0B5A3E}.ft-chip.verified .ft-i{background:#0B5A3E}
+.ft-chip.unverified{background:#FFF7E6;border-color:#F0D595;color:#7A4B00}.ft-chip.unverified .ft-i{background:#8A5200}
+.ft-chip.conflict{background:#FFE9E6;border-color:#FFC7BF;color:#8E2418}.ft-chip.conflict .ft-i{background:#8E2418}
+.ft-row{display:flex;flex-wrap:wrap;gap:8px;margin-block:10px}
+.ft-card{border:1px solid var(--line);border-radius:16px;padding:14px 16px;background:#FAFBFF;margin-block:12px}.ft-card p{margin-block:8px}
+.ft-val{font-size:19px}.ft-val span{color:var(--muted);font-size:15px}
+.ft-rep{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}.ft-rep h3{font-size:20px;margin-bottom:4px}.ft-rep .s{color:var(--muted);margin-bottom:10px}
+.ft-ta{display:block;width:100%;box-sizing:border-box;margin-block:8px 12px;padding:12px 14px;border:1.5px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);font:inherit;font-size:16px;line-height:1.55;resize:vertical}
+.ft-ta:focus{outline:none;box-shadow:0 0 0 3px #FFD0C3;border-color:var(--primary)}
+.tag.ft-t{display:inline-flex;align-items:center;gap:5px}.tag.ft-t i{font-style:normal;font-size:11px}
+.tag.ft-t.num{background:var(--good-soft);color:#0B5A3E}.tag.ft-t.txt{background:#E6EEFF;color:#233A8B}.tag.ft-t.none{background:#F0F1F6;color:#4A5068}.tag.ft-t.open{background:var(--good-soft);color:#0B5A3E}
+.ft-cy{margin-top:8px;line-height:1.55}
+.ft-tier{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-block:0 14px;padding:12px 16px;border-radius:16px;background:var(--bg);font-size:15px}.ft-tier .tag{font-size:14px}
+.ft-tier p{margin:0;flex:1 1 260px}
+.ft-err{margin-top:10px}.ft-err .btn{min-height:42px}
+.ft-cov{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-block:12px}.ft-cov>div{border:1px solid var(--line);border-radius:14px;padding:10px 14px;background:#fff}.ft-cov b{display:block;font:700 26px/1.2 var(--head)}.ft-cov span{font-size:14px;color:var(--muted)}
+@media(max-width:520px){.ft-chip{font-size:12.5px}.ft-chip.lg{width:100%}.ft-tier{padding:12px}}
 html.rm .kp-next.soon,html.rm .kp-focus.soon{animation:none}
 
 </style>
@@ -1938,7 +1961,7 @@ function checklist(d){
   return items;
 }
 const CKI={yes:'✓',no:'✕',na:'?'};
-function ckHTML(x){return `<div class="ck ${x.s}"><span class="cki" aria-hidden="true">${CKI[x.s]}</span><div><b>${esc(x.t)}</b><span class="sr">${x.s==='yes'?' (יש)':x.s==='no'?' (צריך להשלים)':''}</span>${x.d?`<p>${esc(x.d)}</p>`:''}${x.src?`<a class="cite" href="${x.src}" target="_blank" rel="noopener">מקור: ${esc(x.sl)}</a>`:''}${x.go?`<button class="linkbtn" data-go="${x.go}">${esc(x.gl)}</button>`:''}</div></div>`}
+function ckHTML(x){return `<div class="ck ${x.s}"><span class="cki" aria-hidden="true">${CKI[x.s]}</span><div><b>${esc(x.t)}</b><span class="sr">${x.s==='yes'?' (יש)':x.s==='no'?' (צריך להשלים)':''}</span>${x.d?`<p>${esc(x.d)}${x.f?factChip(x.f):''}</p>`:''}${x.src?`<a class="cite" href="${x.src}" target="_blank" rel="noopener">מקור: ${esc(x.sl)}</a>`:''}${x.go?`<button class="linkbtn" data-go="${x.go}">${esc(x.gl)}</button>`:''}</div></div>`}
 function checklistHTML(d){
   const it=checklist(d);
   if(it===null)return `<section class="blk"><div class="banner" style="background:linear-gradient(120deg,#E6EEFF,#EFEAFF)"><div></div><div><h2>מה כבר יש לי ומה חסר לתואר הזה?</h2><p style="color:var(--muted)">ממלאים פרופיל קצר פעם אחת, ובכל תואר רואים בירוק מה כבר יש לי ובאדום מה צריך להשלים.</p></div><button class="btn primary" data-prof>מילוי הפרופיל</button></div></section>`;
@@ -4394,6 +4417,200 @@ document.addEventListener('keydown',e=>{if(S.route.v!=='dir'||DIRV.mode!=='q'||(
   else if(e.key==='Enter'&&$('[data-dqnext]')){e.preventDefault();$('[data-dqnext]').click()}});
 
 
+/* ================= F1: trust layer (where a fact comes from, how far it was checked, what the data covers) =================
+   FACTS: the procedural facts the app writes by hand (fees, validity, exam rules, deadlines, professional paths). DATA keeps its own sources.
+   status: 'verified'   = cross-checked in search against two or more sources, one of them official. It was NOT read from the primary page,
+                          so the chip says "הוצלב מול ..." and never "אומת באתר".
+           'unverified' = no confirmation was found. That is not the same as wrong.   'conflict' = the sources disagree.
+   hide:1 = a number we could not confirm: it is not shown, the text sends to the official page (money and deadlines are high stakes).
+   Edit a fact here once: every text that uses fact(id) and every chip follows. FT_D = the day the statuses were set. */
+const CONTACT_EMAIL=''; /* the owner can fill an address: error reports then also offer an email link */
+const FT_D='2026-10-19';
+const FACTS=[
+ {id:'psy.range',t:'טווח הציון הכללי בפסיכומטרי',v:'200–800',by:'מאל"ו',scope:'גם בבחינה הדו-תחומית (מדצמבר 2026)',src:'https://www.nite.org.il/two-domain-psychometric-entrance-test/faqs/?lang=en',srcType:'official',status:'verified',checked:FT_D},
+ {id:'psy.format',t:'מבנה הבחינה הפסיכומטרית מדצמבר 2026',v:'דו-תחומית: חשיבה מילולית וחשיבה כמותית, ציון כללי בסולם 200–800',by:'מאל"ו',scope:'מדצמבר 2026 (תשפ"ז)',src:'https://www.nite.org.il/two-domain-psychometric-entrance-test/?lang=en',srcType:'official',status:'verified',checked:FT_D,note:'האנגלית יוצאת מהבחינה ונבדקת בנפרד באמירנט.'},
+ {id:'psy.rename',t:'שם הבחינה הפסיכומטרית לפני ואחרי דצמבר 2026',v:'עד סתיו 2026 רב-תחומית (עם אנגלית), מדצמבר 2026 דו-תחומית',by:'מאל"ו',scope:'מדצמבר 2026',src:'https://www.nite.org.il/news/notice-15022026/?lang=en',srcType:'official',status:'verified',checked:FT_D,note:'ציונים שהתקבלו בפורמט הישן נשארים תקפים, בדרך כלל לפחות 7 שנים, לפי מדיניות המוסד.'},
+ {id:'psy.subscore',t:'סולם הציון לכל תחום בפסיכומטרי',v:'50–150',by:'מאל"ו',scope:'הבחינה הדו-תחומית',src:'https://www.nite.org.il/two-domain-psychometric-entrance-test/?lang=en',srcType:'official',status:'unverified',checked:FT_D,note:'הסולם מוכר מהמתכונת הישנה. לא נמצא אישור לבחינה הדו-תחומית.'},
+ {id:'psy.validity',t:'תוקף ציון הפסיכומטרי',v:'לפחות 7 שנים מיום הבחינה',by:'מאל"ו',src:'https://www.nite.org.il/other-tests/tests-administered-overseas/?lang=en',srcType:'official',status:'verified',checked:FT_D,note:'אם המוסד שבחרתי קובע הגבלה משלו, הוא קובע.'},
+ {id:'psy.retake',t:'מספר הפעמים שאפשר להיבחן בפסיכומטרי',v:'אין הגבלה',by:'מאל"ו',src:'https://www.nite.org.il/files/psych/psychometric_registration_english.pdf',srcType:'official',status:'verified',checked:FT_D,note:'המקורות מתייחסים למתכונת הקיימת, ואין סימן לשינוי.'},
+ {id:'psy.highest',t:'איזה ציון נחשב למי שנבחן כמה פעמים',v:'רוב המוסדות מתחשבים בציון הגבוה',by:'מאל"ו',src:'https://www.nite.org.il/other-tests/tests-administered-overseas/?lang=en',srcType:'official',status:'verified',checked:FT_D,note:'במעבר לבחינה הדו-תחומית כל מוסד קובע איך לשקלל. כדאי לוודא מול המוסד שבחרתי.'},
+ {id:'psy.fee.reg',t:'דמי הרשמה רגילה לבחינה הפסיכומטרית',v:495,unit:'₪',by:'מאל"ו',scope:'מדצמבר 2026 (תשפ"ז)',src:'https://www.nite.org.il/two-domain-psychometric-entrance-test/?lang=en',srcType:'official',status:'verified',checked:FT_D,note:'המחיר עלול להתעדכן, ולכן בודקים באתר מאל"ו לפני התשלום.'},
+ {id:'psy.fee.late',t:'דמי הרשמה מאוחרת לבחינה הפסיכומטרית',v:745,unit:'₪',by:'מאל"ו',scope:'מדצמבר 2026 (תשפ"ז)',src:'https://www.nite.org.il/two-domain-psychometric-entrance-test/?lang=en',srcType:'official',status:'verified',checked:FT_D,note:'לפי מאל"ו ההרשמה המאוחרת לא מוצעת בכל מועד. לא אומת אם נשארה הרשמה מאוחרת למועד דצמבר 2026.'},
+ {id:'psy.fee.day',t:'דמי הרשמה ביום הבחינה הפסיכומטרית',v:1240,unit:'₪',by:'מאל"ו',scope:'מדצמבר 2026 (תשפ"ז)',src:'https://www.nite.org.il/two-domain-psychometric-entrance-test/?lang=en',srcType:'official',status:'verified',checked:FT_D,note:'מופיע בטבלת המחירים של מאל"ו, ולא מוצע בכל מועד.'},
+ {id:'psy.fee.set',t:'מי קובע את דמי ההרשמה לבחינה הפסיכומטרית',v:'מאל"ו קובע ומפרסם באתרו, והדמים יכולים להשתנות בין מועדים',by:'מאל"ו',src:'https://www.nite.org.il/test-dates-and-prices/?lang=en',srcType:'official',status:'verified',checked:FT_D},
+ {id:'psy.date.dec26',t:'מועד הבחינה הפסיכומטרית בדצמבר 2026',v:'4 או 6 בדצמבר 2026',by:'מאל"ו',scope:'דצמבר 2026',src:'https://www.nite.org.il/two-domain-psychometric-entrance-test/?lang=en',srcType:'official',status:'verified',checked:FT_D,note:'ההרשמה הרגילה נסגרה ב-14 באוקטובר 2026.'},
+ {id:'psy.date.apr27',t:'מועד הבחינה הפסיכומטרית באפריל 2027',v:'18–19 באפריל 2027',by:'מאל"ו',scope:'אפריל 2027',src:'https://www.nite.org.il/two-domain-psychometric-entrance-test/?lang=en',srcType:'official',status:'unverified',checked:FT_D,note:'סגירת ההרשמה הרגילה ב-10 בפברואר 2027, ממקור אחד.'},
+ {id:'psy.date.jul27',t:'מועד הבחינה הפסיכומטרית ביולי 2027',v:'1 ביולי 2027',by:'מאל"ו',scope:'יולי 2027',src:'https://www.nite.org.il/two-domain-psychometric-entrance-test/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'psy.date.sep27',t:'מועד הבחינה הפסיכומטרית בספטמבר 2027',v:'6–7 בספטמבר 2027',by:'מאל"ו',scope:'ספטמבר 2027',src:'https://www.nite.org.il/two-domain-psychometric-entrance-test/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'psy.results',t:'זמן קבלת ציוני הבחינה הפסיכומטרית',v:'עד 45 ימים מיום הבחינה',by:'מאל"ו',src:'https://www.nite.org.il/test-scores/?lang=en',srcType:'official',status:'unverified',checked:FT_D,note:'כתוב בדפים של מאל"ו בלבד, ולכן לא הוצלב מול מקור נוסף. זו תקרה ולא זמן אופייני.'},
+ {id:'psy.april',t:'עד מתי הציון הפסיכומטרי נדרש בטכניון ובעברית',v:'עד מועד אפריל להרשמה הרגילה',scope:'מחזור תשפ"ז',src:'https://admissions.web.technion.ac.il/registeration-dates/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'eng.removed',t:'האנגלית בבחינה הפסיכומטרית',v:'מדצמבר 2026 האנגלית יוצאת מהפסיכומטרי, והרמה נקבעת באמירנט',by:'מאל"ו',scope:'מדצמבר 2026',src:'https://www.nite.org.il/two-domain-psychometric-entrance-test/?lang=en',srcType:'official',status:'verified',checked:FT_D,note:'עד מועד סתיו 2026 פרק האנגלית בפסיכומטרי נותן ציון באנגלית. אמירנט הוא מבחן הסיווג, אלא אם המוסד קבע אחרת.'},
+ {id:'eng.exempt',t:'פטור באנגלית',v:'הרמה נקבעת באמירנט או לפי ציון אנגלית ישן שעדיין בתוקף, וכללי המוסד באתר המוסד',by:'מאל"ו',scope:'מדצמבר 2026',src:'https://www.nite.org.il/news/notice-15022026/?lang=en',srcType:'official',status:'unverified',checked:FT_D,note:'הטענה על מועד אחרון להשגת פטור במוסדות לא נבדקה.'},
+ {id:'amir.fee',t:'דמי הרשמה רגילה לאמירנט',v:315,unit:'₪',by:'מאל"ו',scope:'נכון ל-2026',src:'https://www.nite.org.il/prices-of-services-to-examinees/?lang=en',srcType:'official',status:'verified',checked:FT_D,note:'המחיר עלול להתעדכן, ולכן בודקים באתר מאל"ו לפני התשלום.'},
+ {id:'amir.retake',t:'חזרה על אמירנט',v:'מהיום ה-35 ואילך',by:'מאל"ו',src:'https://www.nite.org.il/other-tests/amirnet/faq/?lang=en',srcType:'official',status:'verified',checked:FT_D,note:'הספירה מתחילה ביום שאחרי הבחינה. בחינה שנעשתה לפני כן מבוטלת, בלי החזר כספי.'},
+ {id:'amir.format',t:'אופי הבחינה באמירנט',v:'בחינה ממוחשבת שנערכת במוסדות',by:'מאל"ו',src:'https://www.nite.org.il/other-tests/amirnet/?lang=en',srcType:'official',status:'verified',checked:FT_D},
+ {id:'amir.results',t:'זמן קבלת ציון אמירנט',v:'לא נקבע',src:'https://www.nite.org.il/other-tests/amirnet/faq/?lang=en',srcType:'official',status:'conflict',checked:FT_D,hide:1,alt:'מפורסם באזור האישי באתר מאל"ו',note:'מקורות לא רשמיים סותרים (כ-10 ימים לעומת 24 עד 48 שעות), ובדפי מאל"ו לא נמצא משך קבוע.'},
+ {id:'amir.mandatory',t:'האם אמירנט חובה לקבלה',v:'כל מוסד קובע אם הציון נדרש לקבלה ואיך הוא נכלל',by:'מאל"ו',scope:'מדצמבר 2026',src:'https://www.nite.org.il/other-tests/amirnet/?lang=en',srcType:'official',status:'conflict',checked:FT_D,note:'לא נמצא מקור של מאל"ו שקובע שאמירנט הוא תנאי חובה בכל המוסדות.'},
+ {id:'amir.validity',t:'תוקף ציון אמירנט',v:'נקבע לפי מאל"ו והמוסד',by:'מאל"ו',src:'https://www.nite.org.il/other-tests/amirnet/faq/?lang=en',srcType:'official',status:'unverified',checked:FT_D,note:'הכלל "לפחות 7 שנים" אומת לפסיכומטרי, ולא בהכרח לאמירנט.'},
+ {id:'mitam',t:'מבחן הקבלה לתואר שני בפסיכולוגיה',v:'מתא"ם, נערך פעם בשנה באוקטובר',by:'מאל"ו',src:'https://www.nite.org.il/other-tests/mitam/?lang=en',srcType:'official',status:'unverified',checked:FT_D,note:'לפי עמודי מאל"ו. הנוסח הקודם באתר נקב בשם שגוי ותוקן.'},
+ {id:'yael',t:'מי נדרש לבחינת יע"ל',v:'בדרך כלל מי שנבחן בפסיכומטרי או בבגרות בשפה שאינה עברית',by:'המכלול',src:'https://www.hamichlol.org.il/%D7%99%D7%A2%22%D7%9C_(%D7%9E%D7%91%D7%97%D7%9F)',srcType:'secondary',status:'unverified',checked:FT_D,note:'מקור אחד שאינו רשמי. הרמה הנדרשת משתנה בין המוסדות.'},
+ {id:'mor.fee.assess',t:'עלות מרכז ההערכה במו"ר ומרק"ם',v:1900,unit:'₪',by:'מאל"ו',src:'https://www.nite.org.il/other-tests/mor-mirkam/',srcType:'official',status:'unverified',checked:FT_D,hide:1,alt:'הסכום מפורסם באתר מאל"ו',note:'סכום שהופיע באתר בעבר ולא אומת, ולכן הוא לא מוצג כאן.'},
+ {id:'mor.fee.bio',t:'עלות השאלון האישי-ביוגרפי במו"ר ומרק"ם',v:450,unit:'₪',by:'מאל"ו',src:'https://www.nite.org.il/other-tests/mor-mirkam/',srcType:'official',status:'unverified',checked:FT_D,hide:1,alt:'הסכום מפורסם באתר מאל"ו',note:'סכום שהופיע באתר בעבר ולא אומת, ולכן הוא לא מוצג כאן.'},
+ {id:'mor.structure',t:'מבנה המיון האישי ברפואה',v:'שאלון אישי-ביוגרפי, מרכז הערכה ושאלון שאו"ל',by:'מאל"ו',src:'https://www.nite.org.il/other-tests/mor-mirkam/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'mor.nogeneral',t:'ציון במיון האישי ברפואה',v:'מ-2026 כל מרכיב מדווח בנפרד וכל מוסד משקלל לפי המדיניות שלו',by:'מאל"ו',scope:'מ-2026',src:'https://www.nite.org.il/other-tests/mor-mirkam/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'mor.invite',t:'הזימון למיון האישי ברפואה',v:'נשלח ממאל"ו לפי רשימות שהמוסד מעביר',by:'מאל"ו',src:'https://www.nite.org.il/other-tests/mor-mirkam/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'mor.technion',t:'מועד ההודעה על המעבר למו"ר בטכניון',v:'בשנה האחרונה, בתחילת יוני',scope:'מחזור תשפ"ו',src:'https://www.nite.org.il/other-tests/mor-mirkam/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'atuda.min',t:'ציון פסיכומטרי מינימלי להמשך המיונים בעתודה האקדמית',v:590,by:'צה"ל',src:'https://www.mitgaisim.idf.il/%D7%A2%D7%AA%D7%95%D7%93%D7%94-%D7%90%D7%A7%D7%93%D7%9E%D7%99%D7%AA/',srcType:'official',status:'unverified',checked:FT_D,hide:1,alt:'נקבע לפי המסלול ומתפרסם באתר "מתגייסים"',note:'מסומן כאן כלא מאומת, ולכן המספר לא מוצג. מדצמבר 2026 הפסיכומטרי דו-תחומי, ולא ברור אם הסף מתייחס לציון הישן.'},
+ {id:'atuda.deadline',t:'סגירת השאלון לעתודה האקדמית',v:'28 בפברואר',by:'צה"ל',scope:'המחזור הקודם',src:'https://www.mitgaisim.idf.il/%D7%A2%D7%AA%D7%95%D7%93%D7%94-%D7%90%D7%A7%D7%93%D7%9E%D7%99%D7%AA/',srcType:'official',status:'unverified',checked:FT_D,hide:1,alt:'בסוף החורף',note:'לפי הנתונים האחרונים שפורסמו. התאריך המדויק למחזור שלי מפורסם באתר "מתגייסים".'},
+ {id:'atuda.grade12',t:'ההרשמה לעתודה האקדמית',v:'בדרך כלל בכיתה י"ב',by:'צה"ל',src:'https://www.mitgaisim.idf.il/%D7%A2%D7%AA%D7%95%D7%93%D7%94-%D7%90%D7%A7%D7%93%D7%9E%D7%99%D7%AA/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'atuda.induction',t:'מועד ההגעה ליום חיול בעתודה',v:'אחרי האישור הסופי, לפי הנוהל שמפרסם צה"ל',by:'צה"ל',src:'https://www.mitgaisim.idf.il/%D7%A2%D7%AA%D7%95%D7%93%D7%94-%D7%90%D7%A7%D7%93%D7%9E%D7%99%D7%AA/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'atuda.tuition',t:'תשלום שכר לימוד לפני אישור סופי בעתודה',v:'אין חובה לשלם לפני האישור הסופי',by:'צה"ל',src:'https://www.mitgaisim.idf.il/%D7%A2%D7%AA%D7%95%D7%93%D7%94-%D7%90%D7%A7%D7%93%D7%9E%D7%99%D7%AA/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'atuda.bagrut',t:'תנאי הסף בעתודה האקדמית',v:'תנאי קבלה לפי המקצוע וקבלה למוסד אקדמי',by:'צה"ל',src:'https://www.mitgaisim.idf.il/%D7%A2%D7%AA%D7%95%D7%93%D7%94-%D7%90%D7%A7%D7%93%D7%9E%D7%99%D7%AA/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'reg.technion',t:'מועדי ההרשמה בטכניון',v:'נפתחה ב-1 בפברואר; מאוחרת מ-1 ביוני עד 15 בספטמבר',by:'הטכניון',scope:'מחזור תשפ"ז',src:'https://admissions.web.technion.ac.il/registeration-dates/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'reg.technion.med',t:'סגירת ההרשמה לרפואה בטכניון',v:'28 באפריל, בלי הרשמה מאוחרת',by:'הטכניון',scope:'מחזור תשפ"ז',src:'https://admissions.web.technion.ac.il/registeration-dates/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'reg.technion.arch',t:'סגירת ההרשמה לבחינת הכניסה לאדריכלות בטכניון',v:'19 באפריל, בלי הרשמה מאוחרת',by:'הטכניון',scope:'מחזור תשפ"ז',src:'https://admissions.web.technion.ac.il/registeration-dates/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'reg.technion.spring',t:'הרשמה לסמסטר האביב בטכניון',v:'במחזור הקודם: 1 בנובמבר עד 28 בינואר',by:'הטכניון',scope:'מחזור קודם',src:'https://admissions.web.technion.ac.il/registeration-dates/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'reg.huji',t:'מועדי ההרשמה באוניברסיטה העברית',v:'נפתחה ב-1 בפברואר; הרגילה נסגרה ב-30 באפריל',by:'האוניברסיטה העברית',scope:'מחזור תשפ"ז',src:'https://info.huji.ac.il/registration-process/calendar',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'reg.huji.med',t:'סגירת ההרשמה לרפואה ולרפואת שיניים בעברית',v:'12 במאי, בלי הרשמה מאוחרת',by:'האוניברסיטה העברית',scope:'מחזור תשפ"ז',src:'https://info.huji.ac.il/registration-process/calendar',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'reg.tau',t:'סגירת ההרשמה בתל אביב',v:'מ-31 במאי תוכניות רשאיות לסגור בלי הודעה מוקדמת',by:'אוניברסיטת תל אביב',scope:'מחזור תשפ"ז',src:'https://go.tau.ac.il/he/reg-dates',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'reg.bgu',t:'פתיחת ההרשמה בבן-גוריון',v:'1 בפברואר',by:'אוניברסיטת בן-גוריון',scope:'מחזור תשפ"ז',src:'https://www.bgu.ac.il/events/registrastion2027/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'reg.haifa',t:'פתיחת ההרשמה בחיפה',v:'1 בפברואר; מועדי הסגירה משתנים בין הפקולטות',by:'אוניברסיטת חיפה',scope:'מחזור תשפ"ז',src:'https://admissions.haifa.ac.il/registration-deadlines-and-entrance-exams/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'reg.pattern',t:'מועדי ההרשמה הרגילים באוניברסיטאות',v:'בתחילת פברואר נפתחת, והרגילה נסגרת בסביבות סוף אפריל',scope:'מחזור תשפ"ז',src:'',srcType:'',status:'unverified',checked:FT_D,note:'הכללה מהטכניון והעברית. בתל אביב אין סגירה מפורסמת, ובבן-גוריון ובחיפה נמצאו רק מועדי פתיחה.'},
+ {id:'reg.med',t:'סגירת ההרשמה לרפואה',v:'בטכניון 28 באפריל ובעברית 12 במאי, בלי הרשמה מאוחרת',scope:'מחזור תשפ"ז',src:'',srcType:'',status:'unverified',checked:FT_D,note:'נגזר משני נתוני המוסדות שלא אומתו.'},
+ {id:'bagrut.2027',t:'מועדי בחינות הבגרות ב-2027',v:'לפי טיוטת לוח הבחינות של משרד החינוך',by:'משרד החינוך',scope:'חורף וקיץ 2027',src:'https://meyda.education.gov.il/files/Exams/LuachWinExams2027Tyota.pdf',srcType:'official',status:'unverified',checked:FT_D,note:'זו טיוטה שעשויה להשתנות. את הלוח הסופי בודקים באתר משרד החינוך.'},
+ {id:'md.six',t:'משך לימודי הרפואה אחרי התיכון',v:'6 שנים: 3 קדם-קליניות ו-3 קליניות',by:'אתרי האוניברסיטאות',src:'https://go.tau.ac.il/he/med/ba/med-doc',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'md.stage',t:'משך הסטאז\' ברפואה',v:'9 חודשים מספטמבר 2025 (במקום 12)',by:'משרד הבריאות',scope:'מספטמבר 2025',src:'https://www.gov.il/he/pages/27052025-01',srcType:'official',status:'unverified',checked:FT_D,note:'לפי הודעת משרד הבריאות מ-27.05.2025.'},
+ {id:'md.spec',t:'משך ההתמחות ברפואה',v:'4 עד 6 שנים לפי המקצוע',by:'ההסתדרות הרפואית ומשרד הבריאות',src:'https://www.gov.il/BlobFolder/reports/health-professions-manpower/he/files_publications_units_info_manpower2023.pdf',srcType:'official',status:'unverified',checked:FT_D,note:'הזמן בפועל ארוך יותר.'},
+ {id:'md.sub',t:'משך תת-התמחות ברפואה',v:'עוד 2 עד 3 שנים',by:'ההסתדרות הרפואית',src:'https://www.ima.org.il/internship/Specializations.aspx',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'md.mlag',t:'החלטת המל"ג על מועד הענקת תואר ה-M.D',v:'בנובמבר 2023: בסיום הלימודים האקדמיים, בלי שנת הסטאז\'',by:'מבקר המדינה',scope:'נובמבר 2023',src:'https://library.mevaker.gov.il/sites/DigitalLibrary/Documents/2024/2024.11-75A-PartB/2024.11-75A-PartB-601-Medical-Specialists.pdf',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'md.fouryear',t:'מוסדות עם תוכנית רפואה ארבע-שנתית',v:'תל אביב, בר-אילן, בן-גוריון, אריאל וגם רייכמן (תוכנית חדשה)',by:'מאגר המל"ג',src:'https://che.org.il/%D7%AA%D7%9B%D7%A0%D7%99%D7%95%D7%AA-%D7%9C%D7%99%D7%9E%D7%95%D7%93/',srcType:'official',status:'unverified',checked:FT_D,note:'הרשימה עלולה להשתנות מדי שנה.'},
+ {id:'md.haifa6',t:'תוכנית הרפואה השש-שנתית בחיפה',v:'נפתחה בתשפ"ו',by:'אוניברסיטת חיפה',scope:'תשפ"ו',src:'https://med.haifa.ac.il/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'dmd.huji80',t:'ממוצע נדרש להמשך לימודי רפואת שיניים בעברית',v:'ממוצע 80',by:'האוניברסיטה העברית',src:'https://en.studentsadmin.huji.ac.il/24%C2%A0doctor-medicine-md-and-doctor-dental-medicine-dmd',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'md.selection',t:'המיון האישי ברפואה אחרי סף הסכם',v:'עמידה בסף מזמינה לשלב המיון האישי, והיא לא אישור קבלה',src:'https://www.nite.org.il/other-tests/mor-mirkam/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'psychologist.ma',t:'דרישות לעבודה כפסיכולוג/ית',v:'תואר שני ורישום בפנקס הפסיכולוגים',by:'משרד הבריאות',src:'https://www.gov.il/he/pages/about-council-psychologists',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'psychologist.intern',t:'התמחות בפסיכולוגיה',v:'כשנתיים במשרה מלאה ובחינה מקצועית',by:'משרד הבריאות',src:'https://www.gov.il/BlobFolder/dynamiccollectorresultitem/professions-licensing-files-educational_psychology_internship_guidelines/he/subjects_medical-professions-licensing_files_educational-psychology-internship-guidelines.pdf',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'psychologist.fields',t:'תחומי המומחיות בפסיכולוגיה',v:'שישה תחומים מוכרים',by:'מועצת הפסיכולוגים',src:'https://www.gov.il/he/pages/about-council-psychologists',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'law.bar',t:'בחינת ההסמכה של לשכת עורכי הדין',v:'מטלת כתיבה, דין דיוני ודין מהותי',by:'לשכת עורכי הדין',src:'https://www.israelbar.org.il/',srcType:'official',status:'unverified',checked:FT_D,note:'מבנה הבחינה ומשך ההתמחות השתנו בשנים האחרונות.'},
+ {id:'cpa.intern',t:'התמחות ברואי חשבון',v:'24 חודשים',by:'מרכז המחקר של הכנסת',scope:'2017',src:'https://fs.knesset.gov.il/globaldocs/MMM/76b58a43-7514-e711-80ca-00155d020699/2_76b58a43-7514-e711-80ca-00155d020699_11_8365.pdf',srcType:'official',status:'unverified',checked:FT_D,note:'הנתון ממסמך משנת 2017, ולכן ייתכן שהשתנה.'},
+ {id:'teacher.stage',t:'שנת ההתמחות בהוראה',v:'בהיקף של שליש משרה לפחות ועם חונך/ת',by:'מרכז המחקר של הכנסת',scope:'2017',src:'https://fs.knesset.gov.il/globaldocs/MMM/76b58a43-7514-e711-80ca-00155d020699/2_76b58a43-7514-e711-80ca-00155d020699_11_8365.pdf',srcType:'official',status:'unverified',checked:FT_D,note:'הנתון ממסמך משנת 2017, ולכן ייתכן שהשתנה.'},
+ {id:'engineers.registry',t:'רישום מהנדסים ואדריכלים',v:'בפנקס המהנדסים והאדריכלים של המדינה',src:'https://www.gov.il/he/pages/regulated_professions',srcType:'official',status:'unverified',checked:FT_D,note:'לא אומת איזה משרד אחראי כיום.'},
+ {id:'nurse.exam',t:'בחינת הרישוי בסיעוד',v:'חובה גם לבוגרי ישראל',by:'משרד הבריאות',src:'https://www1.health.gov.il/nursing/study/licensing-exams/exams-faqs/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'pharmacy.stage',t:'סטאז\' ברוקחות',v:'חלק מהלימודים: ששת החודשים האחרונים',by:'מרכז המחקר של הכנסת',scope:'2017',src:'https://fs.knesset.gov.il/globaldocs/MMM/76b58a43-7514-e711-80ca-00155d020699/2_76b58a43-7514-e711-80ca-00155d020699_11_8365.pdf',srcType:'official',status:'unverified',checked:FT_D,note:'הנתון ממסמך משנת 2017, ולכן ייתכן שהשתנה.'},
+ {id:'mahat.basic',t:'תנאי קבלה בסיסיים ללימודי הנדסאים',v:'ציון עובר ב-3 יח"ל מתמטיקה, 3 יח"ל אנגלית ו-2 יח"ל עברית',by:'עבודאטה',src:'',srcType:'',status:'unverified',checked:FT_D,note:'לפי עבודאטה (משרד העבודה). לכל מכללה תנאים משלה.'},
+ {id:'mahat.duration',t:'משך לימודי הנדסאים',v:'בדרך כלל שנתיים בלימודי יום',src:'',srcType:'',status:'unverified',checked:FT_D},
+ {id:'bonus.generic',t:'בונוס על מקצועות ברמה גבוהה',v:'מקצועות ב-4 וב-5 יח"ל מוסיפים בונוס, וגובהו נקבע בכל מוסד',scope:'תשפ"ז',src:'',srcType:'',status:'unverified',checked:FT_D},
+ {id:'cs.math4',t:'מתמטיקה במדעי המחשב',v:'נדרשת בדרך כלל לפחות ב-4 יח"ל',scope:'תשפ"ז',src:'',srcType:'',status:'unverified',checked:FT_D},
+ {id:'openu.open',t:'ההרשמה לאוניברסיטה הפתוחה',v:'פתוחה לכולם, בלי בגרות ובלי פסיכומטרי',by:'האוניברסיטה הפתוחה',src:'https://academic.openu.ac.il/yedion/pages/studies-general.aspx',srcType:'official',status:'verified',checked:FT_D,note:'בחלק מהקורסים יש תנאי קדם. שני המקורות הם של אותו מוסד.'},
+ {id:'openu.semester',t:'התחלת לימודים בפתוחה',v:'אפשר להירשם בכל סמסטר (הרשמה מאוחרת בתשלום נוסף)',by:'האוניברסיטה הפתוחה',src:'https://www.openu.ac.il/haredim/pages/academic_studies.aspx',srcType:'official',status:'unverified',checked:FT_D,note:'ממקור אחד, עמוד לציבור החרדי.'},
+ {id:'openu.transfer',t:'המעבר מהפתוחה למוסדות אחרים',v:'תלוי בתנאי המוסד, ובמסלולי המעבר של הפתוחה נדרשת בדרך כלל זכאות לבגרות',by:'האוניברסיטה הפתוחה',src:'https://www.openu.ac.il/transfertrack/pages/faq.aspx',srcType:'official',status:'unverified',checked:FT_D,note:'ממקור אחד, עמוד השאלות הנפוצות של "אפיקי מעבר".'},
+ {id:'age30',t:'מסלול קבלה לבני 30 ומעלה בלי בגרות',v:'בחלק מהמוסדות, בדרך כלל דרך מכינה או קורסי הכנה',by:'המל"ג',src:'https://che.org.il/decision/%D7%A7%D7%91%D7%9C%D7%AA-%D7%A1%D7%98%D7%95%D7%93%D7%A0%D7%98%D7%99%D7%9D-%D7%9E%D7%A2%D7%9C-%D7%92%D7%99%D7%9C-%D7%A9%D7%9C%D7%95%D7%A9%D7%99%D7%9D-%D7%9C%D7%9C%D7%90-%D7%AA%D7%A2%D7%95%D7%93%D7%AA-2/',srcType:'official',status:'verified',checked:FT_D,note:'התנאים שונים בכל מוסד ולא אומתו עבור תשפ"ז.'},
+ {id:'mod.prep',t:'מימון מכינה קדם-אקדמית למשוחררי צה"ל',v:'בדרך כלל עד 5 שנים מהשחרור ובכפוף לתנאים',by:'כל זכות ומשרד הביטחון',src:'https://www.kolzchut.org.il/he/%D7%A1%D7%99%D7%95%D7%A2_%D7%91%D7%9E%D7%99%D7%9E%D7%95%D7%9F_%D7%9C%D7%99%D7%9E%D7%95%D7%93%D7%99%D7%9D_%D7%91%D7%9E%D7%9B%D7%99%D7%A0%D7%95%D7%AA_%D7%A7%D7%93%D7%9D-%D7%90%D7%A7%D7%93%D7%9E%D7%99%D7%95%D7%AA_%D7%9C%D7%97%D7%99%D7%99%D7%9C%D7%99%D7%9D_%D7%9E%D7%A9%D7%95%D7%97%D7%A8%D7%A8%D7%99%D7%9D_%D7%95%D7%9E%D7%A1%D7%99%D7%99%D7%9E%D7%99_%D7%A9%D7%99%D7%A8%D7%95%D7%AA_%D7%9C%D7%90%D7%95%D7%9E%D7%99-%D7%90%D7%96%D7%A8%D7%97%D7%99',srcType:'official',status:'verified',checked:FT_D,note:'לחלק מהקבוצות, כמו חיילים בודדים, החלון ארוך יותר. הסכום והתנאים משתנים.'},
+ {id:'foreign.cert',t:'תעודת בגרות מחו"ל',v:'נדרש בדרך כלל אישור שקילות',src:'https://admissions.technion.ac.il/?p=894',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'foreign.degree',t:'הכרה בתארים מחו"ל',v:'גוף ממשלתי ייעודי להערכת תארים אקדמיים מחו"ל',src:'',srcType:'',status:'unverified',checked:FT_D},
+ {id:'digital.cert',t:'גיליון ציונים דיגיטלי',v:'מופק בשירות ב-gov.il',by:'gov.il',src:'https://www.gov.il/he/service/production-matriculation-certificate-and-grades',srcType:'official',status:'unverified',checked:FT_D,note:'לא אומת אם יש תשלום.'},
+ {id:'tuition.uniform',t:'שכר הלימוד לתואר ראשון במוסדות מתוקצבים',v:'נקבע במסגרת כללים אחידים',src:'',srcType:'',status:'unverified',checked:FT_D},
+ {id:'rights.reserve',t:'זכויות סטודנטים משרתי מילואים',v:'נקודות זכות אקדמיות, ולפי המוסד התאמות ומועדים מיוחדים',by:'כל זכות',src:'https://www.kolzchut.org.il/he/%D7%A0%D7%A7%D7%95%D7%93%D7%95%D7%AA_%D7%96%D7%9B%D7%95%D7%AA_%D7%90%D7%A7%D7%93%D7%9E%D7%99%D7%95%D7%AA_%D7%9C%D7%A1%D7%98%D7%95%D7%93%D7%A0%D7%98_%D7%91%D7%92%D7%99%D7%9F_%D7%A9%D7%99%D7%A8%D7%95%D7%AA_%D7%9E%D7%99%D7%9C%D7%95%D7%90%D7%99%D7%9D',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'deposit',t:'פיקדון אישי של חייל משוחרר',v:'ניתן לממש בתנאים מסוימים',by:'משרד הביטחון',src:'https://www.hachvana.mod.gov.il/MainEducation/TwelveYearsStudies/Pages/PreAcademic.aspx',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'discharged.funding',t:'מימון לימודים ללוחמים ולמשוחררים',v:'לפי סוג השירות ומקום המגורים',src:'',srcType:'',status:'unverified',checked:FT_D},
+ {id:'transport',t:'הנחה לסטודנטים בתחבורה ציבורית',v:'בכרטיס רב-קו עם פרופיל "סטודנט"',src:'',srcType:'',status:'unverified',checked:FT_D},
+ {id:'parach',t:'מלגה בתוכנית פר"ח',v:'מלגה בתמורה להתנדבות',src:'',srcType:'',status:'unverified',checked:FT_D},
+ {id:'studentlaw',t:'חוק זכויות הסטודנט',v:'התאמות לסטודנטים הורים ולסטודנטיות בהריון',src:'',srcType:'',status:'unverified',checked:FT_D},
+ {id:'bonus.tau',t:'בונוסים בבגרות בתל אביב',v:'מתמטיקה: 5 יח"ל 35, 4 יח"ל 12.5',by:'אוניברסיטת תל אביב',scope:'תשפ"ז',src:'https://go.tau.ac.il/he/ba/how-to-calculate',srcType:'official',status:'unverified',checked:FT_D,note:'לפי כללי האוניברסיטה כפי שנאספו, ולא אומת מחדש.'},
+ {id:'bonus.huji',t:'בונוסים בבגרות בעברית',v:'מתמטיקה 5 יח"ל 35; מקצועות ברשימה 5 יח"ל 25 ו-4 יח"ל 15',by:'האוניברסיטה העברית',scope:'תשפ"ז',src:'https://info.huji.ac.il/reception-components/Bagrut',srcType:'official',status:'unverified',checked:FT_D,note:'כפי שנאסף, ולא אומת מחדש.'},
+ {id:'bonus.bgu',t:'בונוסים בבגרות בבן-גוריון',v:'מתמטיקה 35 ו-20, אנגלית 25 ו-15',by:'אוניברסיטת בן-גוריון',scope:'ידיעון תשפ"ה',src:'https://www.bgu.ac.il/media/113nb2rb/%D7%90-%D7%9E%D7%91%D7%95%D7%90-%D7%AA%D7%95%D7%90%D7%A8-%D7%A8%D7%90%D7%A9%D7%95%D7%9F-%D7%AA%D7%A9%D7%A4%D7%94-10012024.pdf',srcType:'official',status:'unverified',checked:FT_D,note:'מבוסס על ידיעון תשפ"ה, המהדורה האחרונה שנמצאה. ייתכן שהשתנה.'},
+ {id:'bonus.haifa',t:'בונוסים בבגרות בחיפה',v:'מתמטיקה 35 ו-20; מקצועות נבחרים 25 ו-20',by:'אוניברסיטת חיפה',scope:'תשפ"ז',src:'https://www.haifa.ac.il/%D7%97%D7%99%D7%A9%D7%95%D7%91-%D7%A6%D7%99%D7%95%D7%9F-%D7%A7%D7%91%D7%9C%D7%94-%D7%A1%D7%9B%D7%9D/',srcType:'official',status:'unverified',checked:FT_D,note:'לפי הטבלה שפורסמה באתר האוניברסיטה כפי שנאספה, ולא אומתה מחדש.'},
+ {id:'bonus.technion',t:'בונוסים בבגרות בטכניון',v:'מתמטיקה 5 יח"ל 30; מדעים 25 עד 30 לפי תנאים',by:'הטכניון',scope:'תשפ"ז',src:'https://admissions.technion.ac.il/calculation-of-the-median-grade/',srcType:'official',status:'unverified',checked:FT_D,note:'הטבלה נאספה מאתר הטכניון ולא אומתה מחדש.'},
+ {id:'bonus.technion4',t:'בונוס ל-4 יח"ל בטכניון',v:'לא פורסם בונוס ל-4 יח"ל במקצועות הליבה',by:'הטכניון',scope:'תשפ"ז',src:'https://admissions.technion.ac.il/calculation-of-the-median-grade/',srcType:'official',status:'unverified',checked:FT_D,note:'טענה שלילית ("לא פורסם") שקשה להוכיח. לא אומתה מחדש.'},
+ {id:'bonus.min60',t:'ציון מינימלי לקבלת בונוס',v:'60 ומעלה (בבן-גוריון: מעל 60)',src:'https://www.study.co.il/ממוצע-בגרות/',srcType:'secondary',status:'unverified',checked:FT_D},
+ {id:'avg.min20',t:'מספר היחידות הנדרש לחישוב ממוצע',v:'לפחות 20 יחידות לימוד',by:'כלל החישוב של האתר',src:'',srcType:'',status:'unverified',checked:FT_D,note:'כלל החישוב של האתר, ולא כלל רשמי שנבדק מול כל מוסד.'},
+ {id:'calc.rules',t:'מקור כללי חישוב הממוצע',v:'הכללים שכל אוניברסיטה פרסמה, חלקם ממהדורות קודמות',src:'',srcType:'',status:'unverified',checked:FT_D},
+ {id:'sechem.tau',t:'נוסחת ציון ההתאמה בתל אביב',v:'תקרת ממוצע 117',by:'אוניברסיטת תל אביב',scope:'תשפ"ז',src:'https://go.tau.ac.il/he/ba/how-to-calculate',srcType:'official',status:'unverified',checked:FT_D,note:'נבדקה מול המחשבון הרשמי של האוניברסיטה לפי הערת הקוד. לא ניתן היה לאמת זאת כאן.'},
+ {id:'sechem.technion',t:'נוסחת הסכם בטכניון',v:'0.5 × ממוצע בגרות (עד 119) + 0.075 × פסיכומטרי − 19',by:'הטכניון',scope:'תשפ"ז',src:'https://www.study.co.il/תנאי-קבלה-הטכניון/',srcType:'secondary',status:'unverified',checked:FT_D,note:'סיכום משני אחד תואם את הנוסחה. התקרה 119 לא נמצאה.'},
+ {id:'sechem.huji',t:'נוסחת הסכם באוניברסיטה העברית',v:'שקלול 50/50 ו-30/70',by:'האוניברסיטה העברית',scope:'תשפ"ז',src:'https://info.huji.ac.il/reception-components/Bagrut',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'sechem.bgu',t:'נוסחת הסכם בבן-גוריון',v:'5.9 × ממוצע (עד 120) + 0.62 × פסיכומטרי − 330',by:'אוניברסיטת בן-גוריון',scope:'ידיעון תשפ"ה',src:'https://www.bgu.ac.il/media/113nb2rb/%D7%90-%D7%9E%D7%91%D7%95%D7%90-%D7%AA%D7%95%D7%90%D7%A8-%D7%A8%D7%90%D7%A9%D7%95%D7%9F-%D7%AA%D7%A9%D7%A4%D7%94-10012024.pdf',srcType:'official',status:'unverified',checked:FT_D,note:'מבוסס על ידיעון תשפ"ה, המהדורה האחרונה שנמצאה. ייתכן שהשתנה.'},
+ {id:'sechem.haifa',t:'יחסי הסכם באוניברסיטת חיפה',v:'בגרות:פסיכומטרי 1:2 בהרוח, 1:3 בחברה, 3:7 במשפטים',by:'אוניברסיטת חיפה',scope:'תשפ"ז',src:'https://www.haifa.ac.il/%D7%97%D7%99%D7%A9%D7%95%D7%91-%D7%A6%D7%99%D7%95%D7%9F-%D7%A7%D7%91%D7%9C%D7%94-%D7%A1%D7%9B%D7%9D/',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'tau.reali',t:'תוספת 10 נקודות בתל אביב',v:'5 יח"ל מתמטיקה ו-5 יח"ל פיזיקה (ציון 55 לפחות), בהנדסה ובמדעים מדויקים',by:'אוניברסיטת תל אביב',scope:'תשפ"ז',src:'https://go.tau.ac.il/he/ba/how-to-calculate',srcType:'official',status:'unverified',checked:FT_D},
+ {id:'avodata.bagrut',t:'ממוצע בגרות של המתקבלים (עבודאטה)',v:'ממוצע משוקלל שיכול לעלות על 100',by:'עבודאטה',src:'https://avodata.labor.gov.il',srcType:'official',status:'unverified',checked:FT_D,note:'ייתכן שהוא כולל בונוסים. שיטת החישוב של עבודאטה לא אומתה.'},
+ {id:'cycle.thr',t:'מחזור ספי הקבלה שמוצגים באתר',v:'תשפ"ז (לימודים מאוקטובר 2026)',scope:'תשפ"ז',src:'https://www.kan.org.il/content/kan-news/local/999187/',srcType:'secondary',status:'unverified',checked:FT_D,note:'ספי תשפ"ח עדיין לא נאספו.'}
+];
+const FACTM=new Map(FACTS.map(f=>[f.id,f])), FT_IC={verified:'✓',unverified:'?',conflict:'!'};
+const factGet=id=>FACTM.get(id)||null;
+/* the value as the text should show it. raw=true gives the stored value. A number we could not confirm is replaced by where to look */
+function fact(id,raw){const f=factGet(id);if(!f)return '';if(raw)return f.v;if(f.hide)return f.alt||'לפי האתר הרשמי';
+  return (typeof f.v==='number'?fmt(f.v):f.v)+(f.unit?' '+f.unit:'')}
+const factLabel=f=>f.status==='verified'?`הוצלב מול ${f.by||'מקור רשמי'} · ${dLong(f.checked)}`:f.status==='conflict'?'מקורות סותרים, בדקו באתר':'לא אומת, בדקו באתר';
+/* the small badge: icon + words (never color alone). o.lg = a stand-alone row (40px tall); o.static = no button (inside a sheet that must stay open); o.pre = a prefix */
+function factChip(id,o){o=o||{};const f=factGet(id);if(!f)return '';
+  const lbl=(o.pre?o.pre+': ':'')+factLabel(f),cl=`ft-chip ${f.status}${o.lg?' lg':''}`,inner=`<span class="ft-i" aria-hidden="true">${FT_IC[f.status]}</span><span>${esc(lbl)}</span>`;
+  return o.static?`<span class="${cl}">${inner}</span>`:`<button type="button" class="${cl}" data-ftc="${esc(id)}" aria-haspopup="dialog" aria-label="${esc(lbl)}. פרטים ודיווח על טעות">${inner}</button>`}
+const factRow=(ids,o)=>`<div class="ft-row">${ids.map(i=>factChip(i,{lg:1,...o})).join('')}</div>`;
+/* the same text for a sentence that carries several facts: the weakest status wins */
+const factWorst=ids=>ids.map(factGet).filter(Boolean).reduce((w,f)=>({conflict:3,unverified:2,verified:1}[f.status]>({conflict:3,unverified:2,verified:1}[w]||0)?f.status:w),'verified');
+const httpUrl=u=>{try{const x=new URL(String(u));return /^https?:$/.test(x.protocol)?x.href:''}catch(e){return ''}};
+/* plain-text version for the forum answers (they are escaped text, not HTML): the chip's words in brackets */
+const factTxt=id=>{const f=factGet(id);return f?` (${factLabel(f)})`:''};
+
+/* ---- "מצאתי טעות": a sheet with a report text that is ready to copy ---- */
+function reportText(o){return ['דיווח על טעות באתר "כיוון"','',`מה: ${o.what}`,o.val?`מה כתוב באתר: ${o.val}`:'',`איפה: ${location.hash||'#'} (דף באתר)`,o.src?`מקור שמוצג באתר: ${o.src}`:'',o.st?`מצב האימות באתר: ${o.st}`:'','','מה לדעתי הנכון, ומה המקור (קישור):',''].filter((x,i,a)=>x!==''||a[i-1]!=='').join('\n')}
+function reportHTML(o){const mail=/^[^\s@<>"']+@[^\s@<>"']+$/.test(CONTACT_EMAIL);
+  return `<div class="ft-rep"><h3>מצאתי טעות</h3><p class="s">מצאת טעות? ספרו לנו. כל דיווח נבדק. הנוסח מוכן, אפשר להשלים בו מה הנכון ואיפה ראיתי.</p>
+    <label class="sr" for="ftRep">נוסח הדיווח</label><textarea id="ftRep" class="ft-ta" rows="9" dir="rtl">${esc(reportText(o))}</textarea>
+    <div class="kp-btns"><button type="button" class="btn primary sm" data-ftcopy>העתקת הדיווח</button>${mail?`<a class="btn soft sm" id="ftMail" href="mailto:${esc(CONTACT_EMAIL)}">שליחה במייל</a>`:''}</div>
+    ${mail?'':'<p class="fine">כרגע אין באתר כתובת קבועה לדיווחים. מעתיקים את הנוסח ושולחים אותו למי שמתחזק את האתר.</p>'}</div>`}
+function openReport(o){return openOv(`<h2>מצאתי טעות</h2><p class="s">${esc(o.what)}</p>${reportHTML(o)}`,'wide')}
+const FT_EX={verified:'נבדק בחיפוש מול שני מקורות לפחות, ואחד מהם רשמי. זו לא קריאה ישירה של העמוד הרשמי, ולכן לפני החלטה חשובה בודקים גם באתר הגוף המפרסם.',
+  unverified:'לא מצאנו אישור לנתון הזה. זה לא אומר שהוא שגוי, אלא שהוא טרם אומת. בודקים אותו באתר הגוף הרשמי.',
+  conflict:'מקורות שבדקנו סותרים זה את זה, ולכן אנחנו לא קובעים מה נכון. בודקים באתר הגוף הרשמי.'};
+function openFact(id){const f=factGet(id);if(!f)return;const u=httpUrl(f.src),shown=fact(id);
+  return openOv(`<h2>על הנתון הזה</h2><p class="s">${esc(f.t)}</p>
+    <div class="ft-card"><p class="ft-val"><b>${esc(shown)}</b>${f.scope?` <span>(${esc(f.scope)})</span>`:''}</p><p>${factChip(id,{static:1})}</p><p>${esc(FT_EX[f.status])}</p>${f.note?`<p>${esc(f.note)}</p>`:''}
+      <p class="fine">${u?`המקור שמצאנו: <a href="${esc(u)}" target="_blank" rel="noopener">${esc(f.by||siteHost(u))}</a> (${f.srcType==='official'?'אתר רשמי':'מקור משני'}). `:'לא נמצא קישור למקור. '}נבדק לאחרונה ב-${esc(dLong(f.checked))}.</p></div>
+    ${reportHTML({what:f.t,val:f.hide?'הסכום לא מוצג באתר':shown+(f.scope?` (${f.scope})`:''),src:u,st:factLabel(f)})}`,'wide')}
+document.addEventListener('click',e=>{
+  const c=e.target.closest('[data-ftc]');if(c){e.preventDefault();openFact(c.dataset.ftc);return}
+  const r=e.target.closest('[data-ftr]');if(r){e.preventDefault();const [k,a,b]=r.dataset.ftr.split('|');
+    if(k==='thr'&&INST[a]&&BY[b]){const T=THR[a]||{};openReport({what:`טבלת ספי הקבלה: ${BY[b].n}, ${INST[a].n}`,val:`מחזור ${T.year||''}`,src:httpUrl(T.src),st:'נאסף מאתר המוסד, לא אומת מחדש'})}
+    else if(k==='tier'&&BY[a]){const t=degTier(BY[a]);openReport({what:`כיסוי נתוני הקבלה: ${BY[a].n}`,val:TIER_L[t],st:'מחושב מהמאגר'})}
+    return}
+  const cp=e.target.closest('[data-ftcopy]');if(cp){const ta=$('#ftRep');if(!ta)return;const txt=ta.value;
+    (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast('הדיווח הועתק. אפשר להדביק ולשלוח'),()=>{
+      ta.focus();ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(x){}toast(ok?'הדיווח הועתק. אפשר להדביק ולשלוח':'ההעתקה לא הצליחה, אפשר לסמן ולהעתיק ידנית')});return}
+  const ml=e.target.closest('#ftMail');if(ml){const ta=$('#ftRep');ml.href='mailto:'+encodeURI(CONTACT_EMAIL)+'?subject='+encodeURIComponent('דיווח על טעות באתר כיוון')+'&body='+encodeURIComponent(ta?ta.value:'')}
+});
+
+/* ---- which cycle the published thresholds belong to, and what that means for me ---- */
+const cyY=y=>+(Object.keys(HY).find(k=>String(y).includes(HY[k]))||0); /* 'חורף תשפ"ז' -> 2026 (the year those studies start) */
+function cycleNote(iid){
+  const ys=(iid?[(THR[iid]||{}).year]:Object.values(THR).map(t=>t.year)).map(cyY).filter(Boolean);if(!ys.length)return '';
+  const cy=Math.max(...ys),lab=HY[cy],s=startY(),est=!s||s>cy;
+  return `<p class="cite ft-cy">${est?`זו הערכה לפי ספי ${esc(lab)} (לימודים מאוקטובר ${cy}), המחזור האחרון שפורסם. ${s?`התכנון הוא להתחיל ב-${s}, ו`:''}ספי המחזור הבא טרם פורסמו, ולכן בודקים באתר המוסד לפני הגשה.`:`אלה ספי ${esc(lab)}, המחזור הנוכחי שפורסם. הם יכולים להשתנות עד סוף ההרשמה, ולכן בודקים באתר המוסד לפני הגשה.`}</p>`}
+const cycleTxt=iid=>cycleNote(iid).replace(/<[^>]+>/g,'');
+
+/* ---- data coverage tiers, computed from DATA on the fly (nothing is stored) ---- */
+const TIER_L={num:'סף מספרי',txt:'תנאי קבלה בטקסט',none:'אין נתון במאגר',open:'פתוח לכולם'};
+const TIER_IC={num:'●',txt:'◐',none:'○',open:'●'};
+const rowNum=r=>r.v!=null||r.minP!=null||r.bag!=null;
+/* one offer: 'num' official numeric row, 'txt' program text (or a table row without a number), 'gen' only the institution's general text, 'none', 'open' */
+function offerTier(d,i){if(i==='open')return 'open';const R=(d.th||{})[i];
+  if(R&&R.some(rowNum))return 'num';if(R&&R.length)return 'txt';
+  if((progLines(i,d)||[]).length)return 'txt';return (DATA.adm||{})[i]?'gen':'none'}
+const TIERC=new Map();
+function degTier(d){let t=TIERC.get(d.id);if(t)return t;const T=d.of.map(o=>offerTier(d,o.i));
+  t=T.includes('num')?'num':T.includes('txt')?'txt':T.includes('gen')?'gen':T.includes('open')?'open':'none';TIERC.set(d.id,t);return t}
+/* what to show: 'gen' (only general institution text) counts as no data for the program itself */
+const tierKey=t=>t==='gen'?'none':t;
+const tierTag=d=>{const k=tierKey(degTier(d));return `<span class="tag ft-t ${k}" title="${esc(k==='none'?'עדיין אין לנו סף מפורסם לתוכנית הזו':TIER_L[k])}"><i aria-hidden="true">${TIER_IC[k]}</i>${TIER_L[k]}</span>`};
+/* the institution's page: its site, or the CHE page when the institution has no site of its own */
+const instUrl=i=>(INST[i]&&(INST[i].site||INST[i].che))||'';
+const instUrlLbl=i=>INST[i]&&INST[i].site?'אתר המוסד':'דף המוסד במל"ג';
+/* provenance of the bonus table and of the sechem formula per university (UNI_RULES / SECHEM are hand-collected) */
+const BONF={tau:'bonus.tau',huji:'bonus.huji',bgu:'bonus.bgu',haifa:'bonus.haifa',technion:'bonus.technion'}, SECHF={tau:'sechem.tau',huji:'sechem.huji',bgu:'sechem.bgu',haifa:'sechem.haifa',technion:'sechem.technion'};
+const bonChip=i=>BONF[i]?factChip(BONF[i]):'', secChip=i=>SECHF[i]?factChip(SECHF[i]):'';
+function covStats(){
+  const c={num:0,txt:0,none:0,open:0,gen:0,total:DEG.length,offers:0,collOffers:0,collInst:new Set(),teachNone:0};
+  DEG.forEach(d=>{const t=degTier(d);c[t]++;c.offers+=d.of.length;d.of.forEach(o=>{if(INST[o.i].k==='c'){c.collOffers++;c.collInst.add(o.i)}});if(d.c==='teach'&&tierKey(t)==='none')c.teachNone++});
+  c.noData=c.none+c.gen+c.open;return c}
+
 /* ================= "המסלול שלי" v4: a personal plan from where I am to the first day of studies =================
    One target (a degree at an institution). The plan is generated from: where I am (grade or service), when I want to start,
    the target's official admission data (thresholds with formulas, published conditions, averages of those admitted)
@@ -4774,7 +4991,7 @@ function ctx(){
 /* the numbers side of "what is needed", as a checklist of what I have and what I do not */
 function reqItems(X){
   const {d,I,q,V,prof,rows,P}=X,it=[],my=u=>rows.find(r=>r.k===u.k);
-  if(q.open){it.push({s:'yes',t:'ההרשמה פתוחה לכולם',d:'באוניברסיטה הפתוחה אין תנאי קבלה: לא בגרות ולא פסיכומטרי. אפשר להתחיל כבר עכשיו, ולצבור נקודות זכות גם לפני שמגיעים לתואר אחר.',src:NEED_SRC.openu,sl:'ידיעון האוניברסיטה הפתוחה'});return it}
+  if(q.open){it.push({s:'yes',t:'ההרשמה פתוחה לכולם',d:'באוניברסיטה הפתוחה אין תנאי קבלה: לא בגרות ולא פסיכומטרי. אפשר להתחיל כבר עכשיו, ולצבור נקודות זכות גם לפני שמגיעים לתואר אחר.',f:'openu.open',src:NEED_SRC.openu,sl:'ידיעון האוניברסיטה הפתוחה'});return it}
   it.push({s:!prof.bag?'na':BAG_EQUIV(prof)?'yes':'no',t:'תעודת בגרות מלאה',d:BAG_EQUIV(prof)?'יש לי את התעודה שרוב המוסדות דורשים.':'רוב המסלולים דורשים בגרות מלאה. מי שאין לו, בודק מכינה קדם-אקדמית או השלמת בגרות.'});
   if(q.tier===1){const r=V.row;
     it.push({s:V.ok===true?'yes':V.ok===false?'no':'na',t:`סף קבלה: ${fmt(V.thr,V.thr%1?2:0)} ב${V.scale}`,
@@ -4792,12 +5009,12 @@ function reqItems(X){
   else it.push({s:'na',t:'לא פורסם סף קבלה מספרי',d:'המוסד לא פרסם סף שאפשר לחשב ממנו. מציגים את ממוצע המתקבלים בעבר, שהוא סימן ולא תנאי.'});
   q.units.forEach(u=>{const m=my(u);it.push({s:!rows.length?'na':m&&m.u>=u.u&&(!u.g||m.g>=u.g)?'yes':'no',t:`${SN[u.k]}: ${u.u} יח"ל${u.g?` בציון ${u.g} ומעלה`:''}`,d:u.l})});
   const eng=engLevel(V);
-  it.push({s:X.M.eng?'yes':'na',t:`אנגלית${eng?': רמת '+eng:''}`,d:'לפי מאל"ו, רמת האנגלית נבדקת באמירנט, והיא חובה לקבלה אלא אם נקבע אחרת בנוהלי התוכנית.',src:NITE.amir,sl:'מאל"ו: אמירנט'});
+  it.push({s:X.M.eng?'yes':'na',t:`אנגלית${eng?': רמת '+eng:''}`,d:'מדצמבר 2026 רמת האנגלית נבדקת באמירנט ולא בפסיכומטרי. כל מוסד קובע אם הציון נדרש לקבלה, ולכן בודקים בתנאי הקבלה של התוכנית.',f:'amir.mandatory',src:NITE.amir,sl:'מאל"ו: אמירנט'});
   if(q.fl.yael||(prof.heb&&prof.heb!=='he'))it.push({s:'na',t:'בחינת ידע בעברית (יע"ל)',d:'נדרשת בדרך כלל ממי שלא למד בעברית. הציון הנדרש משתנה בין המוסדות.',src:NITE.yael,sl:'מאל"ו: יעלנט'});
   if(q.fl.iv)it.push({s:'na',t:'ראיון',d:'בתוכנית הזאת מופיע ראיון בתנאי הקבלה. הפרטים אצל המוסד.'});
   if(q.fl.test)it.push({s:'na',t:'מבחן קבלה או מיון',d:'בתוכנית הזאת מופיע מבחן או שלב מיון בתנאי הקבלה.'});
   if(q.fl.port)it.push({s:'na',t:'תיק עבודות',d:'נדרש תיק עבודות. כדאי להתחיל להכין אותו הרבה לפני ההרשמה.'});
-  if(q.fl.mor||X.fam==='med')it.push({s:'na',t:'שלב מיון אישי: מו"ר ומרק"ם',d:'ברפואה יש מיון אישי אחרי הציונים. הזימון מגיע ממאל"ו לפי רשימות שהמוסדות מעבירים.',src:NITE.mor,sl:'מאל"ו: מו"ר ומרק"ם'});
+  if(q.fl.mor||X.fam==='med')it.push({s:'na',t:'שלב מיון אישי: מו"ר ומרק"ם',d:'ברפואה יש מיון אישי אחרי הציונים. הזימון מגיע ממאל"ו לפי רשימות שהמוסדות מעבירים.',f:'mor.invite',src:NITE.mor,sl:'מאל"ו: מו"ר ומרק"ם'});
   if(q.fl.noPsy)it.push({s:'na',t:'אפשרות לקבלה בלי פסיכומטרי',d:'באחד המסלולים שפורסמו מופיע מסלול בגרות בלבד.'});
   if(q.bench){const b=q.bench;it.push({s:'na',t:`ממוצע המתקבלים בעבר${b.inst?'':' בתחום'}: ${[b.p?'פסיכומטרי '+fmt(b.p):'',b.b?'בגרות '+b.b:''].filter(Boolean).join(', ')}`,d:'זה ממוצע של מי שהתקבלו ולא סף, ולכן יש מי שהתקבלו עם ציונים נמוכים ממנו (עבודאטה).',src:AVURL+'/Academic/'+d.av,sl:'עבודאטה, משרד העבודה'})}
   return it}
@@ -4814,7 +5031,7 @@ function famTip(X){
     teach:'בהוראה ובחינוך לעיתים מוסיפים לציונים גם ראיון או התרשמות אישית. ניסיון בהדרכה או בהתנדבות עם ילדים ונוער יכול לעזור.',
     biz:'בכלכלה ובניהול רמת המתמטיקה בבגרות קובעת לא פעם אם מתקבלים ישירות או דרך קורס הכנה.',
     science:'במדעים כדאי להסתכל על הרכב הבגרות: מתמטיקה ומקצועות מדעיים ברמה גבוהה מוסיפים בונוס ומקלים על הלימודים.'}[X.fam];
-  return T?`<p class="kp-tip">${T}</p>`:''}
+  return T?`<p class="kp-tip">${T}${{med:'reg.med',dent:'reg.huji.med',cs:'cs.math4'}[X.fam]?factChip({med:'reg.med',dent:'reg.huji.med',cs:'cs.math4'}[X.fam]):''}</p>`:''}
 function summaryText(pl){
   const X=pl.X,s=pl.stand,sc=X.sc,L=['המסלול שלי ב"כיוון"',`יעד: ${X.d.n} ${bIn(X.I.n)}`,`איפה אני: ${s.h}. ${s.s}`,
     `פסיכומטרי: ${sc.p?sc.p+(S.sc&&S.sc.estP?' (צפוי)':''):'עוד אין'} · ממוצע בגרות: ${sc.b?fmt(sc.b,1)+(S.sc&&S.sc.est?' (צפוי)':''):'עוד אין'}`];
@@ -4871,68 +5088,68 @@ function plan(){
   add(Z.now,{id:'numbers',nm:1,ic:'chart',t:X.real?'הציונים שלי במערכת':'להזין את הציונים שלי (גם צפויים)',s:X.real?([X.sc.p?`פסיכומטרי ${X.sc.p}${X.sc.estP?' (צפוי)':''}`:'',X.sc.b?`ממוצע בגרות ${fmt(X.sc.b,2)}${S.sc&&S.sc.est?' (צפוי)':''}`:''].filter(Boolean).join(', ')||'ציוני בגרות שהזנתי'):'בלי מספרים אי אפשר לדעת כמה חסר',done:X.real,
     body:()=>`<p>${X.real?'המספרים שלי שמורים בפרופיל. קיבלתי ציון חדש, או שיפרתי בגרות? מעדכנים אותם בלשונית "כמה חסר לי?", ושם נשמרים בפרופיל והמסלול כולו מתעדכן.':'אין חובה להכיר את הציונים כבר עכשיו: אפשר להתחיל מהערכה או מציונים צפויים, ולראות מה צריך כדי להתקבל. כשיהיו ציונים אמיתיים, מעדכנים.'}</p>${BTNS([KB('data-kgo="lab"',X.real?'לעדכון הציונים':'להזנת הציונים','primary'),KB('data-go="calc"','מחשבון ממוצע בגרות'),KB('data-prof','הפרופיל שלי')])}`});
   add(Z.now,{id:'know',ic:'doc',t:'להבין מה נדרש כדי להתקבל',s:q.tier===0?'אין תנאי קבלה':q.tier===1?`סף רשמי: ${fmt(V.thr,V.thr%1?2:0)} ב${V.scale}`:q.tier===2?'דרכי קבלה שפורסמו':'לא פורסם סף מספרי',
-    body:()=>`${reqHTML(X)}${famTip(X)}${BTNS([KB('data-kgo="lab"','לבדוק כמה חסר לי','primary'),q.srcs[0]?KA(q.srcs[0],'תנאי הקבלה באתר המוסד'):'',q.th&&q.th.calc?KA(q.th.calc,'המחשבון הרשמי של המוסד'):''].filter(Boolean))}`});
+    body:()=>`${reqHTML(X)}${cycleNote(P.i)}${famTip(X)}${BTNS([KB('data-kgo="lab"','לבדוק כמה חסר לי','primary'),q.srcs[0]?KA(q.srcs[0],'תנאי הקבלה באתר המוסד'):'',q.th&&q.th.calc?KA(q.th.calc,'המחשבון הרשמי של המוסד'):''].filter(Boolean))}`});
   if(['g10','g11'].includes(stg)){
     add(Z.now,{id:'units',ic:'book',t:'להחליט על רמת המקצועות המוגברים',s:'יח"ל במתמטיקה ובאנגלית משפיעות על הסכם',
-      body:()=>`<p>באוניברסיטאות הגדולות, ובמכללות רבות, מקצוע ברמה גבוהה מוסיף בונוס לציון הבגרות המחושב. ${UNI_RULES[P.i]?esc(bonusTxt(P.i))+'.':'המוסדות עם נוסחה רשמית מפורסמת הם האוניברסיטאות הגדולות, ואפשר לראות אותה בקישור למטה.'}</p>${q.units.length?`<p>בתוכנית שבחרתי מופיעות הדרישות האלה:</p>${UL(q.units.map(u=>esc(`${SN[u.k]}: ${u.u} יח"ל${u.g?` בציון ${u.g} ומעלה`:''}`)))}`:''}${tip('לפני שמחליטים כדאי לדבר עם היועץ/ת בבית הספר: לא בכל בית ספר אפשר לעלות רמה באמצע הדרך, וההחלטה תלויה גם ביכולת וברצון.')}${BTNS([KB('data-kgo="lab"','לראות כמה זה שווה בסכם','primary'),UNI_RULES[P.i]?KA(UNI_RULES[P.i].src,'כללי הבונוס של המוסד'):''].filter(Boolean))}`});
+      body:()=>`<p>באוניברסיטאות הגדולות, ובמכללות רבות, מקצוע ברמה גבוהה מוסיף בונוס לציון הבגרות המחושב. ${UNI_RULES[P.i]?esc(bonusTxt(P.i))+'.'+bonChip(P.i):'המוסדות עם נוסחה רשמית מפורסמת הם האוניברסיטאות הגדולות, ואפשר לראות אותה בקישור למטה.'}</p>${q.units.length?`<p>בתוכנית שבחרתי מופיעות הדרישות האלה:</p>${UL(q.units.map(u=>esc(`${SN[u.k]}: ${u.u} יח"ל${u.g?` בציון ${u.g} ומעלה`:''}`)))}`:''}${tip('לפני שמחליטים כדאי לדבר עם היועץ/ת בבית הספר: לא בכל בית ספר אפשר לעלות רמה באמצע הדרך, וההחלטה תלויה גם ביכולת וברצון.')}${BTNS([KB('data-kgo="lab"','לראות כמה זה שווה בסכם','primary'),UNI_RULES[P.i]?KA(UNI_RULES[P.i].src,'כללי הבונוס של המוסד'):''].filter(Boolean))}`});
   }
   if(stg==='g10')add(Z.now,{id:'explore',ic:'compass',t:'לבדוק שהכיוון באמת מתאים לי',s:dirDone()?'מילאתי את שאלון הכיוון':'שאלון קצר שמראה תארים ומקצועות שמתאימים',done:dirDone()||M.explore,
     body:()=>`<p>עוד יש זמן לבחור. כדאי לראות מה מתאים לי באמת: תחומי עניין, ערכים וחוזקות. התוצאה יכולה להציע תארים שלא חשבתי עליהם, וגם לחזק את היעד הנוכחי.</p>${BTNS([KB('data-go="dir"','לשאלון "מה הכיוון שלי?"','primary'),KB(`data-kmark="explore"`,M.explore?'✓ בדקתי':'סימון: בדקתי')])}`});
 
   /* ----- English, bagrut, psychometric: they live in the zone where the exams are ----- */
   if(q.tier>0){
-    add(Z.mid,{id:'eng',ic:'globe',t:'לסגור אנגלית (אמירנט)',s:M.eng?'יש לי סיווג באנגלית':'חובה לקבלה, אפשר לעשות מוקדם',
-      body:()=>`<p>לפי מאל"ו, מבחן סיווג באנגלית (אמירנט) הוא חובה לקבלה ללימודים, אלא אם נקבע אחרת בנוהלי התוכנית. הציון תקף לפחות 7 שנים, ולכן אין סיבה לחכות.</p>${UL(['בחינה במחשב, ואפשר לחזור עליה אחרי 35 ימים לפחות','הציון מגיע באזור האישי תוך 10 ימים','הרשמה רגילה: 315 ₪ (לפי מאל"ו)'])}${engLevel(V)?`<p>הרמה שפורסמה כנדרשת בתוכנית שבחרתי: <b>${esc(engLevel(V))}</b>.</p>`:''}${BTNS([KA(NITE.amir,'הרשמה לאמירנט','primary'),KB('data-kmark="eng"',M.eng?'✓ יש לי ציון באנגלית':'יש לי ציון באנגלית')])}`});
+    add(Z.mid,{id:'eng',ic:'globe',t:'לסגור אנגלית (אמירנט)',s:M.eng?'יש לי סיווג באנגלית':'המוסד קובע אם נדרש, אפשר לעשות מוקדם',
+      body:()=>`<p>מדצמבר 2026 האנגלית יוצאת מהבחינה הפסיכומטרית, ורמת האנגלית נבדקת בנפרד באמירנט, מבחן הסיווג של מאל"ו.${factChip('eng.removed')} כל מוסד קובע אם הציון נדרש לקבלה ואיך הוא נכלל בה, ולכן בודקים בתנאי הקבלה של התוכנית שבחרתי.${factChip('amir.mandatory')}</p>${UL([`בחינה ממוחשבת במוסדות הלימוד, ואפשר לחזור עליה מהיום ה-35 ואילך (הספירה מתחילה ביום שאחרי הבחינה)${factChip('amir.retake')}`,`הציון מתפרסם באזור האישי באתר מאל"ו. כמה זמן זה לוקח, בודקים שם לפני שמתכננים סביבו${factChip('amir.results')}`,`תוקף הציון נקבע לפי מאל"ו והמוסד, ולכן בודקים לפני שמחכים או מקדימים${factChip('amir.validity')}`,`הרשמה רגילה: ${fact('amir.fee')} (לפי מאל"ו, נכון ל-2026)${factChip('amir.fee')}`])}${engLevel(V)?`<p>הרמה שפורסמה כנדרשת בתוכנית שבחרתי: <b>${esc(engLevel(V))}</b>.</p>`:''}${BTNS([KA(NITE.amir,'הרשמה לאמירנט','primary'),KB('data-kmark="eng"',M.eng?'✓ יש לי ציון באנגלית':'יש לי ציון באנגלית')])}`});
     if(['g10','g11'].includes(stg)){
       add(Z.mid,{id:'bagCore',ic:'book',t:'לתכנן את הבגרויות הנשארות',s:'כמה מקצועות לסגור לפני י"ב',
         body:()=>`<p>ככל שיותר בגרויות נסגרות לפני י"ב, כך נשאר יותר זמן לשיפורים ולפסיכומטרי. כדאי לבנות עם היועץ/ת לוח: אילו מקצועות נבחנים השנה ואילו בשנה הבאה, ואיפה כדאי לעלות יחידות.</p>${q.units.length?UL(q.units.map(u=>esc(`${SN[u.k]}: ${u.u} יח"ל${u.g?` בציון ${u.g} ומעלה`:''}`))):''}${BTNS([KB('data-kgo="lab"','להתנסות במספרים','primary'),KB('data-kmark="bagCore"',M.bagCore?'✓ תכננתי':'סימון: תכננתי')])}`});
       add(Z.mid,{id:'psyEarly',ic:'bolt',t:'להכיר את הבחינה הפסיכומטרית',s:'אפשר להתחיל לתרגל כבר עכשיו',
-        body:()=>`<p>הבחינה הפסיכומטרית (מדצמבר 2026) דו-תחומית: חשיבה מילולית וחשיבה כמותית, בסולם 200 עד 800. אין הגבלה על מספר הפעמים שאפשר להיבחן, והציון תקף לפחות 7 שנים. מי שנבחן כמה פעמים, רוב המוסדות מתחשבים בציון הגבוה (לפי מאל"ו).</p>${tip('אין צורך למהר, אבל כדאי להכיר את הבחינה מוקדם: בחינות להתנסות באתר מאל"ו נותנות הרגשה אמיתית של השאלות והזמנים.')}${BTNS([KA(NITE.prep,'בחינות להתנסות','primary'),KA(NITE.td,'על הבחינה')])}`});
+        body:()=>`<p>הבחינה הפסיכומטרית (מדצמבר 2026) דו-תחומית: חשיבה מילולית וחשיבה כמותית, בסולם 200 עד 800.${factChip('psy.format')}</p>${UL([`אין הגבלה על מספר הפעמים שאפשר להיבחן${factChip('psy.retake')}`,`הציון תקף לפחות 7 שנים מיום הבחינה${factChip('psy.validity')}`,`מי שנבחן כמה פעמים, רוב המוסדות מתחשבים בציון הגבוה (לפי מאל"ו)${factChip('psy.highest')}`])}${tip('אין צורך למהר, אבל כדאי להכיר את הבחינה מוקדם: בחינות להתנסות באתר מאל"ו נותנות הרגשה אמיתית של השאלות והזמנים.')}${BTNS([KA(NITE.prep,'בחינות להתנסות','primary'),KA(NITE.td,'על הבחינה')])}`});
     }
     {
       /* psychometric: register, sit, retake */
       const np=X.np;
       if(!X.hasP){
         add(Z.ready,{id:'psyReg',ic:'pen',t:'להירשם לבחינה הפסיכומטרית',s:np?`ההרשמה למועד ${np.lbl} נסגרת ${inN(np.n)}`:'נרשמים באתר מאל"ו',due:np?np.reg:null,
-          body:()=>`<p>בוחרים מועד ונרשמים באתר מאל"ו. ההרשמה הרגילה עולה 495 ₪, הרשמה מאוחרת 745 ₪. אפשר להיבחן שוב בכל מועד: אין הגבלה על מספר הפעמים.</p>${psyTip(X)}${q.fl.noPsy||(q.tier>=2&&instKind(P.i)==='c')?'<p class="kp-tip">בחלק מהמכללות והתוכניות אפשר להתקבל גם בלי פסיכומטרי (למשל לפי ממוצע בגרות או אחרי מכינה). בודקים בתנאי הקבלה של התוכנית שבחרתי לפני שמתחייבים לבחינה.</p>':''}${sessHTML(X)}${BTNS([KA(NITE.reg,'להרשמה באתר מאל"ו','primary'),KB('data-kmark="psyReg"',M.psyReg?'✓ נרשמתי':'נרשמתי למועד')])}`});
+          body:()=>`<p>בוחרים מועד ונרשמים באתר מאל"ו. אפשר להיבחן שוב בכל מועד: אין הגבלה על מספר הפעמים.${factChip('psy.retake')}</p>${UL([`ההרשמה הרגילה עולה ${fact('psy.fee.reg')} (מדצמבר 2026)${factChip('psy.fee.reg')}`,`הרשמה מאוחרת עולה ${fact('psy.fee.late')}, ולא בכל מועד היא מוצעת${factChip('psy.fee.late')}`,`הרשמה ביום הבחינה עולה ${fact('psy.fee.day')}, ולא בכל מועד היא מוצעת${factChip('psy.fee.day')}`])}${psyTip(X)}${q.fl.noPsy||(q.tier>=2&&instKind(P.i)==='c')?'<p class="kp-tip">בחלק מהמכללות והתוכניות אפשר להתקבל גם בלי פסיכומטרי (למשל לפי ממוצע בגרות או אחרי מכינה). בודקים בתנאי הקבלה של התוכנית שבחרתי לפני שמתחייבים לבחינה.</p>':''}${sessHTML(X)}${BTNS([KA(NITE.reg,'להרשמה באתר מאל"ו','primary'),KB('data-kmark="psyReg"',M.psyReg?'✓ נרשמתי':'נרשמתי למועד')])}`});
         const goalP=P.goalP||(V.tier===1&&V.needP!=null&&isFinite(V.needP)&&V.needP<=800?V.needP:0);
         add(Z.ready,{id:'prep',ic:'rocket',t:'להתכונן לבחינה',s:goalP?`היעד שלי: פסיכומטרי ${goalP}${P.goalP?'':', לפי הבגרות שלי'}`:'בחינות להתנסות ותרגול קבוע',
           body:()=>`<p>ההכנה הכי יעילה היא תרגול על בחינות מלאות בתנאי אמת. כדאי להתחיל כמה שבועות לפני המועד, ולהקדיש קצת זמן כל כמה ימים במקום הכול ביום אחד.</p>${UL(['בחינות להתנסות רשמיות באתר מאל"ו','לתרגל את החלק הכמותי ואת החלק המילולי בנפרד, ואחר כך יחד','לשמור את הציון הראשון כנקודת התחלה: אפשר לשפר בבחינה חוזרת'])}${BTNS([KA(NITE.prep,'בחינות להתנסות','primary'),KB('data-kmark="prep"',M.prep?'✓ התחלתי להתכונן':'התחלתי להתכונן')])}`});
         add(Z.ready,{id:'psy',nm:1,ic:'bolt',t:'להיבחן ולקבל ציון',s:M.psyReg&&np?`הבחינה: ${np.days}`:'אחרי הבחינה מזינים את הציון',due:np&&M.psyReg?np.d:null,
-          body:()=>`<p>הציונים מועברים למוסדות ולנבחנים תוך 45 ימים מהבחינה (לפי מאל"ו). כשהציון מגיע, מזינים אותו כאן, והמסלול כולו מתעדכן.</p>${scoreForm()}`});
+          body:()=>`<p>הציונים נשלחים למוסדות ולנבחנים תוך 45 ימים לכל היותר מיום הבחינה (לפי מאל"ו).${factChip('psy.results')} כשהציון מגיע, מזינים אותו כאן, והמסלול כולו מתעדכן.</p>${scoreForm()}`});
       }else{
         add(Z.ready,{id:'psy',nm:1,ic:'bolt',t:`יש לי ציון פסיכומטרי: ${X.sc.p}`,s:'אפשר להזין ציון חדש אם נבחנתי שוב',done:true,
-          body:()=>`<p>הציון שלי הוא <b>${X.sc.p}</b>. רוב המוסדות מתחשבים בציון הגבוה, ולכן שיפור תמיד שווה לנסות.</p>${scoreForm()}`});
+          body:()=>`<p>הציון שלי הוא <b>${X.sc.p}</b>. רוב המוסדות מתחשבים בציון הגבוה, ולכן שיפור תמיד שווה לנסות.${factChip('psy.highest')}</p>${scoreForm()}`});
         if(V.ok===false&&V.tier>0){
           add(Z.ready,{id:'psyRe',ic:'rocket',t:'לשקול בחינה חוזרת',s:X.gap!=null?`חסרות ${X.gap} נקודות, והמועד הבא ${np?np.lbl:'בקרוב'}`:'לשפר את הציון',due:np?np.reg:null,
-            body:()=>`<p>${X.gap!=null?`עם הבגרות שלי חסרות ${X.gap} נקודות בפסיכומטרי. `:''}אין הגבלה על מספר הניסיונות, והמוסדות בדרך כלל מחשיבים את הציון הגבוה. מי שמתכונן שוב, בדרך כלל מכיר את הבחינה ומרגיש בטוח יותר.</p>${sessHTML(X)}${BTNS([KA(NITE.reg,'להרשמה באתר מאל"ו','primary'),KA(NITE.prep,'בחינות להתנסות')])}`})}
+            body:()=>`<p>${X.gap!=null?`עם הבגרות שלי חסרות ${X.gap} נקודות בפסיכומטרי. `:''}אין הגבלה על מספר הניסיונות,${factChip('psy.retake')} והמוסדות בדרך כלל מחשיבים את הציון הגבוה.${factChip('psy.highest')} מי שמתכונן שוב, בדרך כלל מכיר את הבחינה ומרגיש בטוח יותר.</p>${sessHTML(X)}${BTNS([KA(NITE.reg,'להרשמה באתר מאל"ו','primary'),KA(NITE.prep,'בחינות להתנסות')])}`})}
       }
     }
     /* bagrut core + boosters */
     if(!['g10','g11'].includes(stg)){
       const iss=bagIssues(X);
       add(Z.ready,{id:'bagCore',ic:'book',t:'לוודא שיש את כל מקצועות הבגרות הנדרשים',s:!X.rows.length?'אחרי הזנת ציונים אבדוק':iss.length?`חסר: ${iss.slice(0,2).join(', ')}`:'הכול מכוסה',done:X.rows.length>=3?!iss.length:M.bagCore,
-        body:()=>`${iss.length?`<p>לפי המספרים שהזנתי, כדאי לבדוק:</p>${UL(iss.map(esc))}`:X.rows.length?'<p>לפי הציונים שהזנתי, כל המקצועות שנדרשים בתוכנית מכוסים.</p>':'<p>כשמזינים ציונים, אבדוק אם המקצועות והיחידות מספיקים לתוכנית שבחרתי.</p>'}${q.units.length?`<p>מה שפורסם באתר המוסד:</p>${UL(q.units.map(u=>esc(u.l)))}`:''}${BTNS([KB('data-kgo="lab"','לבדוק כמה חסר לי','primary'),KB('data-go="calc"','מחשבון ממוצע בגרות'),KB('data-kmark="bagCore"',M.bagCore?'✓ סגור':'סימון: סגור')])}${['svc','after','other',''].includes(X.stg)?`<p class="fine">צריך גיליון ציונים רשמי? <a href="${EDU.cert}" target="_blank" rel="noopener">הפקת גיליון ציונים דיגיטלי (gov.il, בחינם)</a></p>`:''}`});
+        body:()=>`${iss.length?`<p>לפי המספרים שהזנתי, כדאי לבדוק:</p>${UL(iss.map(esc))}`:X.rows.length?'<p>לפי הציונים שהזנתי, כל המקצועות שנדרשים בתוכנית מכוסים.</p>':'<p>כשמזינים ציונים, אבדוק אם המקצועות והיחידות מספיקים לתוכנית שבחרתי.</p>'}${q.units.length?`<p>מה שפורסם באתר המוסד:</p>${UL(q.units.map(u=>esc(u.l)))}`:''}${BTNS([KB('data-kgo="lab"','לבדוק כמה חסר לי','primary'),KB('data-go="calc"','מחשבון ממוצע בגרות'),KB('data-kmark="bagCore"',M.bagCore?'✓ סגור':'סימון: סגור')])}${['svc','after','other',''].includes(X.stg)?`<p class="fine">צריך גיליון ציונים רשמי? <a href="${EDU.cert}" target="_blank" rel="noopener">הפקת גיליון ציונים דיגיטלי (gov.il)</a>. בודקים בשירות אם יש תשלום.${factChip('digital.cert')}</p>`:''}`});
       if(V.ok===false&&X.real){
         add(Z.ready,{id:'boost',ic:'fire',t:'לשפר איפה שהכי משתלם',s:'הבוסטרים הכי שווים מהבגרות והפסיכומטרי',
           body:()=>`${boostHTML(X)}${BTNS([KB('data-kgo="lab"','לנסות בתרחיש','primary')])}`})}
     }
     /* the threshold */
     if(q.tier===1||q.tier===2)add(Z.ready,{id:'thr',ms:1,nm:q.tier===1?1:0,ic:'flag',t:'לעבור את סף הקבלה',s:standing(X).h,done:V.ok===true||(q.tier===2&&M.thr),
-      body:()=>`<p>${esc(standing(X).s)}</p>${q.tier===2?tier2HTML(V):''}${BTNS([KB('data-kgo="lab"','כמה חסר לי, ואיך סוגרים','primary'),q.tier===2?KB('data-kmark="thr"',M.thr?`✓ בדקתי, אני ${gx('עומד','עומדת')} בתנאים`:`בדקתי ואני ${gx('עומד','עומדת')} בתנאים`):''].filter(Boolean))}${q.tier===1&&q.th?`<p class="fine">הסף והנוסחה: <a href="${esc(q.th.src)}" target="_blank" rel="noopener">אתר הקבלה של המוסד</a> (${esc(q.th.year||'')}). הספים משתנים משנה לשנה.</p>`:''}`});
+      body:()=>`<p>${esc(standing(X).s)}</p>${q.tier===2?tier2HTML(V):''}${BTNS([KB('data-kgo="lab"','כמה חסר לי, ואיך סוגרים','primary'),q.tier===2?KB('data-kmark="thr"',M.thr?`✓ בדקתי, אני ${gx('עומד','עומדת')} בתנאים`:`בדקתי ואני ${gx('עומד','עומדת')} בתנאים`):''].filter(Boolean))}${q.tier===1&&q.th?`<p class="fine">הסף והנוסחה: <a href="${esc(q.th.src)}" target="_blank" rel="noopener">אתר הקבלה של המוסד</a> (${esc(q.th.year||'')}). הספים משתנים משנה לשנה.</p>${cycleNote(P.i)}`:''}`});
     else add(Z.ready,{id:'thr',ms:1,ic:'flag',t:'לבדוק איפה אני ביחס למתקבלים',s:standing(X).h,done:!!M.thr,
       body:()=>`<p>${esc(standing(X).s)}</p>${q.bench?`<p>לפי עבודאטה, ${q.bench.inst?'בממוצע במוסד הזה':'בממוצע בתחום'} מי שהתקבלו הגיעו עם ${[q.bench.p?'פסיכומטרי '+fmt(q.bench.p):'',q.bench.b?'ממוצע בגרות '+q.bench.b:''].filter(Boolean).join(' ו')}. זה לא סף: יש מי שהתקבלו עם פחות.</p>`:''}${BTNS([KB('data-kmark="thr"',M.thr?'✓ בדקתי את התנאים':'בדקתי את התנאים באתר המוסד'),q.srcs[0]?KA(q.srcs[0],'תנאי הקבלה באתר'):KA(I.site,'אתר המוסד')])}`});
     /* extras the program asks for */
     const ex=extras(X);
     if(ex.length)add(Z.ready,{id:'ext',ic:'star',t:ex.length===1?ex[0].t:'דרישות נוספות מעבר למספרים',s:ex.length===1?'דרישה נוספת מעבר למספרים':ex.map(e=>e.t).join(' · '),
       body:()=>`${ex.map(e=>`<p><b>${e.t}.</b> ${e.d}</p>`).join('')}${q.lines.length?`<p>מתוך התנאים שפורסמו:</p>${UL(q.lines.filter(l=>RQF.iv.test(l)||RQF.test.test(l)||RQF.port.test(l)||RQF.prep.test(l)||RQF.mor.test(l)).slice(0,5).map(esc))}`:''}${BTNS([KB('data-kmark="ext"',M.ext?'✓ מסודר':'סימון: מסודר'),q.srcs[0]?KA(q.srcs[0],'תנאי הקבלה באתר'):''].filter(Boolean))}`});
-    if(['g10','g11','g12'].includes(stg))add(Z.ready,{id:'atuda',ic:'shield',t:'לבדוק עתודה אקדמית (אם מתאים)',s:'ההרשמה בכיתה י"ב, עד סוף פברואר',
+    if(['g10','g11','g12'].includes(stg))add(Z.ready,{id:'atuda',ic:'shield',t:'לבדוק עתודה אקדמית (אם מתאים)',s:'ההרשמה בדרך כלל בכיתה י"ב (לא אומת)',
       due:stg==='g12'?atudaDue():null,approx:1,
-      body:()=>`<p>בעתודה האקדמית לומדים תואר לפני השירות ואחר כך משרתים שירות מקצועי. לפי אתר "מתגייסים" של צה"ל:</p>${UL(['נדרש פסיכומטרי: הציון המינימלי להמשך המיונים הוא בדרך כלל 590 (למסלולים מסוימים סף גבוה יותר)','נדרשת תעודת בגרות מלאה בהתאם למקצוע, וקבלה למוסד האקדמי','השאלון באתר נפתח בקיץ ונסגר ב-28 בפברואר, לפי הנתונים האחרונים שפורסמו','אחרי האישור הסופי מגיעים ליום חיול באוקטובר, ומשרתים אחרי הלימודים','לא משלמים שכר לימוד או מקדמות לפני אישור סופי'])}${tip('המועדים משתנים משנה לשנה. את הנוסח המחייב קוראים באתר "מתגייסים".')}${BTNS([KA(IDF_ATUDA,'עתודה אקדמית באתר צה"ל','primary'),KB('data-kmark="atuda"',M.atuda?'✓ בדקתי':'בדקתי, מתאים או לא')])}`});
+      body:()=>`<p>בעתודה האקדמית לומדים תואר לפני השירות ואחר כך משרתים שירות מקצועי. ההרשמה מיועדת בדרך כלל לתלמידי י"ב.${factChip('atuda.grade12')} הפרטים שלהלן לפי אתר "מתגייסים" של צה"ל, ועוד לא אומתו מחדש:</p>${UL([`נדרש פסיכומטרי. הציון המינימלי להמשך המיונים ${fact('atuda.min')}${factChip('atuda.min')}`,`נדרשים תנאי קבלה לפי המקצוע וקבלה למוסד אקדמי${factChip('atuda.bagrut')}`,`השאלון באתר נפתח בקיץ ונסגר ${fact('atuda.deadline')} (נבדק לאחרונה במחזור הקודם). את התאריך המדויק למחזור שלי בודקים באתר צה"ל${factChip('atuda.deadline')}`,`אחרי האישור הסופי מתגייסים לפי הנוהל שמפרסם צה"ל, ומשרתים אחרי הלימודים${factChip('atuda.induction')}`,`לפני האישור הסופי אין חובה לשלם שכר לימוד או מקדמה${factChip('atuda.tuition')}`])}${tip('המועדים משתנים משנה לשנה. את הנוסח המחייב קוראים באתר "מתגייסים".')}${BTNS([KA(IDF_ATUDA,'עתודה אקדמית באתר צה"ל','primary'),KB('data-kmark="atuda"',M.atuda?'✓ בדקתי':'בדקתי, מתאים או לא')])}`});
   }else{
     /* open university: nothing to pass, only the first course */
     add(Z.ready,{id:'ouFirst',ic:'rocket',t:'לבחור את הקורס הראשון',s:'אפשר להתחיל בלי בגרות ובלי פסיכומטרי',
-      body:()=>`<p>באוניברסיטה הפתוחה לומדים בקצב שלי ובוחרים קורסים בכל סמסטר. כדאי להתחיל בקורס אחד או שניים, לראות איך זה מרגיש, ולצבור נקודות זכות שאפשר להמשיך איתן.</p>${BTNS([KA(I.site,'לאתר האוניברסיטה הפתוחה','primary'),KB('data-kmark="ouFirst"',M.ouFirst?'✓ בחרתי':'בחרתי קורס')])}`})}
+      body:()=>`<p>באוניברסיטה הפתוחה לומדים בקצב שלי ובוחרים קורסים בכל סמסטר. כדאי להתחיל בקורס אחד או שניים, לראות איך זה מרגיש, ולצבור נקודות זכות שאפשר להמשיך איתן.${factChip('openu.open')}</p>${BTNS([KA(I.site,'לאתר האוניברסיטה הפתוחה','primary'),KB('data-kmark="ouFirst"',M.ouFirst?'✓ בחרתי':'בחרתי קורס')])}`})}
   if(X.noCert&&['after','other','','svc'].includes(stg))add(Z.ready,{id:'cert',ic:'book',t:'להשלים בגרות או מכינה',s:'בלי תעודה רוב המסלולים סגורים',
     body:()=>`<p>${prof2certText(X.prof)}</p>${BTNS([KA(NEED_SRC.mod,'מכינות קדם-אקדמיות (משרד הביטחון)','primary'),KB('data-kmark="cert"',M.cert?'✓ יש לי תעודה':'סיימתי, יש לי תעודה')])}`});
 
@@ -4944,7 +5161,7 @@ function plan(){
     add(Z.svc,{id:'svcPlan',ic:'shield',t:'לבחור איך משלבים שירות ולימודים',s:'כמה דרכים, ואין אחת נכונה לכולם',
       body:()=>`<p>הדרכים הנפוצות:</p>${UL(['לשרת ואז ללמוד: הדרך הרגילה. כדאי להמשיך לשמור את הציונים והפסיכומטרי "חיים"','עתודה אקדמית: לומדים לפני השירות ומשרתים אחריו (הרשמה בכיתה י"ב)','שירות לאומי-אזרחי: למי שלא מתגייס/ת לצה"ל','שנת ביניים או שנת שירות לפני הצבא, למי שרוצה'])}${tip('הפרטים והזכאויות נקבעים לפי המצב האישי. את הנוסח המחייב מקבלים בלשכת הגיוס ובאתרים הרשמיים.')}${BTNS([KA(IDF_ATUDA,'עתודה אקדמית','primary'),KB('data-kmark="svcPlan"',M.svcPlan?'✓ בחרתי כיוון':'בחרתי כיוון')])}`});
     add(Z.svc,{id:'svcKeep',ic:'fire',t:'לשמור על הלימודים "חיים" בזמן השירות',s:'פסיכומטרי, בגרויות וקורסים',
-      body:()=>`<p>גם בזמן השירות אפשר להתקדם, ובמיוחד כדאי לא להפסיק לגמרי:</p>${UL(['להיבחן בפסיכומטרי או לשפר ציון: הציון תקף לפחות 7 שנים',`לשפר בגרויות במועדי חורף וקיץ, כ${gx('נבחן אקסטרני','נבחנת אקסטרנית','נבחן/ת אקסטרני/ת')}`,'לבדוק את הספים מחדש כשמתקרבת ההרשמה: הם משתנים משנה לשנה','להתחיל קורס באוניברסיטה הפתוחה, אם יש זמן וכוח'])}${BTNS([KB('data-kgo="lab"','לעדכן את המספרים','primary'),KB('data-kmark="svcKeep"',M.svcKeep?'✓ אני על זה':'סימון: אני על זה')])}`});
+      body:()=>`<p>גם בזמן השירות אפשר להתקדם, ובמיוחד כדאי לא להפסיק לגמרי:</p>${UL([`להיבחן בפסיכומטרי או לשפר ציון: הציון תקף לפחות 7 שנים${factChip('psy.validity')}`,`לשפר בגרויות במועדי חורף וקיץ, כ${gx('נבחן אקסטרני','נבחנת אקסטרנית','נבחן/ת אקסטרני/ת')}`,'לבדוק את הספים מחדש כשמתקרבת ההרשמה: הם משתנים משנה לשנה','להתחיל קורס באוניברסיטה הפתוחה, אם יש זמן וכוח'])}${BTNS([KB('data-kgo="lab"','לעדכן את המספרים','primary'),KB('data-kmark="svcKeep"',M.svcKeep?'✓ אני על זה':'סימון: אני על זה')])}`});
     add(Z.svc,{id:'svcRights',ic:'coin',t:'לבדוק זכויות ומימון למשוחררים',s:'מכינות ממומנות, מלגות והלוואות',
       body:()=>`<p>לחיילים משוחררים יש זכויות שקשורות ללימודים, ובהן מימון למכינות קדם-אקדמיות ומלגות לפי זכאות. הזכאות תלויה בסוג השירות ובמצב האישי, ולכן בודקים באתר האגף לחיילים משוחררים.</p>${BTNS([KA(MOD_HOME,'האגף לחיילים משוחררים','primary'),KA(MOD_SCHOL,'מלגות'),KB('data-kmark="svcRights"',M.svcRights?'✓ בדקתי':'סימון: בדקתי')])}`})}
   /* ----- registration ----- */
@@ -4953,11 +5170,11 @@ function plan(){
   add(Z.reg,{id:'docs',ic:'doc',t:'להכין את המסמכים להרשמה',s:'כדי לא להיתקע ברגע האחרון',
     body:()=>`${UL(['תעודת זהות','גיליון ציונים או תעודת בגרות (אפשר להפיק דיגיטלית ב-gov.il)','ציון פסיכומטרי וציון אמירנט: לבדוק באתר המוסד איך הם מועברים','תיק עבודות, מכתבים או אישורים אם נדרשים בתוכנית','דמי רישום: הסכום מופיע באתר המוסד'])}${BTNS([KA(EDU.cert,'גיליון ציונים דיגיטלי','primary'),KA(NITE.reg,'מאל"ו: העברת ציונים'),KB('data-kmark="docs"',M.docs?'✓ מוכן':'סימון: מוכן')])}`});
   add(Z.reg,{id:'reg',ic:'pen',t:'להירשם לתואר',s:regWindow(X),
-    body:()=>`<p>ההרשמה נעשית באתר ${esc(I.n)}. ${regWindow(X,1)}</p>${regInfoHTML(X)}${tip('כשמתפרסם מועד סגירת ההרשמה, כדאי להוסיף אותו ליומן. כך שום דבר לא נופל בין הכיסאות.')}${dateAdd()}${BTNS([KA(I.site,'לאתר המוסד','primary'),KB('data-kmark="reg"',M.reg?'✓ נרשמתי':'נרשמתי לתואר')])}`});
+    body:()=>`<p>ההרשמה נעשית באתר ${esc(I.n)}. ${regWindow(X,1)}${instKind(P.i)==='u'&&!q.open?factChip('reg.pattern'):''}</p>${regInfoHTML(X)}${tip('כשמתפרסם מועד סגירת ההרשמה, כדאי להוסיף אותו ליומן. כך שום דבר לא נופל בין הכיסאות.')}${dateAdd()}${BTNS([KA(I.site,'לאתר המוסד','primary'),KB('data-kmark="reg"',M.reg?'✓ נרשמתי':'נרשמתי לתואר')])}`});
   if(X.fam==='med'||q.fl.mor)add(Z.reg,{id:'mor',ic:'star',t:'מיון אישי: מו"ר ומרק"ם',s:'הזימון מגיע ממאל"ו אחרי הציונים',
-    body:()=>`<p>ברפואה, אחרי שלב הציונים, מועמדים מוזמנים למערכות לאפיון אישי: שאלון אישי-ביוגרפי, מרכז הערכה ושאלון שאו"ל. הזימון נשלח ממאל"ו לפי רשימות שהאוניברסיטאות הממיינות מעבירות.</p>${UL(['מרכז הערכה: 1,900 ₪','שאלון אישי-ביוגרפי: 450 ₪','מ-2026 לא מחושב "ציון כללי" אחד: כל מרכיב מדווח בנפרד, וכל מוסד משקלל לפי המדיניות שלו'])}${P.i==='technion'?'<p>בטכניון, בשנה האחרונה, ההודעה על מעבר לשלב המו"ר ופתיחת השאלון הביוגרפי באתר מאל"ו היו בתחילת יוני.</p>':''}<p class="fine">מקור: מאל"ו. המחירים והנוהל עלולים להשתנות.</p>${BTNS([KA(NITE.mor,'מאל"ו: מו"ר ומרק"ם','primary'),KB('data-kmark="mor"',M.mor?'✓ הוזמנתי / סיימתי':'הוזמנתי / סיימתי')])}`});
+    body:()=>`<p>ברפואה, אחרי שלב הציונים, מועמדים מוזמנים למערכות לאפיון אישי: שאלון אישי-ביוגרפי, מרכז הערכה ושאלון שאו"ל.${factChip('mor.structure')} הזימון נשלח ממאל"ו לפי רשימות שהאוניברסיטאות הממיינות מעבירות.${factChip('mor.invite')}</p>${UL([`מרכז הערכה: עלותו ${fact('mor.fee.assess')}${factChip('mor.fee.assess')}`,`שאלון אישי-ביוגרפי: עלותו ${fact('mor.fee.bio')}${factChip('mor.fee.bio')}`,`מ-2026 לא מחושב "ציון כללי" אחד: כל מרכיב מדווח בנפרד, וכל מוסד משקלל לפי המדיניות שלו${factChip('mor.nogeneral')}`])}${P.i==='technion'?`<p>בטכניון, בשנה האחרונה, ההודעה על מעבר לשלב המו"ר ופתיחת השאלון הביוגרפי באתר מאל"ו היו בתחילת יוני.${factChip('mor.technion')}</p>`:''}<p class="fine">מקור: מאל"ו. הנוהל עלול להשתנות. סכומים לא מוצגים כאן כל עוד לא אומתו.</p>${BTNS([KA(NITE.mor,'מאל"ו: מו"ר ומרק"ם','primary'),KB('data-kmark="mor"',M.mor?'✓ הוזמנתי / סיימתי':'הוזמנתי / סיימתי')])}`});
   add(Z.reg,{id:'answer',ic:'chat',t:'לקבל תשובה ולהחליט',s:'ולא לשלם מקדמה לפני אישור סופי',
-    body:()=>`<p>כשמגיעות תשובות, משווים בין האפשרויות. אם לא התקבלתי למה שרציתי, זו עדיין לא הסוף: אפשר לבדוק רשימת המתנה, מסלול אחר באותו מוסד, או בחינה חוזרת והגשה שוב.</p>${UL(['לא משלמים מקדמת שכר לימוד לפני שיש אישור סופי, במיוחד בעתודה','לשמור על כל המסמכים והאישורים','אם יש שאלה על תשובה, פונים למשרד הקבלה של המוסד'])}${BTNS([KB('data-kmark="answer"',M.answer?'✓ קיבלתי תשובה':'קיבלתי תשובה')])}`});
+    body:()=>`<p>כשמגיעות תשובות, משווים בין האפשרויות. אם לא התקבלתי למה שרציתי, זו עדיין לא הסוף: אפשר לבדוק רשימת המתנה, מסלול אחר באותו מוסד, או בחינה חוזרת והגשה שוב.</p>${UL([`לפני שיש אישור סופי כדאי לא לשלם מקדמת שכר לימוד, ולבדוק מול המוסד אם זה אפשרי. בעתודה, לפי אתר "מתגייסים", אין חובה לשלם לפני האישור הסופי${factChip('atuda.tuition')}`,'לשמור על כל המסמכים והאישורים','אם יש שאלה על תשובה, פונים למשרד הקבלה של המוסד'])}${BTNS([KB('data-kmark="answer"',M.answer?'✓ קיבלתי תשובה':'קיבלתי תשובה')])}`});
   add(Z.reg,{id:'acc',ms:1,ic:'cap',t:'התקבלתי!',s:M.acc?'מזל טוב!':'הקו האחרון של הדרך',
     body:()=>`<p>${M.acc?'מזל טוב! 🎉 הדרך הזאת נגמרה, והדרך האמיתית מתחילה.':'כשמתקבלים, מסמנים כאן וחוגגים.'}</p>${BTNS([KB('data-kmark="acc"',M.acc?'✓ התקבלתי':'התקבלתי! 🎓','primary')])}`});
   /* ----- first day ----- */
@@ -4989,12 +5206,16 @@ function regWindow(X,long){
   const typ=uni?'באוניברסיטאות הגדולות ההרשמה נפתחה בשנה האחרונה בתחילת פברואר, הרגילה נסגרה בסביבות סוף אפריל ותחילת מאי, ואחריה הרשמה מאוחרת על בסיס מקום פנוי עד הקיץ. תוכניות תחרותיות כמו רפואה ואדריכלות נסגרו מוקדם יותר, בלי הרשמה מאוחרת':'במכללות רבות ההרשמה נפתחת בחורף ונמשכת עד הקיץ, בכפוף למקומות פנויים. תוכניות עם מיון מוקדם יותר נסגרות קודם';
   if(X.q.open)return long?'ההרשמה פתוחה לכולם לאורך השנה.':'פתוחה לכולם';
   return Y?(long?`כדי להתחיל באוקטובר ${Y}: ${typ}.`:`לימודים מאוקטובר ${Y}: ההרשמה לרוב מפברואר עד הקיץ של ${Y}`):(long?`${typ}.`:'בשנה שלפני תחילת הלימודים')}
-const psyTip=X=>`<p>הציון מגיע עד 45 ימים אחרי הבחינה, ולכן כדאי להיבחן לפחות חודשיים לפני סגירת ההרשמה למוסד, ולהשאיר זמן לבחינה חוזרת אם צריך. ${X.P.i==='technion'||X.P.i==='huji'?`ב${X.I.n}, בשנה האחרונה, הציון נדרש עד מועד אפריל להרשמה הרגילה${X.fam==='med'||X.fam==='dent'?', וברפואה מועד אפריל היה האחרון התקף':''}.`:'כדאי לבדוק עד איזה מועד הציון נדרש במוסד שבחרתי.'}</p>`;
+const psyTip=X=>`<p>הציון מגיע עד 45 ימים אחרי הבחינה,${factChip('psy.results')} ולכן כדאי להיבחן לפחות חודשיים לפני סגירת ההרשמה למוסד, ולהשאיר זמן לבחינה חוזרת אם צריך. ${X.P.i==='technion'||X.P.i==='huji'?`ב${X.I.n}, בשנה האחרונה, הציון נדרש עד מועד אפריל להרשמה הרגילה${X.fam==='med'||X.fam==='dent'?', וברפואה מועד אפריל היה האחרון התקף':''}.${factChip('psy.april')}`:'כדאי לבדוק עד איזה מועד הציון נדרש במוסד שבחרתי.'}</p>`;
+/* provenance chips for the institution's registration dates (last published cycle) */
+const REGF={technion:'reg.technion',huji:'reg.huji',tau:'reg.tau',bgu:'reg.bgu',haifa:'reg.haifa'};
+function regChips(X){const i=X.P.i,f=X.fam,med=f==='med'||f==='dent';
+  return [REGF[i],med?{technion:'reg.technion.med',huji:'reg.huji.med'}[i]:f==='arch'&&i==='technion'?'reg.technion.arch':''].filter(Boolean).map(id=>factChip(id)).join('')}
 /* the target institution's own published dates, when I have them */
 function regInfoHTML(X){
   const R=REGD[X.P.i],f=X.fam;if(!R)return '';
   const sp=f==='med'||f==='dent'?R.med:f==='arch'?R.arch:'';
-  return `<div class="kp-tip"><b>${esc(X.I.n)}, ${R.cy} (המחזור האחרון שפורסם):</b> ${esc(R.txt)}${sp?` ${esc(sp)}`:''} <a href="${esc(R.src)}" target="_blank" rel="noopener">מקור</a>. המועדים לשנה שלי מתפרסמים באתר המוסד, והם משתנים משנה לשנה.</div>`}
+  return `<div class="kp-tip"><b>${esc(X.I.n)}, ${R.cy} (המחזור האחרון שפורסם):</b> ${esc(R.txt)}${sp?` ${esc(sp)}`:''} <a href="${esc(R.src)}" target="_blank" rel="noopener">מקור</a>. המועדים לשנה שלי מתפרסמים באתר המוסד, והם משתנים משנה לשנה.${regChips(X)}</div>`}
 function prof2certText(p){return p.bag==='handesai'?'מוסדות רבים מקבלים הנדסאים בתנאים מיוחדים, והם מופיעים בעמוד התואר.':p.bag==='foreign'?'צריך הכרה בתעודה מחו"ל, והתנאים שונים בכל מוסד.':'הדרך הנפוצה: מכינה קדם-אקדמית, שמאפשרת להשלים בגרות או להתקבל לפי ציון המכינה. משוחררי צה"ל עשויים להיות זכאים למימון.'}
 /* what the bagrut rows I entered are missing for this program */
 function bagIssues(X){
@@ -5020,7 +5241,7 @@ function dateAdd(){return `<form class="kp-form" id="kpDate"><label for="kpDT">�
 function sessHTML(X){
   const L=psySess();if(!L.length)return '<p class="fine">אין מועדים קרובים שפורסמו. מועדים חדשים מתפרסמים באתר מאל"ו.</p>';
   const lg=myLang();
-  return `<div class="kp-sess">${L.map(z=>`<div class="kp-s ${z.n>=0&&z.n<=14?'soon':''} ${X.P.sess===z.id?'pick':''} ${z.mine?'':'off'}"><div><b>${z.days}</b><small>${z.n>=0?`ההרשמה הרגילה נסגרת ${dLong(z.reg)} (${inN(z.n)})`:`ההרשמה הרגילה נסגרה ב-${dShort(z.reg)}. בודקים באתר מאל"ו אם אפשר להירשם בהרשמה מאוחרת (745 ₪)`}</small><small>שפות: ${z.lg.split(',').map(c=>LGN[c]).join(', ')}${z.mine?'':` (לא כולל ${LGN[lg]||'השפה שלי'})`}</small></div><button class="btn ${X.P.sess===z.id?'on':'soft'} sm" data-ksess="${z.id}">${X.P.sess===z.id?'✓ המועד שלי':'זה המועד שלי'}</button></div>`).join('')}</div>`}
+  return `<div class="kp-sess">${L.map(z=>`<div class="kp-s ${z.n>=0&&z.n<=14?'soon':''} ${X.P.sess===z.id?'pick':''} ${z.mine?'':'off'}"><div><b>${z.days}</b><small>${z.n>=0?`ההרשמה הרגילה נסגרת ${dLong(z.reg)} (${inN(z.n)})`:`ההרשמה הרגילה נסגרה ב-${dShort(z.reg)}. בודקים באתר מאל"ו אם אפשר להירשם בהרשמה מאוחרת (${fact('psy.fee.late')})`}</small><small>שפות: ${z.lg.split(',').map(c=>LGN[c]).join(', ')}${z.mine?'':` (לא כולל ${LGN[lg]||'השפה שלי'})`}${factChip('psy.date.'+z.id)}</small></div><button class="btn ${X.P.sess===z.id?'on':'soft'} sm" data-ksess="${z.id}">${X.P.sess===z.id?'✓ המועד שלי':'זה המועד שלי'}</button></div>`).join('')}</div>`}
 function boostHTML(X){
   const t={d:X.P.d,i:X.P.i},rows=X.rows,P=X.sc.p||0,out=[];
   if(rows.length&&P&&UNI_RULES[t.i])moves(t,rows,P).forEach(m=>out.push(`${esc(m.lbl)}: <b class="num">+${m.gain}</b> נקודות פסיכומטרי`));
@@ -5300,10 +5521,10 @@ function sachmExplain(X){
   const bt=bonusTxt(X.P.i);
   return `<details class="adm dmeth kp-ex"><summary>מה זה סכם, ואיך הוא מחושב?</summary><div class="admb">
     <p>סכם הוא ציון קבלה שמחברים אליו שני נתונים: <b>ממוצע בגרות מותאם</b> (אחרי בונוסים על מקצועות ברמה גבוהה) ו<b>ציון פסיכומטרי</b>. כל מוסד קובע נוסחה ומשקל משלו, ולכן אותם ציונים יכולים להספיק במוסד אחד ולא באחר.</p>
-    <ul class="kp-ul"><li>הממוצע המותאם גבוה מהממוצע הרגיל, כי מקצועות ב-4 וב-5 יח"ל מוסיפים בונוס.${bt?` ${esc(bt)}.`:''}</li>
+    <ul class="kp-ul"><li>הממוצע המותאם גבוה מהממוצע הרגיל, כי מקצועות ב-4 וב-5 יח"ל מוסיפים בונוס.${bt?` ${esc(bt)}.${bonChip(X.P.i)}`:''}</li>
       <li>לכל מוסד חישוב משלו: אילו מקצועות נספרים, כמה בונוס ומה התקרה.</li>
-      <li>בבחינה הפסיכומטרית הדו-תחומית (מדצמבר 2026) יש ציון כללי בסולם 200–800, ובנוסף ציון נפרד לכל תחום (מילולי וכמותי, בסולם 50–150).</li></ul>
-    <p class="fine">הנוסחאות כאן מבוססות על מה שהמוסדות פרסמו באתריהם, והחישוב הקובע הוא של המוסד.</p></div></details>`}
+      <li>בבחינה הפסיכומטרית הדו-תחומית (מדצמבר 2026) יש ציון כללי בסולם 200–800,${factChip('psy.range')} ובנוסף ציון נפרד לכל תחום (מילולי וכמותי). סולם הציון לכל תחום לא אומת, בדקו באתר מאל"ו.${factChip('psy.subscore')}</li></ul>
+    <p class="fine">הנוסחאות כאן מבוססות על מה שהמוסדות פרסמו באתריהם, והחישוב הקובע הוא של המוסד.${secChip(X.P.i)}</p></div></details>`}
 function labHTML(pl){
   const X=pl.X;
   return `<div class="sec-h"><div><h2>${ki('chart')}המספרים שלי: כמה חסר ואיך סוגרים</h2><p>${X.real?`מתחילים מהמספרים שבפרופיל שלי. מזיזים ציון או מקלידים ציון חדש, מפעילים בוסטר, והסכם מתעדכן מיד. שום דבר לא נשמר בפרופיל עד שאני ${gx('בוחר','בוחרת')} לשמור.`:'אין לי עדיין ציונים אמיתיים, וזה בסדר: אלה מספרים לדוגמה. מזיזים אותם ורואים מה צריך כדי להתקבל. כשיהיו ציונים אמיתיים, מעדכנים.'}</p></div><div class="kp-src">${X.real?`<span class="kp-tag ${X.est?'':'ok'}">${X.est?'ציונים צפויים בפרופיל':'מהפרופיל שלי'}</span>`:'<span class="kp-tag">תרחיש לדוגמה</span>'}</div></div>
@@ -5354,13 +5575,13 @@ function labVerdictHTML(X){
       if(V.needB!=null&&isFinite(V.needB))need.push(`או, עם הפסיכומטרי הזה: ממוצע בגרות <b class="num">${fmt(V.needB,2)}</b> לפי חישוב המוסד`)}
     else if(g!=null&&isFinite(g)&&g<0)need.push(`מרווח של <b class="num">${-g}</b> נקודות בפסיכומטרי מעל הסף`);
     return box(ok?'ok':'no',ok?'check':'flag',ok?`${gx('אני בפנים','אני בפנים')} בתרחיש הזה`:!isFinite(g)?'עם הבגרות הזאת גם 800 לא מספיק':`חסרות ${g} נקודות בפסיכומטרי`,
-      `${V.scale} שלי: <b class="num">${fmt(V.score,V.score%1?2:0)}</b> · הסף ב${esc(I.n)}: <b class="num">${fmt(V.thr,V.thr%1?2:0)}</b>${V.row&&V.row.n?` · ${esc(V.row.n)}`:''}`)+(need.length?`<ul class="kp-need">${need.map(n=>`<li>${n}</li>`).join('')}</ul>`:'')+cmp}
+      `${V.scale} שלי: <b class="num">${fmt(V.score,V.score%1?2:0)}</b> · הסף ב${esc(I.n)}: <b class="num">${fmt(V.thr,V.thr%1?2:0)}</b>${V.row&&V.row.n?` · ${esc(V.row.n)}`:''}`)+(need.length?`<ul class="kp-need">${need.map(n=>`<li>${n}</li>`).join('')}</ul>`:'')+cycleNote(X.P.i)+cmp}
   if(V.tier===2){
     const ok=V.ok,c=V.closest&&V.closest.r,pb=V.pubBest;
     const head=ok===true?`${gx('עומד','עומדת')} באחת הדרכים שפורסמו`:c?'הדרך הקרובה אליי':ok===false?(pb?'מתחת לתנאי המינימום':'מתחת לדרכים שפורסמו'):pb?`הסף פורסם: ${fmt(pb.v,pb.v%1?2:0)}`:'אין חישוב אוטומטי';
     const sub=c?`${[c.p?'פסיכומטרי '+c.p:'',c.b?'ממוצע בגרות '+c.b:''].filter(Boolean).join(' ו')}${c.gp>0?` (חסרות ${c.gp} נקודות בפסיכומטרי)`:''}${c.gb>0?` (חסרות ${c.gb} בממוצע)`:''}`
       :pb?`הסף ב${esc(pb.lbl||V.scale)} מחושב גם מציוני משנה, ולכן אין חישוב אוטומטי מהמספרים שלי. מה שאפשר לבדוק מופיע למטה.`:'התנאים שפורסמו מפורטים למטה. הנוסח המחייב הוא באתר המוסד.';
-    return box(ok===true?'ok':ok===false?'no':'na',ok===true?'check':'flag',head,sub)+tier2HTML(V)+cmp}
+    return box(ok===true?'ok':ok===false?'no':'na',ok===true?'check':'flag',head,sub)+tier2HTML(V)+cycleNote(X.P.i)+cmp}
   const b=X.q.bench,sc=L.sc,dp=b&&b.p&&sc.p?sc.p-b.p:null,db=b&&b.b&&sc.b?Math.round((sc.b-b.b)*10)/10:null;
   return box('na','flag','אין סף שפורסם',b?`ממוצע המתקבלים בעבר${b.inst?'':' בתחום'}: ${[b.p?'פסיכומטרי '+fmt(b.p):'',b.b?'בגרות '+b.b:''].filter(Boolean).join(', ')}. ${dp!=null?`הפסיכומטרי בתרחיש ${dp>=0?'גבוה ב-'+dp:'נמוך ב-'+(-dp)}`:''}${db!=null?`${dp!=null?', ':''}הבגרות ${db>=0?'גבוהה ב-'+db:'נמוכה ב-'+(-db)}`:''}. זה ממוצע ולא סף.`:'המוסד לא פרסם סף מספרי, ולכן אי אפשר לחשב. בודקים את התנאים באתר.')+cmp}
 /* the admission map: the lowest psychometric that gets in, for every bagrut average */
@@ -5523,7 +5744,7 @@ const KD={all:false};
 function timeline(pl){
   const P=pth(),mine=new Set(bagRows().map(r=>r.k)),L=[];
   PSYD.forEach(z=>{const pick=P&&P.sess===z.id;
-    L.push({id:'psyreg-'+z.id,d:z.reg,k:'psy',reg:1,pick,t:`סגירת ההרשמה הרגילה לפסיכומטרי (מועד ${z.lbl})`,sub:'הרשמה רגילה: 495 ₪ (מאל"ו).',src:NITE.td});
+    L.push({id:'psyreg-'+z.id,d:z.reg,k:'psy',reg:1,pick,t:`סגירת ההרשמה הרגילה לפסיכומטרי (מועד ${z.lbl})`,sub:`הרשמה רגילה: ${fact('psy.fee.reg')} (מאל"ו, מדצמבר 2026).`,src:NITE.td});
     L.push({id:'psy-'+z.id,d:z.d,d2:z.d2,k:'psy',pick,t:`בחינה פסיכומטרית: ${z.days}`,src:NITE.td});
     if(z.res)L.push({id:'psyres-'+z.id,d:z.res,k:'psy',t:`תחזית לפרסום הציונים (מועד ${z.lbl})`,src:NITE.td})});
   BAGD.forEach(([s,k,d,n,d2])=>{if(mine.has(k)){const se=s==='w'?'חורף':s==='s'?'קיץ':'מועד ב';L.push({id:'bag-'+s+'-'+k,d,d2,k:'bag',grp:'bag-'+s,gt:`בגרויות ${se} 2027`,sn:n,t:`בגרות ${se}: ${n}`,sub:'לפי טיוטת לוח הבחינות של משרד החינוך.',src:s==='w'?EDU.win:EDU.sum})}});
@@ -5610,7 +5831,7 @@ function moreHTML(pl){
       <div class="kp-btns"><button class="btn soft sm" data-kcopy>העתקת סיכום לשיתוף</button><button class="btn soft sm" data-kexp>גיבוי לקובץ</button><label class="btn soft sm">שחזור מקובץ<input type="file" accept="application/json,.json" id="pimp" hidden></label></div>
       <div class="kp-btns kp-danger">${KP.rm===P.active?`<span class="kp-ask">להסיר את ${esc(X.d.n)} ${esc(bIn(X.I.n))} מהיעדים שלי?</span><button class="btn soft sm" data-krmok="${P.active}">כן, להסיר</button><button class="linkbtn" data-krmno>ביטול</button>`:`<button class="btn soft sm" data-krm="${P.active}">הסרת היעד הזה</button>`}
         ${KP.rst?'<span class="kp-ask">למחוק את כל היעדים והמסלול? הפרופיל והציונים נשארים.</span><button class="btn soft sm" data-kresetok>כן, למחוק הכול</button><button class="linkbtn" data-kresetno>ביטול</button>':'<button class="btn soft sm" data-kreset>מחיקת כל היעדים</button>'}</div>
-      <p class="fine">החישובים משתמשים בנוסחאות ובספי הקבלה הרשמיים של תשפ"ז שנאספו באתר, והספים משתנים משנה לשנה. החל מדצמבר 2026 הבחינה הפסיכומטרית דו-תחומית (200–800), והאנגלית נבדקת בבחינת אמירנט. כל מוסד יחליט איך לשקלל את הציון החדש, ולפי מאל"ו רוב המוסדות יתחשבו בציון הגבוה. אין כאן אחוז "סיכוי קבלה", כי אין לכך נתונים רשמיים. ממוצע המתקבלים (עבודאטה) הוא סימן ולא סף. מועדים משוערים מסומנים "בערך" ולא נכנסים ליומן. מקורות: <a href="${NITE.td}" target="_blank" rel="noopener">מאל"ו: מועדים</a>, <a href="${NITE.faq}" target="_blank" rel="noopener">מאל"ו: שאלות ותשובות</a>, <a href="${EDU.portal}" target="_blank" rel="noopener">משרד החינוך: מועדי הבגרות</a>, <a href="${IDF_ATUDA}" target="_blank" rel="noopener">צה"ל: עתודה אקדמית</a>.</p></div></details>`}
+      <p class="fine">החישובים משתמשים בנוסחאות ובספי הקבלה הרשמיים של תשפ"ז שנאספו באתר, והספים משתנים משנה לשנה. החל מדצמבר 2026 הבחינה הפסיכומטרית דו-תחומית (200–800), והאנגלית נבדקת בבחינת אמירנט. כל מוסד יחליט איך לשקלל את הציון החדש, ולפי מאל"ו רוב המוסדות יתחשבו בציון הגבוה. אין כאן אחוז "סיכוי קבלה", כי אין לכך נתונים רשמיים. ממוצע המתקבלים (עבודאטה) הוא סימן ולא סף. מועדים משוערים מסומנים "בערך" ולא נכנסים ליומן. מקורות: <a href="${NITE.td}" target="_blank" rel="noopener">מאל"ו: מועדים</a>, <a href="${NITE.faq}" target="_blank" rel="noopener">מאל"ו: שאלות ותשובות</a>, <a href="${EDU.portal}" target="_blank" rel="noopener">משרד החינוך: מועדי הבגרות</a>, <a href="${IDF_ATUDA}" target="_blank" rel="noopener">צה"ל: עתודה אקדמית</a>.${factChip('psy.format')}${factChip('psy.highest')}</p>${cycleNote()}</div></details>`}
 
 /* ---------- starting: degree, institution, where I am ---------- */
 /* "I have not decided": an example institution that has real data, where I qualify if I do, and near me if I said where I live */
