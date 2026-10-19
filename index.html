@@ -1504,17 +1504,19 @@ button.ft-chip:hover{box-shadow:0 1px 0 rgba(31,37,68,.22)}
 @media(max-width:820px){.sc-two{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:520px){.sc-card{padding:14px}.sc-h{flex-direction:column;gap:6px}.sc-dl>div{grid-template-columns:76px minmax(0,1fr)}.sc-il li{flex-direction:column;align-items:flex-start;gap:6px}.sc-q{padding:16px}}
 /* F2a: welcome back, the bridge plan, my story, the date I finish */
-.kp-wb{background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:16px 18px;margin-bottom:14px;border-inline-start:6px solid var(--primary)}
-.kp-wbh{display:flex;gap:12px;align-items:flex-start}.kp-wbh>div{min-width:0}.kp-wbh h2{font-size:20px;margin:0 0 2px}.kp-wbh p{margin:0;font-size:15px;color:#3B4262;line-height:1.6}
-.kp-wbd{margin:12px 0 0;display:grid;gap:10px}.kp-wbd>div{display:grid;grid-template-columns:130px minmax(0,1fr);gap:4px 12px;align-items:baseline}
-.kp-wbd dt{font-family:var(--head);font-weight:600;font-size:14px;color:var(--muted)}.kp-wbd dd{margin:0;font-size:15.5px;overflow-wrap:anywhere}.kp-wbd ul{margin:0;padding-inline-start:18px;display:grid;gap:3px}
+.kp-wel{background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:16px 18px;margin-bottom:14px;border-inline-start:6px solid var(--primary)}
+.kp-welh{display:flex;gap:12px;align-items:flex-start}.kp-welh>div{min-width:0}.kp-welh h2{font-size:20px;margin:0 0 2px}.kp-welh p{margin:0;font-size:15px;color:#3B4262;line-height:1.6}
+.kp-weld{margin:12px 0 0;display:grid;gap:10px}.kp-weld>div{display:grid;grid-template-columns:130px minmax(0,1fr);gap:4px 12px;align-items:baseline}
+.kp-weld dt{font-family:var(--head);font-weight:600;font-size:14px;color:var(--muted)}.kp-weld dd{margin:0;font-size:15.5px;overflow-wrap:anywhere}.kp-weld ul{margin:0;padding-inline-start:18px;display:grid;gap:3px}
 .kp-bridge{list-style:none;margin:8px 0;padding:0;display:grid;gap:8px}.kp-bridge li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:10px;align-items:start;background:#F7F8FC;border-radius:14px;padding:9px 12px;font-size:15px}
 .kp-bridge b{font-family:var(--head);font-size:14.5px;color:#B83A1B}.kp-bridge b.u{color:var(--muted);font-weight:600}.kp-bridge span{min-width:0;overflow-wrap:anywhere}
 .kp-story{display:grid;gap:6px;margin:10px 0}.kp-story label{font-family:var(--head);font-weight:600;font-size:15px}
 .kp-story textarea{box-sizing:border-box;width:100%;font:inherit;font-size:16px;line-height:1.55;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;background:#fff;color:var(--ink);resize:vertical;min-height:120px}
 .kp-story textarea:focus{outline:none;box-shadow:0 0 0 3px #FFD0C3;border-color:var(--primary)}.kp-story small{color:var(--muted);font-size:13px}
 .kp-endf{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}.kp-endf input{font:inherit;font-size:16px;border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;background:#fff;min-height:44px}.kp-endf input:focus{outline:none;box-shadow:0 0 0 3px #FFD0C3}
-@media(max-width:520px){.kp-wb{padding:14px}.kp-wbd>div{grid-template-columns:minmax(0,1fr)}.kp-bridge li{grid-template-columns:64px minmax(0,1fr)}}
+/* touch size for the small buttons inside them, and long unbroken text (a pasted link) wraps */
+.kp-wel .linkbtn,.kp-endf .linkbtn{min-height:40px;display:inline-flex;align-items:center}.kp-ul li{overflow-wrap:anywhere}
+@media(max-width:520px){.kp-wel{padding:14px}.kp-weld>div{grid-template-columns:minmax(0,1fr)}.kp-bridge li{grid-template-columns:64px minmax(0,1fr)}}
 html.rm .kp-next.soon,html.rm .kp-focus.soon{animation:none}
 
 </style>
@@ -5196,7 +5198,7 @@ function plan(){
     body:()=>`<p>היעד שלי הוא <b>${esc(d.n)}</b> ${bIn(I.n)}. כל התוכנית כאן בנויה סביב היעד הזה, וכשמחליפים אותו היא מתעדכנת.</p>${BTNS([KB(`data-open="${d.id}"`,'לעמוד התואר'),KB('data-kinst','מוסד אחר'),KB('data-kchange','תואר אחר')])}`});
   /* the numbers come first: without them nothing else can be measured, and with them the next step is clear */
   add(Z.now,{id:'numbers',nm:1,ic:'chart',t:X.real?'הציונים שלי במערכת':'להזין את הציונים שלי (גם צפויים)',s:X.real?([X.sc.p?`פסיכומטרי ${X.sc.p}${X.sc.estP?' (צפוי)':''}`:'',X.sc.b?`ממוצע בגרות ${fmt(X.sc.b,2)}${S.sc&&S.sc.est?' (צפוי)':''}`:''].filter(Boolean).join(', ')||'ציוני בגרות שהזנתי'):'בלי מספרים אי אפשר לדעת כמה חסר',done:X.real,
-    body:()=>`<p>${X.real?'המספרים שלי שמורים בפרופיל. קיבלתי ציון חדש, או שיפרתי בגרות? מעדכנים אותם בלשונית "כמה חסר לי?", ושם נשמרים בפרופיל והמסלול כולו מתעדכן.':'אין חובה להכיר את הציונים כבר עכשיו: אפשר להתחיל מהערכה או מציונים צפויים, ולראות מה צריך כדי להתקבל. כשיהיו ציונים אמיתיים, מעדכנים.'}</p>${BTNS([KB('data-kgo="lab"',X.real?'לעדכון הציונים':'להזנת הציונים','primary'),KB('data-go="calc"','מחשבון ממוצע בגרות'),KB('data-prof','הפרופיל שלי')])}`});
+    body:()=>`<p>${X.real?'המספרים שלי שמורים. מעכשיו כל תואר מראה כמה כבר יש וכמה חסר. קיבלתי ציון חדש, או שיפרתי בגרות? מעדכנים אותם בלשונית "כמה חסר לי?", ושם נשמרים בפרופיל והמסלול כולו מתעדכן.':'אין צורך בציונים סופיים. הערכה מספיקה כדי לראות את הצעד הראשון: אפשר להתחיל מהערכה או מציונים צפויים, ולראות מה צריך כדי להתקבל. כשיהיו ציונים אמיתיים, מעדכנים.'}</p>${BTNS([KB('data-kgo="lab"',X.real?'לעדכון הציונים':'להזנת הציונים','primary'),KB('data-go="calc"','מחשבון ממוצע בגרות'),KB('data-prof','הפרופיל שלי')])}`});
   add(Z.now,{id:'know',ic:'doc',t:'להבין מה נדרש כדי להתקבל',s:q.tier===0?'אין תנאי קבלה':q.tier===1?`סף רשמי: ${fmt(V.thr,V.thr%1?2:0)} ב${V.scale}`:q.tier===2?'דרכי קבלה שפורסמו':'לא פורסם סף מספרי',
     body:()=>`${reqHTML(X)}${cycleNote(P.i)}${famTip(X)}${BTNS([KB('data-kgo="lab"','לבדוק כמה חסר לי','primary'),q.srcs[0]?KA(q.srcs[0],'תנאי הקבלה באתר המוסד'):'',q.th&&q.th.calc?KA(q.th.calc,'המחשבון הרשמי של המוסד'):''].filter(Boolean))}`});
   if(['g10','g11'].includes(stg)){
@@ -5249,7 +5251,7 @@ function plan(){
       body:()=>bridgeHTML(X)});
     /* the threshold */
     if(q.tier===1||q.tier===2)add(Z.ready,{id:'thr',ms:1,nm:q.tier===1?1:0,ic:'flag',t:'לעבור את סף הקבלה',s:standing(X).h,done:V.ok===true||(q.tier===2&&M.thr),
-      body:()=>`<p>${esc(standing(X).s)}</p>${q.tier===2?tier2HTML(V):''}${BTNS([KB('data-kgo="lab"','כמה חסר לי, ואיך סוגרים','primary'),q.tier===2?KB('data-kmark="thr"',M.thr?`✓ בדקתי, אני ${gx('עומד','עומדת')} בתנאים`:`בדקתי ואני ${gx('עומד','עומדת')} בתנאים`):''].filter(Boolean))}${q.tier===1&&q.th?`<p class="fine">הסף והנוסחה: <a href="${esc(q.th.src)}" target="_blank" rel="noopener">אתר הקבלה של המוסד</a> (${esc(q.th.year||'')}). הספים משתנים משנה לשנה.</p>${cycleNote(P.i)}`:''}`});
+      body:()=>`${V.ok===true?'<p>עברתי את הסף. זו לא סוף הדרך, אבל זו נקודת ציון אמיתית.</p>':''}<p>${esc(standing(X).s)}</p>${q.tier===2?tier2HTML(V):''}${BTNS([KB('data-kgo="lab"','כמה חסר לי, ואיך סוגרים','primary'),q.tier===2?KB('data-kmark="thr"',M.thr?`✓ בדקתי, אני ${gx('עומד','עומדת')} בתנאים`:`בדקתי ואני ${gx('עומד','עומדת')} בתנאים`):''].filter(Boolean))}${q.tier===1&&q.th?`<p class="fine">הסף והנוסחה: <a href="${esc(q.th.src)}" target="_blank" rel="noopener">אתר הקבלה של המוסד</a> (${esc(q.th.year||'')}). הספים משתנים משנה לשנה.</p>${cycleNote(P.i)}`:''}`});
     else add(Z.ready,{id:'thr',ms:1,ic:'flag',t:'לבדוק איפה אני ביחס למתקבלים',s:standing(X).h,done:!!M.thr,
       body:()=>`<p>${esc(standing(X).s)}</p>${q.bench?`<p>לפי עבודאטה, ${q.bench.inst?'בממוצע במוסד הזה':'בממוצע בתחום'} מי שהתקבלו הגיעו עם ${[q.bench.p?'פסיכומטרי '+fmt(q.bench.p):'',q.bench.b?'ממוצע בגרות משוקלל '+q.bench.b:''].filter(Boolean).join(' ו')}. הממוצע משוקלל ויכול לעלות על 100 בגלל בונוסים.${factChip('avodata.bagrut')} זה לא סף: יש מי שהתקבלו עם פחות.</p>`:''}${BTNS([KB('data-kmark="thr"',M.thr?'✓ בדקתי את התנאים':'בדקתי את התנאים באתר המוסד'),q.srcs[0]?KA(q.srcs[0],'תנאי הקבלה באתר'):instKA(I,'אתר המוסד')])}`});
     /* extras the program asks for */
@@ -5291,7 +5293,7 @@ function plan(){
   if(X.fam==='med'||q.fl.mor)add(Z.reg,{id:'mor',ic:'star',t:'מיון אישי: מו"ר ומרק"ם',s:'הזימון מגיע ממאל"ו אחרי הציונים',
     body:()=>`<p>ברפואה, אחרי שלב הציונים, מועמדים מוזמנים למערכות לאפיון אישי: שאלון אישי-ביוגרפי, מרכז הערכה ושאלון שאו"ל.${factChip('mor.structure')} הזימון נשלח ממאל"ו לפי רשימות שהאוניברסיטאות הממיינות מעבירות.${factChip('mor.invite')}</p>${UL([`עלות מרכז ההערכה: ${fact('mor.fee.assess')}${factChip('mor.fee.assess')}`,`עלות השאלון האישי-ביוגרפי: ${fact('mor.fee.bio')}${factChip('mor.fee.bio')}`,`מ-2026 לא מחושב "ציון כללי" אחד: כל מרכיב מדווח בנפרד, וכל מוסד משקלל לפי המדיניות שלו${factChip('mor.nogeneral')}`])}${P.i==='technion'?`<p>בטכניון, בשנה האחרונה, ההודעה על מעבר לשלב המו"ר ופתיחת השאלון הביוגרפי באתר מאל"ו היו בתחילת יוני.${factChip('mor.technion')}</p>`:''}<p class="fine">מקור: מאל"ו. הנוהל עלול להשתנות. סכומים לא מוצגים כאן כל עוד לא אומתו.</p>${BTNS([KA(NITE.mor,'מאל"ו: מו"ר ומרק"ם','primary'),KB('data-kmark="mor"',M.mor?'✓ הוזמנתי / סיימתי':'הוזמנתי / סיימתי')])}`});
   add(Z.reg,{id:'answer',ic:'chat',t:'לקבל תשובה ולהחליט',s:'ולא לשלם מקדמה לפני אישור סופי',
-    body:()=>`<p>כשמגיעות תשובות, משווים בין האפשרויות. אם לא התקבלתי למה שרציתי, זו עדיין לא הסוף: אפשר לבדוק רשימת המתנה, מסלול אחר באותו מוסד, או בחינה חוזרת והגשה שוב.</p>${UL([`לפני שיש אישור סופי כדאי לא לשלם מקדמת שכר לימוד, ולבדוק מול המוסד אם זה אפשרי. בעתודה, לפי אתר "מתגייסים", אין חובה לשלם לפני האישור הסופי${factChip('atuda.tuition')}`,'לשמור על כל המסמכים והאישורים','אם יש שאלה על תשובה, פונים למשרד הקבלה של המוסד'])}${BTNS([KB('data-kmark="answer"',M.answer?'✓ קיבלתי תשובה':'קיבלתי תשובה')])}`});
+    body:()=>`<p>כשמגיעות תשובות, משווים בין האפשרויות. אם לא התקבלתי הפעם, זו תשובה על הציון של היום, לא עליי. אלה הדרכים הפתוחות: רשימת המתנה, מסלול דומה, ושיפור והגשה מחדש.</p>${UL([`לפני שיש אישור סופי כדאי לא לשלם מקדמת שכר לימוד, ולבדוק מול המוסד אם זה אפשרי. בעתודה, לפי אתר "מתגייסים", אין חובה לשלם לפני האישור הסופי${factChip('atuda.tuition')}`,'לשמור על כל המסמכים והאישורים','אם יש שאלה על תשובה, פונים למשרד הקבלה של המוסד'])}${BTNS([KB('data-kmark="answer"',M.answer?'✓ קיבלתי תשובה':'קיבלתי תשובה')])}`});
   add(Z.reg,{id:'acc',ms:1,ic:'cap',t:'התקבלתי!',s:M.acc?'מזל טוב!':'הקו האחרון של הדרך',
     body:()=>`<p>${M.acc?'מזל טוב! 🎉 הדרך הזאת נגמרה, והדרך האמיתית מתחילה.':'כשמתקבלים, מסמנים כאן וחוגגים.'}</p>${BTNS([KB('data-kmark="acc"',M.acc?'✓ התקבלתי':'התקבלתי! 🎓','primary')])}`});
   /* ----- first day ----- */
@@ -5390,13 +5392,13 @@ function bridgeSteps(X){
   const t={d:X.P.d,i:X.P.i},rows=X.rows,ps=X.sc.p||0,out=[],np=X.np;
   const mv=rows.length&&ps&&UNI_RULES[t.i]?moves(t,rows,ps).map(m=>({lbl:m.lbl,k:m.diff.k,gain:`+${m.gain} נקודות פסיכומטרי`})):rows.length?avgMoves(rows).map(m=>({lbl:m.lbl,k:m.diff.k,gain:`+${m.gainB} בממוצע`})):[];
   mv.slice(0,2).forEach(m=>{const ex=m.k?bagNext(m.k):[];
-    out.push({d:ex.length?ex[0][2]:'',h:`${esc(m.lbl)} (${esc(m.gain)})${ex.length?`. מועדי הבחינה: ${ex.map(b=>`${b[0]==='w'?'חורף':b[0]==='s'?'קיץ':'מועד ב'} ${dShort(b[2])}`).join(', ')}${factChip('bagrut.2027')}`:'. בוחרים עם היועץ/ת באיזה מועד ובאיזו דרך'}`})});
+    out.push({d:ex.length?ex[0][2]:'',f:ex.length?'bagrut.2027':'',h:`${esc(m.lbl)} (${esc(m.gain)})${ex.length?`. מועדי הבחינה: ${ex.map(b=>`${b[0]==='w'?'חורף':b[0]==='s'?'קיץ':'מועד ב'} ${dShort(b[2])}`).join(', ')}`:'. בוחרים עם היועץ/ת באיזה מועד ובאיזו דרך'}`})});
   if(X.gap!=null){
     const re=X.hasP?'בחינה פסיכומטרית חוזרת':'בחינה פסיכומטרית';
     if(np){
-      out.push({d:np.reg,h:`${re}: ההרשמה הרגילה למועד ${esc(np.lbl)} נסגרת ${dLong(np.reg)} (${inN(np.n)})${factChip('psy.date.'+np.id)}`});
-      out.push({d:np.d,h:`הבחינה עצמה: ${esc(np.days)}. עד אז מתרגלים בבחינות להתנסות${factChip('psy.date.'+np.id)}`});
-      out.push({d:np.res||'',h:`הציון החדש מגיע עד 45 ימים אחרי הבחינה${np.res?', ובמועד הזה לפי תחזית':''}${factChip('psy.results')}`})}
+      out.push({d:np.reg,f:'psy.date.'+np.id,h:`${re}: ההרשמה הרגילה למועד ${esc(np.lbl)} נסגרת ${dLong(np.reg)} (${inN(np.n)})`});
+      out.push({d:np.d,h:`הבחינה עצמה: ${esc(np.days)}. עד אז מתרגלים בבחינות להתנסות`});
+      out.push({d:np.res||'',f:'psy.results',h:`הציון החדש מגיע עד 45 ימים אחרי הבחינה${np.res?', ובמועד הזה לפי תחזית':''}`})}
     else out.push({d:'',h:`${re}: אין כרגע מועד פתוח להרשמה. מועדים חדשים מתפרסמים באתר מאל"ו`})}
   out.push({d:'',h:'כשיש ציון חדש, מזינים אותו בלשונית "כמה חסר לי?" ורואים מה השתנה'});
   out.push({d:'',h:'במקביל, תוכנית גיבוי: מוסד או תואר דומה שפתוחים לי כבר היום'});
@@ -5406,7 +5408,8 @@ function bridgeHTML(X){
   const intro=g!=null&&g<=40?`חסרות עוד ${g} נקודות בפסיכומטרי. זה מרחק של בחינה אחת, ואפשר לתכנן אותו.`
     :X.V.tier===1?'היעד הזה רחוק מהמספרים של היום. יש שלוש דרכים להתקרב אליו: לשפר את הבגרות, להיבחן שוב בפסיכומטרי, ולהוסיף יעד דומה שפתוח לי כבר עכשיו.'
     :'עוד אין מספר מדויק לפער, ובכל זאת אפשר לבנות כבר תוכנית קצרה.';
-  return `<p>${intro}</p><ol class="kp-bridge">${steps.map(x=>`<li><b class="num ${x.d?'':'u'}">${x.d?dShort(x.d):'אחר כך'}</b><span>${x.h}</span></li>`).join('')}</ol>
+  const seen=new Set(); /* one provenance chip per fact, on the first step that uses it */
+  return `<p>${intro}</p><ol class="kp-bridge">${steps.map(x=>{const c=x.f&&!seen.has(x.f)?(seen.add(x.f),factChip(x.f)):'';return `<li><b class="num ${x.d?'':'u'}">${x.d?dShort(x.d):'אחר כך'}</b><span>${x.h}${c}</span></li>`}).join('')}</ol>
     <p class="fine">השיפורים מחושבים לפי הנוסחאות שבאתר, כל אחד לבד, והם לא הבטחה להתקבל. מועדי הפסיכומטרי והבגרות הם כפי שפורסמו, ויכולים להשתנות.</p>${BTNS([KB('data-kgo="lab"','לבדוק בתרחיש','primary'),KB('data-kgo="opt"','תוכנית גיבוי'),KB('data-kmark="bridge"',M.bridge?'✓ התחלתי את התוכנית':'התחלתי את התוכנית')])}`}
 
 /* my story: notes kept in the path (P.story, plain text, escaped when shown). The recommendations catalog of F2b plugs in at storyRecsHTML */
@@ -5603,19 +5606,18 @@ function coach(pl){
 /* ---------- F2a: welcome back ---------- */
 /* how long since I was last on the road. Decided once per page load (KP.away), so the card stays until I close it; then today is saved as the visit */
 function visitNote(){
-  if(KP.away!==undefined)return;const P=pth();if(!P)return;
-  const t=today0(),iso=isoOf(t.getFullYear(),t.getMonth()+1,t.getDate());
-  KP.away=isoOk(P.seen)?Math.max(0,-daysTo(P.seen)):0;
-  if(P.seen!==iso){P.seen=iso;pthSave()}}
+  const P=pth();if(!P)return;const t=today0(),iso=isoOf(t.getFullYear(),t.getMonth()+1,t.getDate());
+  if(KP.away===undefined)KP.away=isoOk(P.seen)?Math.max(0,-daysTo(P.seen)):0;
+  if(P.seen!==iso){P.seen=iso;pthSave()} /* also after a restore from a backup, which brings an older date */}
 /* the card for a week or more away: what is close, how far I got, and one small step. Warm, no counting of what was missed */
 function welcomeHTML(pl){
   const n=KP.away;if(!(n>=7)||KP.wbDone)return '';
   const soon=[...pl.tasks.filter(t=>!t.done&&t.due&&!t.approx&&t.n>=0&&t.n<=14).map(t=>({d:t.due,t:t.t})),
     ...timeline(pl).filter(x=>(x.k==='mine'||x.k==='sch')&&!x.approx&&daysTo(x.d)<=14).map(x=>({d:x.d,t:x.t}))].sort((a,b)=>a.d.localeCompare(b.d)).slice(0,3);
   const nx=pl.next||pl.tasks.find(t=>!t.done);
-  return `<section class="kp-wb" aria-labelledby="kpWbH"><div class="kp-wbh"><span class="kp-ci">${ki('compass')}</span><div><h2 id="kpWbH">עבר זמן מאז שנפגשנו, וזה בסדר</h2>
+  return `<section class="kp-wel" aria-labelledby="kpWbH"><div class="kp-welh"><span class="kp-ci">${ki('compass')}</span><div><h2 id="kpWbH">עבר זמן מאז שנפגשנו, וזה בסדר</h2>
     <p>הנה מה שחשוב עכשיו ושלב קטן אחד להמשך. עברו ${n} ימים מאז הפעם האחרונה שהייתי כאן.</p></div></div>
-    <dl class="kp-wbd"><div><dt>בשבועיים הקרובים</dt><dd>${soon.length?`<ul>${soon.map(x=>`<li>${esc(x.t)} · ${esc(dShort(x.d))}, ${esc(inN(daysTo(x.d)))}</li>`).join('')}</ul>`:'אין מועד שנסגר בשבועיים הקרובים'}</dd></div>
+    <dl class="kp-weld"><div><dt>בשבועיים הקרובים</dt><dd>${soon.length?`<ul>${soon.map(x=>`<li>${esc(x.t)} · ${esc(dShort(x.d))}, ${esc(inN(daysTo(x.d)))}</li>`).join('')}</ul>`:'אין מועד שנסגר בשבועיים הקרובים'}</dd></div>
     <div><dt>עד עכשיו</dt><dd><b class="num">${pl.done}</b> מתוך <b class="num">${pl.total}</b> צעדים, ${pl.pct}% מהדרך</dd></div>
     ${nx?`<div><dt>הצעד הבא</dt><dd>${esc(nx.t)}${nx.due&&!nx.done?` · ${esc(dueText(nx))}`:''}</dd></div>`:''}</dl>
     <div class="kp-btns">${nx?KB(`data-kwel="${nx.id}"`,'להמשיך מהצעד הזה','primary'):''}<button class="linkbtn" data-kweld>סגירה</button></div></section>`}
@@ -5978,7 +5980,7 @@ function datesHTML(pl){
   return `<div class="sec-h"><div><h2>${ki('cal')}המועדים שלי</h2><p>בחינות והרשמות שקשורות אליי, לפי מאל"ו ומשרד החינוך, ותאריכים שהוספתי בעצמי.</p></div>${inViewer()?'':`<button class="btn soft sm" data-kics>${ki('down')}ליומן</button>`}</div>
     <div class="kp-card"><ol class="tl">${shown.map(x=>{const n=daysTo(x.d);return `<li class="tl-i ${x.k} ${x.reg?'reg':''} ${n<=14?'soon':''} ${x.pick?'pick':''}"><span class="tl-dot" aria-hidden="true"></span>
       <div class="tl-d num"><b>${dShort(x.d)}</b><small>${new Date(x.d+'T00:00:00').getFullYear()}</small></div>
-      <div class="tl-b"><b>${esc(x.t)}</b>${x.pick?' <span class="kp-tag ok">המועד שלי</span>':''}${x.sub?`<small>${esc(x.sub)}${x.f?factChip(x.f,x.sub2?{pre:'מועד'}:null):''}</small>`:''}${x.sub2?`<small>${esc(x.sub2)}${x.f2?factChip(x.f2):''}</small>`:''}${x.src?` <a class="tl-src" href="${x.src}" target="_blank" rel="noopener">מקור</a>`:''}${x.mine?` <button class="linkbtn" data-kdel="${x.id}">מחיקה</button>`:''}</div>
+      <div class="tl-b"><b>${esc(x.t)}</b>${x.pick?' <span class="kp-tag ok">המועד שלי</span>':''}${x.sub?`<small>${esc(x.sub)}${x.f?factChip(x.f,x.sub2?{pre:'מועד'}:null):''}</small>`:''}${x.sub2?`<small>${esc(x.sub2)}${x.f2?factChip(x.f2):''}</small>`:''}${x.src?` <a class="tl-src" href="${x.src}" target="_blank" rel="noopener">מקור</a>`:''}${x.mine?` <button class="linkbtn" data-kdel="${esc(x.id)}">מחיקה</button>`:''}</div>
       <span class="tl-n ${n<=14?'hot':''}">${inN(n)}</span></li>`}).join('')||'<li class="tl-empty">אין מועדים קרובים</li>'}</ol>
       ${L.length>6?`<div class="more"><button class="btn soft sm" data-kmore="dates">${KD.all?'להציג פחות':`להציג את כל ${L.length} המועדים`}</button></div>`:''}${dateAdd()}</div>`}
 function icsFile(only){
@@ -6088,7 +6090,7 @@ function wizardHTML(){
       ${R?'':`<p class="fine">לא ${gx('בטוח','בטוחה')} מה לבחור? <button class="linkbtn" data-go="dir">השאלון "מה הכיוון שלי?"</button> מציע תארים לפי מה שמעניין אותי.</p>`}`}
   else if(s===2){const d=BY[W.d||P.d];
     body=`<h2>איפה הכי הייתי רוצה ללמוד ${esc(d.n)}?</h2><p class="sub">${profileOK()?`בירוק: לפי הנתונים שלי אני כבר ${gx('עומד','עומדת')} בתנאים שפורסמו.`:`אחרי מילוי הפרופיל אראה גם איפה אני כבר ${gx('עומד','עומדת')} בתנאים.`} את הכול אפשר להחליף אחר כך.</p>${instPick(d,i=>`data-kwi="${i}"`,true)}`}
-  else body=`<h2>ועוד כמה שאלות קטנות, כדי שהתוכנית תתאים לי</h2><p class="sub">כולן אופציונליות. הכיתה והמועד עוזרים לסדר את הדרך לפי הזמן שנשאר.</p>
+  else body=`<h2>ועוד כמה שאלות קטנות, כדי שהתוכנית תתאים לי</h2><p class="sub">מתחילים מהנקודה שבה אני ${gx('נמצא','נמצאת')} היום, ומכאן נחשב לאן אפשר להגיע. כולן אופציונליות: הכיתה והמועד עוזרים לסדר את הדרך לפי הזמן שנשאר.</p>
     <div class="form kp-me">${meFieldsHTML('path',['stage','start','end'])}
     <details class="kp-more-me"><summary>עוד קצת עליי <small>(לא חובה, מדייק את התוכנית)</small></summary>${meFieldsHTML('path',['sex','reg','nat'])}<p class="fine">${MENOTE}</p></details></div>`;
   return `<section class="hero pth-hero wiz kp-wizhero"><div class="wrap">${BACK}
