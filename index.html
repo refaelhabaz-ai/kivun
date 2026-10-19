@@ -1331,6 +1331,7 @@ input[type=range]{accent-color:var(--primary);height:28px}
 .kp-dn{display:flex;flex-wrap:wrap;align-items:center;gap:0 8px;min-width:0;flex:1 1 220px}.kp-dr .linkbtn{min-height:40px;min-width:44px;display:inline-flex;align-items:center}.kp-dn .linkbtn{font-weight:700;font-size:15px;color:var(--ink);text-align:start;padding:0}.kp-dn .linkbtn:hover{color:var(--primary-dark);text-decoration:underline}
 .kp-dn small{color:var(--muted);font-size:13px}.kp-dn .kp-dx{font-size:12.5px;overflow-wrap:anywhere;flex-basis:100%;padding-bottom:4px}
 .kp-dtag{font-size:12.5px;font-weight:700;border-radius:999px;padding:3px 10px;background:#E3F7EE;color:#0B5A3E;white-space:normal}.kp-dtag i{font-style:normal}.kp-dtag.near{background:#FFF1D6;color:#7A4B00}
+.kp-dl+.linkbtn{font-weight:700;color:var(--primary-dark);text-decoration:underline;text-underline-offset:3px} /* "show all N": reads as a control, like the live line's link */
 .kp-dfold{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
 .kp-dfb{font:inherit;font-weight:700;font-size:14.5px;color:var(--ink);display:inline-flex;gap:8px;align-items:center;min-height:40px;padding:0 4px;cursor:pointer;background:none;border:0}.kp-dfb:hover{color:var(--primary-dark);text-decoration:underline}
 .kp-dcmb{display:flex;gap:10px;align-items:flex-start;background:#FFF7E6;border-radius:14px;padding:10px 12px;margin:12px 0 0;font-size:14.5px}.kp-dcmb svg{width:20px;height:20px;flex:none;margin-top:2px;color:#B8860B}
@@ -5125,7 +5126,7 @@ const doorsByName=(a,b)=>BY[a.d].n.localeCompare(BY[b.d].n,'he')||INST[a.i].n.lo
 function doorItem(x,mode){
   const d=BY[x.d],I=INST[x.i],med=mode!=='far'&&doorMed(d,x.i),one=x.gap===1; /* one point is singular, as gapLine writes it */
   const tx=mode==='near'?(med?`קרוב להזמנה לשלב הבא (${one?'חסרה נקודה אחת':`חסרות ${x.gap}`})`:`${one?'חסרה נקודה אחת':`חסרות ${x.gap} נקודות`} בפסיכומטרי`):mode==='open'?(med?'מספיק להזמנה לשלב הבא (מיון אישי)':'הציונים מגיעים לסף'):'',tag=tx?`<i aria-hidden="true">${mode==='near'?'◐':'✓'}</i> ${tx}`:'';
-  return `<li><span class="kp-dn"><button type="button" class="linkbtn" data-open="${esc(d.id)}">${esc(d.n)}</button><small>${esc(I.n)}</small>${x.x&&mode!=='far'?`<small class="kp-dx">לשים לב: ${esc(x.x.length>110?x.x.slice(0,108)+'…':x.x)}</small>`:''}</span>${tag?`<span class="kp-dtag ${mode}">${tag}</span>`:''}</li>`}
+  return `<li><span class="kp-dn"><button type="button" class="linkbtn" data-open="${esc(d.id)}" aria-label="${esc(d.n)}, ${esc(I.n)}">${esc(d.n)}</button><small>${esc(I.n)}</small>${x.x&&mode!=='far'?`<small class="kp-dx">לשים לב: ${esc(x.x.length>110?x.x.slice(0,108)+'…':x.x)}</small>`:''}</span>${tag?`<span class="kp-dtag ${mode}">${tag}</span>`:''}</li>`}
 /* the open flags live in LAB.dopen: a repaint replaces the DOM on every input, so a <details> would close each time */
 function doorsList(key,items,mode){
   const all=!!LAB.dopen[key],list=all?items:items.slice(0,DOOR_CAP);
@@ -5161,8 +5162,10 @@ function doorsHTML(X){
   if(C.far)out.push(doorsFold('far','הדלתות הרחוקות',D.filter(x=>x.st==='far'),'far'));
   if(D.some(x=>(x.st==='open'||x.st==='near')&&doorMed(BY[x.d],x.i)))out.push(`<p class="fine">ברפואה, ברפואת שיניים ובתוכניות עם מיון אישי (מו"ר, מרק"ם) הסף רק מזמין לשלב הבא. זו לא קבלה.</p>`);
   /* turn the boosters I chose into dated steps */
-  if(LAB.dplan){const p=LAB.dplan;
-    out.push(`<div class="kp-dok" id="kpDPlan" tabindex="-1" role="status"><b>${ki('check')}${p.n?`התוכנית נוספה: ${p.n===1?'תאריך אחד':p.n+' תאריכים'} בלשונית "התאריכים שלי"`:'התוכנית נשמרה בלי תאריכים'}</b>${p.n?`<ul>${p.steps.map(s=>`<li><b class="num">${esc(dShort(s.d))}</b> ${esc(s.t)}${s.f?factChip(s.f,{lg:1}):''}</li>`).join('')}</ul>`:''}${p.undated.length?`<p>בלי מועד שפורסם, ולכן בלי תאריך: ${p.undated.map(esc).join(', ')}. את התאריך אפשר להוסיף בעצמי בלשונית התאריכים.</p>`:''}${BTNS([KB('data-kgo="dates"','לתאריכים שלי')])}</div>`)}
+  /* the box lists only the steps that are still in my dates: one I deleted there is not "added" any more (all deleted = the plan button comes back) */
+  const p=LAB.dplan,pd=p?pth().dates:[],live=p?p.steps.filter(s=>pd.some(c=>c.id===s.id)):[];
+  if(p&&(live.length||(!p.n&&p.undated.length))){
+    out.push(`<div class="kp-dok" id="kpDPlan" tabindex="-1" role="status"><b>${ki(live.length?'check':'cal')}${live.length?`התוכנית נוספה: ${live.length===1?'תאריך אחד':live.length+' תאריכים'} בלשונית "התאריכים שלי"`:'לא נוספו תאריכים'}</b>${live.length?`<ul>${live.map(s=>`<li><b class="num">${esc(dShort(s.d))}</b> ${esc(s.t)}${s.f?factChip(s.f,{lg:1}):''}</li>`).join('')}</ul>`:''}${p.undated.length?`<p>בלי מועד שפורסם, ולכן בלי תאריך: ${p.undated.map(esc).join(', ')}. את התאריך אפשר להוסיף בעצמי בלשונית התאריכים.</p>`:''}${BTNS([KB('data-kgo="dates"','לתאריכים שלי')])}</div>`)}
   else if(X.real&&LAB.boost.size)out.push(`<div class="kp-btns">${KB('data-lbplan','להפוך לתוכנית','primary')}</div><p class="fine">הבוסטרים שבחרתי הופכים לצעדים בלשונית התאריכים, רק כשיש להם מועד שפורסם. אפשר למחוק כל צעד אחר כך.</p>`);
   return `<div class="kp-dr">${head}<p class="fine">לכל תואר ומוסד שפורסם לו סף מספרי: דלת פתוחה כשהציונים בתרחיש מגיעים לסף, וקרובה כשחסרות עד ${DOOR_NEAR} נקודות בפסיכומטרי. זו השוואה לספים שפורסמו, לא הבטחה להתקבל.</p>
     <div class="kp-dt4" role="group" aria-label="ספירת הדלתות בתרחיש">${['open','near','far','na'].map(tile).join('')}</div>
@@ -5188,8 +5191,8 @@ function doorsPlan(){
       else undated.push(b.lbl)}});
   steps.forEach(s=>{P.dates=P.dates.filter(c=>c.id!==s.id);P.dates.push({id:s.id,t:s.t,d:s.d,src:'lab',bk:s.bk,f:s.f})});
   if(steps.length)KD.all=true; /* the dates tab shows 6 rows until asked for all: the new steps must not sit behind that button */
-  if(!P.marks.bridge)setMark('bridge',Date.now());
-  LAB.dplan={n:steps.length,steps:steps.map(s=>({t:s.t,d:s.d,f:s.f})),undated};
+  if(steps.length&&!P.marks.bridge)setMark('bridge',Date.now()); /* the badge says a bridge plan exists: not when no date could be added */
+  LAB.dplan={n:steps.length,steps:steps.map(s=>({id:s.id,t:s.t,d:s.d,f:s.f})),undated};
   logAct();pthSave();PLC=null}
 
 /* one normalized answer for "where do I stand for this target": tier 1 official formula, 2 published number routes, 3 averages only, 0 open to all */
@@ -5903,7 +5906,7 @@ function visitNote(){
 function welcomeHTML(pl){
   const n=KP.away;if(!(n>=7)||KP.wbDone)return '';
   const soon=[...pl.tasks.filter(t=>!t.done&&t.due&&!t.approx&&t.n>=0&&t.n<=14).map(t=>({d:t.due,t:t.t,fl:dueFt(t)})), /* the same flag as the step's own date chip: a date that rests on an unverified fact says so */
-    ...timeline(pl).filter(x=>(x.k==='mine'||x.k==='sch')&&!x.approx&&daysTo(x.d)<=14).map(x=>({d:x.d,t:x.t,fl:''}))].sort((a,b)=>a.d.localeCompare(b.d)).slice(0,3);
+    ...timeline(pl).filter(x=>(x.k==='mine'||x.k==='sch')&&!x.approx&&daysTo(x.d)<=14).map(x=>({d:x.d,t:x.t,fl:dueFt({df:x.f})}))].sort((a,b)=>a.d.localeCompare(b.d)).slice(0,3); /* a plan step carries the fact behind its date (x.f); my own dates and scholarships carry none */
   const nx=pl.next||pl.tasks.find(t=>!t.done);
   return `<section class="kp-wel" aria-labelledby="kpWbH"><div class="kp-welh"><span class="kp-ci">${ki('compass')}</span><div><h2 id="kpWbH">עבר זמן מאז שנפגשנו, וזה בסדר</h2>
     <p>עברו ${n} ימים מאז הביקור האחרון. הנה מה שחשוב עכשיו ושלב קטן אחד להמשך.</p></div></div>
@@ -6373,8 +6376,8 @@ function timeline(pl){
     (many?tInfos().map(x=>x.X):[pl.X]).forEach(X=>{if(!X.start||!REGD[X.P.i])return;const R=REGD[X.P.i],f=X.fam,Y=X.start;
       [...(R.ev||[]),...(f==='med'||f==='dent'?R.evmed||[]:[]),...(f==='arch'?R.evarch||[]:[])].forEach(([md,t])=>{const [m,d]=md.split('-'),id='regev-'+md+'-'+X.P.i+'-'+t;if(seen.has(id))return;seen.add(id);
         L.push({id,d:isoOf(Y,+m,+d),k:'idf',approx:1,t:`${t} (בערך, לפי ${R.cy})${many?` · ${X.I.n}`:''}`,sub:`${X.I.n}: לפי המחזור האחרון שפורסם. המועד לשנה שלי מתפרסם באתר המוסד.`,f:REGF[X.P.i],src:R.src})})})}
-  (P&&P.dates||[]).forEach(x=>{const f=planFact(x); /* F4: a step made from an exam date shows the status of that date, like the site's own row beside it */
-    L.push({id:x.id,d:x.d,k:'mine',t:x.t,mine:1,...(f?{f,sub:f==='bagrut.2027'?'לפי טיוטת לוח הבחינות של משרד החינוך.':'לפי לוח המועדים של מאל"ו.'}:{})})});
+  (P&&P.dates||[]).forEach(x=>{const f=planFact(x),bg=f==='bagrut.2027'?BAGD.find(b=>b[2]===x.d||b[4]===x.d):null; /* F4: a step made from an exam date shows the status and the source of that date, like the site's own row beside it */
+    L.push({id:x.id,d:x.d,k:'mine',t:x.t,mine:1,...(f?{f,sub:f==='bagrut.2027'?'לפי טיוטת לוח הבחינות של משרד החינוך.':'לפי לוח המועדים של מאל"ו.',src:f==='bagrut.2027'?bg&&(bg[0]==='w'?EDU.win:EDU.sum):NITE.td}:{})})});
   schEvents().forEach(x=>L.push(x)); /* F3: my tracked scholarships and verified windows */
   if(P&&P.end)L.push({id:'end-mine',d:P.end,k:'mine',t:endTitle(),sub:'התאריך שהזנתי בעצמי.'}); /* F2a: my own date (no delete button: it is edited under "עליי") */
   return L.filter(x=>x.d&&daysTo(x.d2||x.d)>=0).sort((a,b)=>a.d.localeCompare(b.d))}
@@ -7209,7 +7212,7 @@ function schTrackHTML(){const s=schS(),L=[...s.items].sort((a,b)=>(SC_DONE.inclu
     <div class="kp-btns">${KB('data-sch="new"','הוספת מלגה משלי')}</div></div>`}
 function schTlRow(x){const n=daysTo(x.d),hot=n<=14;
   return `<li class="tl-i ${x.k} ${x.reg?'reg':''} ${hot?'soon':''}"><span class="tl-dot" aria-hidden="true"></span><div class="tl-d num"><b>${dShort(x.d)}</b><small>${new Date(x.d+'T00:00:00').getFullYear()}</small></div>
-    <div class="tl-b"><b>${esc(x.t)}</b>${x.approx?'<small>תאריך משוער (בערך)</small>':''}${x.sub?`<small>${esc(x.sub)}</small>`:''}</div><span class="tl-n ${hot?'hot':''}">${inN(n)}</span></li>`}
+    <div class="tl-b"><b>${esc(x.t)}</b>${x.approx?'<small>תאריך משוער (בערך)</small>':''}${x.sub?`<small>${esc(x.sub)}${x.f?factChip(x.f):''}</small>`:''}</div><span class="tl-n ${hot?'hot':''}">${inN(n)}</span></li>`} /* x.f: the same status chip the dates tab shows for that date */
 /* one rail: my scholarship dates next to the road's dates (psychometric registration, registration windows, dates I added), sorted by date */
 function schRailHTML(){const road=hasGoal(),L=timeline(safe(plan,null)).filter(x=>x.k==='sch'||x.k==='mine'||(road&&(x.reg||x.k==='idf'))),shown=SCF.rail?L:L.slice(0,6),hasS=schEvents().length>0;
   return `<div class="kp-card sc-rail"><div class="pc-h"><h2>${ki('cal')}המועדים הקרובים שלי</h2></div>
