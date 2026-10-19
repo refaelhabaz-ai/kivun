@@ -4813,7 +4813,7 @@ function pth(){
   if(!BY[p.d])p.d='';
   if(!p.d||!INST[p.i]||!BY[p.d].of.some(o=>o.i===p.i))p.i='';
   if(!p.marks||typeof p.marks!=='object')p.marks={};
-  if(!Array.isArray(p.dates))p.dates=[];if(!Array.isArray(p.log))p.log=[];
+  p.dates=Array.isArray(p.dates)?p.dates.filter(x=>x&&typeof x==='object'&&/^\d{4}-\d{2}-\d{2}$/.test(x.d)).map(x=>({...x,id:String(x.id??''),t:String(x.t??'')})):[];if(!Array.isArray(p.log))p.log=[]; /* only real dates: a null or a number in storage would break the lists */
   /* F2a: when I finish school or service (end), the last day I was on the road (seen) and my story notes; old saves have none of them */
   if(!isoOk(p.end))p.end='';if(!isoOk(p.seen))p.seen='';p.story=typeof p.story==='string'?p.story.slice(0,STORY_MAX):'';
   /* before v4 there was a single goal in d / i / auto / marks / goalP: it becomes the first target */
@@ -5247,7 +5247,7 @@ function plan(){
           body:()=>`${boostHTML(X)}${BTNS([KB('data-kgo="lab"','לנסות בתרחיש','primary')])}`})}
     }
     /* a bridge plan: only while the verdict says I am not above the threshold yet */
-    if(V.ok===false&&X.real)add(Z.ready,{id:'bridge',ic:'map',t:'לבנות תוכנית גישור',s:X.gap!=null?`חסרות ${X.gap} נקודות בפסיכומטרי, ויש דרך לסגור`:'מהמצב של היום אל הסף, צעד אחרי צעד',
+    if(V.ok===false&&X.real)add(Z.ready,{id:'bridge',ic:'map',t:'לבנות תוכנית גישור',s:X.gap!=null?gapLine(X.gap):'מהמצב של היום אל הסף, צעד אחרי צעד',
       body:()=>bridgeHTML(X)});
     /* the threshold */
     if(q.tier===1||q.tier===2)add(Z.ready,{id:'thr',ms:1,nm:q.tier===1?1:0,ic:'flag',t:'לעבור את סף הקבלה',s:standing(X).h,done:V.ok===true||(q.tier===2&&M.thr),
@@ -5386,6 +5386,8 @@ function boostHTML(X){
   return out.length?`<p>הדברים שהכי מקרבים אותי לסף, לפי הנוסחה הרשמית:</p>${UL(out)}<p class="fine">כל אחד מחושב לבד. את השילוב ביניהם רואים בלשונית "כמה חסר לי?".</p>`:'<p>כדי לדעת מה הכי משתלם, צריך ציוני בגרות ופסיכומטרי. מזינים אותם בלשונית "כמה חסר לי?".</p>'}
 /* ---------- F2a: the bridge plan, my story, housing ---------- */
 /* the next exam dates of one bagrut subject, from the Ministry of Education draft (the chip says it is a draft) */
+/* the gap in the psychometric score, in words: singular for one point, and no promise when the gap is big */
+const gapLine=g=>`${g===1?'חסרה נקודה אחת':`חסרות ${g} נקודות`} בפסיכומטרי, ${g<=40?'ויש דרך לסגור':'ואפשר להתקרב בכמה דרכים'}`;
 const bagNext=k=>BAGD.filter(b=>b[1]===k&&daysTo(b[4]||b[2])>=0).slice(0,2);
 /* a short plan that starts from the boosters (the same pure functions the booster list uses) and the real exam dates; undated steps come last */
 function bridgeSteps(X){
@@ -5396,7 +5398,9 @@ function bridgeSteps(X){
   if(X.gap!=null){
     const re=X.hasP?'בחינה פסיכומטרית חוזרת':'בחינה פסיכומטרית';
     if(np){
-      out.push({d:np.reg,f:'psy.date.'+np.id,h:`${re}: ההרשמה הרגילה למועד ${esc(np.lbl)} נסגרת ${dLong(np.reg)} (${inN(np.n)})`});
+      /* a session I saved whose regular registration already closed: not a deadline ahead, so no date to sort by */
+      out.push(np.n<0?{d:'',f:'psy.date.'+np.id,h:`${re}: ההרשמה הרגילה למועד ${esc(np.lbl)} נסגרה ${dLong(np.reg)}. בודקים באתר מאל"ו אם עדיין אפשר להירשם, או מתכננים את המועד הבא`}
+        :{d:np.reg,f:'psy.date.'+np.id,h:`${re}: ההרשמה הרגילה למועד ${esc(np.lbl)} נסגרת ${dLong(np.reg)} (${inN(np.n)})`});
       out.push({d:np.d,h:`הבחינה עצמה: ${esc(np.days)}. עד אז מתרגלים בבחינות להתנסות`});
       out.push({d:np.res||'',f:'psy.results',h:`הציון החדש מגיע עד 45 ימים אחרי הבחינה${np.res?', ובמועד הזה לפי תחזית':''}`})}
     else out.push({d:'',h:`${re}: אין כרגע מועד פתוח להרשמה. מועדים חדשים מתפרסמים באתר מאל"ו`})}
@@ -5405,7 +5409,7 @@ function bridgeSteps(X){
   return [...out.filter(x=>x.d).sort((a,b)=>a.d.localeCompare(b.d)),...out.filter(x=>!x.d)]}
 function bridgeHTML(X){
   const g=X.gap,M=X.M,steps=bridgeSteps(X);
-  const intro=g!=null&&g<=40?`חסרות עוד ${g} נקודות בפסיכומטרי. זה מרחק של בחינה אחת, ואפשר לתכנן אותו.`
+  const intro=g!=null&&g<=40?`${g===1?'חסרה עוד נקודה אחת':`חסרות עוד ${g} נקודות`} בפסיכומטרי. זה מרחק של בחינה אחת, ואפשר לתכנן אותו.`
     :X.V.tier===1?'היעד הזה רחוק מהמספרים של היום. יש שלוש דרכים להתקרב אליו: לשפר את הבגרות, להיבחן שוב בפסיכומטרי, ולהוסיף יעד דומה שפתוח לי כבר עכשיו.'
     :'עוד אין מספר מדויק לפער, ובכל זאת אפשר לבנות כבר תוכנית קצרה.';
   const seen=new Set(); /* one provenance chip per fact, on the first step that uses it */
@@ -5420,15 +5424,16 @@ function storyHTML(X){
   return `<p>${fl.length?`בתנאי הקבלה של התוכנית שבחרתי מופיע: ${fl.join(', ')}. `:'בחלק מהתוכניות מבקשים ראיון, מכתב או תיק עבודות. '}כדאי לאסוף מראש את הסיפור שלי, כדי שיהיה לי מה להגיד כשיבקשו.</p>
     ${UL(['מה משך אותי לתחום הזה, ומתי זה התחיל','משהו אחד שעשיתי סביבו: פרויקט, התנדבות, עבודה או קורס','מה אני רוצה ללמוד, ומה אני רוצה שיזכרו ממני'])}
     <div class="kp-story"><label for="kpStory">הסיפור שלי, בנקודות או בקצרה</label><textarea id="kpStory" rows="6" maxlength="${STORY_MAX}" placeholder="למשל: מה משך אותי לתחום, מה עשיתי בו, ומה אני רוצה ללמוד">${esc(txt)}</textarea>
-    <small id="kpStoryS" role="status">${storyCount(txt.length)}${txt?' · נשמר בדפדפן הזה':''}</small></div>
+    <small id="kpStoryS">${storyCount(txt.length)}<span role="status">${txt?' · נשמר בדפדפן הזה':''}</span></small></div>
     <p class="fine">הסיפור לא מחליף את הציונים ולא משנה את חישוב הסכם: זה מה שמכינים לראיון, למכתב או לתיק. מה שנכתב כאן נשמר רק בדפדפן הזה ולא נכנס לסיכום שאני משתף/ת.</p>${storyRecsHTML(X)}${BTNS([KB('data-kmark="story"',M.story?'✓ הסיפור שלי מוכן':'סימון: הסיפור שלי מוכן')])}`}
 function storySave(v){const P=pth();if(!P)return;P.story=String(v).slice(0,STORY_MAX);pthSave();PLC=null;storyStatus(true)}
-function storyStatus(saved){const e=$('#kpStoryS'),t=$('#kpStory');if(e&&t)e.textContent=storyCount(t.value.length)+(saved&&t.value?' · נשמר בדפדפן הזה':'')}
+/* the counter changes with every key but is not announced; only "saved" is (role=status) */
+function storyStatus(saved){const e=$('#kpStoryS'),t=$('#kpStory');if(!e||!t)return;e.firstChild.nodeValue=storyCount(t.value.length);const s=e.querySelector('[role="status"]');if(s)s.textContent=saved&&t.value?' · נשמר בדפדפן הזה':''}
 let STT=0;
 
 /* housing: the institution's page and my own date in the calendar (the dates I add here are ordinary custom dates, so they can be deleted from the dates tab) */
 function dormHTML(X){
-  const I=X.I,M=X.M,mine=(X.P.dates||[]).filter(x=>String(x.id).startsWith('my-dorm-')&&isoOk(x.d));
+  const I=X.I,M=X.M,mine=(X.P.dates||[]).filter(x=>String(x.id).startsWith('my-dorm-')&&isoOk(x.d)&&(!x.i||x.i===X.P.i));
   return `<p>מי שלומד רחוק מהבית צריך מקום לגור בו. במוסדות רבים ההרשמה למעונות נפרדת מההרשמה לתואר ויש לה מועדים משלה.${factChip('dorm.separate')} בודקים באתר ${esc(I.n)} או בדיקנאט הסטודנטים אם יש מעונות, איך נרשמים ועד מתי. אפשר גם לשקול דירה משותפת, או להמשיך לגור בבית.</p>
     ${mine.length?`<ul class="kp-ul">${mine.map(x=>`<li>${esc(x.t)}: ${dLong(x.d)} (${inN(daysTo(x.d))}) <button class="linkbtn" data-kdel="${esc(x.id)}">מחיקה</button></li>`).join('')}</ul>`:''}
     <form class="kp-form" id="kpDorm"><label for="kpDormD">מועד שחשוב לי במעונות (למשל סגירת ההרשמה)</label><input id="kpDormD" type="date" required><button class="btn soft sm" type="submit">${FIC.plus}הוספה ליומן</button></form>
@@ -5500,7 +5505,7 @@ function zoneRange(id,X){
   if(id==='svc')return g?`מהקיץ של ${ye+(12-g)}`:'עכשיו';
   if(id==='prep')return 'עכשיו';
   if(id==='reg')return Y?`בדרך כלל ${Y}: מפברואר ועד הקיץ`:'בשנה שלפני הלימודים';
-  if(id==='go')return Y?`אוקטובר ${Y} (${HY[Y]||''})`:'כשמתחילים';
+  if(id==='go')return Y?`אוקטובר ${Y}${HY[Y]?` (${HY[Y]})`:''}`:'כשמתחילים';
   return ''}
 const zOpen=(z,pl)=>KP.zt[z.id]!==undefined?KP.zt[z.id]:z.id===pl.focus;
 /* a date whose source is not cross-checked says so wherever it is shown (df = the fact that holds the date) */
@@ -5529,7 +5534,7 @@ function zonesHTML(pl){
   const X=pl.X,Y=X.start;
   return `${stepsHTML(pl)}
     <div class="kp-road">${pl.zones.map(z=>zoneHTML(z,pl)).join('')}
-      <div class="kp-z end"><span class="kp-node end">${ki('cap')}</span><div class="kp-zc"><div class="kp-endc"><b>היום הראשון ללימודים</b><small>${Y?`אוקטובר ${Y} (${HY[Y]||''})${X.startE?', לפי תאריך הסיום שהזנתי':''}`:`כשאני ${gx('מוכן','מוכנה')}, ובקצב שלי`}</small></div></div></div></div>`}
+      <div class="kp-z end"><span class="kp-node end">${ki('cap')}</span><div class="kp-zc"><div class="kp-endc"><b>היום הראשון ללימודים</b><small>${Y?`אוקטובר ${Y}${HY[Y]?` (${HY[Y]})`:''}${X.startE?', לפי תאריך הסיום שהזנתי':''}`:`כשאני ${gx('מוכן','מוכנה')}, ובקצב שלי`}</small></div></div></div></div>`}
 
 /* ---------- my targets: how far along each one is ---------- */
 function tInfo(t){return withTarget(t,()=>{const pl=safe(plan,null);if(!pl)return null;const X=pl.X;
@@ -5612,12 +5617,12 @@ function visitNote(){
 /* the card for a week or more away: what is close, how far I got, and one small step. Warm, no counting of what was missed */
 function welcomeHTML(pl){
   const n=KP.away;if(!(n>=7)||KP.wbDone)return '';
-  const soon=[...pl.tasks.filter(t=>!t.done&&t.due&&!t.approx&&t.n>=0&&t.n<=14).map(t=>({d:t.due,t:t.t})),
-    ...timeline(pl).filter(x=>(x.k==='mine'||x.k==='sch')&&!x.approx&&daysTo(x.d)<=14).map(x=>({d:x.d,t:x.t}))].sort((a,b)=>a.d.localeCompare(b.d)).slice(0,3);
+  const soon=[...pl.tasks.filter(t=>!t.done&&t.due&&!t.approx&&t.n>=0&&t.n<=14).map(t=>({d:t.due,t:t.t,fl:dueFt(t)})), /* the same flag as the step's own date chip: a date that rests on an unverified fact says so */
+    ...timeline(pl).filter(x=>(x.k==='mine'||x.k==='sch')&&!x.approx&&daysTo(x.d)<=14).map(x=>({d:x.d,t:x.t,fl:''}))].sort((a,b)=>a.d.localeCompare(b.d)).slice(0,3);
   const nx=pl.next||pl.tasks.find(t=>!t.done);
   return `<section class="kp-wel" aria-labelledby="kpWbH"><div class="kp-welh"><span class="kp-ci">${ki('compass')}</span><div><h2 id="kpWbH">עבר זמן מאז שנפגשנו, וזה בסדר</h2>
-    <p>הנה מה שחשוב עכשיו ושלב קטן אחד להמשך. עברו ${n} ימים מאז הפעם האחרונה שהייתי כאן.</p></div></div>
-    <dl class="kp-weld"><div><dt>בשבועיים הקרובים</dt><dd>${soon.length?`<ul>${soon.map(x=>`<li>${esc(x.t)} · ${esc(dShort(x.d))}, ${esc(inN(daysTo(x.d)))}</li>`).join('')}</ul>`:'אין מועד שנסגר בשבועיים הקרובים'}</dd></div>
+    <p>עברו ${n} ימים מאז הביקור האחרון. הנה מה שחשוב עכשיו ושלב קטן אחד להמשך.</p></div></div>
+    <dl class="kp-weld"><div><dt>בשבועיים הקרובים</dt><dd>${soon.length?`<ul>${soon.map(x=>`<li>${esc(x.t)} · ${esc(dShort(x.d))}, ${esc(inN(daysTo(x.d)))}${x.fl?` · ${esc(x.fl)}`:''}</li>`).join('')}</ul>`:'אין מועד שנסגר בשבועיים הקרובים'}</dd></div>
     <div><dt>עד עכשיו</dt><dd><b class="num">${pl.done}</b> מתוך <b class="num">${pl.total}</b> צעדים, ${pl.pct}% מהדרך</dd></div>
     ${nx?`<div><dt>הצעד הבא</dt><dd>${esc(nx.t)}${nx.due&&!nx.done?` · ${esc(dueText(nx))}`:''}</dd></div>`:''}</dl>
     <div class="kp-btns">${nx?KB(`data-kwel="${nx.id}"`,'להמשיך מהצעד הזה','primary'):''}<button class="linkbtn" data-kweld>סגירה</button></div></section>`}
@@ -6022,15 +6027,23 @@ function meFieldsHTML(mode,keys){
   const attr=mode==='prof'?(k,v)=>`data-pq="${k}" data-pv="${v}"`:(k,v)=>`data-kme="${k}:${v}"`,p=S.prof||{};
   return MEQ().filter(q=>keys.includes(q.k)).map(q=>`<div class="field kp-mq"><label ${q.t==='date'?'id="kpEndL" for="kpEnd"':''}>${q.q}</label>${q.h?`<span class="hint">${q.h}</span>`:''}${q.t==='date'?endField():meChips(q,mode==='prof'?p[q.k]:meVal(q.k),attr)}</div>`).join('')}
 /* the date I finish school or service (P.end, on the path like the start year): a date input, a way to clear it, and what follows from it */
-const endRange=()=>{const t=today0(),a=new Date(t),b=new Date(t);a.setFullYear(a.getFullYear()-1);b.setFullYear(b.getFullYear()+8);const f=x=>isoOf(x.getFullYear(),x.getMonth()+1,x.getDate());return [f(a),f(b)]};
+const endRange=()=>{const t=today0(),a=new Date(t),b=new Date(t);a.setFullYear(a.getFullYear()-1);b.setFullYear(b.getFullYear()+5);const f=x=>isoOf(x.getFullYear(),x.getMonth()+1,x.getDate());return [f(a),f(b)]};
 const endTitle=()=>stageNow()==='svc'?'סיום השירות שלי':GRD[stageNow()]?'סיום י"ב שלי':'התאריך שבו אני מסיים';
 function endHint(){const P=pth(),v=P&&P.end;if(!v)return '';const n=daysTo(v);
   return `${n>=0?`${endTitle()}: ${inN(n)}.`:'התאריך כבר עבר.'}${!startPicked()&&startFromEnd()?` ההתחלה המוקדמת שמתאימה לתאריך הזה: אוקטובר ${startFromEnd()}.`:''}`}
 function endField(){const P=pth(),v=P&&P.end||'',[lo,hi]=endRange();
   return `<div class="kp-endf"><input type="date" id="kpEnd" data-kend value="${esc(v)}" min="${lo}" max="${hi}"><button type="button" class="linkbtn" data-kendx ${v?'':'hidden'}>ניקוי התאריך</button></div><span class="hint" id="kpEndH" role="status">${esc(endHint())}</span>`}
 function setEnd(v){const [lo,hi]=endRange();
-  if(v&&!(isoOk(v)&&v>=lo&&v<=hi)){toast('התאריך מחוץ לטווח. אפשר לבחור תאריך בשמונה השנים הקרובות');return false}
+  if(v&&!(isoOk(v)&&v>=lo&&v<=hi)){toast('התאריך מחוץ לטווח. אפשר לבחור תאריך בחמש השנים הקרובות');return false}
   const P=pth()||pthNew();PTH=P;P.end=v||'';pthSave();PLC=null;return true}
+/* typing a date key by key: the browser reports 0002-07-07, 0020-07-07 ... on the way to the year, and an erased part reads as an empty field.
+   While I am in the field nothing is judged or written back; a complete date in range is saved, an emptied field clears. The range is judged when I leave it */
+function endChange(t,left){
+  const v=t.value,cur=(pth()||{}).end||'',[lo,hi]=endRange(),ok=v===''||(isoOk(v)&&v>=lo&&v<=hi);
+  if(!left){if(v===''&&t.validity.badInput)return;if(ok&&v!==cur&&setEnd(v))endSync();return}
+  if(document.activeElement===t)return; /* the window lost focus, not the field */
+  if(v!==''&&!ok)toast('התאריך מחוץ לטווח. אפשר לבחור תאריך בחמש השנים הקרובות');
+  if(!ok||(v===''&&t.validity.badInput))t.value=cur}
 /* after the date changed: the hint under the input, the clear button, and the road behind the sheet */
 function endSync(){const h=$('#kpEndH'),b=$('[data-kendx]'),v=(pth()||{}).end||'';if(h)h.textContent=endHint();if(b)b.hidden=!v;
   if(S.route.v==='path'&&!KP.wiz.active)paint()}
@@ -6053,7 +6066,7 @@ function moreHTML(pl){
   const X=pl.X,P=X.P,B=badges(pl),sx=streak(),p=X.prof;
   const me=[(STAGES.find(s=>s[0]===p.stage)||[])[1],P.end?`${endTitle()}: ${dLong(P.end)}`:'',p.sex?{m:'זכר',f:'נקבה',x:''}[p.sex]:'',p.reg?REGN[p.reg]:'',p.nat?(LANGS.find(l=>l[0]===p.nat)||[])[1]:''].filter(Boolean);
   return `<div class="kp-two">
-    <div class="kp-card"><div class="pc-h"><h2>${ki('cap')}ההישגים שלי</h2><span class="pc-c num">${B.filter(b=>b[2]).length}/${B.length}</span></div>${badgesHTML(pl)}${sx>=2?`<p class="kp-streak">${ki('fire')}${sx} ימים של התקדמות. ממשיכים מכאן</p><p class="fine">יום או יומיים של מנוחה בשבוע לא שוברים את הרצף.</p>`:''}</div>
+    <div class="kp-card"><div class="pc-h"><h2>${ki('cap')}ההישגים שלי</h2><span class="pc-c num">${B.filter(b=>b[2]).length}/${B.length}</span></div>${badgesHTML(pl)}${sx>=2?`<p class="kp-streak">${ki('fire')}${sx} ימים של התקדמות. ממשיכים מכאן</p><p class="fine">ימי מנוחה הם חלק מהקצב: עד יומיים בשבוע.</p>`:''}</div>
     <div class="kp-card"><div class="pc-h"><h2>${ki('user')}עליי</h2></div><p>${me.length?esc(me.join(' · ')):'עוד לא סיפרתי. אפשר לדלג, אבל כדאי: זה משפר את הניסוח, המועדים והאפשרויות.'}</p><div class="kp-btns">${KB('data-kme','עריכה')}${KB('data-prof','הפרופיל והציונים')}</div><p class="fine">${MENOTE}</p></div></div>
     <details class="adm dmeth kp-adm"><summary>שיתוף, גיבוי והגדרות</summary><div class="admb">
       <p>אפשר להעתיק סיכום קצר של המסלול ולשלוח להורה, ליועץ/ת או לחבר/ה. המסלול עצמו נשמר בדפדפן הזה, וכדי להעביר אותו למכשיר אחר: גיבוי לקובץ ושחזור ממנו במכשיר השני.</p>
@@ -6216,7 +6229,7 @@ document.addEventListener('input',e=>{
   if(t.id==='ptq'){KP.wiz.tq=t.value;const v=t.value.trim(),box=$('#ptsugg');if(!box)return;if(!v){box.hidden=true;return}
     const R=DEG.map(d=>[d,qScore(d,v)]).filter(x=>x[1]>=30).sort((a,b)=>b[1]-a[1]||b[0].of.length-a[0].of.length).slice(0,7).map(x=>x[0]);
     box.innerHTML=R.length?R.map(d=>`<button data-kwd="${d.id}"><span class="mini">${ill(d)}</span><span><b>${esc(d.n)}</b><small>${d.of.length===1?esc(INST[d.of[0].i].n):d.of.length+' מוסדות'}</small></span></button>`).join(''):`<p style="padding:12px 14px;color:var(--muted)">לא נמצא תואר בשם "${esc(v)}"</p>`;box.hidden=false;return}
-  if(t.id==='kpStory'){clearTimeout(STT);storyStatus(false);STT=setTimeout(()=>storySave(t.value),500);return}
+  if(t.id==='kpStory'){clearTimeout(STT);const P=pth();if(P)P.story=t.value.slice(0,STORY_MAX);storyStatus(false);STT=setTimeout(()=>storySave(t.value),500);return} /* in memory at once, so a repaint inside the pause shows what I typed */
   if(t.id==='kpP'){LAB.p=+t.value;LAB.tp=true;labChanged(true);return}
   if(t.id==='kpPn'){const v=Math.round(+t.value);if(t.value!==''&&v>=200&&v<=800){LAB.p=v;LAB.tp=true;labChanged(true)}return}
   if(t.id==='kpA'){LAB.avg=+t.value;LAB.tb=true;labChanged(true);return}
@@ -6229,7 +6242,7 @@ document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='ptq'&&e.key=
 document.addEventListener('change',e=>{
   const t=e.target;
   if(t.id==='kpStory'){clearTimeout(STT);storySave(t.value);return}
-  if(t.dataset&&t.dataset.kend!==undefined){if(!setEnd(t.value))t.value=(pth()||{}).end||'';endSync();return}
+  if(t.dataset&&t.dataset.kend!==undefined){endChange(t,false);return}
   if(t.dataset&&t.dataset.lbr!==undefined&&t.tagName==='SELECT'){const r=LAB.rows[+t.dataset.lbr],f=t.dataset.f;if(r){r[f]=f==='k'?t.value:Number(t.value);LAB.tb=true;LAB.boost.clear();labChanged(false)}return}
   /* a typed number that ended outside its range goes back to the value in use */
   if(t.id==='kpPn'||t.id==='kpAn'){const v=+t.value,ok=t.id==='kpPn'?v>=200&&v<=800:v>=55&&v<=100;if(!ok||t.value==='')t.value=t.id==='kpPn'?LAB.p:LAB.avg;return}
@@ -6237,9 +6250,10 @@ document.addEventListener('change',e=>{
       ['path','dir','prof','scores','calcRows','calcAr','list','sch'].forEach(k=>{const v=o[k];if(v!==undefined&&v!==null&&(typeof v==='object'||typeof v==='boolean'))store.set(k,v)});
       PTH=null;PLC=null;DIRS=null;DIRR=null;CALC_ROWS=null;SCHS=null;LAB.on=false;KP.fid='';KP.skip.clear();KP.hist=[];KP.view='';S.prof=store.get('prof',null);S.sc=store.get('scores',null);S.list=new Set(store.get('list',[]));render();toast('המסלול שוחזר מהקובץ')}catch(err){toast('הקובץ לא נראה כמו גיבוי של כיוון')}};fr.readAsText(t.files[0])}
 });
+document.addEventListener('focusout',e=>{const t=e.target;if(t&&t.dataset&&t.dataset.kend!==undefined)endChange(t,true)});
 document.addEventListener('submit',e=>{
   if(e.target.id==='kpDorm'){e.preventDefault();const d=$('#kpDormD').value,P=pth();if(!P||!isoOk(d)){toast('בוחרים תאריך');return}
-    P.dates.push({id:'my-dorm-'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),t:`מעונות ${bIn(INST[P.i].n)}`.slice(0,80),d});logAct();pthSave();PLC=null;toast('התאריך נוסף ליומן שלי');paint();refocus('#kpDormD');return}
+    P.dates.push({id:'my-dorm-'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),t:`מעונות ${bIn(INST[P.i].n)}`.slice(0,80),d,i:P.i});logAct();pthSave();PLC=null;toast('התאריך נוסף ליומן שלי');paint();refocus('#kpDormD');return}
   if(e.target.id==='kpDate'){e.preventDefault();const t=$('#kpDT').value.trim(),d=$('#kpDD').value;if(!t||!d)return;const P=pth();P.dates.push({id:'my-'+Date.now(),t,d});logAct();pthSave();PLC=null;toast('התאריך נוסף');paint();e.target.reset()}
   else if(e.target.id==='kpScore'){e.preventDefault();const v=Math.round(+$('#kpSc').value);if(!(v>=200&&v<=800)){toast('ציון פסיכומטרי הוא בין 200 ל-800');return}
     /* a real score replaces an expected one; between two real scores the higher counts (most institutions use the best one) */
