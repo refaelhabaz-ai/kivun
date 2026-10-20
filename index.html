@@ -2077,7 +2077,7 @@ function checklist(d){
   if(p.bag==='full'&&!sc.b) items.push({s:'no',t:'ממוצע בגרות',d:'כדי לבדוק עמידה בסף, צריך ממוצע בגרות בפרופיל. אפשר לחשב אותו במחשבון שלנו.',go:'calc',gl:'למחשבון הממוצע'});
   if(p.heb==='he') items.push({s:'yes',t:'עברית',d:'למדתי בעברית, ולכן בדרך כלל לא נדרשת בחינת עברית.'});
   else items.push({s:'no',t:'בחינת ידע בעברית (יע"ל)',d:'מי שלמד בשפה אחרת נדרש בדרך כלל לעבור את בחינת יע"ל. הציון הנדרש משתנה בין המוסדות.',f:'yael'});
-  if(el.open) items.push({s:'yes',t:'אפשר להתחיל כבר עכשיו באוניברסיטה הפתוחה',d:'התואר נלמד גם באוניברסיטה הפתוחה, שבה ההרשמה פתוחה לכולם ואינה מותנית בבגרות או בפסיכומטרי.',src:NEED_SRC.openu,sl:'ידיעון האוניברסיטה הפתוחה'});
+  if(el.open) items.push({s:'yes',t:'אפשר להתחיל כבר עכשיו באוניברסיטה הפתוחה',d:'התואר נלמד גם באוניברסיטה הפתוחה, שלפי הידיעון שלה ההרשמה פתוחה לכולם ואינה מותנית בבגרות או בפסיכומטרי.',src:NEED_SRC.openu,sl:'ידיעון האוניברסיטה הפתוחה'});
   return items;
 }
 const CKI={yes:'✓',no:'✕',na:'?'};
@@ -2153,7 +2153,7 @@ function renderMe(){
     <div class="cklist row">${gen.map(x=>`<div class="ck ${x.s} sm"><span class="cki" aria-hidden="true">${CKI[x.s]}</span><b>${esc(x.t)}</b>${x.go?`<button class="linkbtn" data-go="${x.go}">${esc(x.gl)}</button>`:''}</div>`).join('')}</div>
     <div class="hero-btns" style="margin-top:18px"><button class="btn primary" data-prof>עריכת הפרופיל</button>${p.bag==='full'?'<button class="btn soft" data-go="calc">מחשבון ממוצע בגרות</button>':''}<button class="btn soft" data-go="path">המסלול שלי</button></div></div></section>
   ${main}
-  ${sec('open','האוניברסיטה הפתוחה: בלי תנאי קבלה','ההרשמה לאוניברסיטה הפתוחה אינה מותנית בבגרות או בפסיכומטרי, ולכן גם התארים האלה פתוחים בפניי.',open)}
+  ${sec('open','האוניברסיטה הפתוחה: בלי תנאי קבלה (לפי הידיעון)','לפי הידיעון, ההרשמה לאוניברסיטה הפתוחה אינה מותנית בבגרות או בפסיכומטרי, ולכן גם התארים האלה פתוחים בפניי.',open)}
   ${BAG_EQUIV(p)?'':`<section class="sec"><div class="wrap"><div class="sec-h"><div><h2>הנדסאים וטכנאים</h2><p>לימודי מה"ט במכללות הטכנולוגיות, כולל מכינה טכנולוגית למי שחסרים לו מקצועות</p></div>${arrows('s-metech')}</div><div class="strip" id="s-metech">${MAHAT.map((m,i)=>[m,i]).sort((a,b)=>(b[0].kind==='מכינה')-(a[0].kind==='מכינה')).slice(0,12).map(([m,i])=>mahatCard(m,i)).join('')}</div><div class="more" style="margin-top:12px"><button class="btn soft" data-go="tech">לכל המגמות</button></div></div></section>`}
   <section class="sec"><div class="wrap"><p class="fine">הרשימה מבוססת רק על תנאי קבלה שפורסמו באתרי המוסדות ונאספו כאן. מוסדות שלא נאספו מהם ספים (למשל בר-אילן) לא נכללים בבדיקה. עמידה בתנאים אינה מבטיחה קבלה.</p></div></section>`;
 }
@@ -2383,7 +2383,7 @@ function certItem(){
 }
 const hebItem=()=>S.prof.heb==='he'?{s:'yes',t:'עברית (למדתי בעברית)'}:{s:'no',t:'בחינת ידע בעברית (יע"ל)',how:'מי שלמד בשפה אחרת נבחן בדרך כלל ביע"ל. הציון הנדרש משתנה בין המוסדות.'};
 function instChecklist(d,iid){
-  if(iid==='open')return {s:'yes',items:[{s:'yes',t:'אין תנאי קבלה',how:'ההרשמה פתוחה לכולם, בלי בגרות ובלי פסיכומטרי.',src:NEED_SRC.openu,sl:'ידיעון האוניברסיטה הפתוחה'}]};
+  if(iid==='open')return {s:'yes',items:[{s:'yes',t:'אין תנאי קבלה, לפי הידיעון',how:'לפי האוניברסיטה הפתוחה ההרשמה פתוחה לכולם, בלי בגרות ובלי פסיכומטרי. כדאי לוודא באתר.',src:NEED_SRC.openu,sl:'ידיעון האוניברסיטה הפתוחה'}]};
   const p=S.prof, sc=S.sc||{}, B=(sc.bi&&sc.bi[iid])||sc.b, P=sc.p;
   const fRows=primaryRows(d,iid).filter(r=>r.f&&r.v!=null), lines=progLines(iid,d)||[];
   const numLines=lines.filter(l=>lineMeets(l)!==null||/פסיכומטרי[^\d]{0,30}\d{3}|ממוצע (?:ה)?בגרות[^\d]{0,30}\d{2,3}/.test(l));
@@ -2894,7 +2894,7 @@ function dataAnswer(text,ctx,inst,topic){
     if(want('study')){if(du)L.push(`משך הלימודים: ${du.txt} שנים${d.pro==='md'?', ואחריהן סטאז\' של 9 חודשים'+factTxt('md.stage'):''}.`);
       if(d.pro==='md')L.push('המסלול: 3 שנים קדם-קליניות, 3 שנים קליניות, סטאז\', רישיון, ואז התמחות של 4–6 שנים.'+factTxt('md.spec'));
       else if(f&&f.desc&&d.avHow==='exact')L.push('מה לומדים: '+f.desc.slice(0,200).replace(/\s\S*$/,'')+'…');
-      if(!d.pro)L.push(`נלמד ב-${nI} מוסדות${d.of.some(o=>o.i==='open')?', כולל האוניברסיטה הפתוחה (בלי תנאי קבלה)':''}.`)}
+      if(!d.pro)L.push(`נלמד ב-${nI} מוסדות${d.of.some(o=>o.i==='open')?', כולל האוניברסיטה הפתוחה (לפי הידיעון, בלי תנאי קבלה)':''}.`)}
     if(want('jobs')){const ps=proSal(d);
       if(ps)L.push(`שכר ממוצע${d.pro==='md'?' של רופאים מומחים':''}: ₪${fmt(ps)} בחודש (עבודאטה).`);
       else if(s&&s.sal)L.push(`שכר ממוצע 5–6 שנים אחרי התואר: ₪${fmt(s.sal)} בחודש${d.avHow!=='exact'?` (התחום הקרוב "${f.n}")`:''} (עבודאטה).`);
@@ -4428,7 +4428,7 @@ function admLine(d){
   if(!profileOK())return {s:'na',t:'כדי לבדוק אם אני מתקבל, צריך למלא פרופיל',go:'prof'};
   const e=eligibility(d),n=e.now.size+e.part.size;
   if(n)return {s:'yes',t:`הציונים שלי מספיקים ${n===1?'במוסד אחד':'ב-'+n+' מוסדות'}`};
-  if(d.of.some(o=>o.i==='open'))return {s:'yes',t:'אפשר להתחיל באוניברסיטה הפתוחה, בלי תנאי קבלה'};
+  if(d.of.some(o=>o.i==='open'))return {s:'yes',t:'אפשר להתחיל באוניברסיטה הפתוחה, שלפי הידיעון שלה אין בה תנאי קבלה'};
   if(!BAG_EQUIV(S.prof))return {s:'no',t:'צריך קודם להשלים בגרות או מכינה'};
   /* without a program-level threshold in the data, "not yet" would be a verdict we cannot back */
   const k=tierKey(degTier(d));
@@ -4775,7 +4775,7 @@ function methodHTML(){
   const li=(s,txt)=>{const f=FACTS.find(x=>x.status===s);return `<li style="margin-top:8px">${f?factChip(f.id,{static:1}):''} <b class="num">${fmt(n[s])}</b> ${txt}</li>`};
   return `<div class="srcnote" style="background:#FFF7E6">${ICON.doc}<div><b>איך אנחנו בודקים נתונים:</b>
     <p>ספי הקבלה, רשימת התארים והשכר נאספים מהאתרים הרשמיים, ולכל אחד מהם מצורף קישור למקור. מעבר לזה יש באתר ${fmt(FACTS.length)} עובדות שנכתבו ביד (מחירים, תוקף ציונים, מועדים, כללי רישוי, תנאי קבלה ומלגות), ולכל אחת רשום תאריך בדיקה ומצב. ל-${fmt(FACTS.length-noS)} מהן יש גם קישור למקור${rootS?` (ל-${fmt(rootS)} מהן הקישור הוא לאתר הגוף בלבד, לא לעמוד של הנתון)`:''}. ל-${fmt(noS)} עובדות אין קישור למקור: הן מסומנות כך בפרטים שלהן, ומומלץ לבדוק אותן באתר הרשמי:</p>
-    <ul style="margin:6px 0 0;padding-inline-start:0;list-style:none">${li('verified','עובדות שנבדקו בחיפוש מול שני מקורות לפחות, ואחד מהם רשמי. זו לא קריאה של העמוד הרשמי עצמו.')}${li('unverified','עובדות שלא מצאנו להן אישור. זה לא אומר שהן שגויות, ולכן הן מסומנות ומפנות לאתר הרשמי.')}${li('conflict','עובדות שהמקורות סותרים לגביהן. אנחנו לא קובעים מה נכון ומפנים לאתר הרשמי.')}</ul>
+    <ul style="margin:6px 0 0;padding-inline-start:0;list-style:none">${li('verified','עובדות שנבדקו בחיפוש מול שני מקורות לפחות, ואחד מהם רשמי. זו לא קריאה של העמוד הרשמי עצמו.')}${li('unverified','עובדות שלא מצאנו להן אישור. זה לא אומר שהן שגויות, ולכן הן מסומנות ומפנות לאתר הרשמי.')}${li('conflict',n.conflict===1?'עובדה שהמקורות סותרים לגביה. אנחנו לא קובעים מה נכון ומפנים לאתר הרשמי.':'עובדות שהמקורות סותרים לגביהן. אנחנו לא קובעים מה נכון ומפנים לאתר הרשמי.')}</ul>
     <p style="margin-top:10px">סכומי כסף ומועדים שלא אומתו לא מוצגים כעובדה: הטקסט מפנה לעמוד הרשמי. הבדיקות נעשו ב-${esc(dLong(FT_D))} בחיפוש, והן לא תחליף לבדיקה באתר הגוף המפרסם לפני החלטה או תשלום.</p>
     <p>${RPT_LEAD()}</p><div class="ft-err"><button type="button" class="btn soft sm" data-ftr="gen">מצאתי טעות</button></div></div></div>`}
 
@@ -4882,7 +4882,7 @@ function pth(){
   if(typeof p.d!=='string'||!own(BY,p.d))p.d='';
   if(!p.d||typeof p.i!=='string'||!own(INST,p.i)||!BY[p.d].of.some(o=>o.i===p.i))p.i='';
   p.start=nin(p.start,2000,2100)?Math.round(p.start):0;p.sess=typeof p.sess==='string'&&/^[\w-]{1,24}$/.test(p.sess)?p.sess:'';p.lab=labNorm(p.lab);p.goalP=nin(p.goalP,0,800)?p.goalP:0;
-  p.dates=Array.isArray(p.dates)?p.dates.filter(x=>isObj(x)&&typeof x.d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x.d)).map(x=>{const o={...x,id:txt(x.id),t:txt(x.t)};if(o.i!==undefined&&!(typeof o.i==='string'&&own(INST,o.i)))delete o.i;return o}):[];p.log=Array.isArray(p.log)?p.log.filter(x=>nin(x,1,1e14)).slice(-400):[]; /* only real dates: a null or a number in storage would break the lists */
+  p.dates=Array.isArray(p.dates)?p.dates.filter(x=>isObj(x)&&typeof x.d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x.d)).map(x=>{const o={...x,id:txt(x.id),t:txt(x.t)};['f','bk'].forEach(k=>{if(o[k]!==undefined)o[k]=txt(o[k])});if(o.i!==undefined&&!(typeof o.i==='string'&&own(INST,o.i)))delete o.i;return o}):[];p.log=Array.isArray(p.log)?p.log.filter(x=>nin(x,1,1e14)).slice(-400):[]; /* only real dates: a null or a number in storage would break the lists */
   /* F2a: when I finish school or service (end), the last day I was on the road (seen) and my story notes; old saves have none of them */
   if(!isoOk(p.end))p.end='';if(!isoOk(p.seen))p.seen='';p.story=typeof p.story==='string'?p.story.slice(0,STORY_MAX):'';
   /* F2b: the day I said "not now" to a question (qs) and the day I answered a one-moment question (qa): a date per question id, nothing else */
@@ -5198,7 +5198,7 @@ function doorsHTML(X){
 /* "להפוך לתוכנית": the boosters I chose become dated steps in my dates (P.dates) and the bridge step is marked. Only dates that exist: the psychometric sessions and the
    Ministry's draft bagrut calendar. A step with no published date is listed but gets no date. Ids are stable, so pressing twice replaces instead of duplicating. */
 /* the fact behind a step the plan made (its f when that is a known fact; for an older save, found from its date). Nothing else gets a fact: my own dates stay mine */
-function planFact(x){if(x.src!=='lab')return '';const f=String(x.f||''),bk=String(x.bk||'');if(f&&factGet(f))return f;
+function planFact(x){if(x.src!=='lab')return '';const f=txt(x.f),bk=txt(x.bk);if(f&&factGet(f))return f;
   if(bk.startsWith('psy-')){const z=PSYD.find(z=>z.reg===x.d||z.d===x.d);return z&&factGet('psy.date.'+z.id)?'psy.date.'+z.id:''}
   return bk.startsWith('bag-')?'bagrut.2027':''}
 function doorsPlan(){
@@ -5350,7 +5350,7 @@ function summaryText(pl){
 /* a short sentence about where I stand, used by the hero and the coach */
 function standing(X){
   const {V,hasP,real}=X,t=V.tier;
-  if(t===0)return {k:'open',h:'אפשר להתחיל כבר עכשיו',s:'באוניברסיטה הפתוחה אין תנאי קבלה, ואפשר להירשם לקורס הראשון בלי בגרות ובלי פסיכומטרי.'};
+  if(t===0)return {k:'open',h:'אפשר להתחיל כבר עכשיו',s:'לפי הידיעון של האוניברסיטה הפתוחה אין בה תנאי קבלה, ואפשר להירשם לקורס הראשון בלי בגרות ובלי פסיכומטרי. כדאי לוודא באתר.'};
   if(!real)return {k:'none',h:'נתחיל מהמספרים',s:'כדי לדעת כמה חסר, צריך ממוצע בגרות (גם צפוי) וציון פסיכומטרי (גם יעד). אפשר להתחיל מהערכה בלשונית "כמה חסר לי?" ולדייק בהמשך.'};
   if(t===1){
     if(V.err==='bagrut')return {k:'part',h:'חסר ממוצע בגרות',s:'יש לי פסיכומטרי, וחסר ממוצע בגרות כדי לחשב את הסכם. אפשר להזין ציונים בלשונית "כמה חסר לי?".'};
@@ -5393,7 +5393,7 @@ function plan(){
   /* the numbers come first: without them nothing else can be measured, and with them the next step is clear */
   add(Z.now,{id:'numbers',nm:1,ic:'chart',t:X.real?'הציונים שלי במערכת':'להזין את הציונים שלי (גם צפויים)',s:X.real?([X.sc.p?`פסיכומטרי ${X.sc.p}${X.sc.estP?' (צפוי)':''}`:'',X.sc.b?`ממוצע בגרות ${fmt(X.sc.b,2)}${S.sc&&S.sc.est?' (צפוי)':''}`:''].filter(Boolean).join(', ')||'ציוני בגרות שהזנתי'):'בלי מספרים אי אפשר לדעת כמה חסר',done:X.real,
     body:()=>`<p>${X.real?'המספרים שלי שמורים. מעכשיו כל תואר מראה כמה כבר יש וכמה חסר. קיבלתי ציון חדש, או שיפרתי בגרות? מעדכנים אותם בלשונית "כמה חסר לי?", ושם נשמרים בפרופיל והמסלול כולו מתעדכן.':'אין צורך בציונים סופיים. הערכה מספיקה כדי לראות את הצעד הראשון: אפשר להתחיל מהערכה או מציונים צפויים, ולראות מה צריך כדי להתקבל. כשיהיו ציונים אמיתיים, מעדכנים.'}</p>${BTNS([KB('data-kgo="lab"',X.real?'לעדכון הציונים':'להזנת הציונים','primary'),KB('data-go="calc"','מחשבון ממוצע בגרות'),KB('data-prof','הפרופיל שלי')])}`});
-  add(Z.now,{id:'know',ic:'doc',t:'להבין מה נדרש כדי להתקבל',s:q.tier===0?'אין תנאי קבלה':q.tier===1?`סף רשמי: ${fmt(V.thr,V.thr%1?2:0)} ב${V.scale}`:q.tier===2?'דרכי קבלה שפורסמו':'לא פורסם סף מספרי',
+  add(Z.now,{id:'know',ic:'doc',t:'להבין מה נדרש כדי להתקבל',s:q.tier===0?'אין תנאי קבלה, לפי הידיעון':q.tier===1?`סף רשמי: ${fmt(V.thr,V.thr%1?2:0)} ב${V.scale}`:q.tier===2?'דרכי קבלה שפורסמו':'לא פורסם סף מספרי',
     body:()=>`${reqHTML(X)}${cycleNote(P.i)}${famTip(X)}${BTNS([KB('data-kgo="lab"','לבדוק כמה חסר לי','primary'),q.srcs[0]?KA(q.srcs[0],'תנאי הקבלה באתר המוסד'):'',q.th&&q.th.calc?KA(q.th.calc,'המחשבון הרשמי של המוסד'):''].filter(Boolean))}`});
   if(['g10','g11'].includes(stg)){
     add(Z.now,{id:'units',ic:'book',t:'להחליט על רמת המקצועות המוגברים',s:'יח"ל במתמטיקה ובאנגלית משפיעות על הסכם',
@@ -5457,7 +5457,7 @@ function plan(){
       body:()=>`<p>בעתודה האקדמית לומדים תואר לפני השירות ואחר כך משרתים שירות מקצועי. ההרשמה מיועדת בדרך כלל לתלמידי י"ב.${factChip('atuda.grade12')} הפרטים שלהלן לפי אתר "מתגייסים" של צה"ל, ועוד לא אומתו מחדש:</p>${UL([`נדרש פסיכומטרי. הציון המינימלי להמשך המיונים ${fact('atuda.min')}${factChip('atuda.min')}`,`נדרשים תנאי קבלה לפי המקצוע וקבלה למוסד אקדמי${factChip('atuda.bagrut')}`,`השאלון באתר נפתח בקיץ ונסגר ${fact('atuda.deadline')} (נבדק לאחרונה במחזור הקודם). את התאריך המדויק למחזור שלי בודקים באתר צה"ל${factChip('atuda.deadline')}`,`אחרי האישור הסופי מתגייסים לפי הנוהל שמפרסם צה"ל, ומשרתים אחרי הלימודים${factChip('atuda.induction')}`,`לפני האישור הסופי אין חובה לשלם שכר לימוד או מקדמה${factChip('atuda.tuition')}`])}${tip('המועדים משתנים משנה לשנה. את הנוסח המחייב קוראים באתר "מתגייסים".')}${BTNS([KA(IDF_ATUDA,'עתודה אקדמית באתר צה"ל','primary'),KB('data-kmark="atuda"',M.atuda?'✓ בדקתי':'בדקתי, מתאים או לא')])}`});
   }else{
     /* open university: nothing to pass, only the first course */
-    add(Z.ready,{id:'ouFirst',ic:'rocket',t:'לבחור את הקורס הראשון',s:'אפשר להתחיל בלי בגרות ובלי פסיכומטרי',
+    add(Z.ready,{id:'ouFirst',ic:'rocket',t:'לבחור את הקורס הראשון',s:'לפי הידיעון: אפשר להתחיל בלי בגרות ובלי פסיכומטרי',
       body:()=>`<p>באוניברסיטה הפתוחה לומדים בקצב שלי ובוחרים קורסים בכל סמסטר. כדאי להתחיל בקורס אחד או שניים, לראות איך זה מרגיש, ולצבור נקודות זכות שאפשר להמשיך איתן.${factChip('openu.open')}</p>${BTNS([instKA(I,'לאתר האוניברסיטה הפתוחה','primary'),KB('data-kmark="ouFirst"',M.ouFirst?'✓ בחרתי':'בחרתי קורס')])}`})}
   if(X.noCert&&['after','other','','svc'].includes(stg))add(Z.ready,{id:'cert',ic:'book',t:'להשלים בגרות או מכינה',s:'בלי תעודה רוב המסלולים סגורים',
     body:()=>`<p>${prof2certText(X.prof)}${['handesai','foreign'].includes(X.prof.bag)?'':factChip('mod.prep')}</p>${BTNS([KA(NEED_SRC.mod,'מכינות קדם-אקדמיות (משרד הביטחון)','primary'),KB('data-kmark="cert"',M.cert?'✓ יש לי תעודה':'סיימתי, יש לי תעודה')])}`});
@@ -5763,7 +5763,7 @@ function altHTML(X){
   const L=instList(X.d).filter(x=>x.i!==X.P.i).slice(0,4);
   const out=[];
   if(L.length)out.push(`<p>מוסדות נוספים שמלמדים את ${esc(X.d.n)}, מהקרוב לסף לרחוק:</p><div class="kp-chips">${L.map(x=>`<button class="ichip ${x.st?x.st.s:'na'}" data-kpick="${x.i}" title="${x.st?esc(x.st.t):''}"><span aria-hidden="true">${x.st?CKI[x.st.s]:'?'}</span>${esc(INST[x.i].n)}</button>`).join('')}</div>`);
-  if(!X.q.open&&X.d.of.some(o=>o.i==='open'))out.push(`<p>הדרך הגמישה: להתחיל ${esc(bIn(INST.open.n))}, בלי תנאי קבלה, ולהמשיך משם.</p>`);
+  if(!X.q.open&&X.d.of.some(o=>o.i==='open'))out.push(`<p>הדרך הגמישה: להתחיל ${esc(bIn(INST.open.n))}, שלפי הידיעון שלה אין בה תנאי קבלה, ולהמשיך משם.</p>`);
   if(!out.length)out.push('<p>התואר נלמד רק במוסד הזה. אפשר לבדוק תארים קרובים באפשרויות למטה.</p>');
   return out.join('')}
 
@@ -5854,7 +5854,7 @@ function tInfo(t){return withTarget(t,()=>{const pl=safe(plan,null);if(!pl)retur
 const tInfos=()=>tList().map(tInfo).filter(Boolean);
 /* one line about the numbers of a target */
 function thrLine(x){const V=x.X.V,f=v=>fmt(v,v%1?2:0);
-  if(V.tier===0)return 'אין תנאי קבלה';
+  if(V.tier===0)return 'אין תנאי קבלה, לפי הידיעון';
   if(V.tier===1&&V.thr)return V.score!=null?`${V.scale} שלי ${f(V.score)} · הסף ${f(V.thr)}`:`הסף: ${f(V.thr)} ב${V.scale}`;
   if(V.tier===2)return V.pubBest?`סף שפורסם: ${f(V.pubBest.v)} ב${V.pubBest.lbl||V.scale}`:'כמה דרכי קבלה שפורסמו';
   return 'לא פורסם סף מספרי'}
@@ -6220,7 +6220,7 @@ function labVerdictHTML(X){
   if(L.err==='rows')return box('na','flag','מזינים ציונים','כדי לחשב, צריך כמה ציוני בגרות (גם צפויים).');
   if(L.err==='units')return box('na','flag','חסרות יחידות לימוד',unitsNote()+' מוסיפים מקצועות כדי שאחשב את הממוצע לפי כללי '+esc(I.n)+'.');
   const V=L.v,cmp=labDirty()&&X.real&&X.q.tier>0?`<p class="kp-cmp">בפרופיל שלי, בלי השינויים: <b>${esc(standing(X).h)}</b></p>`:'';
-  if(V.tier===0)return box('ok','check','אין תנאי קבלה','באוניברסיטה הפתוחה אפשר להתחיל בלי בגרות ובלי פסיכומטרי. הפסיכומטרי והבגרות שבלשונית "כמה חסר לי?" עוזרים לבדוק מה אפשר ללמוד במוסדות אחרים, בלשונית "מה עוד אפשר?".');
+  if(V.tier===0)return box('ok','check','אין תנאי קבלה, לפי הידיעון','לפי הידיעון של האוניברסיטה הפתוחה אפשר להתחיל בלי בגרות ובלי פסיכומטרי. הפסיכומטרי והבגרות שבלשונית "כמה חסר לי?" עוזרים לבדוק מה אפשר ללמוד במוסדות אחרים, בלשונית "מה עוד אפשר?".');
   if(V.err)return box('na','flag',V.err==='bagrut'?'חסר ממוצע בגרות':'חסר ציון פסיכומטרי','מזינים את הנתון החסר, והחישוב יופיע כאן.');
   if(V.tier===1){
     const g=V.gapP,ok=V.ok,need=[];
@@ -6368,7 +6368,7 @@ function optHTML(pl){
     <div class="kp-opt-grid">
       <div class="kp-oc"><h3>אותו תואר, מוסדות אחרים <span class="kp-cnt num">${rows.length}</span></h3><div class="kp-ics">${shown.map(x=>instCard(d,x,X)).join('')}</div>${rows.length>6?`<div class="more"><button class="btn soft sm" data-kmore="inst">${KO.all?'להציג פחות':`להציג את כל ${rows.length} המוסדות`}</button></div>`:''}</div>
       <div class="kp-oc"><h3>דרכי גישור</h3><div class="cklist kp-ck">
-        ${open?ckHTML({s:'yes',t:'להתחיל באוניברסיטה הפתוחה',d:'התואר נלמד גם שם, בלי תנאי קבלה. אפשר להתחיל ללמוד ולצבור נקודות זכות, ולהמשיך משם.',src:NEED_SRC.openu,sl:'ידיעון האוניברסיטה הפתוחה'}):''}
+        ${open?ckHTML({s:'yes',t:'להתחיל באוניברסיטה הפתוחה',d:'התואר נלמד גם שם, ולפי הידיעון בלי תנאי קבלה. אפשר להתחיל ללמוד ולצבור נקודות זכות, ולהמשיך משם.',src:NEED_SRC.openu,sl:'ידיעון האוניברסיטה הפתוחה'}):''}
         ${ckHTML({s:'na',t:'מכינה קדם-אקדמית',d:'מאפשרת להשלים בגרות או להתקבל לפי ציון המכינה. משוחררי צה"ל עשויים להיות זכאים למימון.',f:'mod.prep',src:NEED_SRC.mod,sl:'משרד הביטחון: מכינות'})}
         ${ckHTML({s:'na',t:'שיפור ציונים ובחינה חוזרת',d:'פסיכומטרי אפשר לשפר בכל מועד, ובגרויות במועדי חורף וקיץ. הבוסטרים בלשונית "כמה חסר לי?" מראים מה הכי משתלם.'})}
         ${ckHTML({s:'na',t:'הנדסאים וטכנאים',d:'לימודי מה"ט במכללות הטכנולוגיות, כולל מכינה טכנולוגית למי שחסרים לו מקצועות.',go:'tech',gl:'להנדסאים וטכנאים'})}</div></div></div>
@@ -6917,7 +6917,7 @@ function filtersHTML(){
      <label class="fsel"><span>שכר</span><select id="fsal"><option value="0">כל שכר</option>${[12000,15000,20000,25000].map(v=>`<option value="${v}" ${f.sal===v?'selected':''}>מעל ₪${fmt(v/1000)}K בחודש</option>`).join('')}</select></label>
      ${tog('grow','חם בשוק','לפי עבודאטה: במקצועות שאליהם מוביל התואר מספר העובדים עולה מהר יותר מבמשק, והשכר גבוה מהממוצע')}
      ${profileOK()?tog('elig','אפשר להתקבל עכשיו','לפי הפרופיל שלי'):''}
-     ${tog('open','בלי תנאי קבלה (הפתוחה)','נלמד באוניברסיטה הפתוחה')}
+     ${tog('open','בלי תנאי קבלה (הפתוחה, לפי הידיעון)','נלמד באוניברסיטה הפתוחה')}
      ${on?'<button class="linkbtn fclear" data-fclear>ניקוי הסינון</button>':''}
    </div>
    <div class="subbar"><span class="num">${S.q?`<span class="qchip">חיפוש: ${esc(S.q)}<button data-clearq aria-label="ניקוי החיפוש">✕</button></span> · `:''}${fmt(n)} תארים${S.uni?' ב'+esc(INST[S.uni].n):''}</span>
