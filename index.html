@@ -2530,7 +2530,7 @@ function degreeTiles(d){
   const nI=new Set(d.of.map(o=>o.i)).size;
   h+=t('נלמד ב',nI===1?'מוסד אחד':nI+' מוסדות',d.of.filter(o=>INST[o.i].k==='u').length+' אוניברסיטאות'+(d.of.some(o=>o.i==='open')?' · כולל הפתוחה':''));
   if(s&&s.psy&&(exact||d.pro==='md'||d.pro==='dmd'))h+=t('פסיכומטרי ממוצע של המתקבלים',fmt(s.psy),(s.bagrut?'ממוצע בגרות משוקלל '+s.bagrut+' (יכול לעלות על 100 בגלל בונוסים) · ':'')+'עבודאטה'+(s.bagrut?factChip('avodata.bagrut'):''));
-  if(profileOK()){const ok=d.of.filter(o=>{const st=instStatus(d,o.i);return st&&st.s==='yes'}).length;h+=t('אפשר להתקבל',ok?`ל-${ok} מתוך ${nI}`:'עוד לא',ok?'לפי הפרופיל שלי':'מה צריך להשלים: ראו למטה',ok?'good':'')}
+  if(profileOK()){const ok=d.of.filter(o=>{const c=instChecklist(d,o.i);return c&&c.s==='yes'}).length /* the same rule as the "אפשר להתקבל ל-N מוסדות" line below (the checklists), so the tile and the line never disagree */;h+=t('אפשר להתקבל',ok?`ל-${ok} מתוך ${nI}`:'עוד לא',ok?'לפי הפרופיל שלי':'מה צריך להשלים: ראו למטה',ok?'good':'')}
   if(!s&&!d.pro)h+=t('שכר ותעסוקה','אין נתון רשמי','לתואר אין עמוד תואם בעבודאטה');
   return h;
 }
