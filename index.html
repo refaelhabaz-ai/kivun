@@ -1729,9 +1729,111 @@ html.rm .tr-n.nxt .tr-c::after{animation:none}
 .kp-ftop{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}.kp-ftt{flex:1 1 320px;min-width:0}
 .kp-ftop .kp-fdo{margin:12px 0 0}.kp-ftop .kp-fdo .btn{flex:none;min-height:48px;padding-inline:28px}.kp-ftop .kp-fok{margin:12px 0 0}
 .kp-focus .kp-fhow{background:transparent;border-radius:0;padding:14px 0 0;border-top:1.5px dashed var(--line);margin-top:6px}
-.kp-fnav{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}.kp-fnav>:first-child{justify-self:start}.kp-fnav>:last-child{justify-self:end}
-.kp-fnav .linkbtn{min-height:44px}.kp-fnav .linkbtn:disabled{opacity:.35;pointer-events:none}.kp-fnav .kp-fskip{font-weight:500}
-@media(max-width:640px){.kp-fnav{grid-template-columns:1fr 1fr}.kp-fnav>:nth-child(2){grid-column:1/-1;grid-row:2;justify-self:center}}
+/* ===== the calm road: one clear dashboard on top, then one step at a time (kc) =====
+   Top: a big ring with my percent and a few words, one tile per stage with its own percent, and where I stand against the threshold.
+   Below the map: the step in focus in a narrow, quiet card, the encouragement beside it. */
+.kp-hero.hero:not(.kp-hubhero){padding-block:12px 20px}
+.kp-dash{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(290px,1fr);grid-template-areas:"p s" "m m";gap:16px;margin-top:8px;align-items:stretch}
+.kp-pcard{grid-area:p;background:#fff;border-radius:32px;box-shadow:var(--shadow-h);padding:clamp(18px,2.2vw,26px);display:grid;gap:clamp(12px,1.4vw,16px);align-content:start;min-width:0}
+.kp-pcard .kp-goal{margin:0;align-items:center}
+.kp-pcard .kp-pic{width:clamp(60px,6vw,76px);border-radius:18px;box-shadow:none}
+.kp-pcard .kp-gt h1{font-size:clamp(24px,3vw,34px)}
+.kp-pcard .kp-gt p{font-size:clamp(14.5px,1.3vw,16.5px)}
+.kp-pcard .kp-cp{box-shadow:none;border:1.5px solid var(--line)}.kp-pcard .kp-cp.empty{border:1.5px dashed #FFB9A6}
+.kp-pcard .kp-ged{gap:4px 8px}.kp-pcard .kp-ged .kp-lnk{font-size:13.5px;min-height:34px;padding:2px 12px;border-radius:999px;background:#F3F4F9;text-decoration:none;color:#3B4262;margin:0}.kp-pcard .kp-ged .kp-lnk:hover{background:#E9EBF4}
+.kp-prog{display:flex;align-items:center;gap:clamp(16px,3vw,32px);padding:clamp(12px,1.5vw,16px) clamp(14px,2.2vw,26px);border-radius:26px;background:linear-gradient(135deg,#FFF1EA 0,#FFF8EC 100%)}
+.kp-ring.xl{width:clamp(116px,11vw,140px);height:clamp(116px,11vw,140px)}.kp-ring.xl .ring{width:100%;height:100%}.kp-ring.xl .rbg{stroke:rgba(31,37,68,.08)}
+.kp-ring.xl .kp-rin b{font-size:clamp(28px,3.1vw,38px);font-weight:800;color:var(--ink)}.kp-ring.xl .kp-rin small{font-size:clamp(12px,1.2vw,14px);font-weight:600;color:#3B4262;margin-top:2px}
+.kp-pt{flex:1;min-width:0}
+.kp-ph{margin:0 0 4px;font:800 clamp(24px,3vw,34px)/1.15 var(--head);color:var(--ink)}
+.kp-pd{margin:0 0 10px;font-size:clamp(15px,1.4vw,17px);color:#3B4262;line-height:1.55}
+.kp-pr{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px}
+.kp-pn2{display:flex;flex-wrap:wrap;gap:2px 18px;margin:0;font-size:15px;color:#3B4262}.kp-pn2 b{font-family:var(--head);color:var(--ink);font-size:17px}
+.kp-pn{display:inline-flex;align-items:center;gap:8px;margin:0;background:#fff;border-radius:999px;padding:7px 14px;font-size:14.5px;box-shadow:var(--shadow)}.kp-pn svg{width:18px;height:18px;color:var(--primary-dark);flex:none}.kp-pn b{font-family:var(--head)}
+.kp-pfine{margin:8px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5}
+/* one tile per stage */
+.kp-ms{grid-area:m;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(var(--n,5),minmax(0,1fr));gap:12px}
+.kp-m{min-width:0}
+.kp-mb{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:start;padding:12px 14px 10px;border-radius:22px;background:#fff;border:2px solid transparent;box-shadow:var(--shadow);font:inherit;color:var(--ink);cursor:pointer;transition:transform .15s,box-shadow .2s,border-color .2s}
+.kp-mb:hover{transform:translateY(-2px);box-shadow:var(--shadow-h)}
+.kp-mt{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%}
+.kp-mi{width:38px;height:38px;border-radius:13px;background:var(--zb);color:var(--zc);display:grid;place-items:center;flex:none}.kp-mi svg{width:21px;height:21px}
+.kp-mp{font:800 clamp(22px,2.2vw,28px)/1 var(--head)}
+.kp-mn{font:600 15px/1.3 var(--head)}
+.kp-mbar{display:block;width:100%;height:8px;border-radius:99px;background:#EEF0F6;overflow:hidden}.kp-mbar i{display:block;height:100%;width:var(--zp);min-width:0;border-radius:99px;background:var(--zc);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.kp-mb small{font-size:12.5px;color:var(--muted);line-height:1.3}
+.kp-m.cur .kp-mb{border-color:var(--zc);box-shadow:0 8px 22px color-mix(in srgb,var(--zc) 22%,transparent)}
+.kp-m.fo .kp-mb{border-color:color-mix(in srgb,var(--zc) 50%,transparent);border-style:dashed}
+.kp-m.done .kp-mb{background:#F2FBF6}.kp-m.done .kp-mi{background:#12A26B;color:#fff}.kp-m.done .kp-mbar i{background:#12A26B}
+/* where I stand against the threshold */
+.kp-dash .kp-stand{grid-area:s;display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:12px;margin:0;padding:clamp(18px,2.4vw,28px);border-radius:32px;border:0;border-top:6px solid #3B5BDB}
+.kp-dash .kp-stand.ok{border-top-color:#12A26B}.kp-dash .kp-stand.near{border-top-color:#FFC53D}.kp-dash .kp-stand.mid{border-top-color:#FF9A6C}.kp-dash .kp-stand.far{border-top-color:#F2502F}.kp-dash .kp-stand.open{border-top-color:#3B5BDB}
+.kp-dash .kp-sh b{font-size:clamp(21px,2.4vw,27px)}.kp-dash .kp-sh span{font-size:15px}
+.kp-dash .kp-sxr{justify-content:flex-start;margin-top:-4px}
+.kp-nx{display:grid;gap:4px;margin-top:4px;padding-top:14px;border-top:1.5px dashed var(--line);justify-items:start}
+.kp-nx small{color:var(--muted);font-size:13px;font-weight:600}.kp-nx b{font:700 17px/1.35 var(--head)}.kp-nxd{font-size:13.5px;color:var(--primary-dark);font-weight:600}
+.kp-nx .btn{margin-top:6px}
+/* the other tabs: the same top, smaller */
+.kp-hero:not([data-tab="now"]) .kp-dash{grid-template-areas:"p s"}
+.kp-hero:not([data-tab="now"]) .kp-ms,.kp-hero:not([data-tab="now"]) .kp-nx,.kp-hero:not([data-tab="now"]) .kp-pn,.kp-hero:not([data-tab="now"]) .kp-pfine,.kp-hero:not([data-tab="now"]) .kp-pd{display:none}
+.kp-hero:not([data-tab="now"]) .kp-ring.xl{width:112px;height:112px}
+/* the step in focus: narrow, quiet, one thing at a time */
+.kp-nowg{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,330px);gap:22px;align-items:start;margin-top:20px}
+.kp-nowg .kp-focus{margin-top:0}
+.kp-side{display:grid;gap:14px;align-content:start;min-width:0}.kp-side .kp-coach,.kp-side .tn-teaser{margin:0}
+.kp-side .kp-coach{align-items:flex-start;padding:16px 18px;border-radius:24px}
+.kp-focus{border-radius:30px;box-shadow:0 8px 30px rgba(31,37,68,.08);padding:clamp(20px,3vw,34px)}
+.kp-fh{gap:8px 12px}
+.kp-fstep{gap:10px;font-size:14.5px;color:#3B4262;font-weight:500}.kp-fstep b,.kp-fh .kp-fstep b{font-family:var(--head);font-size:inherit;font-weight:700;color:var(--ink);line-height:inherit}
+.kp-fstep i{background:var(--zb);color:var(--zc)}
+.kp-fdots{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:14px 0 0}
+.kp-fdots li{width:22px;height:6px;border-radius:99px;background:#E4E7F1}.kp-fdots li.d{background:#12A26B}.kp-fdots li.c{width:38px;background:var(--zc)}
+.kp-focus h2{font-size:clamp(22px,2.6vw,29px);line-height:1.25;margin-block:16px 6px;font-weight:700}
+.kp-fwhy{font-size:16px;color:#4A5068;margin:0;line-height:1.6}
+.kp-ftop .kp-fok{margin:12px 0 0}
+.kp-focus .kp-fhow{background:#F8F9FD;border:0;border-radius:22px;padding:clamp(16px,2.2vw,24px);margin-top:20px;font-size:16px;line-height:1.75}
+.kp-focus .kp-fhow h3{font-size:13.5px;letter-spacing:.02em;margin:0 0 10px;color:var(--muted);font-weight:700}
+.kp-focus .kp-fhow p{margin-block:0 12px;color:#2B3252}.kp-focus .kp-fhow>*:last-child{margin-bottom:0}
+.kp-focus .kp-ul{font-size:15.5px;gap:6px;margin-block:4px 12px}
+.kp-focus .cklist{grid-template-columns:minmax(0,1fr);gap:8px;margin-top:4px}
+.kp-focus .ck{background:#fff;border:1.5px solid #E6E8F1;border-radius:16px;padding:12px 14px;gap:12px;color:var(--ink)}
+.kp-focus .ck.yes{border-color:#BFE5D3}.kp-focus .ck.no{border-color:#F5C6BF}
+.kp-focus .ck b{font-size:16px}.kp-focus .ck p{font-size:14.5px;color:#4A5068}
+.kp-focus .kp-btns{margin-top:14px}
+.kp-focus .kp-tip{background:#FFF8EA}
+.kp-fnav{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;margin-top:22px;padding-top:20px;border-top:1.5px dashed var(--line)}
+.kp-fmid{display:flex;align-items:center;justify-content:center;gap:6px 14px;flex-wrap:wrap;min-width:0}
+.kp-fdone{min-height:52px;padding-inline:36px;font-size:17px}
+.kp-fp{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:8px 16px;border-radius:999px;background:#F3F4F9;color:#3B4262;font:600 14.5px var(--head);border:0;cursor:pointer;transition:background .15s}
+.kp-fp svg{width:16px;height:16px}.kp-fp:hover:not(:disabled){background:#E9EBF4}.kp-fp:disabled{opacity:.4;cursor:default}
+.kp-fnav .kp-fskip{min-height:44px;font-weight:500}
+.kp-ftip{background:#F4F7FF;border-radius:18px;margin-top:18px}
+.kp-nowg+.kp-qc,.jn-sec~.kp-qc{max-width:860px}
+@media(max-width:1000px){.kp-nowg{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:900px){.kp-dash,.kp-hero:not([data-tab="now"]) .kp-dash{grid-template-columns:minmax(0,1fr);grid-template-areas:"p" "m" "s"}.kp-hero:not([data-tab="now"]) .kp-dash{grid-template-areas:"p" "s"}}
+@media(max-width:720px){
+  .kp-ms{display:flex;overflow-x:auto;scroll-snap-type:x proximity;gap:10px;padding:4px 2px 12px;margin-inline:-2px;scrollbar-width:thin}
+  .kp-m{flex:0 0 124px;scroll-snap-align:start}
+  .kp-mb{padding:10px 12px;gap:5px;border-radius:18px}.kp-mi{width:32px;height:32px;border-radius:11px}.kp-mi svg{width:18px;height:18px}.kp-mn{font-size:14px}
+  .kp-m:not(.cur) .kp-mb small{display:none}.kp-mb small{font-size:12px}
+}
+@media(max-width:620px){
+  .kp-pcard{padding:16px;border-radius:26px}
+  .kp-prog{padding:14px;gap:14px;border-radius:22px}
+  .kp-ring.xl{width:108px;height:108px}.kp-ring.xl .kp-rin b{font-size:28px}
+  .kp-pd{display:none}.kp-ph{font-size:22px}.kp-pn2{font-size:14px}.kp-pn2 b{font-size:15.5px}
+  .kp-pcard .kp-gt h1{font-size:23px}
+  .kp-dash .kp-stand{padding:14px 18px;border-radius:26px;gap:8px;border-top-width:5px}
+  .kp-dash .kp-sh span,.kp-nx{display:none}.kp-dash .kp-sh b{font-size:20px}
+  .kp-hero.hero:not(.kp-hubhero){padding-bottom:12px}.kp-dash{gap:12px}
+  .kp-prog{padding:12px 14px}.kp-pfine{margin-top:6px}
+  .kp-focus{border-radius:24px;padding:18px 16px}
+  .kp-focus .kp-fhow{background:transparent;padding:0;margin-top:14px;border-radius:0}
+  .kp-fnav{grid-template-columns:44px minmax(0,1fr) 44px;gap:8px}
+  .kp-fp{width:44px;padding:0;justify-content:center}.kp-fp span{display:none}
+  .kp-fmid{flex-direction:column;gap:2px}.kp-fdone{width:100%}
+}
+html.rm .kp-mbar i{transition:none}
 .tn{margin-top:30px}
 .tn-f{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
 .tn-f .fb2[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
@@ -6229,15 +6331,48 @@ function chipsHTML(X){
   const st=(STAGES.find(s=>s[0]===(S.prof&&S.prof.stage))||[])[1],P=X.P,r=myReg();
   const ch=(ic,t,empty)=>`<button class="kp-cp ${t?'':'empty'}" data-kme>${ki(ic)}${esc(t||empty)}</button>`;
   return `<div class="kp-cps">${ch('user',st,'באיזו כיתה אני?')}${ch('cal',X.start?`לימודים מאוקטובר ${X.start}${X.startE?' (לפי הסיום שלי)':''}`:'',!X.start?'מתי אני רוצה להתחיל?':'')}${r?ch('pin',REGN[r],''):''}</div>`}
+/* the words that go with the percent: where I am on the road, in a few encouraging words (never a promise to be accepted) */
+const MOTIV=[
+  [0,'הדרך מתחילה כאן','הצעד הראשון קטן, והוא כבר מחכה לי למטה.'],
+  [1,'התחלה טובה','כבר יצאתי לדרך. כל צעד שאסמן מקדם את הטבעת.'],
+  [10,'התנופה נבנית','כמה צעדים כבר מאחוריי. ממשיכים בקצב שלי.'],
+  [25,'רבע מהדרך מאחוריי','זה כבר הרבה. עוד צעד קטן, ועוד אחד.'],
+  [50,'באמצע הדרך','חצי מהצעדים כבר מאחוריי, ומכאן היעד נראה קרוב יותר.'],
+  [75,'שלושת רבעי מהדרך','הקו האחרון כבר נראה לעין.'],
+  [90,'כמעט שם','נשארו רק הצעדים האחרונים.'],
+  [100,'הגעתי ליעד','כל הצעדים בדרך מסומנים. כל הכבוד!']];
+const motivOf=p=>MOTIV.filter(m=>p>=m[0]).pop();
+/* how many more steps to the next round percent, counted the way the percent itself is counted */
+function nextMark(pl){
+  const m=[10,25,50,75,100].find(m=>m>pl.pct);if(!m||!pl.total)return null;
+  const base=pl.done+(pl.part||0);
+  for(let k=1;k<=pl.total-pl.done;k++)if(Math.round(100*(base+k)/pl.total)>=m)return {m,k};
+  return null}
+/* one tile for every stage of the road: its own percent, big; a tap opens the stage on the map */
+function msHTML(pl){
+  return `<ol class="kp-ms" style="--n:${pl.zones.length}" aria-label="השלבים בדרך ליעד">${pl.zones.map(z=>{
+    const th=ZTH[z.id]||ZTH.g10,p=z.total?Math.round(100*z.done/z.total):0,st=trState(z,pl),fo=z.id===pl.focus&&st==='later';
+    const tag=st==='done'?'הושלם':st==='cur'?'אני כאן':fo?'הצעד הבא כאן':'בהמשך';
+    return `<li class="kp-m ${st}${fo?' fo':''}" style="--zc:${th.c};--zb:${th.bg};--zp:${p}%"><button type="button" class="kp-mb" data-khz="${z.id}" aria-label="${esc(z.t)}: ${tag}, ${z.done} מתוך ${z.total} צעדים, ${p}%. לחיצה פותחת את השלב במפה">
+      <span class="kp-mt"><span class="kp-mi">${st==='done'?ki('check'):ki(z.ic)}</span><b class="kp-mp num">${p}%</b></span>
+      <span class="kp-mn">${esc(z.t)}</span><span class="kp-mbar" aria-hidden="true"><i></i></span><small>${tag} · ${z.done} מתוך ${z.total}</small></button></li>`}).join('')}</ol>`}
 function heroHTML(pl){
-  const X=pl.X,{d,I,P}=X,s=pl.stand;
+  const X=pl.X,{d,I,P}=X,s=pl.stand,mo=motivOf(pl.pct),nm=nextMark(pl),zd=pl.zones.filter(z=>z.total&&z.done===z.total).length;
   return `${switchHTML()}
-    <div class="kp-goal"><span class="kp-pic">${ill(d)}</span>
-      <div class="kp-gt"><small>היעד שלי</small><h1>${esc(d.n)}</h1><p>${esc(I.n)}${P.auto?' · <b>מוסד לדוגמה</b>':''}</p>${chipsHTML(X)}</div>
-      <div class="kp-ged">${button('data-kinst','מוסד אחר')}${button('data-kchange','תואר אחר')}${button(`data-open="${d.id}"`,'עמוד התואר')}</div></div>
-    <div class="kp-stand ${s.k}"><div class="kp-ring">${ring(pl.pct,80,9,'lg')}<div class="kp-rin"><b class="num">${pl.pct}%</b><small>מהדרך</small></div></div>
-      <div class="kp-sh"><small>איפה אני עכשיו${X.est?' · לפי ציונים צפויים':''}</small><b>${esc(s.h)}</b><span>${esc(s.s)}</span></div>
-      <div class="kp-sx">${gaugeHTML(X)}<div class="kp-sxr"><span><b class="num">${pl.done}</b> מתוך <b class="num">${pl.total}</b> צעדים${pl.part>0?' ועוד חלק מהסף':''}</span>${button('data-ktab="lab"','עדכון ציונים',ki('arrow'))}</div></div></div>`}
+    <div class="kp-dash">
+      <div class="kp-pcard">
+        <div class="kp-goal"><span class="kp-pic">${ill(d)}</span>
+          <div class="kp-gt"><small>היעד שלי</small><h1>${esc(d.n)}</h1><p>${esc(I.n)}${P.auto?' · <b>מוסד לדוגמה</b>':''}</p>${chipsHTML(X)}</div>
+          <div class="kp-ged">${button('data-kinst','מוסד אחר')}${button('data-kchange','תואר אחר')}${button(`data-open="${d.id}"`,'עמוד התואר')}</div></div>
+        <div class="kp-prog"><div class="kp-ring xl">${ring(pl.pct,176,16,'lg')}<div class="kp-rin"><b class="num">${pl.pct}%</b><small>מהדרך</small></div></div>
+          <div class="kp-pt"><p class="kp-ph">${esc(mo[1])}</p><p class="kp-pd">${esc(mo[2])}</p>
+            <div class="kp-pr"><p class="kp-pn2"><span><b class="num">${pl.done}</b> מתוך <b class="num">${pl.total}</b> צעדים${pl.part>0?' ועוד חלק מהסף':''}</span><span><b class="num">${zd}</b> מתוך <b class="num">${pl.zones.length}</b> שלבים הושלמו</span></p>
+              ${nm?`<p class="kp-pn">${ki('target')}<span>עוד ${pl.part>0?'כ-':''}${nm.k===1?'צעד אחד':nm.k+' צעדים'} ל-<b class="num">${nm.m}%</b></span></p>`:''}</div>
+            <p class="kp-pfine">האחוז הוא הצעדים שעשיתי בדרך, ולא סיכוי להתקבל.</p></div></div></div>
+      ${msHTML(pl)}
+      <div class="kp-stand ${s.k}"><div class="kp-sh"><small>איפה אני עכשיו${X.est?' · לפי ציונים צפויים':''}</small><b>${esc(s.h)}</b><span>${esc(s.s)}</span></div>
+        ${gaugeHTML(X)}<div class="kp-sxr">${button('data-ktab="lab"','עדכון ציונים',ki('arrow'))}</div>
+        ${pl.next?`<div class="kp-nx"><small>הצעד הבא שלי</small><b>${esc(pl.next.t)}</b>${pl.next.due?`<span class="kp-nxd">${dueN(pl.next)}</span>`:''}<button type="button" class="btn primary sm" data-kstop="${pl.next.id}">לצעד הזה${ki('arrow')}</button></div>`:''}</div></div>`}
 
 /* ---------- what to do now: one step at a time ---------- */
 /* a few honest, encouraging words from my own numbers and progress */
@@ -6405,11 +6540,13 @@ function focusHTML(pl,t){
   const z=pl.zones.find(z=>z.id===t.z)||{t:'',tasks:[t],total:1},zi=Math.max(1,z.tasks.indexOf(t)+1),th=ZTH[t.z]||ZTH.g10,ix=pl.tasks.indexOf(t);
   const body=safe(t.body,''),own=body.includes(`data-kmark="${t.id}"`),man=!t.nm&&!own&&!t.done,first=!store.get('pathHelp',0);
   return `<article class="kp-focus kp-stop ${t.done?'done':''} ${t.soon?'soon':''}" id="kpf-${t.id}" aria-labelledby="kpf-h" style="--zc:${th.c};--zb:${th.bg}">
-    <div class="kp-fh"><span class="kp-fstep"><i>${ki(t.ic)}</i><span>${esc(z.t)} · תחנה ${zi} מתוך ${z.total}</span></span>${dueChip(t)}</div>
-    <div class="kp-ftop"><div class="kp-ftt"><h2 id="kpf-h">${esc(t.t)}</h2>${t.s?`<p class="kp-fwhy">${esc(t.s)}</p>`:''}</div>
-      ${t.done?`<p class="kp-fok">${ki('check')}הושלם</p>`:man?`<div class="kp-fdo"><button class="btn primary" data-kmark="${t.id}">סיימתי ${ki('check')}</button></div>`:''}</div>
+    <div class="kp-fh"><span class="kp-fstep"><i>${ki(t.ic)}</i><span><b>${esc(z.t)}</b> · תחנה ${zi} מתוך ${z.total}</span></span>${dueChip(t)}</div>
+    <ol class="kp-fdots" aria-hidden="true">${z.tasks.map(x=>`<li class="${x.done?'d':''}${x===t?' c':''}"></li>`).join('')}</ol>
+    <div class="kp-ftop"><div class="kp-ftt"><h2 id="kpf-h">${esc(t.t)}</h2>${t.s?`<p class="kp-fwhy">${esc(t.s)}</p>`:''}</div>${t.done?`<p class="kp-fok">${ki('check')}הושלם</p>`:''}</div>
     <div class="kp-fhow"><h3>${t.done?'מה היה בתחנה הזאת':'מה עושים כאן'}</h3>${body}</div>
-    <div class="kp-fnav"><button class="linkbtn" data-kfsib="-1"${ix>0?'':' disabled'}>${ki('arrow','kp-flip')}התחנה הקודמת</button>${t.done?`<button class="btn soft sm" data-kfnext>לצעד הבא${ki('arrow')}</button>`:`<button class="linkbtn kp-fskip" data-kfskip>לא עכשיו</button>`}<button class="linkbtn" data-kfsib="1"${ix<pl.tasks.length-1?'':' disabled'}>התחנה הבאה${ki('arrow')}</button></div>
+    <div class="kp-fnav"><button type="button" class="kp-fp" data-kfsib="-1" aria-label="התחנה הקודמת"${ix>0?'':' disabled'}>${ki('arrow','kp-flip')}<span>הקודמת</span></button>
+      <div class="kp-fmid">${t.done?`<button class="btn soft" data-kfnext>לצעד הבא${ki('arrow')}</button>`:`${man?`<button class="btn primary kp-fdone" data-kmark="${t.id}">סיימתי ${ki('check')}</button>`:''}<button class="linkbtn kp-fskip" data-kfskip>לא עכשיו</button>`}</div>
+      <button type="button" class="kp-fp" data-kfsib="1" aria-label="התחנה הבאה"${ix<pl.tasks.length-1?'':' disabled'}><span>הבאה</span>${ki('arrow')}</button></div>
     ${first?`<p class="kp-ftip">${ki('star')}<span>התחנה עם התווית "הבא" במפה היא הצעד שמחכה לי. כשאסיים אותה אסמן ✓ והמפה תתקדם.</span><button class="linkbtn" data-khelp>הבנתי</button></p>`:''}</article>`}
 function doneHTML(pl){return `<div class="kp-next done"><span class="kn-i">${ki('cap')}</span><div class="kn-b"><small>הדרך הושלמה</small><h3>${gx('התקבלתי','התקבלתי')} ל${esc(pl.X.d.n)}!</h3></div></div>`}
 /* the road grew after some people started it: the percentage is lower than it was, and this says why (once, until closed) */
@@ -6422,8 +6559,9 @@ function nowHTML(pl){
   return `${safe(()=>stepsNoteHTML(),'')}${safe(()=>welcomeHTML(pl),'')}
     <section class="jn-sec" aria-labelledby="jnH"><div class="sec-h"><div><h2 id="jnH">${ki('map')}המפה שלי</h2><p>כל שלב הוא אזור במפה. לוחצים על תחנה כדי לראות מה עושים בה.</p></div>${nx&&t&&t.id!==nx.id?`<button type="button" class="btn soft sm" data-kstop="${nx.id}">לצעד הבא שלי${ki('arrow')}</button>`:''}</div>
       <div id="kpJ">${journeyHTML(pl,t)}</div>
-      <div id="kpStep">${t?focusHTML(pl,t):doneHTML(pl)}</div></section>
-    ${coach(pl)}${safe(()=>qCardHTML(pl),'')}${safe(()=>teenTeaser(pl),'')}
+      <div class="kp-nowg"><div class="kp-main" id="kpStep">${t?focusHTML(pl,t):doneHTML(pl)}</div>
+        <div class="kp-side">${coach(pl)}${safe(()=>teenTeaser(pl),'')}</div></div></section>
+    ${safe(()=>qCardHTML(pl),'')}
     <div class="kp-whyc">${safe(()=>whyHTML(pl))}</div>`}
 const roadHTML=pl=>`<div class="sec-h"><div><h2>${ki('map')}הדרך המלאה</h2><p>כל השלבים עד היום הראשון, על מפה אחת. לוחצים על שלב כדי לראות מה בו, ומסמנים ✓ כשמסיימים צעד. שום דבר לא נעול.</p></div></div>${trailHTML(pl)}${panelHTML(pl)}${endCardHTML(pl)}${safe(()=>teenHTML(pl),'')}`;
 const button=(attr,label,ic='')=>`<button class="linkbtn kp-lnk" ${attr}>${label}${ic}</button>`;
@@ -6448,7 +6586,7 @@ function renderPath(){
   if(!pl)return `<section class="hero"><div class="wrap">${BACK}<h1>משהו השתבש במסלול</h1><p class="sub">אפשר להתחיל מחדש, והפרופיל והציונים לא יימחקו.</p><button class="btn primary" data-kresetok>התחלה מחדש</button></div></section>`;
   const X=pl.X;labInit(LAB.sig!==labSig());LAB.sig=labSig();
   setTimeout(afterTab,0);
-  return `<section class="hero kp-hero" style="${cv(X.d)}"><div class="wrap">${BACK}<div id="kpHero">${safe(()=>heroHTML(pl))}</div></div></section>
+  return `<section class="hero kp-hero" data-tab="${KP.tab}" style="${cv(X.d)}"><div class="wrap">${BACK}<div id="kpHero">${safe(()=>heroHTML(pl))}</div></div></section>
     <div class="kp-nav" id="kpNav">${navHTML()}</div>
     <div class="wrap kp-body"><div id="kpTab" role="tabpanel">${tabInner(pl)}</div></div>`}
 /* the options tab looks at every degree, so it fills in right after the first paint */
@@ -6467,8 +6605,9 @@ function jump(id,smooth=true){const e=$('#'+id);if(!e)return;const y=e.getBoundi
 function gotoTab(k,o={}){
   if(!TABS.some(t=>t[0]===k))k='now';
   if(k!==KP.tab){KP.qpause=false;KP.qfx=null} /* F2b: leaving the tab and coming back allows the next question, and an old effect is not kept */
-  KP.tab=k;const n=$('#kpNav'),b=$('#kpTab'),pl=safe(plan);
+  KP.tab=k;const n=$('#kpNav'),b=$('#kpTab'),pl=safe(plan),hs=$('.kp-hero');
   if(!n||!b||!pl){render();return}
+  if(hs)hs.dataset.tab=k;
   n.innerHTML=navHTML();b.innerHTML=tabInner(pl);afterTab();
   const a=$('.kp-np.act');if(a&&a.scrollIntoView)a.scrollIntoView({inline:'center',block:'nearest'});
   if(o.scroll||b.getBoundingClientRect().top<(innerWidth<760?116:150))jump('kpTab',!o.instant)}
@@ -6905,7 +7044,7 @@ function celebrate(el,n=30){if(!el)return;const r=el.getBoundingClientRect();bur
 
 
 /* ---------- events ---------- */
-const KSEL='[data-padd],[data-ppick],[data-pswap],[data-kwd],[data-kwi],[data-kwauto],[data-kwb],[data-kwdone],[data-kme],[data-kmedone],[data-kc],[data-kt],[data-kmap],[data-kmapn],[data-kstop],[data-kgate],[data-kfsib],[data-ktf],[data-kteen],[data-kgo],[data-ktab],[data-ktgt],[data-khub],[data-kadd],[data-krm],[data-krmok],[data-krmno],[data-kfocus],[data-kfprev],[data-kfnext],[data-kfskip],[data-knext],[data-kmark],[data-kinst],[data-kchange],[data-kpick],[data-ksess],[data-kfq],[data-kmore],[data-kdel],[data-kendx],[data-kwel],[data-kweld],[data-ksn],[data-kq],[data-kqd],[data-kqskip],[data-kqok],[data-kqgo],[data-kqask],[data-kics],[data-khelp],[data-kcopy],[data-kexp],[data-kundo],[data-kreset],[data-kresetok],[data-kresetno],[data-lb],[data-lbm],[data-lbe],[data-lbx],[data-lbmode],[data-lbadd],[data-lbrm],[data-lbsave],[data-lbok],[data-lbno],[data-lbreal],[data-lbsavep],[data-lbreset],[data-lbd],[data-lbplan]';
+const KSEL='[data-padd],[data-ppick],[data-pswap],[data-kwd],[data-kwi],[data-kwauto],[data-kwb],[data-kwdone],[data-kme],[data-kmedone],[data-kc],[data-kt],[data-kmap],[data-kmapn],[data-kstop],[data-kgate],[data-khz],[data-kfsib],[data-ktf],[data-kteen],[data-kgo],[data-ktab],[data-ktgt],[data-khub],[data-kadd],[data-krm],[data-krmok],[data-krmno],[data-kfocus],[data-kfprev],[data-kfnext],[data-kfskip],[data-knext],[data-kmark],[data-kinst],[data-kchange],[data-kpick],[data-ksess],[data-kfq],[data-kmore],[data-kdel],[data-kendx],[data-kwel],[data-kweld],[data-ksn],[data-kq],[data-kqd],[data-kqskip],[data-kqok],[data-kqgo],[data-kqask],[data-kics],[data-khelp],[data-kcopy],[data-kexp],[data-kundo],[data-kreset],[data-kresetok],[data-kresetno],[data-lb],[data-lbm],[data-lbe],[data-lbx],[data-lbmode],[data-lbadd],[data-lbrm],[data-lbsave],[data-lbok],[data-lbno],[data-lbreal],[data-lbsavep],[data-lbreset],[data-lbd],[data-lbplan]';
 const wizReset=(change,add)=>{KP.wiz={active:true,step:1,tq:'',d:'',i:'',change:!!change,add:!!add}};
 const top0=()=>window.scrollTo({top:0,behavior:'instant'});
 const refocus=sel=>{const e=$(sel);if(e)e.focus({preventScroll:true})};
@@ -6920,15 +7059,23 @@ function wizPick(d,i,auto){
   else setGoal(d,i,true,auto);
   if((W.change||W.add)&&S.prof&&S.prof.stage)finishWizard();else{W.step=3;render();top0()}}
 /* mark or unmark a manual step, then repaint what depends on it. A step finished in focus moves me on to the next one. */
+/* a stage just finished, or a quarter / half / three quarters of the road: said out loud, once */
+function progressNote(a,b){
+  if(!a||!b)return null;
+  const m=[25,50,75,100].find(m=>a.pct<m&&b.pct>=m),z=b.zones.find(z=>z.total&&z.done===z.total&&a.zones.some(y=>y.id===z.id&&y.done<y.total));
+  if(m===100)return {k:'pct',t:'הגעתי ל-100% מהדרך!'};
+  if(z)return {k:'stage',t:`סיימתי את שלב ${z.t}! ${b.pct}% מהדרך מאחוריי.`};
+  if(m)return {k:'pct',t:`${m}% מהדרך מאחוריי!`};
+  return null}
 function toggleMark(id,el){
-  const P=pth(),on=!P.marks[id],focus=!!document.getElementById('kpf-'+id);
-  if(on)celebrate(el||$('#kpt-'+id+' .kp-chk'),id==='acc'||id==='arrived'?90:26);
+  const P=pth(),on=!P.marks[id],focus=!!document.getElementById('kpf-'+id),pl0=on?safe(plan):null,src=el||$('#kpt-'+id+' .kp-chk');
   setMark(id,on?Date.now():0);if(on)logAct();
-  pthSave();PLC=null;const pl=plan();
+  pthSave();PLC=null;const pl=plan(),ms=on?safe(()=>progressNote(pl0,pl),null):null;
+  if(on)celebrate(src,id==='acc'||id==='arrived'?90:ms?(ms.k==='stage'?70:50):26);
   if(on&&focus){KP.hist.push(id);if(KP.hist.length>30)KP.hist.shift();KP.fid='';KP.skip.delete(id)}
   paint();
   if(!focus)refocus(`#kpt-${id} .kp-chk`);
-  if(on){const n=pl.next;if(n&&n.id!==id)toast(`יופי! הצעד הבא: ${n.t}`);if(focus)jump('kpTab')}}
+  if(on){const n=pl.next,nx=n&&n.id!==id?` הצעד הבא: ${n.t}`:'',msg=ms?ms.t+nx:nx?`יופי! ${pl.pct}% מהדרך.${nx}`:'';if(msg)toast(msg);if(focus)jump('kpTab')}}
 document.addEventListener('click',e=>{
   const el=e.target.closest(KSEL);if(!el)return;
   const ds=el.dataset,P=pth();
@@ -6984,6 +7131,8 @@ document.addEventListener('click',e=>{
   else if(ds.kt!==undefined){const id=ds.kt;KP.open.has(id)?KP.open.delete(id):KP.open.add(id);const t=plan().tasks.find(x=>x.id===id),li=$('#kpt-'+id);if(t&&li)li.outerHTML=taskHTML(t);refocus(`[data-kt="${id}"]`)}
   else if(ds.kmap!==undefined)trSelect(ds.kmap);
   else if(ds.kstop!==undefined)jSelect(ds.kstop);
+  else if(ds.khz!==undefined){const pl=safe(plan),z=pl&&pl.zones.find(z=>z.id===ds.khz),q=z&&(z.tasks.find(x=>!x.done)||z.tasks[0]);
+    if(q){if(KP.tab==='now'){jSelect(q.id);jump('jnH')}else if(KP.tab==='road'){trSelect(z.id);jump('kp-road')}else{KP.fid=q.id;gotoTab('now',{scroll:1})}}}
   else if(ds.kgate!==undefined){const pl=safe(plan),z=pl&&pl.zones.find(z=>z.id===ds.kgate),q=z&&(z.tasks.find(x=>!x.done)||z.tasks[0]);if(q)jSelect(q.id)}
   else if(ds.kfsib!==undefined){const pl=safe(plan),t=pl&&focusTask(pl),n=t&&pl.tasks[pl.tasks.indexOf(t)+(+ds.kfsib)];if(n)jSelect(n.id)}
   else if(ds.kmapn!==undefined){const v=el.closest('.tr').querySelector('.tr-view');if(v)v.scrollBy({left:(ds.kmapn==='next'?-1:1)*Math.max(220,v.clientWidth*.7),behavior:RM()?'instant':'smooth'})}
