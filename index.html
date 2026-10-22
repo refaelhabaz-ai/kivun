@@ -1839,6 +1839,8 @@ html.rm .tr-n.nxt .tr-c::after{animation:none}
   .kp-fmid{flex-direction:column;gap:2px}.kp-fdone{width:100%}
 }
 html.rm .kp-mbar i{transition:none}
+/* a focused "back to top" button must be seen (it stays hidden until the page is scrolled, and a keyboard user can reach it before that) */
+.to-top:focus-visible{transform:none;opacity:1;pointer-events:auto}
 .tn{margin-top:30px}
 .tn-f{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
 .tn-f .fb2[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
