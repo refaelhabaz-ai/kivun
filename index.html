@@ -1677,8 +1677,8 @@ button.tr-b{cursor:pointer}
 .tr-l em{font-style:normal;font-size:13px;color:var(--muted);font-weight:600}
 button.tr-b:hover .tr-c{transform:translateY(-3px)}
 .tr-n.cur button.tr-b:hover .tr-c{transform:scale(1.12) translateY(-3px)}
-.tr-n.sel .tr-b{background:#fff;box-shadow:0 0 0 2px var(--ink),var(--shadow)}
-.tr-n.sel .tr-l b{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.tr-n.pick .tr-b{background:#fff;box-shadow:0 0 0 2px var(--ink),var(--shadow)}
+.tr-n.pick .tr-l b{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
 .tr-trav{position:absolute;width:0;height:0;z-index:3;offset-rotate:0deg}
 .tr-trav.mp{transition:offset-distance 1.9s cubic-bezier(.45,0,.2,1) .4s}
 .tr-tp{position:absolute;left:0;top:0;transform:translate(-50%,calc(var(--r)*-1 - 40px));display:inline-flex;align-items:center;gap:5px;white-space:nowrap;background:var(--cta);color:#fff;font-family:var(--head);font-weight:600;font-size:13.5px;padding:5px 12px 5px 9px;border-radius:999px;box-shadow:0 8px 18px rgba(214,64,29,.35);animation:trb 2.4s ease-in-out infinite}
@@ -1703,6 +1703,35 @@ button.tr-b:hover .tr-c{transform:translateY(-3px)}
 .tr-bar{display:block;width:96px;height:8px;border-radius:99px;background:var(--tint);overflow:hidden}.tr-bar>i{display:block;height:100%;background:#12A26B;border-radius:99px;transition:width .6s}
 .tr-end{display:flex;align-items:center;gap:14px;margin-bottom:26px}.tr-end>svg{width:30px;height:30px;flex:none;color:var(--primary-dark)}.tr-end span{display:flex;flex-direction:column}
 .kp-mini .tr{margin-block:2px 0}
+/* ---------- the journey map (jn): regions, stops and the step card ---------- */
+.jn-sec{margin-top:6px}.jn-sec .sec-h{margin-bottom:14px}
+.tr-b{position:relative}
+.tr-rg{position:absolute;top:12px;bottom:12px;border-radius:26px;background:linear-gradient(180deg,var(--rb) 0%,rgba(255,255,255,.62) 100%);border:1.5px solid color-mix(in srgb,var(--rc) 22%,transparent);overflow:hidden;pointer-events:none;transition:box-shadow .3s,border-color .3s}
+.tr-rt{position:absolute;top:10px;inset-inline-start:14px;display:inline-flex;align-items:center;gap:6px;font:700 13px var(--head);color:var(--ink);background:rgba(255,255,255,.8);padding:3px 12px;border-radius:999px}.tr-rt::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--rc)}.tr-rt b{color:var(--muted);font-weight:600}
+.tr-sc{position:absolute;inset-inline:0;bottom:0;display:flex;justify-content:space-around;align-items:flex-end;height:78px;padding-inline:8px}.tr-sc svg{flex:1 1 0;min-width:0;height:78px;max-width:230px;fill:var(--rc);opacity:.26}
+.tr-rg.open{border-color:color-mix(in srgb,var(--rc) 60%,transparent);box-shadow:0 10px 28px color-mix(in srgb,var(--rc) 20%,transparent)}
+.tr-c .tr-arc{position:absolute;inset:-10px;width:calc(100% + 20px);height:calc(100% + 20px);pointer-events:none}
+.tr-arc .a0{fill:none;stroke:rgba(31,37,68,.1);stroke-width:5}.tr-arc .a1{fill:none;stroke:#12A26B;stroke-width:5;stroke-linecap:round}
+.tr-n.st .tr-l{max-width:calc(var(--cw) - 14px)}
+.tr-n.st .tr-l b{font-family:var(--body);font-weight:600;font-size:13px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.tr-n.st .tr-c svg{width:calc(var(--r)*.85);height:calc(var(--r)*.85)}
+.tr-n.nxt .tr-c{background:var(--cta-grad);color:#fff;box-shadow:0 8px 20px rgba(242,80,47,.4)}
+.tr-n.nxt .tr-c::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--cta);opacity:.5;animation:trp 2.3s ease-out infinite}
+.tr-n.st.soon:not(.done) .tr-c{box-shadow:0 0 0 3px #FFB347,0 6px 18px rgba(31,37,68,.14)}
+.tr-n.st.done .tr-c svg{stroke-width:3}
+.tr-n.st.pick .tr-b{background:transparent;box-shadow:none}.tr-n.st.pick .tr-c{box-shadow:0 0 0 3px var(--ink),0 6px 18px rgba(31,37,68,.18)}
+.tr-n:not(.st).pick .tr-b{background:rgba(255,255,255,.7);box-shadow:none}
+.tr.jn .tr-n:not(.st).pick .tr-l b{text-decoration:none}
+.tr-nx{position:absolute;left:50%;top:-27px;transform:translateX(-50%);background:var(--cta);color:#fff;font:700 12px var(--head);padding:2px 10px;border-radius:999px;white-space:nowrap}
+html.rm .tr-n.nxt .tr-c::after{animation:none}
+.kp-focus{border-inline-start:0;border-top:6px solid var(--zc,var(--primary));margin-top:14px}
+.kp-focus.soon{border-top-color:#F2502F}.kp-focus.done{border-top-color:#12A26B}
+.kp-ftop{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}.kp-ftt{flex:1 1 320px;min-width:0}
+.kp-ftop .kp-fdo{margin:12px 0 0}.kp-ftop .kp-fdo .btn{flex:none;min-height:48px;padding-inline:28px}.kp-ftop .kp-fok{margin:12px 0 0}
+.kp-focus .kp-fhow{background:transparent;border-radius:0;padding:14px 0 0;border-top:1.5px dashed var(--line);margin-top:6px}
+.kp-fnav{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}.kp-fnav>:first-child{justify-self:start}.kp-fnav>:last-child{justify-self:end}
+.kp-fnav .linkbtn{min-height:44px}.kp-fnav .linkbtn:disabled{opacity:.35;pointer-events:none}.kp-fnav .kp-fskip{font-weight:500}
+@media(max-width:640px){.kp-fnav{grid-template-columns:1fr 1fr}.kp-fnav>:nth-child(2){grid-column:1/-1;grid-row:2;justify-self:center}}
 .tn{margin-top:30px}
 .tn-f{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
 .tn-f .fb2[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
@@ -6025,30 +6054,28 @@ function taskHTML(t){
    the stage I am in carries a pill, and a tap on a stage shows its steps under the map.
    Motion: the path draws itself and the "I am here" pill drops in when the map first scrolls into view (it rides the path when the stage I am in is not the first one); the background moves slower than the
    stages while the map is scrolled sideways. With reduced motion everything is simply in its final place. */
-const TRG={cw:190,pad:28,H:300,ys:[96,136],r:30},TRC={cw:132,pad:18,H:200,ys:[78,102],r:22},TRM={cw:152,pad:20,H:290,ys:[92,126],r:28};
+const TRG={cw:190,pad:28,H:300,ys:[96,136],r:30},TRM={cw:152,pad:20,H:290,ys:[92,126],r:28};
 function trGeo(n,c){const W=n*c.cw+2*c.pad;return{W,pts:Array.from({length:n},(_,i)=>({x:Math.round(W-c.pad-(i+.5)*c.cw),y:c.ys[i%2]}))}}
 const trSeg=(a,b)=>{const m=Math.round((a.x+b.x)/2);return `M${a.x} ${a.y}C${m} ${a.y} ${m} ${b.y} ${b.x} ${b.y}`};
 const trState=(z,pl)=>z.total&&z.done===z.total?'done':z.id===pl.cur?'cur':'later';
 const trStateTxt={done:'הושלם',cur:'אני כאן',later:'בהמשך'};
 /* the stage shown under the map: the one I tapped, until the stage I am in changes; otherwise the one I am in */
 function trSel(pl){const Z=pl.zones;if(KP.zsel&&KP.zsc===pl.cur&&Z.some(z=>z.id===KP.zsel))return KP.zsel;return Z.some(z=>z.id===pl.cur)?pl.cur:Z[0].id}
-function trailHTML(pl,o={}){
-  const c=o.compact?TRC:(innerWidth<640?TRM:TRG),Z=pl.zones,n=Z.length+1,{W,pts}=trGeo(n,c),X=pl.X,Y=X.start,sel=trSel(pl),at=o.compact?'data-kjump':'data-kmap';
-  const ci=Math.max(0,Z.findIndex(z=>z.id===pl.cur)),cz=Z[ci];
-  let base='',prog='',tp=`M${pts[0].x} ${pts[0].y}`;
+function trailHTML(pl){
+  const c=innerWidth<640?TRM:TRG,Z=pl.zones,n=Z.length+1,{W,pts}=trGeo(n,c),X=pl.X,Y=X.start,sel=trSel(pl);
+  const ci=Math.max(0,Z.findIndex(z=>z.id===pl.cur));
+  let base='',prog='';
   for(let k=0;k<n-1;k++){const d=trSeg(pts[k],pts[k+1]),zk=Z[k],off=zk&&zk.total?Math.round(100*(1-zk.done/zk.total)):100; /* the stretch after a stage is drawn as far as that stage is done */
-    base+=`<path class="tr-base" d="${d}"/>`;prog+=`<path class="tr-prog" d="${d}" pathLength="100" style="--o:${off};--dl:${(k*.22).toFixed(2)}s"/>`;
-    if(k<ci)tp+=d.replace(/^M[^C]*/,'')}
-  const node=(z,i)=>{const s=trState(z,pl),on=sel===z.id&&!o.compact;
-    return `<li class="tr-n ${s}${on?' sel':''}" style="left:${pts[i].x}px;top:${pts[i].y}px"><button type="button" class="tr-b" ${at}="${z.id}"${o.compact?'':` aria-pressed="${on}" aria-controls="kpPanel"`}${s==='cur'?' aria-current="step"':''} aria-label="${esc(z.t)}: ${trStateTxt[s]}, ${z.done} מתוך ${z.total} צעדים">
-      <span class="tr-c">${ki(z.ic)}${s==='done'?`<i class="tr-ok">${ki('check')}</i>`:''}</span><span class="tr-l"><b>${z.t}</b>${o.compact?'':`<small>${z.s}</small>`}<em class="num">${z.done}/${z.total}</em></span></button></li>`};
-  const endN=`<li class="tr-n end" style="left:${pts[n-1].x}px;top:${pts[n-1].y}px"><div class="tr-b"><span class="tr-c">${ki('cap')}</span><span class="tr-l"><b>היום הראשון</b>${o.compact?'':`<small>${Y?`אוקטובר ${Y}`:'בקצב שלי'}</small>`}</span></div></li>`;
-  const bg=`<div class="tr-bg" aria-hidden="true"><svg class="tr-far" viewBox="0 0 1200 300" preserveAspectRatio="none"><path d="M0 230C120 150 260 250 430 190S720 120 880 200s240-50 320-70V300H0Z"/></svg><svg class="tr-near" viewBox="0 0 1200 300" preserveAspectRatio="none"><path d="M0 270C160 220 300 285 520 250S860 215 1010 255s130 5 190-15V300H0Z"/></svg><i class="tr-cl a"></i><i class="tr-cl b"></i><i class="tr-cl c"></i></div>`;
+    base+=`<path class="tr-base" d="${d}"/>`;prog+=`<path class="tr-prog" d="${d}" pathLength="100" style="--o:${off};--dl:${(k*.22).toFixed(2)}s"/>`}
+  const plates=Z.map((z,i)=>jPlate(z,pts[i].x-c.cw/2+4,c.cw-8,sel===z.id)).join('');
+  const node=(z,i)=>{const s=trState(z,pl),on=sel===z.id;
+    return `<li class="tr-n ${s}${on?' pick':''}" style="left:${pts[i].x}px;top:${pts[i].y}px"><button type="button" class="tr-b" data-kmap="${z.id}" aria-pressed="${on}" aria-controls="kpPanel"${s==='cur'?' aria-current="step"':''} aria-label="${esc(z.t)}: ${trStateTxt[s]}, ${z.done} מתוך ${z.total} צעדים">
+      <span class="tr-c">${ki(z.ic)}${s==='done'?`<i class="tr-ok">${ki('check')}</i>`:''}</span><span class="tr-l"><b>${z.t}</b><small>${z.s}</small><em class="num">${z.done}/${z.total}</em></span></button></li>`};
+  const endN=`<li class="tr-n end" style="left:${pts[n-1].x}px;top:${pts[n-1].y}px"><div class="tr-b"><span class="tr-c">${ki('cap')}</span><span class="tr-l"><b>היום הראשון</b><small>${Y?`אוקטובר ${Y}`:'בקצב שלי'}</small></span></div></li>`;
   const pin=pts[ci];
-  const trav=`<span class="tr-trav" aria-hidden="true" style="left:${pin.x}px;top:${pin.y}px" data-path="${ci>0?tp:''}"><span class="tr-tp">${ki('arrow')}אני כאן</span></span>`;
-  return `<div class="tr${o.compact?' cp':''}${KP.trGo?' go still':''}" id="kpTrail" style="--cw:${c.cw}px;--r:${c.r}px"><div class="tr-view" id="trView${o.compact?'C':''}"><div class="tr-track" style="width:${W}px;height:${c.H}px">${bg}
+  return `<div class="tr${KP.trGo?' go still':''}" id="kpTrail" style="--cw:${c.cw}px;--r:${c.r}px"><div class="tr-view" id="trView"><div class="tr-track" style="width:${W}px;height:${c.H}px">${plates}
     <svg class="tr-svg" width="${W}" height="${c.H}" viewBox="0 0 ${W} ${c.H}" aria-hidden="true" focusable="false">${base}${prog}</svg>
-    <ol class="tr-nodes" aria-label="שלבי הדרך">${Z.map(node).join('')}${endN}</ol>${trav}</div></div>
+    <ol class="tr-nodes" aria-label="שלבי הדרך">${Z.map(node).join('')}${endN}</ol><span class="tr-trav" aria-hidden="true" style="left:${pin.x}px;top:${pin.y}px"><span class="tr-tp">${ki('arrow')}אני כאן</span></span></div></div>
     <button type="button" class="tr-arr prev" data-kmapn="prev" aria-label="לשלבים הקודמים">${ki('arrow')}</button><button type="button" class="tr-arr next" data-kmapn="next" aria-label="לשלבים הבאים">${ki('arrow')}</button></div>`}
 function panelHTML(pl){const z=pl.zones.find(z=>z.id===trSel(pl)),X=pl.X,s=trState(z,pl),pct=z.total?Math.round(100*z.done/z.total):0,rg=zoneRange(z.id,X);
   return `<section class="tr-panel" id="kpPanel" aria-labelledby="trPT"><div class="tr-ph"><div><h3 id="trPT">${z.t}</h3><p>${z.s}${rg?` · ${rg}`:''}</p></div>
@@ -6057,24 +6084,74 @@ function panelHTML(pl){const z=pl.zones.find(z=>z.id===trSel(pl)),X=pl.X,s=trSta
 const endCardHTML=pl=>{const X=pl.X,Y=X.start;return `<div class="kp-endc tr-end">${ki('cap')}<span><b>היום הראשון ללימודים</b><small>${Y?`אוקטובר ${Y}${HY[Y]?` (${HY[Y]})`:''}${X.startE?', לפי תאריך הסיום שהזנתי':''}`:`כשאני ${gx('מוכן','מוכנה')}, ובקצב שלי`}</small></span></div>`};
 /* tap on a stage: show its steps, centre it on the map */
 function trSelect(id){const pl=safe(plan);if(!pl||!pl.zones.some(z=>z.id===id))return;KP.zsel=id;KP.zsc=pl.cur;
-  document.querySelectorAll('.tr:not(.cp) .tr-b[data-kmap]').forEach(b=>{const on=b.dataset.kmap===id;b.setAttribute('aria-pressed',on);b.closest('.tr-n').classList.toggle('sel',on)});
+  document.querySelectorAll('.tr .tr-b[data-kmap]').forEach(b=>{const on=b.dataset.kmap===id;b.setAttribute('aria-pressed',on);b.closest('.tr-n').classList.toggle('pick',on)});
   const p=$('#kpPanel');if(p)p.outerHTML=panelHTML(pl);
-  const b=document.querySelector(`.tr:not(.cp) .tr-b[data-kmap="${id}"]`);if(b)trCenter(b.closest('.tr-view'),b,!RM())}
+  const b=document.querySelector(`.tr .tr-b[data-kmap="${id}"]`);if(b)trCenter(b.closest('.tr-view'),b,!RM())}
 function trCenter(v,b,smooth){if(!v||!b)return;const bx=b.getBoundingClientRect(),vx=v.getBoundingClientRect(),d=(bx.left+bx.width/2)-(vx.left+vx.width/2);if(Math.abs(d)<2)return;
   if(smooth)v.scrollBy({left:d,behavior:'smooth'});else v.scrollLeft+=d}
 /* every new map in the page gets its scroll effects once */
 function trailScan(){document.querySelectorAll('.tr:not([data-i])').forEach(t=>{t.dataset.i=1;
-  const v=t.querySelector('.tr-view'),tk=t.querySelector('.tr-track'),key=t.classList.contains('cp')?'trXc':'trXf',still=t.classList.contains('still');if(!v||!tk)return;
+  const v=t.querySelector('.tr-view'),tk=t.querySelector('.tr-track'),jn=t.classList.contains('jn'),key=jn?'trXj':'trXf',still=t.classList.contains('still');if(!v||!tk)return;
   const upd=()=>{const sx=v.scrollLeft,ax=Math.abs(sx),mx=v.scrollWidth-v.clientWidth;tk.style.setProperty('--sx',sx+'px');t.classList.toggle('fr',ax>8);t.classList.toggle('fl',ax<mx-8)};
-  if(still&&KP[key]!=null)v.scrollLeft=KP[key];else trCenter(v,t.querySelector('.tr-n.cur .tr-b')||t.querySelector('.tr-b'),false);
+  const focus=(jn&&(t.querySelector('.tr-n.st.pick .tr-b')||t.querySelector('.tr-n.pick .tr-b')))||t.querySelector('.tr-n.cur .tr-b')||t.querySelector('.tr-b');
+  if(still&&KP[key]!=null&&!jn)v.scrollLeft=KP[key];else trCenter(v,focus,false);
   v.addEventListener('scroll',()=>{KP[key]=v.scrollLeft;upd()},{passive:true});upd();
-  const tv=t.querySelector('.tr-trav'),can=!RM()&&!still&&tv&&tv.dataset.path&&window.CSS&&CSS.supports&&CSS.supports('offset-path','path("M0 0L1 1")');
-  if(can){tv.style.left='0';tv.style.top='0';tv.style.offsetPath=`path("${tv.dataset.path}")`;tv.style.offsetDistance='0%';tv.classList.add('mp')}
-  const go=()=>{t.classList.add('go');KP.trGo=true;if(can)requestAnimationFrame(()=>{tv.style.offsetDistance='100%'})};
+  const go=()=>{t.classList.add('go');KP.trGo=true};
   if(RM()||still||!('IntersectionObserver' in window)){t.classList.add('go','still');return}
   new IntersectionObserver((es,io)=>{if(es.some(e=>e.isIntersecting)){io.disconnect();setTimeout(go,120)}},{threshold:.4}).observe(t)})}
 let trQ=0;new MutationObserver(()=>{if(!trQ)trQ=requestAnimationFrame(()=>{trQ=0;trailScan()})}).observe(document.getElementById('app'),{childList:true,subtree:true});
 
+/* ================= the journey map on the "now" tab (jn) =================
+   Every stage is a region of the map with its own colour and scenery. The stage I am working on unfolds its steps as stops along the path,
+   the other stages stay as one gate with a progress ring. A tap on a stop shows that step under the map; a tap on a gate opens the stage.
+   Nothing is invented here: the stops are the plan's own steps, their state is the plan's state. */
+const JD={gw:152,sw:118,pad:22,H:336,ys:[112,158],rg:30,rs:20},JM={gw:138,sw:106,pad:16,H:326,ys:[106,146],rg:28,rs:19};
+const ZTH={g10:{c:'#2F9E44',bg:'#E3F5E8'},g11:{c:'#3B5BDB',bg:'#E4EBFF'},g12:{c:'#E8590C',bg:'#FFEADD'},svc:{c:'#5C7F26',bg:'#EBF2DA'},prep:{c:'#7048E8',bg:'#ECE6FF'},reg:{c:'#0C8599',bg:'#DAF3F6'},go:{c:'#E67700',bg:'#FFF0CF'}};
+const ZSC={
+ g10:'<circle cx="40" cy="40" r="16"/><rect x="38" y="52" width="5" height="18"/><circle cx="86" cy="30" r="21"/><rect x="84" y="48" width="5" height="22"/><circle cx="136" cy="42" r="14"/><rect x="134" y="52" width="4" height="18"/><circle cx="172" cy="34" r="17"/><rect x="170" y="48" width="5" height="22"/>',
+ g11:'<rect x="30" y="34" width="22" height="36" rx="3"/><rect x="56" y="24" width="22" height="46" rx="3"/><rect x="82" y="36" width="22" height="34" rx="3"/><rect x="112" y="28" width="22" height="42" rx="3"/><rect x="142" y="40" width="30" height="30" rx="3"/>',
+ g12:'<path d="M8 70 62 22 102 60 132 32 194 70Z"/><path d="M62 22V8l14 5-14 5Z"/>',
+ svc:'<path d="M18 70 54 30 90 70Z"/><path d="M108 70 142 36 176 70Z"/>',
+ prep:'<path d="M44 6 24 40h16l-6 26L64 30H48Z"/><path d="M130 14 116 40h12l-4 22 24-30h-12Z"/>',
+ reg:'<path d="M36 70V38a28 28 0 0 1 56 0v32H78V40a14 14 0 0 0-28 0v30Z"/><path d="M112 70V46a20 20 0 0 1 40 0v24h-10V48a10 10 0 0 0-20 0v22Z"/>',
+ go:'<path d="M18 34 100 8l82 26Z"/><rect x="34" y="38" width="14" height="32"/><rect x="62" y="38" width="14" height="32"/><rect x="90" y="38" width="14" height="32"/><rect x="118" y="38" width="14" height="32"/><rect x="146" y="38" width="14" height="32"/>'};
+const jPlate=(z,l,w,open,tag)=>{const th=ZTH[z.id]||ZTH.g10,n=Math.max(1,Math.round(w/250)),sc=`<svg viewBox="0 0 200 72" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false">${ZSC[z.id]||''}</svg>`;return `<div class="tr-rg${open?' open':''}" aria-hidden="true" style="left:${l}px;width:${w}px;--rc:${th.c};--rb:${th.bg}">${tag?`<span class="tr-rt">${z.t} <b class="num">${z.done}/${z.total}</b></span>`:''}<div class="tr-sc">${sc.repeat(n)}</div></div>`};
+/* the stops of the stage that is open, after its gate */
+const jItems=(pl,fz)=>{const I=[];pl.zones.forEach(z=>{I.push({k:'g',z});if(z.id===fz)z.tasks.forEach(t=>I.push({k:'s',z,t}))});I.push({k:'e'});return I};
+/* how much of the stretch a to b is lit: a stop that is done lights the way to it; a closed stage lights as far as it is done */
+const jLit=(a,b)=>b.k==='s'?(b.t.done?1:0):a.k==='s'?(a.z.total&&a.z.done===a.z.total?1:0):a.k==='g'?(a.z.total?a.z.done/a.z.total:0):0;
+function journeyHTML(pl,t){
+  const c=innerWidth<640?JM:JD,fz=t?t.z:pl.cur,I=jItems(pl,fz),nx=pl.next?pl.next.id:'',sel=t?t.id:'';
+  let off=0;const P=I.map((i,k)=>{const w=i.k==='s'?c.sw:c.gw,o=off;off+=w;return {i,o,w,k}});
+  const W=off+2*c.pad,pts=P.map(p=>({x:Math.round(W-c.pad-p.o-p.w/2),y:c.ys[p.k%2]}));
+  let base='',prog='';
+  for(let k=0;k<I.length-1;k++){const d=trSeg(pts[k],pts[k+1]),f=jLit(I[k],I[k+1]);
+    base+=`<path class="tr-base" d="${d}"/>`;prog+=`<path class="tr-prog" d="${d}" pathLength="100" style="--o:${Math.round(100*(1-f))};--dl:${(k*.07).toFixed(2)}s"/>`}
+  const plates=pl.zones.map(z=>{const m=P.filter(p=>p.i.z&&p.i.z.id===z.id),o=m[0].o,w=m.reduce((a,p)=>a+p.w,0);return jPlate(z,W-c.pad-o-w+4,w-8,z.id===fz,z.id===fz)}).join('');
+  const arc=z=>{const pct=z.total?z.done/z.total:0,r=c.rg+6,L=2*Math.PI*r,m=r+4;return `<svg class="tr-arc" viewBox="0 0 ${2*m} ${2*m}" aria-hidden="true" focusable="false"><circle cx="${m}" cy="${m}" r="${r}" class="a0"/><circle cx="${m}" cy="${m}" r="${r}" class="a1" stroke-dasharray="${(L*pct).toFixed(1)} ${L.toFixed(1)}" transform="rotate(-90 ${m} ${m})"/></svg>`};
+  const nodes=P.map((p,k)=>{const i=p.i,pt=pts[k],pos=`left:${pt.x}px;top:${pt.y}px`;
+    if(i.k==='e')return `<li class="tr-n end" style="${pos};--cw:${c.gw}px;--r:${c.rg}px"><div class="tr-b"><span class="tr-c">${ki('cap')}</span><span class="tr-l"><b>היום הראשון</b></span></div></li>`;
+    if(i.k==='g'){const z=i.z,s=trState(z,pl),open=z.id===fz;
+      return `<li class="tr-n ${s}${open?' pick':''}" style="${pos};--cw:${c.gw}px;--r:${c.rg}px"><button type="button" class="tr-b" data-kgate="${z.id}" aria-pressed="${open}" aria-label="${esc(z.t)}: ${trStateTxt[s]}, ${z.done} מתוך ${z.total} צעדים${open?'':'. לחיצה פותחת את השלב'}"><span class="tr-c">${arc(z)}${ki(z.ic)}${s==='done'?`<i class="tr-ok">${ki('check')}</i>`:''}</span><span class="tr-l"><b>${z.t}</b><em class="num">${z.done}/${z.total}</em></span></button></li>`}
+    const q=i.t,on=q.id===sel,isNx=q.id===nx;
+    return `<li class="tr-n st${q.done?' done':''}${isNx?' nxt':''}${on?' pick':''}${q.soon&&!q.done?' soon':''}" style="${pos};--cw:${c.sw}px;--r:${c.rs}px"><button type="button" class="tr-b" data-kstop="${q.id}" aria-pressed="${on}"${isNx?' aria-current="step"':''} aria-label="${esc(q.t)}: ${q.done?'הושלם':isNx?'הצעד הבא':'עוד לא הושלם'}"><span class="tr-c">${q.done?ki('check'):ki(q.ic)}</span><span class="tr-l"><b>${esc(q.t)}</b></span>${isNx?'<span class="tr-nx">הבא</span>':''}</button></li>`}).join('');
+  const here=pts[P.findIndex(p=>p.i.k==='g'&&p.i.z.id===pl.cur)]||pts[0];
+  return `<div class="tr jn${KP.trGo?' go still':''}" id="kpTrail" style="--cw:${c.gw}px;--r:${c.rg}px"><div class="tr-view" id="trViewJ"><div class="tr-track" style="width:${W}px;height:${c.H}px">${plates}
+    <svg class="tr-svg" width="${W}" height="${c.H}" viewBox="0 0 ${W} ${c.H}" aria-hidden="true" focusable="false">${base}${prog}</svg>
+    <ol class="tr-nodes" aria-label="תחנות הדרך">${nodes}</ol><span class="tr-trav" aria-hidden="true" style="left:${here.x}px;top:${here.y}px" data-path=""><span class="tr-tp">${ki('arrow')}אני כאן</span></span></div></div>
+    <button type="button" class="tr-arr prev" data-kmapn="prev" aria-label="לשלבים הקודמים">${ki('arrow')}</button><button type="button" class="tr-arr next" data-kmapn="next" aria-label="לשלבים הבאים">${ki('arrow')}</button></div>`}
+/* a tap on a stop: that step opens under the map. Inside the open stage only the markers change; a stop of another stage unfolds that stage */
+function jSelect(id){
+  const pl=safe(plan);if(!pl)return;const t=pl.tasks.find(x=>x.id===id);if(!t)return;
+  const old=focusTask(pl);if(old&&old.id!==id){KP.hist.push(old.id);if(KP.hist.length>30)KP.hist.shift()}
+  KP.fid=id;KP.skip.delete(id);
+  const J=$('#kpJ'),S=$('#kpStep');if(!J||!S){gotoTab('now',{scroll:1});return}
+  if(old&&old.z===t.z)document.querySelectorAll('#kpJ .tr-n.st').forEach(n=>{const b=n.querySelector('[data-kstop]'),on=!!b&&b.dataset.kstop===id;n.classList.toggle('pick',on);if(b)b.setAttribute('aria-pressed',on)});
+  else J.innerHTML=journeyHTML(pl,t);
+  S.innerHTML=focusHTML(pl,t);
+  const b=document.querySelector(`#kpJ [data-kstop="${id}"]`);if(b){b.focus({preventScroll:true});trCenter(b.closest('.tr-view'),b,!RM())}
+  const lv=$('#live');if(lv)lv.textContent=`נבחרה התחנה: ${t.t}`;
+  if(S.getBoundingClientRect().top>innerHeight*.62)S.scrollIntoView({behavior:RM()?'instant':'smooth',block:'start'})}
 /* ================= programs for high-school students (tn-) =================
    From the "teen programs" research of 2026-10-21. It was read through search summaries only (no program page was opened), so a program found in
    one source only is marked "לא אומת". Facts about admission are included only when a source states them; otherwise the card says none was found.
@@ -6325,21 +6402,15 @@ function focusTask(pl){
   if(!t&&KP.skip.size){KP.skip.clear();t=pl.next||pl.tasks.find(x=>!x.done)}
   return t||null}
 function focusHTML(pl,t){
-  const z=pl.zones.find(z=>z.id===t.z)||{t:'',tasks:[t],total:1},zi=Math.max(1,z.tasks.indexOf(t)+1);
+  const z=pl.zones.find(z=>z.id===t.z)||{t:'',tasks:[t],total:1},zi=Math.max(1,z.tasks.indexOf(t)+1),th=ZTH[t.z]||ZTH.g10,ix=pl.tasks.indexOf(t);
   const body=safe(t.body,''),own=body.includes(`data-kmark="${t.id}"`),man=!t.nm&&!own&&!t.done,first=!store.get('pathHelp',0);
-  return `<article class="kp-focus ${t.done?'done':''} ${t.soon?'soon':''}" id="kpf-${t.id}" aria-labelledby="kpf-h">
-    <div class="kp-fh"><span class="kp-fstep"><i>${ki(t.ic)}</i><span>${esc(z.t)} · צעד ${zi} מתוך ${z.total}</span></span>${dueChip(t)}</div>
-    <h2 id="kpf-h">${esc(t.t)}</h2>${t.s?`<p class="kp-fwhy">${esc(t.s)}</p>`:''}
-    ${t.done?`<p class="kp-fok">${ki('check')}הצעד הזה הושלם</p>`:''}
-    <div class="kp-fhow"><h3>${t.done?'מה היה בצעד הזה':'איך עושים את זה'}</h3>${body}</div>
-    ${man?`<div class="kp-fdo"><button class="btn primary xl" data-kmark="${t.id}">סיימתי ✓ ממשיכים</button></div>`:''}
-    <div class="kp-fnav">${KP.hist.length?`<button class="linkbtn" data-kfprev>${ki('arrow','kp-flip')}הצעד הקודם</button>`:'<span></span>'}${t.done?`<button class="btn primary" data-kfnext>לצעד הבא${ki('arrow')}</button>`:`<button class="linkbtn" data-kfskip>עוד לא, דלג לעכשיו${ki('arrow')}</button>`}</div>
-    ${first?`<p class="kp-ftip">${ki('star')}<span>זה הצעד שמחכה לי עכשיו. כשאסיים אותו אסמן ✓ ונעבור לצעד הבא. את כל הדרך רואים בלשונית "הדרך המלאה".</span><button class="linkbtn" data-khelp>הבנתי</button></p>`:''}</article>`}
-/* what comes after the step in focus */
-function queueHTML(pl,cur){
-  const open=pl.tasks.filter(t=>!t.done&&t!==cur),L=[...open.filter(t=>!KP.skip.has(t.id)),...open.filter(t=>KP.skip.has(t.id))].slice(0,4);if(!L.length)return '';
-  const zn=id=>(pl.zones.find(z=>z.id===id)||{}).t||'';
-  return `<div class="kp-q"><h3>אחר כך</h3><ol>${L.map(t=>`<li><button data-kfocus="${t.id}"><span class="kp-ti">${ki(t.ic)}</span><span class="kp-tt"><b>${esc(t.t)}</b><small>${esc(zn(t.z))}</small></span>${dueChip(t)}${ki('arrow','kp-go')}</button></li>`).join('')}</ol></div>`}
+  return `<article class="kp-focus kp-stop ${t.done?'done':''} ${t.soon?'soon':''}" id="kpf-${t.id}" aria-labelledby="kpf-h" style="--zc:${th.c};--zb:${th.bg}">
+    <div class="kp-fh"><span class="kp-fstep"><i>${ki(t.ic)}</i><span>${esc(z.t)} · תחנה ${zi} מתוך ${z.total}</span></span>${dueChip(t)}</div>
+    <div class="kp-ftop"><div class="kp-ftt"><h2 id="kpf-h">${esc(t.t)}</h2>${t.s?`<p class="kp-fwhy">${esc(t.s)}</p>`:''}</div>
+      ${t.done?`<p class="kp-fok">${ki('check')}הושלם</p>`:man?`<div class="kp-fdo"><button class="btn primary" data-kmark="${t.id}">סיימתי ${ki('check')}</button></div>`:''}</div>
+    <div class="kp-fhow"><h3>${t.done?'מה היה בתחנה הזאת':'מה עושים כאן'}</h3>${body}</div>
+    <div class="kp-fnav"><button class="linkbtn" data-kfsib="-1"${ix>0?'':' disabled'}>${ki('arrow','kp-flip')}התחנה הקודמת</button>${t.done?`<button class="btn soft sm" data-kfnext>לצעד הבא${ki('arrow')}</button>`:`<button class="linkbtn kp-fskip" data-kfskip>לא עכשיו</button>`}<button class="linkbtn" data-kfsib="1"${ix<pl.tasks.length-1?'':' disabled'}>התחנה הבאה${ki('arrow')}</button></div>
+    ${first?`<p class="kp-ftip">${ki('star')}<span>התחנה עם התווית "הבא" במפה היא הצעד שמחכה לי. כשאסיים אותה אסמן ✓ והמפה תתקדם.</span><button class="linkbtn" data-khelp>הבנתי</button></p>`:''}</article>`}
 function doneHTML(pl){return `<div class="kp-next done"><span class="kn-i">${ki('cap')}</span><div class="kn-b"><small>הדרך הושלמה</small><h3>${gx('התקבלתי','התקבלתי')} ל${esc(pl.X.d.n)}!</h3></div></div>`}
 /* the road grew after some people started it: the percentage is lower than it was, and this says why (once, until closed) */
 function stepsNoteHTML(){const P=pth();if(!P||P.sn===1)return '';
@@ -6347,9 +6418,12 @@ function stepsNoteHTML(){const P=pth();if(!P||P.sn===1)return '';
     <p>הדרך התרחבה: נוספו לה צעדים חדשים, כמו תוכנית גישור, מלגות והיערכות ליום הראשון בלימודים. לכן האחוז בטבעת נמוך ממה שהיה, גם אם שום דבר לא נעלם. כל הצעדים שסימנתי נשארו מסומנים.</p></div></div>
     <div class="kp-btns"><button class="btn soft sm" data-ksn>הבנתי</button></div></section>`}
 function nowHTML(pl){
-  const t=focusTask(pl);
-  return `${safe(()=>stepsNoteHTML(),'')}${safe(()=>welcomeHTML(pl),'')}${coach(pl)}${safe(()=>qCardHTML(pl),'')}${t?focusHTML(pl,t):doneHTML(pl)}${queueHTML(pl,t)}${safe(()=>teenTeaser(pl),'')}
-    <div class="kp-mini"><small>הדרך במבט אחד, גם אחרי י"ב · לוחצים על שלב כדי לראות מה עושים בו</small>${trailHTML(pl,{compact:true})}</div>
+  const t=focusTask(pl),nx=pl.next;
+  return `${safe(()=>stepsNoteHTML(),'')}${safe(()=>welcomeHTML(pl),'')}
+    <section class="jn-sec" aria-labelledby="jnH"><div class="sec-h"><div><h2 id="jnH">${ki('map')}המפה שלי</h2><p>כל שלב הוא אזור במפה. לוחצים על תחנה כדי לראות מה עושים בה.</p></div>${nx&&t&&t.id!==nx.id?`<button type="button" class="btn soft sm" data-kstop="${nx.id}">לצעד הבא שלי${ki('arrow')}</button>`:''}</div>
+      <div id="kpJ">${journeyHTML(pl,t)}</div>
+      <div id="kpStep">${t?focusHTML(pl,t):doneHTML(pl)}</div></section>
+    ${coach(pl)}${safe(()=>qCardHTML(pl),'')}${safe(()=>teenTeaser(pl),'')}
     <div class="kp-whyc">${safe(()=>whyHTML(pl))}</div>`}
 const roadHTML=pl=>`<div class="sec-h"><div><h2>${ki('map')}הדרך המלאה</h2><p>כל השלבים עד היום הראשון, על מפה אחת. לוחצים על שלב כדי לראות מה בו, ומסמנים ✓ כשמסיימים צעד. שום דבר לא נעול.</p></div></div>${trailHTML(pl)}${panelHTML(pl)}${endCardHTML(pl)}${safe(()=>teenHTML(pl),'')}`;
 const button=(attr,label,ic='')=>`<button class="linkbtn kp-lnk" ${attr}>${label}${ic}</button>`;
@@ -6831,7 +6905,7 @@ function celebrate(el,n=30){if(!el)return;const r=el.getBoundingClientRect();bur
 
 
 /* ---------- events ---------- */
-const KSEL='[data-padd],[data-ppick],[data-pswap],[data-kwd],[data-kwi],[data-kwauto],[data-kwb],[data-kwdone],[data-kme],[data-kmedone],[data-kc],[data-kt],[data-kmap],[data-kmapn],[data-ktf],[data-kteen],[data-kjump],[data-kgo],[data-ktab],[data-ktgt],[data-khub],[data-kadd],[data-krm],[data-krmok],[data-krmno],[data-kfocus],[data-kfprev],[data-kfnext],[data-kfskip],[data-knext],[data-kmark],[data-kinst],[data-kchange],[data-kpick],[data-ksess],[data-kfq],[data-kmore],[data-kdel],[data-kendx],[data-kwel],[data-kweld],[data-ksn],[data-kq],[data-kqd],[data-kqskip],[data-kqok],[data-kqgo],[data-kqask],[data-kics],[data-khelp],[data-kcopy],[data-kexp],[data-kundo],[data-kreset],[data-kresetok],[data-kresetno],[data-lb],[data-lbm],[data-lbe],[data-lbx],[data-lbmode],[data-lbadd],[data-lbrm],[data-lbsave],[data-lbok],[data-lbno],[data-lbreal],[data-lbsavep],[data-lbreset],[data-lbd],[data-lbplan]';
+const KSEL='[data-padd],[data-ppick],[data-pswap],[data-kwd],[data-kwi],[data-kwauto],[data-kwb],[data-kwdone],[data-kme],[data-kmedone],[data-kc],[data-kt],[data-kmap],[data-kmapn],[data-kstop],[data-kgate],[data-kfsib],[data-ktf],[data-kteen],[data-kgo],[data-ktab],[data-ktgt],[data-khub],[data-kadd],[data-krm],[data-krmok],[data-krmno],[data-kfocus],[data-kfprev],[data-kfnext],[data-kfskip],[data-knext],[data-kmark],[data-kinst],[data-kchange],[data-kpick],[data-ksess],[data-kfq],[data-kmore],[data-kdel],[data-kendx],[data-kwel],[data-kweld],[data-ksn],[data-kq],[data-kqd],[data-kqskip],[data-kqok],[data-kqgo],[data-kqask],[data-kics],[data-khelp],[data-kcopy],[data-kexp],[data-kundo],[data-kreset],[data-kresetok],[data-kresetno],[data-lb],[data-lbm],[data-lbe],[data-lbx],[data-lbmode],[data-lbadd],[data-lbrm],[data-lbsave],[data-lbok],[data-lbno],[data-lbreal],[data-lbsavep],[data-lbreset],[data-lbd],[data-lbplan]';
 const wizReset=(change,add)=>{KP.wiz={active:true,step:1,tq:'',d:'',i:'',change:!!change,add:!!add}};
 const top0=()=>window.scrollTo({top:0,behavior:'instant'});
 const refocus=sel=>{const e=$(sel);if(e)e.focus({preventScroll:true})};
@@ -6909,10 +6983,12 @@ document.addEventListener('click',e=>{
   else if(ds.kmark!==undefined)toggleMark(ds.kmark,el);
   else if(ds.kt!==undefined){const id=ds.kt;KP.open.has(id)?KP.open.delete(id):KP.open.add(id);const t=plan().tasks.find(x=>x.id===id),li=$('#kpt-'+id);if(t&&li)li.outerHTML=taskHTML(t);refocus(`[data-kt="${id}"]`)}
   else if(ds.kmap!==undefined)trSelect(ds.kmap);
-  else if(ds.kmapn!==undefined){const v=$('#trView');if(v)v.scrollBy({left:(ds.kmapn==='next'?-1:1)*Math.max(220,v.clientWidth*.7),behavior:RM()?'instant':'smooth'})}
+  else if(ds.kstop!==undefined)jSelect(ds.kstop);
+  else if(ds.kgate!==undefined){const pl=safe(plan),z=pl&&pl.zones.find(z=>z.id===ds.kgate),q=z&&(z.tasks.find(x=>!x.done)||z.tasks[0]);if(q)jSelect(q.id)}
+  else if(ds.kfsib!==undefined){const pl=safe(plan),t=pl&&focusTask(pl),n=t&&pl.tasks[pl.tasks.indexOf(t)+(+ds.kfsib)];if(n)jSelect(n.id)}
+  else if(ds.kmapn!==undefined){const v=el.closest('.tr').querySelector('.tr-view');if(v)v.scrollBy({left:(ds.kmapn==='next'?-1:1)*Math.max(220,v.clientWidth*.7),behavior:RM()?'instant':'smooth'})}
   else if(ds.ktf!==undefined){KP.tf=ds.ktf;const pl=safe(plan),e=$('#kpTeen');if(pl&&e){e.outerHTML=teenHTML(pl);refocus(`[data-ktf="${ds.ktf}"]`)}}
   else if(ds.kteen!==undefined){gotoTab('road',{instant:1});setTimeout(()=>jump('kpTeen'),40)}
-  else if(ds.kjump!==undefined){const pl0=safe(plan);if(pl0){KP.zsel=ds.kjump;KP.zsc=pl0.cur}gotoTab('road',{instant:1});setTimeout(()=>jump('kpTrail'),40)}
   else if(ds.kinst!==undefined)openTargetPick(P.d,'swap');
   else if(ds.kchange!==undefined){wizReset(true);render();top0()}
   else if(ds.kpick!==undefined){const i=ds.kpick,had=tList().some(t=>t.d===P.d&&t.i===i),t=addTarget(P.d,i,false,true);
