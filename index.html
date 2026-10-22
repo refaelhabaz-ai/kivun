@@ -326,6 +326,7 @@ td.best{color:var(--good);font-weight:700}
 @keyframes fall{to{transform:translate(var(--dx),105vh) rotate(var(--rot));opacity:.8}}
 footer{border-top:1px solid var(--line);padding-block:36px 100px;color:var(--muted);font-size:15px}
 footer .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:24px}
+@media(max-width:1080px){footer{padding-bottom:170px}} /* the last footer links stay clear of the back-to-top button */
 footer h4{font-family:var(--head);color:var(--ink);font-size:16px;margin:0 0 8px}
 .view{animation:viewin .45s cubic-bezier(.2,.8,.2,1) both}
 @keyframes viewin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -1681,6 +1682,8 @@ button.tr-b:hover .tr-c{transform:translateY(-3px)}
 .tr-trav{position:absolute;width:0;height:0;z-index:3;offset-rotate:0deg}
 .tr-trav.mp{transition:offset-distance 1.9s cubic-bezier(.45,0,.2,1) .4s}
 .tr-tp{position:absolute;left:0;top:0;transform:translate(-50%,calc(var(--r)*-1 - 40px));display:inline-flex;align-items:center;gap:5px;white-space:nowrap;background:var(--cta);color:#fff;font-family:var(--head);font-weight:600;font-size:13.5px;padding:5px 12px 5px 9px;border-radius:999px;box-shadow:0 8px 18px rgba(214,64,29,.35);animation:trb 2.4s ease-in-out infinite}
+.tr.go .tr-tp{animation:trin .7s cubic-bezier(.2,.9,.3,1.2) .5s both,trb 2.4s ease-in-out 1.3s infinite}
+@keyframes trin{from{opacity:0;margin-top:-24px}to{opacity:1;margin-top:0}}
 .tr-tp::after{content:"";position:absolute;left:50%;bottom:-5px;width:10px;height:10px;background:var(--cta);transform:translateX(-50%) rotate(45deg);border-radius:2px}
 .tr-tp svg{width:15px;height:15px}
 @keyframes trb{0%,100%{margin-top:0}50%{margin-top:-4px}}
@@ -1729,7 +1732,7 @@ button.tr-b:hover .tr-c{transform:translateY(-3px)}
 .tn-teaser{display:flex;gap:14px;align-items:flex-start;background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:16px 20px;margin-top:14px}
 .tn-teaser>svg{width:28px;height:28px;flex:none;color:var(--primary-dark);margin-top:2px}.tn-teaser b{font-family:var(--head)}.tn-teaser p{margin:2px 0 10px;color:var(--muted)}
 @media(max-width:640px){.tr-arr{display:none}.tr-ph{padding:16px 16px 10px}.tr-ph h3{font-size:20px}}
-html.rm .tr-n.cur .tr-c::after,html.rm .tr-tp{animation:none}
+html.rm .tr-n.cur .tr-c::after,html.rm .tr-tp,html.rm .tr.go .tr-tp{animation:none}
 html.rm .tr-trav.mp{transition:none}
 
 </style>
@@ -1933,6 +1936,7 @@ function careerSections(d){
 
     <section class="blk"><h2>לאן זה מוביל</h2><p class="intro">התחומים שבהם עובדים רוב הבוגרים${f.occLink&&LINKW[f.occLink]?`. לפי עבודאטה, הקשר בין התואר לתחומי העיסוק <b>${LINKW[f.occLink]}</b>`:''}. לחיצה על תחום פותחת עמוד מפורט עליו.</p>
       ${occ.length?`<div class="jobs">${occ.map(o=>`<button class="job" data-occ="${o.id}" style="text-align:right;flex-direction:column;align-items:flex-start;gap:6px"><span style="display:flex;gap:12px;align-items:center"><i><svg viewBox="0 0 24 24">${IC.bag}</svg></i>${esc(o.n)}</span>${o.sal?`<span class="tag m num">שכר ממוצע בתחום: ${shek(o.sal)}</span>`:''}<span class="sub" style="font-weight:400;font-size:14px">${esc(o.d||'')}</span></button>`).join('')}</div>`:'<div class="nodata">לא פורסמו תחומי עיסוק עיקריים לתחום הזה.</div>'}
+      ${occ.length?`<p class="fine">שכר ומקום העבודה לפי אזור לא מתפרסמים לפי תואר, ולכן אין לנו נתון אזורי לתואר עצמו. לכל תחום עיסוק מהרשימה יש פירוט לפי אזור בעמוד התחום, כשעבודאטה פרסמה נתון.</p>`:''}
       ${(f.anaf||[]).length?`<h3>באילו ענפים עובדים הבוגרים</h3><div class="salbox">${hbars(f.anaf.map(a=>({x:a.n,v:a.p})),{max:100,fmtv:v=>v+'%'})}</div>`:''}
       ${AVSRC('Academic/'+d.av)}</section>
 
@@ -6018,8 +6022,8 @@ function taskHTML(t){
     <div class="kp-tb" ${open?'':'hidden'}>${open?safe(t.body):''}</div></li>`}
 /* ================= the trail: the whole road as one horizontal map (tr-) =================
    The stages sit on a winding path, the first at the right (the page reads right to left). Finished stretches are drawn in green,
-   the stage I am in carries a pill that rides the path to it once, and a tap on a stage shows its steps under the map.
-   Motion: the path draws itself and the pill travels when the map first scrolls into view; the background moves slower than the
+   the stage I am in carries a pill, and a tap on a stage shows its steps under the map.
+   Motion: the path draws itself and the "I am here" pill drops in when the map first scrolls into view (it rides the path when the stage I am in is not the first one); the background moves slower than the
    stages while the map is scrolled sideways. With reduced motion everything is simply in its final place. */
 const TRG={cw:190,pad:28,H:300,ys:[96,136],r:30},TRC={cw:132,pad:18,H:200,ys:[78,102],r:22},TRM={cw:152,pad:20,H:290,ys:[92,126],r:28};
 function trGeo(n,c){const W=n*c.cw+2*c.pad;return{W,pts:Array.from({length:n},(_,i)=>({x:Math.round(W-c.pad-(i+.5)*c.cw),y:c.ys[i%2]}))}}
@@ -6032,7 +6036,7 @@ function trailHTML(pl,o={}){
   const c=o.compact?TRC:(innerWidth<640?TRM:TRG),Z=pl.zones,n=Z.length+1,{W,pts}=trGeo(n,c),X=pl.X,Y=X.start,sel=trSel(pl),at=o.compact?'data-kjump':'data-kmap';
   const ci=Math.max(0,Z.findIndex(z=>z.id===pl.cur)),cz=Z[ci];
   let base='',prog='',tp=`M${pts[0].x} ${pts[0].y}`;
-  for(let k=0;k<n-1;k++){const d=trSeg(pts[k],pts[k+1]),off=k<ci?0:(k===ci&&cz&&cz.total?Math.round(100*(1-cz.done/cz.total)):100);
+  for(let k=0;k<n-1;k++){const d=trSeg(pts[k],pts[k+1]),zk=Z[k],off=zk&&zk.total?Math.round(100*(1-zk.done/zk.total)):100; /* the stretch after a stage is drawn as far as that stage is done */
     base+=`<path class="tr-base" d="${d}"/>`;prog+=`<path class="tr-prog" d="${d}" pathLength="100" style="--o:${off};--dl:${(k*.22).toFixed(2)}s"/>`;
     if(k<ci)tp+=d.replace(/^M[^C]*/,'')}
   const node=(z,i)=>{const s=trState(z,pl),on=sel===z.id&&!o.compact;
@@ -7435,9 +7439,9 @@ function renderA11y(){
      <li>בכל מעבר בין מסכים המיקוד עובר לכותרת המסך, וכותרת הדפדפן מתעדכנת.</li>
      <li>לכל שדה בטופס יש תווית, והודעות שגיאה ועדכוני מצב מוקראים לקורא מסך.</li>
      <li>אפשר להגדיל את הטקסט עד 150% בתפריט הנגישות (ועוד, בהגדלה של הדפדפן), להפעיל ניגודיות גבוהה, להדגיש קישורים, לעבור לגופן פשוט ולכבות אנימציות. האתר מכבד גם את הגדרת "הפחתת תנועה" של מערכת ההפעלה.</li>
-     <li>מצב (נבחר, שגיאה, הושלם) לא מסומן בצבע בלבד.</li>
+     <li>מצב (נבחר, שגיאה, הושלם) מסומן בדרך כלל גם בטקסט או בסמל, ולא בצבע בלבד.</li>
      <li>אין שמע או וידאו שמתנגנים לבד, ואין הבהובים מהירים.</li>
-     <li>בדקנו את כל מסכי האתר בכלי בדיקה אוטומטי לנגישות (axe-core), בתצוגת מחשב ובתצוגת טלפון, ובדקנו ניווט במקלדת.</li></ul>
+     <li>בדקנו את המסכים הראשיים של האתר בכלי בדיקה אוטומטי לנגישות (axe-core), בתצוגת מחשב ובתצוגת טלפון, ובדקנו ניווט במקלדת במסכים הראשיים.</li></ul>
     <h2 id="a-menu" tabindex="-1">תפריט הגדרות הנגישות</h2>
     <p>בראש האתר יש כפתור "הגדרות נגישות". ההגדרות נשמרות בדפדפן שלכם. התפריט הוא עזר נוסף ואינו תחליף להנגשת האתר עצמו.</p>
     <p><button type="button" class="btn soft" id="a11yOpen2">פתיחת הגדרות הנגישות</button></p>
